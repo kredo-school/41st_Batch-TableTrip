@@ -12,4 +12,21 @@ class UserController extends Controller
         $user = Auth::user();
         return view('user.show',compact('user'));
     }
+    // edit user
+    public function edit(){
+        $user =Auth::user();
+        return view('user.edit',compact('user'));
+    }
+
+    // update user
+    // public function update(){
+    //     $user=Auth::user();
+
+    //     $request->validate([
+            
+    //     ])
+
+
+    //     return view('user.update',compact('user'));
+    // }
 }
