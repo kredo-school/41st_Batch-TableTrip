@@ -58,7 +58,7 @@
                       @endguest
 
                       @auth
-                       @if (!request()->is('admin/*')) 
+                       @if (!request()->is('admin/*'))  {{-- we need to fix later --}}
                             <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
                             <i class="bi bi-bell"></i>
                             </a>
@@ -81,7 +81,7 @@
                                     <form action="/logout" method="POST" class="m-0">
                                         @csrf 
                                         <button type="submit" class="dropdown-item">
-                                        <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                          <i class="bi bi-box-arrow-right me-2"></i> Logout
                                         </button>
                                     </form>
                                     </li>
