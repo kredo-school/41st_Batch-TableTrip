@@ -1,14 +1,12 @@
 @extends('layouts.app')
-
-@section('title', 'Edit Post')
-
+@section('title','Register')
 @section('content')
     <div class="edit-wrapper">
         <div class="edit-card">
             <h2 class="edit-title">
-                Edit User Account
+                Create User Account
             </h2>
-            <form action="{{ route('mypage.edit') }}" class="edit-form" method="POST">
+            <form action="#" class="edit-form" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="profile-icon">
