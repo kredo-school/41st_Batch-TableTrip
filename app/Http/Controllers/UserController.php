@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+
 class UserController extends Controller
 {
     // illustrate user
@@ -19,14 +20,16 @@ class UserController extends Controller
     }
 
     // update user
-    // public function update(){
-    //     $user=Auth::user();
+    public function update(Request $request){
+        $user=Auth::user();
 
-    //     $request->validate([
-            
-    //     ])
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+        ]);
+        $user->update($request->only('name','email'));
+        return redirect ('/mypage')->with('succuess','Your profile has been updated!');
 
 
-    //     return view('user.update',compact('user'));
-    // }
+    }
 }
