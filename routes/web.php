@@ -24,4 +24,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/mypage', [UserController::class, 'show']);
     Route::get('/mypage/edit', [UserController::class, 'edit']);
     Route::put('/mypage', [UserController::class, 'update']);
+    Route::delete('/mypage', [UserController::class, 'destroy'])->name('mypage.destroy');
 });

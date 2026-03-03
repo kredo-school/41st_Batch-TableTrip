@@ -29,7 +29,13 @@ class UserController extends Controller
         ]);
         $user->update($request->only('name','email'));
         return redirect ('/mypage')->with('succuess','Your profile has been updated!');
+    }
 
-
+    // delete user
+    public function destroy(){
+        $user=Auth::user();
+        Auth::logout(); //logout
+        $user->delete(); //delete
+    return redirect('/');//back to top
     }
 }
