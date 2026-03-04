@@ -18,3 +18,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+//Product
+Route::get('/product', function () {
+    return view('product.index');
+});
