@@ -18,3 +18,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// for checking restaurant page 
+Route::view('/restaurant-page', 'restaurants.restaurant_page');
+    
