@@ -17,8 +17,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
 
 // for checking restaurant page 
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
+Route::view('/restaurant-owner-register', 'restaurant-owners.register');
+
+require __DIR__.'/auth.php';
+
     
