@@ -43,3 +43,59 @@ h5{
 h6{
     font-size: 1rem;
 }
+
+/* =========================
+   Brand Buttons
+========================= */
+
+/* Dark button (#243340) */
+.btn-navy{
+  background-color:#243340;
+  color:#ffffff;
+  border:2px solid #243340;
+  border-radius:999px;
+  padding:8px 24px;
+  font-family:"Sen", sans-serif;
+  transition:all .2s ease;
+}
+
+.btn-navy:hover{
+  background-color:#1b2832;
+  border-color:#1b2832;
+  color:#ffffff;
+}
+
+
+/* Orange button (#D96B52) */
+.btn-orange{
+  background-color:#D96B52;
+  color:#ffffff;
+  border:2px solid #D96B52;
+  border-radius:8px;
+  padding:8px 24px;
+  font-family:"Sen", sans-serif;
+  transition:all .2s ease;
+}
+
+.btn-orange:hover{
+  background-color:#c95a43;
+  border-color:#c95a43;
+  color:#ffffff;
+}
+
+
+/* Outline version (like Cancel) */
+.btn-outline-orange{
+  background-color:transparent;
+  color:#D96B52;
+  border:2px solid #D96B52;
+  border-radius:8px;
+  padding:8px 24px;
+  font-family:"Sen", sans-serif;
+  transition:all .2s ease;
+}
+
+.btn-outline-orange:hover{
+  background-color:#D96B52;
+  color:#ffffff;
+}

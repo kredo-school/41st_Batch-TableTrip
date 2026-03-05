@@ -303,11 +303,12 @@
               <textarea class="form-control" rows="3" placeholder="Special Requests"></textarea>
             </div>
             <div class="col-12">
-              <button type="button" class="btn w-100 text-white" style="background:#d96b52;">
-                Confirm Reservation
+              <button type="button" class="btn btn-orange w-100" data-bs-toggle="modal" data-bs-target="#reservationConfirmModal">
+                Review Reservation
               </button>
             </div>
           </div>
+          @include('restaurants.modal.reservation-confirm-modal')
         </form>
       </div>
     </section>
