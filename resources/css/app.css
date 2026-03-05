@@ -71,7 +71,7 @@ h6{
   background-color:#D96B52;
   color:#ffffff;
   border:2px solid #D96B52;
-  border-radius:999px;
+  border-radius:8px;
   padding:8px 24px;
   font-family:"Sen", sans-serif;
   transition:all .2s ease;
@@ -89,7 +89,7 @@ h6{
   background-color:transparent;
   color:#D96B52;
   border:2px solid #D96B52;
-  border-radius:999px;
+  border-radius:8px;
   padding:8px 24px;
   font-family:"Sen", sans-serif;
   transition:all .2s ease;
