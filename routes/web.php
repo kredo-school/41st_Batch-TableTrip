@@ -49,3 +49,12 @@ Route::prefix('admin')
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+//Product
+Route::get('/product', function () {
+    return view('product.index');
+});
+
+// for checking restaurant page 
+Route::view('/restaurant-page', 'restaurants.restaurant_page');
+    
