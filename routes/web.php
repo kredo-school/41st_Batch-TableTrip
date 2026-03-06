@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 
@@ -43,3 +45,40 @@ Route::middleware('guest')->group(function () {
     Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
     Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
 });
+Route::prefix('admin')->group(function () {
+
+    Route::get('/login',
+        [AdminLoginController::class, 'showLoginForm']
+    )->name('admin.login');
+
+    Route::post('/login',
+        [AdminLoginController::class, 'login']
+    );
+
+    Route::post('/logout',
+        [AdminLoginController::class, 'logout']
+    )->name('admin.logout');
+});
+
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+
+        Route::get('/dashboard',
+            [DashboardController::class, 'index']
+        )->name('admin.dashboard');
+
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+//Product
+Route::get('/product', function () {
+    return view('product.index');
+});
+
+// for checking restaurant page 
+Route::view('/restaurant-page', 'restaurants.restaurant_page');
+    
