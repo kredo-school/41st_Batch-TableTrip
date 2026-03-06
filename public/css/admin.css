@@ -1,0 +1,52 @@
+body {
+    background-color: #F7F5F0;
+}
+
+.login-card {
+    width: 400px;
+    padding: 2rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #B8D9D0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.login-card h1 {
+    font-family: 'Playfair Display', serif;
+    color:#FFFFFF
+}
+
+.login-card label {
+    font-family: 'Playfair', serif;
+    color: #FFFFFF;
+}
+
+.login-card input {
+    font-family: 'Playfair', serif;
+    color: #565555;
+}
+
+.form-control {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    border: none;
+    padding: 10px;
+}
+
+.font-control:focus {
+    border-color: #243340;
+    box-shadow: none;
+}
+
+.btn-admin {
+    background-color: #243340;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Playfair',serif;
+    font-weight: 500;
+}
+
+.btn-admin:hover {
+    background-color: #f2f2f2;
+}
