@@ -53,7 +53,7 @@ h6{
   background-color:#243340;
   color:#ffffff;
   border:2px solid #243340;
-  border-radius:999px;
+  border-radius:8px;
   padding:8px 24px;
   font-family:"Sen", sans-serif;
   transition:all .2s ease;
@@ -99,3 +99,99 @@ h6{
   background-color:#D96B52;
   color:#ffffff;
 }
+
+/* Restaurant Page */
+    .section-title{
+    text-decoration: underline;
+    text-decoration-color:#D96B52;
+    text-underline-offset: 6px;
+    }
+
+    .info-row{
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    column-gap: 24px;
+    padding: 10px 0;
+    }
+
+    .info-left{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    }
+
+    .info-right{
+    line-height:1.6;
+    }
+
+    .info-link{
+    text-decoration: underline;
+    text-underline-offset:3px;
+    color:inherit;
+    }
+
+    .meal-title{
+    font-family:"Playfair Display", serif;
+    font-size: 2.4rem;
+    margin-bottom: .2rem;
+    text-decoration: underline;
+    text-decoration-color:#D96B52;
+    text-underline-offset: 8px;
+  }
+
+  .meal-subtitle{
+    font-family:"Sen", sans-serif;
+    font-size: .9rem;
+    color:#D96B52;
+  }
+
+  .meal-wrap{
+    display:flex;
+    align-items:center;
+    gap: 24px;
+  }
+
+  .meal-row{
+    flex: 1;
+  }
+
+  .meal-arrow{
+    width: 56px;
+    height: 56px;
+    border: none;
+    background: #ececec;
+    color:#666;
+    font-size: 2rem;
+    line-height: 1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .meal-card{
+    background: transparent;
+    border: none;
+    text-align: left;
+  }
+
+  .meal-img{
+    width: 100%;
+    height: 180px;        /* ここが大事：高さ固定 */
+    object-fit: cover;    /* ここが大事：切り抜き */
+    border-radius: 2px;
+  }
+
+  .meal-name{
+    margin-top: 10px;
+    font-size: 1.25rem;
+  }
+
+  .meal-price{
+    font-size: 1.1rem;
+    color:#333;
+  }
+
+  /* Restaurant Owner Register Page */
+  .icon-lg{
+    font-size: 3rem;
+  }
