@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="col-12 col-xl-7">
-                    <button class="btn btn-orange mb-3">+ Add Reservation</button>
+                    <button class="btn btn-orange mb-3" data-bs-toggle="modal" data-bs-target="#addReservationModal">+ Add Reservation</button>
                     <div class="card p-4 reservation-card">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h3 class="mb-0">Reservations</h3>
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-sm align-middle reservation-table">
+                            <table class="table table-sm align-middle reservation-table table-hover">
                                 <thead>
                                     <tr>
                                         <th>Time</th>
@@ -100,6 +100,9 @@
         </div>
     </div>
 </div>
+ @include('restaurant-owners.reservations.modals.add')
+ @include('restaurant-owners.reservations.modals.edit')
+@endsection
     @push('scripts')
         <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -289,14 +292,14 @@
                 }
 
                 reservationTableBody.innerHTML = filteredRows.map(item => `
-                    <tr>
+                    <tr onclick="window.location='/reservations/${item.id}'" style="cursor:pointer;">
                         <td>${escapeHtml(item.time)}</td>
                         <td>${escapeHtml(item.name)}</td>
                         <td class="ps-4">${escapeHtml(item.guests)}</td>
                         <td>${escapeHtml(item.phone)}</td>
                         <td>${getStatusBadge(item.status)}</td>
                         <td>
-                            <button class="btn btn-sm btn-outline-secondary">Edit</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editReservationModal" data-id="${item.id}">Edit</button>
                         </td>
                     </tr>
                 `).join('');
@@ -347,4 +350,3 @@
         });
         </script>
     @endpush
-@endsection
