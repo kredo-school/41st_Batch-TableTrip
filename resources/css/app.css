@@ -99,6 +99,20 @@ h6{
   background-color:#D96B52;
   color:#ffffff;
 }
+.btn-outline-navy{
+  background-color:transparent;
+  color:#243340;
+  border:2px solid #243340;
+  border-radius:8px;
+  padding:8px 24px;
+  font-family:"Sen", sans-serif;
+  transition:all .2s ease;
+}
+
+.btn-outline-navy:hover{
+  background-color:#243340;
+  color:#ffffff;
+}
 
 /* Restaurant Page */
     .section-title{
@@ -195,3 +209,91 @@ h6{
   .icon-lg{
     font-size: 3rem;
   }
+
+  /* Restaurant owner sidebar */
+  .sidebar-menu .list-group-item.active {
+    background-color: rgb(231, 207, 192);
+    border-color: rgb(231, 207, 192);
+    color: #263745;
+    font-weight: 500;
+  }
+  .sidebar-menu .list-group-item:hover {
+      background-color: rgba(231, 207, 192, 0.5);
+  }
+
+  .sidebar-menu .list-group-item {
+    border: none;
+    padding: 12px 16px;
+    background: transparent;
+  }
+
+  .sidebar-menu .list-group-item:hover {
+      background-color: rgba(231,207,192,0.4);
+  }
+
+  .sidebar-menu .active {
+      background-color: rgb(231,207,192);
+  }
+
+  /* restaurant owner dashboard  */
+  .stat-card {
+    height: 120px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    border-radius:12px;
+  }
+  @media (max-width: 767.98px) {
+    .stat-card {
+       height: auto;
+        min-height: 140px;
+    }
+ }
+  .stat-card .card-body{
+    padding: 1rem 1rem 0.75rem;
+    padding-right: 3.2rem;
+ }
+
+ .stat-card .card-title {
+    font-size: 1.15rem;
+    line-height: 1.2;
+  }
+  @media (max-width: 767.98px) {
+      .stat-card .card-title {
+          font-size: 0.95rem;
+      }
+  }
+
+  .info-card {
+      min-height: 280px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.06);
+      border-radius:12px;
+  }
+
+  .info-card .table {
+      font-family: "Sen", sans-serif;
+  }
+
+  .table-wrap {
+    width: fit-content;
+    margin: 0 auto;
+ }
+
+  .info-card th,
+  .info-card.table td {
+      padding: 10px 28px 10px 0;
+      white-space: nowrap;
+  }
+
+  .summary-card {
+      min-height: 120px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.06);
+      border-radius:12px;
+  }
+
+  .stat-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 30px;
+    color: #aaa;
+    opacity:0.4;
+}

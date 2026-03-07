@@ -62,7 +62,7 @@
     </div>
 
 
-  <div class="col-12 col-lg-6 ms-lg-auto" style="background-color: #e3baac; padding: 30px; border-radius: 10px;">
+  <div class="col-12 col-lg-6 ms-lg-auto" style="background-color:rgb(231, 207, 192); padding: 30px; border-radius: 10px;">
     <h1 class="text-white mb-4 text-center">Request an Account</h1>
     <form action="">
         @csrf
