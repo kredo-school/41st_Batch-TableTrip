@@ -7,8 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
-
-
+use App\Http\Controllers\ForgetController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -26,25 +25,30 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-
-// edit user information
+// My page
+    // edit user account
 Route::middleware('auth')->group(function () {
-
-    Route::get('/mypage', [UserController::class, 'show']);
-    Route::get('/mypage/edit', [UserController::class, 'edit'])->name('mypage.edit');
-    Route::delete('/mypage', [UserController::class, 'destroy'])->name('mypage.destroy');
-    Route::put('/mypage', [UserController::class, 'update'])->name('mypage.update');
+    Route::get('/mypage', [UserController::class, 'show'])->name('user.show');
+    Route::get('/mypage/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/mypage', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/mypage', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
-// login  user
+    // login  user
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-// register user
+    // register user
 Route::middleware('guest')->group(function () {
     Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
     Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
 });
+    // forgotten password
+Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
+Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+
+
+// admin
 Route::prefix('admin')->group(function () {
 
     Route::get('/login',
@@ -81,6 +85,7 @@ Route::get('/product', function () {
 
 // for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
+
 Route::view('/restaurant-owner-page', 'restaurant-owners.register');
 Route::view('/restaurant-owner-login', 'restaurant-owners.login');
 Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
