@@ -1,36 +1,7 @@
 @extends('layouts.app')
-
-<style>
-  /* 三角形のリボン本体 */
-    .triangle-ribbon {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 180px 200px 0 0; /* 三角形のサイズ */
-        border-color: #D97652 transparent transparent transparent; /* オレンジ色 */
-        z-index: 1;
-    }
-
-    /* リボンの上の文字（Easyなど） */
-    .ribbon-text {
-        position: absolute;
-        top: 24px;
-        left: 12px;
-        transform: rotate(-45deg); /* 文字を斜めに */
-        transform-origin: center;
-        color: white;
-        font-weight: bold;
-        font-size: 45px;
-        z-index: 2;
-        white-space: nowrap;
-    }  
-</style>
-
-
 @section('content')
+@vite(['resources/css/product-list.css'])
+
 <div class="product-page" style="background-color: #F9F7F2; min-height: 100vh;">
     <div class="container py-5">
         {{-- タイトル部分 --}}
@@ -38,36 +9,197 @@
             <h2 class="display-6 fw-bold" style="color: #4A4A4A; text-decoration: underline orange;">Product list</h2>
         </div>
 
-        {{-- カテゴリ選択（タブ風） --}}
-        <div class="row mb-3 text-center">
-            <div class="col-6 border py-3 bg-white">Meal Kits</div>
-            <div class="col-6 border py-3 bg-white">Restaurants</div>
-        </div>
+        {{-- カテゴリ選択（元のレイアウトを維持） --}}
+        <div class="row mb-3 text-center position-relative mx-0">
+            {{-- 左側：Meal Kitsボタン --}}
+            <div class="col-6 border py-3 bg-white fw-bold" 
+                 id="mealKitsBtn"
+                 style="cursor: pointer; z-index: 1020;" 
+                 onclick="handleFilterToggle(event)">
+                Meal Kits <i class="bi bi-chevron-down ms-1"></i>
+            </div>
+            
+            {{-- 右側：Restaurants --}}
+            <div class="col-6 border py-3 bg-white text-muted" style="z-index: 1020;">
+                Restaurants
+            </div>
 
-        {{-- 商品グリッド --}}
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            {{-- 1つの商品カード --}}
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 position-relative">
-                    {{-- 左上のリボン（Easyなど） --}}
-                    <div class="triangle-ribbon"></div>
-                    <div class="ribbon-text">Easy</div>
+            {{-- --- ソートメニュー --- --}}
+            <div id="customSearchMenu" 
+                 style="display: none; position: absolute; top: 100%; left: 0; width: 50%; z-index: 1010; padding: 0;">
+                
+                <div class="card card-body border shadow-lg text-start" 
+                     style="background-color: #F9F7F2; border-radius: 0 0 15px 15px; border-top: none;"
+                     onclick="event.stopPropagation();">
                     
-                    <img src="{{ asset('images/journykit.png') }}" class="card-img-top" alt="Journey Kit">
-                    
-                    <div class="card-body">
-                        <h5 class="card-title mb-1">Journey Kit</h5>
-                        <div class="text-muted small mb-2">Hokkaido | Kitchen Sapporo</div>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <span class="text-warning">★★★★★ <small class="text-muted">(4.5)</small></span>
-                            <button class="btn btn-link text-dark p-0"><i class="bi bi-cart-plus fs-4"></i></button>
+                    <p class="small fw-bold text-muted mb-3 border-bottom pb-1">Search Details</p>
+
+                    {{-- Price (常に表示) --}}
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <p class="fw-bold mb-0 small">Price</p>
+                            <span class="small text-muted" style="font-size: 0.7rem;">$0-100</span>
                         </div>
-                        <p class="fw-bold mt-2">¥2,480~</p>
+                        <input type="range" class="form-range" id="priceRange">
+                    </div>
+
+                    {{-- Review Section --}}
+                    <div class="mb-3">
+                        <p class="fw-bold mb-0 small d-flex justify-content-between align-items-center border-bottom pb-1" 
+                           style="cursor: pointer;" onclick="toggleAccordion('acc-review', 'icon-review')">
+                            Review <i class="bi bi-chevron-down small text-muted" id="icon-review"></i>
+                        </p>
+                        <div id="acc-review" style="display: none;" class="pt-2">
+                            @for ($i = 5; $i >= 1; $i--)
+                                <div class="form-check small mb-1">
+                                    <input class="form-check-input" type="checkbox" id="star{{$i}}">
+                                    <label class="form-check-label text-warning" for="star{{$i}}">
+                                        {{ str_repeat('★', $i) }}
+                                    </label>
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+
+                    {{-- Location Section --}}
+                    <div class="mb-3">
+                        <p class="fw-bold mb-0 small d-flex justify-content-between align-items-center border-bottom pb-1" 
+                        style="cursor: pointer;" onclick="toggleAccordion('acc-location', 'icon-location')">
+                            Location <i class="bi bi-chevron-down small text-muted" id="icon-location"></i>
+                        </p>
+                        <div id="acc-location" style="display: none;" class="pt-2">
+                            <div style="max-height: 200px; overflow-y: auto; overflow-x: hidden;" class="pe-2 custom-scrollbar">
+                                <div class="form-check small mb-1">
+                                    <input class="form-check-input" type="checkbox" id="loc-all">
+                                    <label class="form-check-label fw-bold" for="loc-all">Select All</label>
+                                </div>
+                                
+                                {{-- 47都道府県の配列 --}}
+                                @php
+                                    $prefectures = [
+                                        'Hokkaido', 'Aomori', 'Iwate', 'Miyagi', 'Akita', 'Yamagata', 'Fukushima',
+                                        'Ibaraki', 'Tochigi', 'Gunma', 'Saitama', 'Chiba', 'Tokyo', 'Kanagawa',
+                                        'Niigata', 'Toyama', 'Ishikawa', 'Fukui', 'Yamanashi', 'Nagano', 'Gifu',
+                                        'Shizuoka', 'Aichi', 'Mie', 'Shiga', 'Kyoto', 'Osaka', 'Hyogo', 'Nara',
+                                        'Wakayama', 'Tottori', 'Shimane', 'Okayama', 'Hiroshima', 'Yamaguchi',
+                                        'Tokushima', 'Kagawa', 'Ehime', 'Kochi', 'Fukuoka', 'Saga', 'Nagasaki',
+                                        'Kumamoto', 'Oita', 'Miyazaki', 'Kagoshima', 'Okinawa'
+                                    ];
+                                @endphp
+
+                                {{-- ループで一気に生成 --}}
+                                @foreach($prefectures as $pref)
+                                    <div class="form-check small mb-1">
+                                        <input class="form-check-input" type="checkbox" id="loc-{{ $pref }}" name="locations[]" value="{{ $pref }}">
+                                        <label class="form-check-label" for="loc-{{ $pref }}">{{ $pref }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Categories Section --}}
+                    <div class="mb-3">
+                        <p class="fw-bold mb-0 small d-flex justify-content-between align-items-center border-bottom pb-1" 
+                           style="cursor: pointer;" onclick="toggleAccordion('acc-categories', 'icon-categories')">
+                            Categories <i class="bi bi-chevron-down small text-muted" id="icon-categories"></i>
+                        </p>
+                        <div id="acc-categories" style="display: none;" class="pt-2">
+                            <div style="max-height: 150px; overflow-y: auto;" class="pe-2">
+                                @foreach(['Chinese', 'Italian', 'French', 'Ethnic', 'Japanese'] as $cat)
+                                    <div class="form-check small mb-1">
+                                        <input class="form-check-input" type="checkbox" id="cat-{{$cat}}">
+                                        <label class="form-check-label" for="cat-{{$cat}}">{{$cat}}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Sale Items Section --}}
+                    <div class="mb-3">
+                        <p class="fw-bold mb-0 small d-flex justify-content-between align-items-center border-bottom pb-1" 
+                           style="cursor: pointer;" onclick="toggleAccordion('acc-sale', 'icon-sale')">
+                            Sale Items <i class="bi bi-chevron-down small text-muted" id="icon-sale"></i>
+                        </p>
+                        <div id="acc-sale" style="display: none;" class="pt-2 ps-2">
+                             <div class="form-check small mb-1">
+                                <input class="form-check-input" type="checkbox" id="sale-only">
+                                <label class="form-check-label" for="sale-only">On Sale Only</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button type="button" class="btn btn-sm btn-dark w-100 py-2" onclick="handleFilterToggle(event)">
+                            Apply Filters
+                        </button>
                     </div>
                 </div>
             </div>
-            {{-- 商品カードここまで（これをコピーして増やす） --}}
+        </div>
+
+        {{-- 商品グリッド --}}
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 position-relative">
+                    <div class="triangle-ribbon"></div>
+                    <div class="ribbon-text">Easy</div>
+                    <img src="{{ asset('images/journykit.png') }}" class="card-img-top" alt="Journey Kit">
+                    <div class="card-body">
+                        <h5 class="card-title mb-1 fw-bold">Journey Kit</h5>
+                        <p class="fw-bold mt-2 h5">¥2,480~</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 position-relative">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Sample">
+                    <div class="card-body">
+                        <h5 class="card-title mb-1 fw-bold">Sample Product</h5>
+                        <p class="fw-bold mt-2 h5">¥1,980~</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    // メニュー全体の開閉
+    function handleFilterToggle(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const menu = document.getElementById('customSearchMenu');
+        if (menu.style.display === 'none' || menu.style.display === '') {
+            menu.style.display = 'block';
+        } else {
+            menu.style.display = 'none';
+        }
+    }
+
+    // 各項目（アコーディオン）の開閉
+    function toggleAccordion(contentId, iconId) {
+        const content = document.getElementById(contentId);
+        const icon = document.getElementById(iconId);
+
+        if (content.style.display === 'none') {
+            content.style.display = 'block';
+            icon.classList.replace('bi-chevron-down', 'bi-chevron-up');
+        } else {
+            content.style.display = 'none';
+            icon.classList.replace('bi-chevron-up', 'bi-chevron-down');
+        }
+    }
+
+    // 外側クリックで閉じる
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('customSearchMenu');
+        const btn = document.getElementById('mealKitsBtn');
+        if (menu && menu.style.display === 'block' && !menu.contains(e.target) && !btn.contains(e.target)) {
+            menu.style.display = 'none';
+        }
+    });
+</script>
+
 @endsection
