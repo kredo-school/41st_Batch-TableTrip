@@ -146,19 +146,112 @@
                     <div class="triangle-ribbon"></div>
                     <div class="ribbon-text">Easy</div>
                     <img src="{{ asset('images/journykit.png') }}" class="card-img-top" alt="Journey Kit">
-                    <div class="card-body">
-                        <h5 class="card-title mb-1 fw-bold">Journey Kit</h5>
-                        <p class="fw-bold mt-2 h5">¥2,480~</p>
+                    {{-- テキスト内容 --}}
+            <div class="card-body pt-3 text-start">
+                <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Journey Kit</h4>
+                
+                {{-- タグ (Cool) --}}
+                <div class="mb-2">
+                    <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Cool</span>
+                </div>
+
+                {{-- 星評価とカート --}}
+                <div class="d-flex justify-content-between align-items-end mt-3">
+                    <div>
+                        <div class="text-warning mb-1" style="font-size: 1.5rem;">
+                            ★★★★★
+                        </div>
+                        <span class="small text-muted">5.0 (40)</span>
+                    </div>
+                    
+                    {{-- カートボタン --}}
+                    <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
+                        <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
+                        <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
                     </div>
                 </div>
+                
+                {{-- 価格 (デザインに合わせて追加) --}}
+                <p class="mt-2 mb-0 fw-bold h5">¥2,480~</p>
             </div>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 position-relative">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Sample">
-                    <div class="card-body">
-                        <h5 class="card-title mb-1 fw-bold">Sample Product</h5>
-                        <p class="fw-bold mt-2 h5">¥1,980~</p>
+        </div>
+    </div>
+
+
+    {{-- 2つ目の商品（ダミー） --}}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 position-relative p-3" style="background-color: #fcfbf9; border-radius: 15px;">
+                <div class="position-relative">
+                    <img src="https://via.placeholder.com/300x200?text=Product+2" class="card-img-top" alt="Sample" style="border-radius: 10px;">
+                </div>
+                <div class="card-body pt-3 text-start">
+                    <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Traditional Pasta</h4>
+                    <div class="mb-2">
+                        <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Flash Flozen</span>
                     </div>
+                    <div class="d-flex justify-content-between align-items-end mt-3">
+                        <div>
+                            <div class="text-warning mb-1" style="font-size: 1.5rem;">★★★★☆</div>
+                            <span class="small text-muted">4.2 (15)</span>
+                        </div>
+                        <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
+                            <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
+                            <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
+                        </div>
+                    </div>
+                    <p class="mt-2 mb-0 fw-bold h5">¥1,850~</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- 3つ目の商品（ダミー） --}}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 position-relative p-3" style="background-color: #fcfbf9; border-radius: 15px;">
+                <div class="position-relative">
+                    <img src="https://via.placeholder.com/300x200?text=Product+3" class="card-img-top" alt="Sample" style="border-radius: 10px;">
+                </div>
+                <div class="card-body pt-3 text-start">
+                    <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Spicy Curry Kit</h4>
+                    <div class="mb-2">
+                        <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Cool</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end mt-3">
+                        <div>
+                            <div class="text-warning mb-1" style="font-size: 1.5rem;">★★★★★</div>
+                            <span class="small text-muted">4.8 (22)</span>
+                        </div>
+                        <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
+                            <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
+                            <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
+                        </div>
+                    </div>
+                    <p class="mt-2 mb-0 fw-bold h5">¥2,100~</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- 4つ目の商品（ここから2行目） --}}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 position-relative p-3" style="background-color: #fcfbf9; border-radius: 15px;">
+                <div class="position-relative">
+                    <img src="https://via.placeholder.com/300x200?text=Product+4" class="card-img-top" alt="Sample" style="border-radius: 10px;">
+                </div>
+                <div class="card-body pt-3 text-start">
+                    <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Green Salad Mix</h4>
+                    <div class="mb-2">
+                        <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Flash Frozen</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-end mt-3">
+                        <div>
+                            <div class="text-warning mb-1" style="font-size: 1.5rem;">★★★☆☆</div>
+                            <span class="small text-muted">3.5 (8)</span>
+                        </div>
+                        <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
+                            <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
+                            <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
+                        </div>
+                    </div>
+                    <p class="mt-2 mb-0 fw-bold h5">¥1,200~</p>
                 </div>
             </div>
         </div>
