@@ -49,11 +49,11 @@
 
                     <div class="d-flex align-items-center gap-3">
                       @guest
-                          <a href="{{ route('register') }}" class="btn btn-outline-dark rounded-pill px-3" style="color:#243340; border-color:#243340;" >
+                          <a href="{{ route('register') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
                              Register
                           </a>
 
-                            <a href="{{ route('login') }}" class="btn btn-dark rounded-pill px-3" style="background-color:#243340;">
+                            <a href="{{ route('login') }}" class="btn btn-navy px-3" style="background-color:#243340;">
                                 Login
                             </a>
                       @endguest
@@ -91,7 +91,7 @@
                             @else
                                  <form method="POST" action="#" class="m-0">
                                 @csrf
-                                <button type="submit" class="btn btn-outline-dark rounded-pill px-3">
+                                <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
                                     Logout
                                 </button>
                             </form>
