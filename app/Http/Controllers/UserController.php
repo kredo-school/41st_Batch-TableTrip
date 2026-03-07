@@ -11,13 +11,13 @@ class UserController extends Controller
 {
     // illustrate user
     public function show(){
-        $user = Auth::user();
-        return view('user.show',compact('user'));
-    }
+    $user = Auth::user();
+    return redirect()->route('dashboard')->with('success', 'Your profile has been updated!');
+}
     // edit user
     public function edit(){
         $user =Auth::user();
-        return view('mypage.edit',compact('user'));
+        return view('user.edit',compact('user'));
     }
 
     // update user
@@ -26,11 +26,15 @@ class UserController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'first_name'  => 'required|string|max:255',
-            'last_name'   => 'required|string|max:255',
-            'user_name'   => 'required|string|max:255|unique:users,user_name,' . $user->id,
-            'email'       => 'required|email|unique:users,email,' . $user->id,
-            'password'    => 'nullable|confirmed|min:8', 
+            'first_name'      => 'required|string|max:255',
+            'last_name'       => 'required|string|max:255',
+            'user_name'       => 'required|string|max:255|unique:users,user_name,' . $user->id,
+            'email'           => 'required|email|unique:users,email,' . $user->id,
+            'tel'             => 'required|string|max:20', 
+            'postal_code'     => 'required|string|max:10', 
+            'address'         => 'required|string|max:255', 
+            'country'         => 'required|string|max:100', 
+            'password'        => 'nullable|min:8', 
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -43,7 +47,7 @@ class UserController extends Controller
         $user->address    = $request->address;
         $user->country    = $request->country;
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            $user->password = Hash::make($request->input('password'));
         }
 
         if ($request->hasFile('profile_picture')) {

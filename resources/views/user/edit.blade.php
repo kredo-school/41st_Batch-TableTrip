@@ -1,99 +1,121 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Post')
+@section('title', 'Edit User Account')
 
 @section('content')
- <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <div class="edit-wrapper">
-        <div class="edit-card">
-            <h2 class="edit-title">
-                Edit User Account
-            </h2>
-            <form action="{{ route('mypage.edit') }}" class="edit-form" method="POST">
-                @csrf
-                @method('POST')
-                <label for="profile_picture" class="profile-upload-label">
-                    @if($user->profile_picture)
-                        {{-- already registerd --}}
-                        <img id="profile_picture_preview" 
-                            src="{{ asset('storage/' . $user->profile_picture) }}" 
-                            style="display: block; width: 60px; height: 60px; border-radius: 50%;">
-                        <svg id="default_svg" style="display: none;">...</svg>
-                    @else
-                        {{-- not registered yet --}}
-                        <img id="profile_picture_preview" src="" style="display: none;">
-                        <svg id="default_svg">...</svg>
-                    @endif
-                </label>
-                <div class="form-grid">
-                    <label>First Name</label>
-                    <input type="text" name="first_name" id="first_name" placeholder="first name" class="form-control required">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-                    <label>Last Name</label>
-                    <input type="text" name="last_name" id="last_name" placeholder="last name" class="form-control required">
-                    
-                    <label>User Name</label>
-                    <input type="text" name="user_name" id="user_name" placeholder="user name" class="form-control required">
-                    
-                    <label>Tel</label>
-                    <input type="number" name="tel" id="tel" placeholder="xx-xxxx-xxxx" class="form-control required">
-                    
-                    <label>Email Address</label>
-                    <input type="email" name="email" id="email" placeholder="xx-xxxx-xxxx" class="form-control required">
-                    <label>Postal Code</label>
-                    <input type="text" name="postal_code" class="form-control required">
+<div class="edit-wrapper">
+    <div class="edit-card">
+        <h2 class="edit-title">Edit User Account</h2>
 
-                    <label>Address</label>
-                    <div class="address-row">
-                        <input type="text" name="address" class="form-control required">
-                            <select name="country" class="form-select text-muted" required>
-                                <option value="" class="text-muted">country</option>
-                                <option value="Japan" {{ old('country')=='Japan'?'selected':'' }}>Japan</option>
-                                <option value="USA" {{ old('country')=='USA'?'selected':'' }}>USA</option>
-                                <option value="South Korea" {{ old('country')=='South Korea'?'selected':'' }}>South Korea</option>
-                                <option value="China" {{ old('country')=='China'?'selected':'' }}>China</option>
-                                <option value="Taiwan" {{ old('country')=='Taiwan'?'selected':'' }}>Taiwan</option>
-                                <option value="Singapore" {{ old('country')=='Singapore'?'selected':'' }}>Singapore</option>
-                                <option value="Thailand" {{ old('country')=='Thailand'?'selected':'' }}>Thailand</option>
-                                <option value="Malaysia" {{ old('country')=='Malaysia'?'selected':'' }}>Malaysia</option>
-                                <option value="Indonesia" {{ old('country')=='Indonesia'?'selected':'' }}>Indonesia</option>
-                                <option value="France" {{ old('country')=='France'?'selected':'' }}>France</option>
-                                <option value="Germany" {{ old('country')=='Germany'?'selected':'' }}>Germany</option>
-                                <option value="Netherlands" {{ old('country')=='Netherlands'?'selected':'' }}>Netherlands</option>
-                                <option value="Spain" {{ old('country')=='Spain'?'selected':'' }}>Spain</option>
-                                <option value="Hungary" {{ old('country')=='Hungary'?'selected':'' }}>Hungary</option>
-                                <option value="Iran" {{ old('country')=='Iran'?'selected':'' }}>Iran</option>
-                                <option value="India" {{ old('country')=='India'?'selected':'' }}>India</option>
-                                <option value="Norway" {{ old('country')=='Norway'?'selected':'' }}>Norway</option>
-                                <option value="Mexico" {{ old('country')=='Mexico'?'selected':'' }}>Mexico</option>
-                                <option value="Switzerland" {{ old('country')=='Switzerland'?'selected':'' }}>Switzerland</option>
-                                <option value="Australia" {{ old('country')=='Australia'?'selected':'' }}>Australia</option>
-                                <option value="UK" {{ old('country')=='UK'?'selected':'' }}>UK</option>
-                                <option value="Brazil" {{ old('country')=='Brazil'?'selected':'' }}>Brazil</option>
-                                <option value="Argentina" {{ old('country')=='Argentina'?'selected':'' }}>Argentina</option>
-                                <option value="Uruguay" {{ old('country')=='Uruguay'?'selected':'' }}>Uruguay</option>
-                                <option value="Morocco" {{ old('country')=='Morocco'?'selected':'' }}>Morocco</option>
-                                <option value="Italy" {{ old('country')=='Italy'?'selected':'' }}>Italy</option>
-                                <option value="Ireland" {{ old('country')=='Ireland'?'selected':'' }}>Ireland</option>
-                            </select>
+        {{-- update form --}}
+        <form action="{{ route('user.update') }}" class="edit-form" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            <div class="form-grid">
+                {{-- Profile Picture --}}
+                <div class="form-row">
+                    <label>Profile Picture</label>
+                    <div class="input-field profile-section">
+                        <label for="profile_picture" class="profile-upload-label">
+                            @if($user->profile_picture)
+                                <img id="profile_picture_preview" src="{{ asset('storage/' . $user->profile_picture) }}" class="rounded-circle">
+                            @else
+                                <img id="profile_picture_preview" src="" style="display: none;" class="rounded-circle">
+                                <svg id="default_svg" width="50" height="50" viewBox="0 0 64 64">
+                                    <circle cx="32" cy="32" r="30" stroke="#4A4A4A" fill="none" />
+                                    <path d="M32 32C37 32 41 28 41 23S37 14 32 14 23 18 23 23 27 32 32 32Z" stroke="#4A4A4A" fill="none"/>
+                                    <path d="M50 50C50 44 45 40 32 40S14 44 14 50" stroke="#4A4A4A" fill="none"/>
+                                </svg>
+                            @endif
+                        </label>
+                        <input type="file" name="profile_picture" id="profile_picture" style="display:none;" accept="image/*">
                     </div>
-
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control required">
-
                 </div>
-            {{-- update --}}
-                <div class="button-area">
-                    <button type="submit" class="btn-update">Update</button>
-                </div>
-            </form>
-            {{-- delete --}}
-            <form action="{{ route('mypage.destroy') }}" method="POST"class="button-area" onsubmit="return confirm('Are you sure you want to delete your account?');">
-                 @csrf
-                 @method('DELETE')
-                 <button type="submit" class="btn-delete">Delete Account</button>
-            </form>
 
-        </div>
+                {{-- Name fields --}}
+                <div class="form-row">
+                    <label>First Name</label>
+                    <div class="input-field">
+                        <input type="text" name="first_name" class="form-control" value="{{ old('first_name', $user->first_name) }}" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Last Name</label>
+                    <div class="input-field">
+                        <input type="text" name="last_name" class="form-control" value="{{ old('last_name', $user->last_name) }}" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>User Name</label>
+                    <div class="input-field">
+                        <input type="text" name="user_name" class="form-control" value="{{ old('user_name', $user->user_name) }}" required>
+                    </div>
+                </div>
+
+                {{-- Contact info --}}
+                <div class="form-row">
+                    <label>Tel</label>
+                    <div class="input-field">
+                        <input type="text" name="tel" class="form-control" value="{{ old('tel', $user->tel) }}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Email Address</label>
+                    <div class="input-field">
+                        <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+                    </div>
+                </div>
+
+                {{-- Address --}}
+                <div class="form-row">
+                    <label>Postal Code</label>
+                    <div class="input-field">
+                        <input type="text" name="postal_code" class="form-control" value="{{ old('postal_code', $user->postal_code) }}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Address & Country</label>
+                    <div class="input-field">
+                        <div class="address-row d-flex gap-2">
+                            <input type="text" name="address" class="form-control" value="{{ old('address', $user->address) }}">
+                            <select name="country" class="form-select">
+                                <option value="">Select Country</option>
+                                @foreach(['Japan', 'USA', 'South Korea', 'China', 'Taiwan', 'UK'] as $country)
+                                    <option value="{{ $country }}" {{ old('country', $user->country) == $country ? 'selected' : '' }}>{{ $country }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Password --}}
+                <div class="form-row">
+                    <label>New Password </label>
+                    <div class="input-field">
+                        <input type="password" name="password" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            {{-- button --}}
+            <div class="d-flex justify-content-center gap-4 mt-5">
+                <button type="submit" class="btn-update">Update Account</button>
+        </form> {{-- Update --}}
+
+        {{-- Delete --}}
+        <form action="{{ route('user.destroy') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn-delete">Delete Account</button>
+        </form>
+            </div>
     </div>
+</div>
 @endsection

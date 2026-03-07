@@ -163,3 +163,48 @@ h2.custom-header {
     background-color: #d1634f; 
     transform: translateY(-1px); 
 }
+
+/* edit user */
+.edit-card{
+    background-color: #f7f5f0;
+    border: 1px solid #D1CFC0;
+    padding: 40px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-row{
+    display:flex;
+    align-items: center;
+    margin-bottom:15px;
+}
+.form-row label{
+    width:150px;
+    font-family: 'Playfair Display',serif;
+    color:#000000;
+}
+
+.input-field{
+    flex-grow:1;
+}
+
+input[type="text"], input[type="number"], input[type="email"], input[type="password"], select {
+    width: 100%;
+    border: 1px solid #D1CFC0;
+    background-color: #fff;
+    padding: 8px;
+}
+.btn-update {
+    background-color: #88C999; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+.btn-delete {
+    background-color: #F68B8B; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+}

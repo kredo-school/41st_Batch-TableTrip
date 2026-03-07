@@ -28,10 +28,10 @@ require __DIR__.'/auth.php';
 // My page
     // edit user account
 Route::middleware('auth')->group(function () {
-    Route::get('/mypage', [UserController::class, 'show']);
-    Route::get('/mypage/edit', [UserController::class, 'edit'])->name('mypage.edit');
-    Route::delete('/mypage', [UserController::class, 'destroy'])->name('mypage.destroy');
-    Route::put('/mypage', [UserController::class, 'update'])->name('mypage.update');
+    Route::get('/mypage', [UserController::class, 'show'])->name('user.show');
+    Route::get('/mypage/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/mypage', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/mypage', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
     // login  user
@@ -44,8 +44,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
 });
     // forgotten password
-Route::get('forgot-password',[ForgetController::class,'show'])->name('password.show');
-Route::post('forgot-password',[ForgetController::class,'show'])->name('password.post');
+Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
+Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
 
 
 // admin
