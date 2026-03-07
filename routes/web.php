@@ -47,6 +47,7 @@ Route::middleware('guest')->group(function () {
 Route::get('forgot-password',[ForgetController::class,'show'])->name('password.show');
 Route::post('forgot-password',[ForgetController::class,'show'])->name('password.post');
 
+
 // admin
 Route::prefix('admin')->group(function () {
 
