@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -16,25 +17,52 @@ class UserController extends Controller
     // edit user
     public function edit(){
         $user =Auth::user();
-        return view('user.edit',compact('user'));
+        return view('mypage.edit',compact('user'));
     }
 
     // update user
-    public function update(Request $request){
-        $user=Auth::user();
+   public function update(Request $request)
+    {
+        $user = Auth::user();
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'first_name'  => 'required|string|max:255',
+            'last_name'   => 'required|string|max:255',
+            'user_name'   => 'required|string|max:255|unique:users,user_name,' . $user->id,
+            'email'       => 'required|email|unique:users,email,' . $user->id,
+            'password'    => 'nullable|confirmed|min:8', 
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $user->update($request->only('name','email'));
-        return redirect ('/mypage')->with('succuess','Your profile has been updated!');
+
+        $user->first_name = $request->first_name;
+        $user->last_name  = $request->last_name;
+        $user->user_name  = $request->user_name;
+        $user->email      = $request->email;
+        $user->tel        = $request->tel;
+        $user->postal_code = $request->postal_code;
+        $user->address    = $request->address;
+        $user->country    = $request->country;
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
+        }
+
+        $user->save();
+
+        return redirect('/mypage')->with('success', 'Your profile has been updated!');
     }
 
     // delete user
     public function destroy(){
+
+    
         $user=Auth::user();
         Auth::logout(); //logout
+
         $user->delete(); //delete
     return redirect('/');//back to top
     }

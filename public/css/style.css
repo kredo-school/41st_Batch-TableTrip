@@ -42,6 +42,7 @@ h2.custom-header {
     transition: 0.3s;
 }
 
+/* register */
 .btn-register {
     background-color: #FF6F61 !important;
     border: none !important;
@@ -84,4 +85,81 @@ h2.custom-header {
 
 #profile_picture {
     display: none;
+}
+
+/* login user */
+.login-title{
+    font-family:'Playfair Display',serif;
+    font-size:2.5rem;
+    color:#000000;
+    margin-bottom: 5px;
+}
+.login-underline{
+    width:250px;
+    height:3px;
+    background-color:#d4a373;
+    margin:0 auto;
+}
+.login-card{
+    background-color:#fffdf9;
+    border:1px solid #d1cfc0;
+    padding:60px 80px;
+    width:100%;
+    max-width:700px;
+}
+
+.login-label{
+    font-family: 'Playfair Display',serif;
+    font-size: 1.25rem;
+    color:#333;
+    text-align: left;
+}
+.login-input{
+    width: 100%;
+    border:1px solid #d1cfc0;
+    background-color: #ffffff;
+    padding:10px;
+    outline: none;
+}
+
+.btn-press {
+    display: inline-block;
+    border: 2px solid #e2725b;
+    background-color: #fffdf9;
+    color: #e2725b;
+    padding: 5px 0;
+    width: 130px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.forget-text {
+    color: #e2725b;
+    font-size: 0.9rem;
+    font-family: 'Sen', sans-serif;
+    min-width: 300px; 
+    text-align: right;
+}
+.btn-login-submit:hover, .btn-press:hover {
+    opacity: 0.8;
+}
+.btn-login-submit {
+    background-color: #e2725b; 
+    color: white;             
+    border: none;             
+    padding: 12px 0;           
+    width: 160px;              
+    border-radius: 12px;       
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif; 
+    cursor: pointer;
+    transition: 0.3s;
+    display: block;            
+    margin: 0 0 20px auto;}   
+
+.btn-login-submit:hover {
+    background-color: #d1634f; 
+    transform: translateY(-1px); 
 }
