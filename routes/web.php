@@ -89,3 +89,6 @@ Route::view('/restaurant-page', 'restaurants.restaurant_page');
 Route::view('/restaurant-owner-page', 'restaurant-owners.register');
 Route::view('/restaurant-owner-login', 'restaurant-owners.login');
 Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
+Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
+Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
+
