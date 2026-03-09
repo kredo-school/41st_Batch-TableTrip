@@ -93,9 +93,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 //Product
-Route::get('/product', function () {
-    return view('product.index');
-});
+Route::get('/products', function () {
+    return view('products.index');
+})->name('products.index');
+
+Route::get('/products/{id}', function ($id) {
+    return view('products.show'); 
+})->name('products.show');
 
 // for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
