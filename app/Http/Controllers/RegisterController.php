@@ -9,7 +9,7 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
-    //illuslate register 
+    //illuslate register
     public function show(){
         return view('user.register');
     }

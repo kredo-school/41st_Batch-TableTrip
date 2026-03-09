@@ -11,9 +11,7 @@ use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\PaymentController;
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
