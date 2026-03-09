@@ -10,7 +10,7 @@
             </div>
 
             <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+                @csrf 
 
                 {{-- Profile Picture Section --}}
                 <div class="row mb-4 align-items-center">
