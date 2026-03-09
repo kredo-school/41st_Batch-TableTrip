@@ -7,7 +7,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\ForgetController;
+use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\PaymentController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -37,6 +39,13 @@ Route::middleware('auth')->group(function () {
     // login  user
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
+Route::middleware('auth')->group(function () {
+    // logout
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+    
+    // illustlate profile
+Route::get('/profile', [UserController::class, 'show'])->name('user.show');
+});
 
     // register user
 Route::middleware('guest')->group(function () {
@@ -46,6 +55,13 @@ Route::middleware('guest')->group(function () {
     // forgotten password
 Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
 Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+
+
+// payment
+Route::middleware('auth')->group(function() {
+    Route::resource('payment', PaymentController::class)
+        ->parameters(['payment' => 'card']); 
+});
 
 
 // admin

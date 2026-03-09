@@ -1,104 +1,5 @@
 <x-guest-layout>
-    {{-- Google Fonts の読み込み --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Sen:wght@400;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #f7f5f0 !important;
-            color: #000000 !important;
-            font-family: 'Sen', sans-serif;
-        }
-
-       h2.custom-header {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            color: #000000 !important; 
-            border-bottom: 2px solid #FF6F61; 
-            padding-bottom: 8px;
-            display: inline-block;
-            letter-spacing: 0.05em;
-
-        }
-
-        .custom-card {
-            background-color: #f7f5f0 !important;
-            border: 1px solid #e0ddd5 !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-        }
-
-        .form-control, .form-select {
-            background-color: transparent !important;
-            border: 1px solid #000000 !important;
-            border-radius: 0 !important;
-            padding: 10px;
-            font-family: 'Sen', sans-serif;
-        }
-
-        .btn-custom {
-            font-family: 'Sen', sans-serif;
-            border-radius: 0 !important;
-            padding: 12px 30px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: 0.3s;
-        }
-
-        .btn-register {
-            background-color: #FF6F61 !important;
-            border: none !important;
-            color: #ffffff !important;
-        }
-
-        .btn-back {
-            background-color: transparent !important;
-            border: 1px solid #000000 !important;
-            color: #000000 !important;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-custom:hover {
-            opacity: 0.7;
-        }
-        .profile-upload-label {
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    transition: transform 0.2s ease;
-}
-
-.profile-upload-label:hover {
-    transform: scale(1.05); 
-}
-
-.profile-upload-label:hover .profile-icon-overlay {
-    background: rgba(0, 0, 0, 0.1); 
-}
-
-.profile-icon-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* 実際のファイル選択ボタンは隠す */
-#profile_picture {
-    display: none;
-}
-    </style>
-
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
    <div class="container d-flex justify-content-center align-items-center vh-100 p-3">
         <div class="card custom-card p-5 shadow-sm" style="max-width: 500px; width: 100%;">
             
@@ -175,7 +76,6 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="d-flex gap-1">
-                            <input type="tel" style="width: 70px;" class="form-control text-center" placeholder="+00" readonly>
                             <input type="tel" name="tel" id="tel" class="form-control flex-grow-1" value="{{ old('tel') }}" placeholder="number" required>
                         </div>
                     </div>
@@ -206,7 +106,7 @@
                     <div class="col-sm-8">
                         <div class="d-flex flex-column gap-2">
                             <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="address">
-                            <select name="country" class="form-select text-muted" required>
+                            <select name="country" class="form-select text-muted" required >
                                 <option value="" class="text-muted">country</option>
                                 <option value="Japan" {{ old('country')=='Japan'?'selected':'' }}>Japan</option>
                                 <option value="USA" {{ old('country')=='USA'?'selected':'' }}>USA</option>
@@ -235,7 +135,7 @@
                                 <option value="Morocco" {{ old('country')=='Morocco'?'selected':'' }}>Morocco</option>
                                 <option value="Italy" {{ old('country')=='Italy'?'selected':'' }}>Italy</option>
                                 <option value="Ireland" {{ old('country')=='Ireland'?'selected':'' }}>Ireland</option>
-                                </select>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -245,7 +145,7 @@
                         <label for="password" class="form-label">Password</label>
                     </div>
                     <div class="col-sm-8">
-                        <input type="password" name="password" id="password" class="form-control" placeholder="**********" required>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="**********" required value="{{ old('password') }}">
                     </div>
                 </div>
 
@@ -265,4 +165,23 @@
             </form>
         </div>
     </div>
+    <script>
+        document.getElementById('profile_picture').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('profile_picture_preview');
+            const svg = document.getElementById('default_svg');
+            const fileNameDisplay = document.getElementById('file-name');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    svg.style.display = 'none';
+                    fileNameDisplay.textContent = file.name;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </x-guest-layout>
