@@ -9,13 +9,13 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
-    //illuslate register 
+    //illuslate register
     public function show(){
         return view('user.register');
     }
 
-    // register 
-      public function store(Request $request)
+    // register user
+          public function store(Request $request)
     {
         $validated = $request->validate([
             'first_name'  => 'required|string|max:255',
