@@ -31,7 +31,7 @@
                     </div>
                     <div class="row">
                         <div class="col text-center border-end p-2">
-                            <h4 class="mb-3">Customer Info</h4>
+                            <h5 class="mb-3">Customer Info</h5>
                             <ul>
                                 <li>Yuta Nakamura</li>
                                 <li>yuta.n@email.com</li>
@@ -39,20 +39,28 @@
                             </ul>
                         </div>
                         <div class="col text-center border-end p-2">
-                            <h4 class="mb-3">Shipping Address</h4>
+                            <h5 class="mb-3">Shipping Address</h5>
                             <p>123 Maple Street, Apt 4B
                                San Francisco, CA 94103
                                United States</p>
                         </div>
                         <div class="col text-center p-2">
-                            <h4 class="mb-3">Payment Info</h4>
-                            <p class="border-2 rounded mb-2"><i class="fa-regular fa-credit-card"></i><i class="fa-brands fa-cc-jcb"></i><span class="ps-3">*******2345</span></p>
-                            <h5>Total: $45.32</h5>
+                            <h5 class="mb-3">Payment Info</h5>
+
+                            <p class="border border-2 rounded mb-2 w-75 mx-auto py-1 px-2 d-flex justify-content-between align-items-center">
+                                <span>
+                                    <i class="fa-regular fa-credit-card me-1"></i>
+                                    <i class="fa-brands fa-cc-jcb"></i>
+                                </span>
+                                <span>*******2345</span>
+                            </p>
+
+                            <h5 class="mt-2">Total: $45.32</h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row bg-white border rounded overflow-hidden" style="font-family: 'Sen','sans-serif';">
+            <div class="row bg-white border rounded overflow-hidden p-3" style="font-family: 'Sen','sans-serif';">
 
                 {{-- Left: Order --}}
                 <div class="col-8 p-0 border-end">
@@ -118,7 +126,7 @@
 
                     <div class="p-3">
                         <div class="mb-3">
-                            <select class="form-select">
+                            <select class="form-select rounded">
                                 <option selected>Pending</option>
                                 <option>Preparing</option>
                                 <option>Shipping</option>
