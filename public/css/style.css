@@ -288,3 +288,50 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 .btn-register:hover {
     background-color: #eee;
 }
+
+/* dashboard */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.welcome-text {
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'Playfair display',serif;
+    border-bottom: 2px solid #d4a373;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+}
+
+.dashboard-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    min-height: 300px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+.dashboard-card h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* レスポンシブ対応：画面が狭くなったら1列にする */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
