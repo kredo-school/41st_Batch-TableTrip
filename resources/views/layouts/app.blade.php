@@ -89,7 +89,7 @@
                                 </ul>
                             </div>
                             @else
-                                 <form method="POST" action="#" class="m-0">
+                                 <form method="POST" action="{{ route('user.show') }}" class="m-0">
                                 @csrf
                                 <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
                                     Logout
@@ -147,6 +147,6 @@
 
         </footer>
 
-
+     @stack('scripts')
     </body>
 </html>
