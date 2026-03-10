@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/mypage', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
-    // login  user
+    // login 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::middleware('auth')->group(function () {
@@ -53,6 +53,15 @@ Route::middleware('guest')->group(function () {
     // forgotten password
 Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
 Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+
+// logout
+Route::middleware('auth')->group(function(){
+    Route::post('/logout',[UserController::class,'logout'])->name('logout');
+    Route::get('/profile',[UserController::class,'show'])->name('user.show');
+});
+
+
+
 
 
 // payment
