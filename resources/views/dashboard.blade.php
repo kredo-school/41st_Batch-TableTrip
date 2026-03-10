@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login')
+@section('title', 'Login') 
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">

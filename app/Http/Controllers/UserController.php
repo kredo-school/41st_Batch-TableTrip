@@ -55,7 +55,7 @@ class UserController extends Controller
             $user->profile_picture = $path;
         }
 
-        $user->save(); 
+        $user->save();  
 
         return redirect('/mypage')->with('success', 'Your profile has been updated!');
     }
