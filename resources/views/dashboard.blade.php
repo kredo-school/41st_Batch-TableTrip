@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Login')
+
+@section('content')
+<link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
 @section('title', 'Login') 
 
 @section('content')
@@ -45,5 +49,14 @@
         </section>
     </div>
 </div>
+
+        <section class="dashboard-card">
+            <h3><i class="fa-solid fa-bag-shopping"></i> Purchased</h3>
+            <div class="card-content">
+                </div>
+        </section>
+    </div>
+</div>
 @endsection
 
+@endsection

@@ -70,6 +70,13 @@ class UserController extends Controller
         $user->delete(); //delete
     return redirect('/');//back to top
     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'You have successfully logged out!');
 
 // log out
     public function logout(Request $request){
