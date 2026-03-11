@@ -88,15 +88,7 @@
                                     </li>
                                 </ul>
                             </div>
-<<<<<<< HEAD
-                        @else
-                          <form method="POST" action="#" class="m-0">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
-                                Logout
-                            </button>
-                          </form>
-=======
+
                             @else
                                  <form method="POST" action="{{ route('user.show') }}" class="m-0">
                                 @csrf
@@ -104,7 +96,7 @@
                                     Logout
                                 </button>
                             </form>
->>>>>>> main
+
                         
                           @endif
                         @endauth
