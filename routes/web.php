@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/mypage', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
-    // login  user
+    // login 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::middleware('auth')->group(function () {
@@ -53,6 +53,15 @@ Route::middleware('guest')->group(function () {
     // forgotten password
 Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
 Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+
+// logout
+Route::middleware('auth')->group(function(){
+    Route::post('/logout',[UserController::class,'logout'])->name('logout');
+    Route::get('/profile',[UserController::class,'show'])->name('user.show');
+});
+
+
+
 
 
 // payment
@@ -93,9 +102,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 //Product
-Route::get('/product', function () {
-    return view('product.index');
-});
+Route::get('/products', function () {
+    return view('products.index');
+})->name('products.index');
+
+Route::get('/products/{id}', function ($id) {
+    return view('products.show'); 
+})->name('products.show');
 
 // for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');

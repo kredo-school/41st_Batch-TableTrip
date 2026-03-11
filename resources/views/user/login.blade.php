@@ -43,7 +43,7 @@
                     {{-- forget password--}}
                         <div class="forget-password-container mt-4 d-flex align-items-center justify-content-center gap-3">
                             <span class="forget-text">Forgotten Password?</span>
-                            <a href="{{ route('password.show') }}" class="btn-press">Press</a>
+                            <a href="{{ route('login') }}" class="btn-press">Press</a>
                         </div>
                     {{-- connect to register --}}
                         <div class="register-link-container d-flex align-items-center justify-content-center gap-3">

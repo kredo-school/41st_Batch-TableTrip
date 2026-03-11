@@ -55,7 +55,7 @@ class UserController extends Controller
             $user->profile_picture = $path;
         }
 
-        $user->save();
+        $user->save();  
 
         return redirect('/mypage')->with('success', 'Your profile has been updated!');
     }
@@ -70,4 +70,13 @@ class UserController extends Controller
         $user->delete(); //delete
     return redirect('/');//back to top
     }
+
+// log out
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login')->with('success','Your are successfull log out!');
+    }
+
 }
