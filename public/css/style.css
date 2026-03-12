@@ -42,6 +42,7 @@ h2.custom-header {
     transition: 0.3s;
 }
 
+/* register */
 .btn-register {
     background-color: #FF6F61 !important;
     border: none !important;
@@ -84,4 +85,256 @@ h2.custom-header {
 
 #profile_picture {
     display: none;
+}
+
+/* login user */
+.login-title{
+    font-family:'Playfair Display',serif;
+    font-size:2.5rem;
+    color:#000000;
+    margin-bottom: 5px;
+}
+.login-underline{
+    width:250px;
+    height:3px;
+    background-color:#d4a373;
+    margin:0 auto;
+}
+.login-card{
+    background-color:#fffdf9;
+    border:1px solid #d1cfc0;
+    padding:60px 80px;
+    width:100%;
+    max-width:700px;
+}
+
+.login-label{
+    font-family: 'Playfair Display',serif;
+    font-size: 1.25rem;
+    color:#333;
+    text-align: left;
+}
+.login-input{
+    width: 100%;
+    border:1px solid #d1cfc0;
+    background-color: #ffffff;
+    padding:10px;
+    outline: none;
+}
+
+.btn-press {
+    display: inline-block;
+    border: 2px solid #e2725b;
+    background-color: #fffdf9;
+    color: #e2725b;
+    padding: 5px 0;
+    width: 130px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.forget-text {
+    color: #e2725b;
+    font-size: 0.9rem;
+    font-family: 'Sen', sans-serif;
+    min-width: 300px; 
+    text-align: right;
+}
+.btn-login-submit:hover, .btn-press:hover {
+    opacity: 0.8;
+}
+.btn-login-submit {
+    background-color: #e2725b; 
+    color: white;             
+    border: none;             
+    padding: 12px 0;           
+    width: 160px;              
+    border-radius: 12px;       
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif; 
+    cursor: pointer;
+    transition: 0.3s;
+    display: block;            
+    margin: 0 0 20px auto;}   
+
+.btn-login-submit:hover {
+    background-color: #d1634f; 
+    transform: translateY(-1px); 
+}
+
+/* edit user */
+.edit-card{
+    background-color: #f7f5f0;
+    border: 1px solid #D1CFC0;
+    padding: 40px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-row{
+    display:flex;
+    align-items: center;
+    margin-bottom:15px;
+}
+.form-row label{
+    width:150px;
+    font-family: 'Playfair Display',serif;
+    color:#000000;
+}
+
+.input-field{
+    flex-grow:1;
+}
+
+input[type="text"], input[type="number"], input[type="email"], input[type="password"], select {
+    width: 100%;
+    border: 1px solid #D1CFC0;
+    background-color: #fff;
+    padding: 8px;
+}
+.btn-update {
+    background-color: #88C999; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+.btn-delete {
+    background-color: #F68B8B; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+/* edit payment */
+.payment-body{
+    background-color:#f7f5f0 !important;
+    padding:50px 20px;
+    font-family:'Playfair Display,serif';
+}
+
+.payment-container{
+    max-width: 800px;
+    margin:0 auto;
+}
+
+.setting-title{
+    text-align: center;
+    border-bottom: 2px;
+    padding-bottom:10px;
+    margin-bottom: 30px;
+    font-size:24px;
+}
+
+.payment-section{
+    background-color: #f1f8f1;
+   border: 1px solid #ccc;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.section-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.section-title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* input form style */
+.payment-form table{
+    width:100%;
+}
+
+.payment-form td{
+    padding: 8px 5px;
+}
+
+.payment-form input{
+    width:100%;
+    padding:8px;
+    border: 1px solid #ccc;
+    box-sizing:border-box;
+}
+
+.input-short{
+    width:80px !important;
+}
+.btn-icon {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn-register {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 50px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-register:hover {
+    background-color: #eee;
+}
+
+/* dashboard */
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f4f0; 
+}
+
+.welcome-text {
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'Playfair display',serif;
+    font-family: 'Serif', Georgia;
+    border-bottom: 2px solid #d4a373;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+}
+
+.dashboard-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    min-height: 300px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+.dashboard-card h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* レスポンシブ対応：画面が狭くなったら1列にする */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
 }

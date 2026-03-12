@@ -7,12 +7,11 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\PaymentController;
 
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -24,27 +23,55 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';  
 
-
-// edit user information
+// My page
+    // edit user account
 Route::middleware('auth')->group(function () {
-
-    Route::get('/mypage', [UserController::class, 'show']);
-    Route::get('/mypage/edit', [UserController::class, 'edit'])->name('mypage.edit');
-    Route::delete('/mypage', [UserController::class, 'destroy'])->name('mypage.destroy');
-    Route::put('/mypage', [UserController::class, 'update'])->name('mypage.update');
+    Route::get('/mypage', [UserController::class, 'show'])->name('user.show');
+    Route::get('/mypage/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/mypage', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/mypage', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
-// login  user
+    // login 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
+Route::middleware('auth')->group(function () {
+    // logout
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+    
+    // illustlate profile
+Route::get('/profile', [UserController::class, 'show'])->name('user.show');
+});
 
-// register user
+    // register user
 Route::middleware('guest')->group(function () {
     Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
     Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
 });
+    // forgotten password
+Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
+Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+
+// logout
+Route::middleware('auth')->group(function(){
+    Route::post('/logout',[UserController::class,'logout'])->name('logout');
+    Route::get('/profile',[UserController::class,'show'])->name('user.show');
+});
+
+
+
+
+
+// payment
+Route::middleware('auth')->group(function() {
+    Route::resource('payment', PaymentController::class)
+        ->parameters(['payment' => 'card']); 
+});
+
+
+// admin
 Route::prefix('admin')->group(function () {
 
     Route::get('/login',
@@ -83,6 +110,16 @@ Route::get('/products/{id}', function ($id) {
     return view('products.show'); 
 })->name('products.show');
 
-// for checking restaurant page 
+// for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
-    
+
+Route::view('/restaurant-owner-page', 'restaurant-owners.register');
+Route::view('/restaurant-owner-login', 'restaurant-owners.login');
+Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
+Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
+Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
+Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
+Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
+Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
+Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
+
