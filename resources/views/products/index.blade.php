@@ -298,5 +298,4 @@
         }
     });
 </script>
-
 @endsection
