@@ -338,3 +338,9 @@ h6{
     border-radius: 50%;
     background-color: #de7456;
 }
+
+/* Restaurant-Owner Orders */
+.orders-thead{
+  background-color:rgb(231, 207, 192);
+
+}

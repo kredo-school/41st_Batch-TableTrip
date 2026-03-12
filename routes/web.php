@@ -118,4 +118,8 @@ Route::view('/restaurant-owner-login', 'restaurant-owners.login');
 Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
 Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
 Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
+Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
+Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
+Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
+Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
 

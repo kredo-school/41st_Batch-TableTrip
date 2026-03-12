@@ -88,6 +88,7 @@
                                     </li>
                                 </ul>
                             </div>
+
                             @else
                                  <form method="POST" action="{{ route('user.show') }}" class="m-0">
                                 @csrf
@@ -95,6 +96,7 @@
                                     Logout
                                 </button>
                             </form>
+
                         
                           @endif
                         @endauth
