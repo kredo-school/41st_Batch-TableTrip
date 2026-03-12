@@ -122,4 +122,6 @@ Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
 Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
 Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
 Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
+Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
+Route::view('/product', 'product.index');
 

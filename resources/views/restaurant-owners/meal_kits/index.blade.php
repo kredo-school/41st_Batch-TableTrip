@@ -88,8 +88,14 @@
                                             <li><a class="dropdown-item" href="#">Details</a></li>
                                             <li><a class="dropdown-item" href="#">Edit</a></li>
                                             <li><a class="dropdown-item" href="#">Hide</a></li>
-                                            <li><a class="dropdown-item text-danger" href="#">Delete</a></li>
-                                        </ul>
+                                            <li>
+                                                <a type="button" class="dropdown-item text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deleteMealKitModal">
+                                                Delete
+                                                </a>
+                                            </li>                                       
+                                         </ul>
                                     </div>
                                 </td>
                             </tr>
@@ -225,5 +231,6 @@
             </div>
         </div>
     </div>
+    @include('restaurant-owners.meal_kits.delete-modal')
 </div>
 @endsection
