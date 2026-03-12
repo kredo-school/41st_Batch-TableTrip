@@ -140,7 +140,10 @@
                                 Update Status
                             </button>
 
-                            <button class="btn btn-outline-orange">
+                            <button 
+                                class="btn btn-outline-orange"
+                                data-bs-toggle="modal"
+                                data-bs-target="#cancelOrderModal">
                                 Cancel Order
                             </button>
                         </div>
@@ -152,4 +155,6 @@
         </div>
     </div>
 </div>
+
+@include('restaurant-owners.orders.modals.cancel')
 @endsection
