@@ -123,5 +123,11 @@ Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-d
 Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
 Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
 Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
-Route::view('/product', 'product.index');
+Route::view('/restaurant-owner-page-info', 'restaurant-owners.page-management.basic-info');
+Route::view('/restaurant-owner-page-image', 'restaurant-owners.page-management.image');
+Route::view('/restaurant-owner-page-menu', 'restaurant-owners.page-management.menu');
+Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management.preview');
+Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
+Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
+Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
 
