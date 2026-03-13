@@ -1,39 +1,58 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\DashboardController; // 一般ユーザー用
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReservationController;
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes (Guest)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')->group(function () {
+    // Login
+    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
 
+    // Register
+    Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
+    Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Password Recovery
+    Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
+    Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
 });
 
-require __DIR__.'/auth.php';  
+/*
+|--------------------------------------------------------------------------
+| Authenticated User Routes (Auth)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified'])->group(function () {
 
-// My page
-    // edit user account
-Route::middleware('auth')->group(function () {
-    Route::get('/mypage', [UserController::class, 'show'])->name('user.show');
-    Route::get('/mypage/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/mypage', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/mypage', [UserController::class, 'destroy'])->name('user.destroy');
-});
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // --- 2. My Page & Profile ---
+    Route::prefix('mypage')->name('user.')->group(function () {
+        Route::get('/', [UserController::class, 'show'])->name('show');
+        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('/', [UserController::class, 'update'])->name('update');
+        Route::delete('/', [UserController::class, 'destroy'])->name('destroy');
+    });
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+    // --- 3. Reservation  ---
+   Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
+    Route::get('/', [ReservationController::class, 'index'])->name('index');
     // login 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -41,19 +60,11 @@ Route::middleware('auth')->group(function () {
     // logout
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     
-    // illustlate profile
-Route::get('/profile', [UserController::class, 'show'])->name('user.show');
-});
+    Route::post('/store', [ReservationController::class, 'store'])->name('store');
 
-    // register user
-Route::middleware('guest')->group(function () {
-    Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
-    Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
-});
-    // forgotten password
-Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
-Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+    Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
 
+    Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
 // logout
 Route::middleware('auth')->group(function(){
     Route::post('/logout',[UserController::class,'logout'])->name('logout');
@@ -64,12 +75,18 @@ Route::middleware('auth')->group(function(){
 
 
 
-// payment
-Route::middleware('auth')->group(function() {
-    Route::resource('payment', PaymentController::class)
-        ->parameters(['payment' => 'card']); 
+    Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
 });
+    // --- 4. Cart ---
+    Route::prefix('cart')->name('cart.')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index'); // route('cart.index')
+        Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('destroy');
+    });
+    Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
 
+    // --- 5. Payment ---
+    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
+});
 
 // admin
 Route::prefix('admin')->group(function () {
@@ -97,9 +114,9 @@ Route::prefix('admin')
 
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 //Product
 Route::get('/products', function () {
