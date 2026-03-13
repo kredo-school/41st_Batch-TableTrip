@@ -7,11 +7,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\ForgetController;
+use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\PaymentController;
-
-
-
+use App\Http\Controllers\RestaurantController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -131,3 +130,12 @@ Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
 Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
 Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
 
+//Restaurant Page
+Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');
+
+//Restaurant Owner
+Route::prefix('owner')->name('owner.')->group(function(){
+    Route::get('/register',[RestaurantAuthController::class,'create'])->name('register');
+    Route::post('/register',[RestaurantAuthController::class,'store'])->name('register.store');
+
+});

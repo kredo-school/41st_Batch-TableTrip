@@ -17,7 +17,7 @@
                 {{-- Restaurant Name --}}
                 <div class="mb-3">
                     <label for="restaurant_name" class="form-label">Restaurant Name</label>
-                    <input type="text" class="form-control" id="restaurant_name" name="restaurant_name"
+                    <input type="text" class="form-control form-transparent" id="restaurant_name" name="restaurant_name"
                         value="Restaurant Sato">
                 </div>
 
@@ -25,13 +25,13 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email"
+                        <input type="email" class="form-control form-transparent" id="email" name="email"
                             value="restaurant.sato@gmail.com">
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="phone" name="phone"
+                        <input type="text" class="form-control form-transparent" id="phone" name="phone"
                             value="090-1234-5678">
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="prefecture" class="form-label">Prefecture</label>
-                        <select class="form-select rounded" id="prefecture" name="prefecture">
+                        <select class="form-select rounded form-transparent" id="prefecture" name="prefecture">
                             <option>Hokkaido</option>
                             <option selected>Tokyo</option>
                             <option>Osaka</option>
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="city" class="form-label rounded">City</label>
+                        <label for="city" class="form-label rounded form-transparent">City</label>
                         <select class="form-select rounded" id="city" name="city">
                             <option>Shibuya</option>
                             <option selected>Chiyoda</option>
@@ -60,7 +60,7 @@
 
                     <div class="col-md-4 mb-3">
                         <label for="address_line" class="form-label">Address Line</label>
-                        <input type="text" class="form-control" id="address_line" name="address_line">
+                        <input type="text" class="form-control form-transparent" id="address_line" name="address_line">
                     </div>
                 </div>
 
@@ -68,13 +68,13 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="opening_hours" class="form-label">Opening Hours</label>
-                        <input type="text" class="form-control" id="opening_hours" name="opening_hours"
+                        <input type="text" class="form-control form-transparent" id="opening_hours" name="opening_hours"
                             placeholder="11:00 AM - 10:00 PM">
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="chef" class="form-label">Chef</label>
-                        <input type="text" class="form-control" id="chef" name="chef"
+                        <input type="text" class="form-control form-transparent" id="chef" name="chef"
                             placeholder="Optional">
                     </div>
                 </div>
@@ -82,14 +82,14 @@
                 {{-- Description --}}
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="6"
+                    <textarea class="form-control form-transparent" id="description" name="description" rows="6"
                         placeholder="ex) Experience authentic japanese ......"></textarea>
                 </div>
 
                 {{-- Category --}}
                 <div class="mb-4">
                     <label for="category" class="form-label">Category</label>
-                    <select class="form-select rounded" id="category" name="category">
+                    <select class="form-select rounded form-transparent" id="category" name="category">
                         <option>Korean</option>
                         <option selected>Japanese</option>
                         <option>Chinese</option>

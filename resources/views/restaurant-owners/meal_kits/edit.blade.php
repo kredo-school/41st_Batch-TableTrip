@@ -23,20 +23,20 @@
 
                             <div class="mb-4">
                                 <label for="meal_kit_name" class="form-label">Meal Kit Name</label>
-                                <input type="text" id="meal_kit_name" name="meal_kit_name" class="form-control" placeholder="Enter meal kit name">
+                                <input type="text" id="meal_kit_name" name="meal_kit_name" class="form-control form-transparent" placeholder="Enter meal kit name">
                             </div>
 
                             <div class="mb-4">
                                 <label for="price" class="form-label">Price</label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" id="price" name="price" class="form-control">
+                                    <input type="text" id="price" name="price" class="form-control form-transparent">
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <label for="serving" class="form-label">Serving</label>
-                                <select id="serving" name="serving" class="form-select">
+                                <select id="serving" name="serving" class="form-select form-transparent">
                                     <option selected>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -46,7 +46,7 @@
 
                             <div class="mb-4">
                                 <label for="stock_quantity" class="form-label">Stock Quantity</label>
-                                <select id="stock_quantity" name="stock_quantity" class="form-select">
+                                <select id="stock_quantity" name="stock_quantity" class="form-select form-transparent">
                                     <option selected>1</option>
                                     <option>2</option>
                                     <option>5</option>
@@ -56,7 +56,7 @@
 
                             <div class="mb-4">
                                 <label for="category" class="form-label">Category</label>
-                                <select id="category" name="category" class="form-select">
+                                <select id="category" name="category" class="form-select form-transparent">
                                     <option selected>Select category</option>
                                     <option>Korean</option>
                                     <option>Japanese</option>
@@ -66,7 +66,7 @@
 
                             <div class="mb-5">
                                 <label for="difficulty_level" class="form-label">Difficulty Level</label>
-                                <select id="difficulty_level" name="difficulty_level" class="form-select">
+                                <select id="difficulty_level" name="difficulty_level" class="form-select form-transparent">
                                     <option selected>Easy</option>
                                     <option>Medium</option>
                                     <option>Hard</option>
@@ -90,7 +90,7 @@
 
                             <div class="mb-4">
                                 <label for="ingredients" class="form-label">Ingredients</label>
-                                <textarea id="ingredients" name="ingredients" class="form-control mb-5" rows="4"
+                                <textarea id="ingredients" name="ingredients" class="form-control mb-5 form-transparent" rows="4"
                                     placeholder="Enter ingredients
                                                 (e.g
                                                 Chicken,Poteto,Onion,Soy ...">
@@ -103,15 +103,15 @@
                                     <div class="col-6">
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" id="wheat" name="allergens[]" value="Wheat">
-                                            <label class="form-check-label" for="wheat">Wheat</label>
+                                            <label class="form-check-label " for="wheat">Wheat</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" id="milk" name="allergens[]" value="Milk">
-                                            <label class="form-check-label" for="milk">Milk</label>
+                                            <label class="form-check-label " for="milk">Milk</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" id="shirimp" name="allergens[]" value="Shirimp">
-                                            <label class="form-check-label" for="shirimp">Shirimp</label>
+                                            <label class="form-check-label " for="shirimp">Shirimp</label>
                                         </div>
                                     </div>
 
@@ -135,13 +135,13 @@
                                     <div class="form-check mb-0">
                                         <input class="form-check-input" type="checkbox" id="other_allergen">
                                     </div>
-                                    <input type="text" class="form-control" name="other_allergen" placeholder="Other">
+                                    <input type="text" class="form-control form-transparent" name="other_allergen" placeholder="Other">
                                 </div>
                             </div>
 
                             <div class="mb-5">
                                 <label for="expiration_description" class="form-label">Expiratioin Description</label>
-                                <textarea id="expiration_description" name="expiration_description" class="form-control" rows="5"
+                                <textarea id="expiration_description" name="expiration_description" class="form-control form-transparent" rows="5"
                                     placeholder="Arrives within 3days after shipping."></textarea>
                             </div>
 
