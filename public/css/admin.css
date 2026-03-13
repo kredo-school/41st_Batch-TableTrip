@@ -33,7 +33,7 @@ body {
     padding: 10px;
 }
 
-.font-control:focus {
+.form-control:focus {
     border-color: #243340;
     box-shadow: none;
 }
@@ -49,4 +49,231 @@ body {
 
 .btn-admin:hover {
     background-color: #f2f2f2;
+}
+
+/* Admin Sidebar */
+
+:root{
+--sidebar-width:274px;
+}
+
+main{
+margin-left:var(--sidebar-width);
+}
+
+.sidebar{
+top:70px;
+height:calc(100vh - 70px);
+width:var(--sidebar-width);
+background-color:#F7F5F0 !important;
+padding-top:50px;
+position:fixed;
+left:0;
+}
+
+/* Admin Menu items */
+.menu-title{
+font-size:14px;
+font-weight:500;
+display:block;
+width:fit-content;
+padding:8px 14px;
+margin:4px 10px;
+color:#333;
+text-decoration:none;
+border-radius:0px;
+transition:all 0.2s ease;
+background:transparent;
+font-family:'Playfair Display', serif;
+cursor:pointer;
+}
+
+.sidebar a{
+display:block;
+width:fit-content;
+padding:10px 16px;
+margin:4px 10px;
+color:#333;
+text-decoration:none;
+border-radius:0;
+transition:all 0.2s ease;
+font-family:'Playfair Display', serif;
+font-size:14px;
+letter-spacing:0.5px;
+font-weight:500;
+cursor:pointer;
+}
+
+/* Admin Hover effect */
+
+.sidebar a:hover,
+.menu-title:hover{
+background:rgba(184,217,208,0.43);
+box-shadow:0px 0px 12px rgba(0,0,0,0.25);
+}
+
+/* Admin Active (クリックした状態) */
+
+.menu-item.active .menu-title{
+background:rgba(184,217,208,0.43);
+box-shadow:0px 0px 12px rgba(0,0,0,0.25);
+}
+
+/* Admin Submenu */
+.submenu{
+display:none;
+padding-left:15px;
+}
+
+/* Admin Open submenu */
+
+.menu-item.active .submenu{
+display:block;
+}
+
+.sidebar a.active{
+background:rgba(184,217,208,0.43);
+box-shadow:0px 0px 12px rgba(0,0,0,0.25);
+}
+
+.submenu a{
+padding-left:30px;
+font-size:13px;
+}
+
+/* Admin Dashboard*/
+.dashboard-title{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    line-height:1.4;
+    margin:0;
+    padding-top:8px;
+    position:relative;
+    z-index:1;
+    
+    border-bottom:3px solid rgba(184,217,208,0.43);
+    display:inline-block;
+    padding-bottom:6px;
+}
+
+.dashboard-link{
+    text-decoration:none;
+    color:inherit;
+    display:block;
+    height:100%;
+    width:100%;
+}
+
+.dashboard-card{
+    border-radius:0;
+    font-family: 'Playfair Display', serif;
+    min-height:170px;
+}
+
+.dashboard-card .card-body{
+    height:100%;    
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-;
+}
+
+.card-sub{
+    font-size:13px;
+    white-space:normal;
+}
+
+.dashboard-card-small{
+    border:none;
+    border-radius:0px;
+    box-shadow:0 3px 8px rgba(0,0,0,0.05);
+    transition:all 0.2s ease, box-shadow 0.2s ease;
+    height:100%;
+    width:100%;
+    font-family: 'Playfair Display', serif;
+}
+
+.dashboard-card-small .card-body{
+    padding:16px;
+    min-height:100px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.dashboard-card-small .card-number{
+    font-size:24px;
+}
+
+.dashboard-card-small:hover{
+    transform:translateY(-4px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);;
+
+}
+
+.card-label{
+    font-size:13px;
+    color:#777;
+    margin-bottom:6px;
+    min-height:32px;
+}
+
+.card-number{
+    font-size:28px;
+    font-weight:700;
+    margin:0;
+    line-height:1;
+}
+
+.dashboard-number{
+    color:#B8D9D0;
+}
+
+.reported-number{
+    color:#dc3545;
+}
+
+.card{
+    border:none;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    font-family:'Playfair Display', serif;
+}
+
+main{
+    overflow:visible;
+}
+
+.recent-orders{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.recent-order-item{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+font-family:'Playfair Display', serif;
+font-size:14px;
+border-bottom:1px solid #eee;
+}
+
+.order-id{
+font-weight:600;
+}
+
+.order-price{
+color:#555;
+}
+
+.order-time{
+color:#999;
+font-size:13px;
+}
+
+header{
+font-family:'Playfair Display', serif;
+}
+
+header input{
+font-family:'Playfair Display', serif;
 }
