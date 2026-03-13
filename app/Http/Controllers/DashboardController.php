@@ -10,7 +10,7 @@ use App\Models\Reservation;
 class DashboardController extends Controller
 
 {
-  // DashboardController.php
+  // DashboardController.php 
 
 public function index() {
     $user = Auth::user();

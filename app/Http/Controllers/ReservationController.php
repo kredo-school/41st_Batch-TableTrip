@@ -15,7 +15,6 @@ class ReservationController extends Controller
             ->with('restaurant')
             ->orderBy('reservation_date','asc')
             ->get();
-
         return view ('user.reservations.index',compact('reservations'));
     }
 }
