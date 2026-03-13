@@ -3,8 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 
 class ReservationController extends Controller
 {
     //
+=======
+use Illuminate\Support\Facades\Auth;
+use App\Models\Reservation;
+
+class ReservationController extends Controller
+{
+    public function index(){
+        $user=Auth::user();
+
+        $reservations=$user->reservations()
+            ->with('restaurant')
+            ->orderBy('reservation_date','asc')
+            ->get();
+        return view ('user.reservations.index',compact('reservations'));
+    }
+>>>>>>> main
 }

@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -37,3 +38,13 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 }
+=======
+namespace App\Models; 
+
+use Illuminate\Database\Eloquent\Model;
+
+class Reservation extends Model
+{
+    // ...
+}
+>>>>>>> main
