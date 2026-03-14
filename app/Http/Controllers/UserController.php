@@ -23,7 +23,8 @@ class UserController extends Controller
     // update user
    public function update(Request $request)
     {
-        $user = Auth::user();
+        // ensure we have an Eloquent User model (so save() is available)
+        $user = \App\Models\User::findOrFail(Auth::id());
 
         $request->validate([
             'first_name'      => 'required|string|max:255',
@@ -61,16 +62,21 @@ class UserController extends Controller
     }
 
     // delete user
-    public function destroy(){
+    public function destroy()
+    {
 
-    
-        $user=Auth::user();
-        Auth::logout(); //logout
+        // retrieve the Eloquent User model instance to ensure delete() is available
+        $user = \App\Models\User::find(Auth::id());
+        if ($user) {
+            Auth::logout(); // logout before deleting the record
+            $user->delete(); // delete user record
+            return redirect('/')->with('success', 'Your account has been deleted.');
+        }
 
-        $user->delete(); //delete
-    return redirect('/');//back to top
+        // if no user found, ensure logout and redirect
+        Auth::logout();
+        return redirect('/')->with('error', 'User not found.');
     }
-    
     public function logout(Request $request)
     {
         Auth::logout();
@@ -79,13 +85,5 @@ class UserController extends Controller
 
         return redirect('/login')->with('success', 'You have successfully logged out!');
     }
-
-// log out
-    // public function logout(Request $request){
-    //     Auth::logout();
-    //     $request->session()->invalidate();
-    //     $request->session()->regenerateToken();
-    //     return redirect('/login')->with('success','Your are successfully log out!');
-    // }
 
 }
