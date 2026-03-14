@@ -110,6 +110,18 @@ Route::get('/products/{id}', function ($id) {
     return view('products.show'); 
 })->name('products.show');
 
+Route::get('/cart', function () {
+    return view('products.cart');
+})->name('cart.index');
+
+Route::get('/cart/confirm', function () {
+    return view('products.confirm');
+})->name('cart.confirm');
+
+Route::get('/cart/thanks', function () {
+    return view('products.thanks');
+})->name('cart.thanks');
+
 // for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
 

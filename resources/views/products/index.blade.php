@@ -3,7 +3,20 @@
 @vite(['resources/css/product-list.css'])
 
 <div class="product-page" style="background-color: #F9F7F2; min-height: 100vh;">
-    <div class="container py-5">
+    
+
+        {{-- 右上の浮遊カートボタン --}}
+        <div class="floating-cart">
+            <a href="{{ route('cart.index') }}" class="cart-link">
+                <div class="cart-wrapper">
+                    <i class="bi bi-cart-fill fs-2"></i>
+                    <span class="cart-badge">1</span> {{-- 商品数を表示するバッジ --}}
+                </div>
+                <p class="cart-text">Items</p>
+            </a>
+        </div>
+
+        <div class="container py-5">
         {{-- タイトル部分 --}}
         <div class="text-center mb-5">
             <h2 class="display-6 fw-bold" style="color: #4A4A4A; text-decoration: underline orange;">Product list</h2>
@@ -20,7 +33,7 @@
             </div>
             
             {{-- 右側：Restaurants --}}
-            <div class="col-6 border py-3 bg-white text-muted" style="z-index: 1020;">
+            <div class="col-6 border py-3 bg-white" style="z-index: 1020;">
                 Restaurants
             </div>
 
