@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AdminOrdersController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,4 +58,8 @@ Route::get('/product', function () {
 
 // for checking restaurant page 
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
-    
+
+// Admin Orders Table //
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
+});
