@@ -1,10 +1,11 @@
 <?php
 
-<<<<<<< HEAD
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Restaurant;
 
 class Reservation extends Model
 {
@@ -38,13 +39,3 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 }
-=======
-namespace App\Models; 
-
-use Illuminate\Database\Eloquent\Model;
-
-class Reservation extends Model
-{
-    // ...
-}
->>>>>>> main

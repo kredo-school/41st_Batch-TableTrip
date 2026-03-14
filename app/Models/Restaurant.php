@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Reservation;
 
 class Restaurant extends Model
 {
@@ -38,10 +38,4 @@ class Restaurant extends Model
     {
         return $this->belongsTo(Category::class);
     }
-=======
-
-class Restaurant extends Model
-{
-    //
->>>>>>> main
 }
