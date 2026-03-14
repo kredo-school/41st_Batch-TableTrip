@@ -10,7 +10,7 @@
         <div class="col-12 col-lg-9">
             <div class="mx-auto" style="max-width: 820px;">
                 <h1 class="text-center mb-5" style="text-decoration: underline; text-underline-offset: 10px; text-decoration-color: #D96B52;">
-                    Add Meal Kit
+                    Edit Meal Kit
                 </h1>
 
                 <form action="" method="POST" enctype="multipart/form-data">
@@ -103,15 +103,15 @@
                                     <div class="col-6">
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" id="wheat" name="allergens[]" value="Wheat">
-                                            <label class="form-check-label" for="wheat">Wheat</label>
+                                            <label class="form-check-label " for="wheat">Wheat</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" id="milk" name="allergens[]" value="Milk">
-                                            <label class="form-check-label" for="milk">Milk</label>
+                                            <label class="form-check-label " for="milk">Milk</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" id="shirimp" name="allergens[]" value="Shirimp">
-                                            <label class="form-check-label" for="shirimp">Shirimp</label>
+                                            <label class="form-check-label " for="shirimp">Shirimp</label>
                                         </div>
                                     </div>
 
@@ -158,8 +158,8 @@
                     </div>
 
                     <div class="d-flex justify-content-center gap-3 mt-5">
-                        <a href="#" class="btn btn-outline-orange px-5">Cancel</a>
-                        <button type="submit" class="btn btn-orange px-5">Save</button>
+                        <a href="#" class="btn btn-outline-navy px-5">Cancel</a>
+                        <button type="submit" class="btn btn-navy px-5">Save</button>
                     </div>
                 </form>
             </div>
