@@ -12,6 +12,8 @@ use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\Favorite_KitsController;
+use App\Http\Controllers\Favorite_RestaurantsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-    // --- 3. Reservation  ---
+    // ---  Reservation  ---
    Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
     Route::get('/', [ReservationController::class, 'index'])->name('index');
     
@@ -62,16 +64,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
 });
-    // --- 4. Cart ---
+    // ---  Cart ---
     Route::prefix('cart')->name('cart.')->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('index'); // route('cart.index')
         Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('destroy');
     });
     Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
+    });
 
-    // --- 5. Payment ---
+
+   // favorite zone
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/favorite/kits', [Favorite_KitsController::class, 'index'])->name('favorite_kits');
+    Route::get('/favorite/restaurant', [Favorite_RestaurantsController::class, 'index'])->name('favorite_restaurants');
+}); 
+    
+    // --- Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-});
 
 // admin
 Route::prefix('admin')->group(function () {
@@ -99,14 +108,12 @@ Route::prefix('admin')
 
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+
 
 //Product
-Route::get('/product', function () {
-    return view('product.index');
-});
+// Route::get('/product', function () {
+//     return view('product.index');
+// });
 
 // for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
