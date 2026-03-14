@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController; // 一般ユーザー用
 // use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Models\User;
 
 //Restaurant
@@ -18,7 +19,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
 
 //Restaurant Owner
-use  App\Http\Controllers\Owner\RestaurantAuthController;
+use App\Http\Controllers\Owner\RestaurantAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -142,11 +143,19 @@ Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
 Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');
 
 //Restaurant Owner
-Route::prefix('owner')->name('owner.')->group(function(){
-    Route::get('/register',[RestaurantAuthController::class,'create'])->name('register');
-    Route::post('/register',[RestaurantAuthController::class,'store'])->name('register.store');
-    Route::get('/login',[RestaurantAuthController::class,'showLoginForm'])->name('login');
-    Route::post('/login',[RestaurantAuthController::class,'login'])->name('login.submit');
-    Route::post('/logout',[RestaurantAuthController::class,'logout'])->name('logout');
+Route::prefix('owner')->name('owner.')->group(function () {
+
+    Route::middleware('guest:restaurant')->group(function () {
+        Route::get('/register', [RestaurantAuthController::class, 'create'])->name('register');
+        Route::post('/register', [RestaurantAuthController::class, 'store'])->name('register.store');
+
+        Route::get('/login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [RestaurantAuthController::class, 'login'])->name('login.submit');
+    });
+
+    Route::middleware('auth:restaurant')->group(function () {
+        Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
+        Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
+    });
 
 });

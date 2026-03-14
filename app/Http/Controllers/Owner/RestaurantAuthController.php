@@ -66,7 +66,7 @@ class RestaurantAuthController extends Controller
         if(Auth::guard('restaurant')->attempt($credentials)){
             $request->session()->regenerate();
 
-            return redirect()->route('owner.register'); //route作成したら、owner.dashboard　にする
+            return redirect()->route('owner.dashboard'); 
         }
 
         return back()->withErrors([
