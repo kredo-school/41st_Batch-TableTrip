@@ -36,70 +36,33 @@
                         <img src="{{ asset('images/logo.png') }}" alt="Logo" width="44" height="44" class="rounded-circle border">
                         <span class="fw-semibold text-dark">Table<span style="color: #d96b52;">Trip</span></span>
                     </a>
-
-                    <!-- Center: Search (like your image) -->
-                    <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="/restaurants" method="GET">
-                        <input type="text" name="q" placeholder="search" aria-label="search" class="form-control rounded-pill" style="max-width:520px; height:38px;">
-                        <button type="submit" class="btn p-0 ms-3" aria-label="search button">
-                            <i class="bi bi-search fs-5 text-dark"></i>
-                        </button>
-                    </form>
                     
-
                     <!-- Right: Icons + Dropdown -->
 
                     <div class="d-flex align-items-center gap-3">
                       @guest
-                          <a href="{{ route('register.show') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
+                          <a href="{{ route('owner.register') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
                              Register
                           </a>
 
-                            <a href="{{ route('login') }}" class="btn btn-navy px-3" style="background-color:#243340;">
+                            <a href="{{ route('owner.login') }}" class="btn btn-navy px-3" style="background-color:#243340;">
                                 Login
                             </a>
                       @endguest
 
                       @auth
-                       @if (Auth::user()->is_admin )  
+                      
                         {{-- Admin --}}
+                           <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
+                             <i class="bi bi-bell"></i>
+                            </a>
+
                              <form method="POST" action="{{ route('user.show') }}" class="m-0">
                                  @csrf
                                     <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
                                         Logout
                                     </button>
                               </form>
-                        @else
-                        {{-- Normal User --}}
-                            <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
-                            <i class="bi bi-bell"></i>
-                            </a>
-
-                            <a href="/cart" class="text-dark fs-4" aria-label="cart">
-                            <i class="bi bi-cart"></i>
-                            </a>
-
-                            <div class="dropdown">
-                                <button class="btn p-0 border-0 bg-transparent text-dark fs-4"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        aria-label="account menu">
-                                    <i class="bi bi-person-circle"></i>
-                                </button>
-
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                    <form action="/logout" method="POST" class="m-0">
-                                        @csrf 
-                                        <button type="submit" class="dropdown-item">
-                                          <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                        </button>
-                                    </form>
-                                    </li>
-                                </ul>
-                            </div>
-                             
-                          @endif
                         @endauth
                     </div>
                 </div>
