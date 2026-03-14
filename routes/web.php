@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController; // 一般ユーザー用
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Models\User;
 
 //Restaurant
@@ -145,17 +146,15 @@ Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant
 //Restaurant Owner
 Route::prefix('owner')->name('owner.')->group(function () {
 
-    Route::middleware('guest:restaurant')->group(function () {
-        Route::get('/register', [RestaurantAuthController::class, 'create'])->name('register');
-        Route::post('/register', [RestaurantAuthController::class, 'store'])->name('register.store');
-
-        Route::get('/login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [RestaurantAuthController::class, 'login'])->name('login.submit');
-    });
+    Route::get('/register', [RestaurantAuthController::class, 'create'])->name('register');
+    Route::post('/register', [RestaurantAuthController::class, 'store'])->name('register.store');
+    Route::get('/login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [RestaurantAuthController::class, 'login'])->name('login.submit');
 
     Route::middleware('auth:restaurant')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
     });
 
 });
