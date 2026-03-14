@@ -145,5 +145,8 @@ Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant
 Route::prefix('owner')->name('owner.')->group(function(){
     Route::get('/register',[RestaurantAuthController::class,'create'])->name('register');
     Route::post('/register',[RestaurantAuthController::class,'store'])->name('register.store');
+    Route::get('/login',[RestaurantAuthController::class,'showLoginForm'])->name('login');
+    Route::post('/login',[RestaurantAuthController::class,'login'])->name('login.submit');
+    Route::post('/logout',[RestaurantAuthController::class,'logout'])->name('logout');
 
 });
