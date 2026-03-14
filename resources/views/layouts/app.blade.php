@@ -135,7 +135,7 @@
                             Restaurant owners & partners
                         </div>
 
-                        <a href="/partner" class="btn btn-light rounded-pill px-5 py-2 fw-semibold">
+                        <a href="{{ route('owner.register') }}" class="btn btn-light rounded-pill px-5 py-2 fw-semibold">
                             Partner with us
                         </a>
 

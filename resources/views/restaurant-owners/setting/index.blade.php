@@ -22,17 +22,17 @@
 
                         <div class="mb-3" style="max-width: 560px;">
                             <label for="current_password" class="form-label">Current Password</label>
-                            <input type="password" class="form-control" id="current_password" name="current_password">
+                            <input type="password" class="form-control form-transparent" id="current_password" name="current_password">
                         </div>
 
                         <div class="mb-3" style="max-width: 560px;">
                             <label for="new_password" class="form-label">New Password</label>
-                            <input type="password" class="form-control" id="new_password" name="new_password">
+                            <input type="password" class="form-control form-transparent" id="new_password" name="new_password">
                         </div>
 
                         <div class="mb-4" style="max-width: 560px;">
                             <label for="new_password_confirmation" class="form-label">Confirm New Password</label>
-                            <input type="password" class="form-control" id="new_password_confirmation" name="new_password_confirmation">
+                            <input type="password" class="form-control form-transparent" id="new_password_confirmation" name="new_password_confirmation">
                         </div>
 
                         <div class="text-center" style="max-width: 560px;">

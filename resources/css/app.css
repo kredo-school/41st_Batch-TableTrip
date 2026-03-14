@@ -405,9 +405,7 @@ h6{
     color: #f2d230 !important;
 }
 
-.form-control,
-.form-select,
-textarea.form-control {
+.form-transparent {
     background-color: transparent;
     border: 1px solid #bfbfbf;
 }
