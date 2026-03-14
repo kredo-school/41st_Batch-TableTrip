@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TableTrip') }}|@yield('title')</title>
+        <title>{{ config('app.name', 'TableTrip') }} | @yield('title')</title>
 
          <!--Fontawesome-->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -57,9 +57,9 @@
                              <i class="bi bi-bell"></i>
                             </a>
 
-                             <form method="POST" action="{{ route('user.show') }}" class="m-0">
+                             <form method="POST" action="{{ route('owner.logout') }}" class="m-0">
                                  @csrf
-                                    <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
+                                    <button type="submit" class="btn btn-navy px-3">
                                         Logout
                                     </button>
                               </form>
