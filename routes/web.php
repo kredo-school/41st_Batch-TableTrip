@@ -32,11 +32,6 @@ Route::prefix('admin')->group(function () {
         [AdminLoginController::class, 'login']
     );
 
-    Route::post('/logout',
-        [AdminLoginController::class, 'logout']
-    )->name('admin.logout');
-});
-
 Route::prefix('admin')
     ->middleware(['auth'])
     ->group(function () {
@@ -44,12 +39,11 @@ Route::prefix('admin')
         Route::get('/dashboard',
             [DashboardController::class, 'index']
         )->name('admin.dashboard');
-
+    
+        Route::post('/logout',
+            [AdminLoginController::class, 'logout']
+    )->name('admin.logout');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 //Product
 Route::get('/product', function () {
