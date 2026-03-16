@@ -52,6 +52,32 @@
                 <div class="btn-container">
                     <a href="{{ route('reservations.index') }}" class="btn-back">View Reservations</a>
                 </div>
+                                <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('y-n-j') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
+                                {{-- restaurant name --}}
+                                <td>{{ $reservation->restaurant->name ?? 'N/A' }}</td>
+                                {{-- location--}}
+                                <td>{{ $reservation->restaurant->location ?? 'N/A' }}</td>
+                                {{-- Map icon --}}
+                                <td><i class="fa-solid fa-location-dot" style="color: #e2725b;"></i></td>
+                                {{-- guests --}}
+                                <td>{{ $reservation->number_of_guests }}</td>
+                                <td class="edit-icons">
+                                    <a href="{{ route('reservation.edit',$reservation->id) }}" class="">
+                                        <i class="fa-regular fa-calender-check"></i>
+                                    </a>
+                                    <i class="fa-solid fa-user" style="margin-left:5px;"></i>
+                                    <i class="fa-solid fa-rotate-left" style="margin-left:5px;"></i>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" style="text-align:center; padding:20px;">No Reservations yet</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                <a href="{{ route('reservations.index') }}" class="view-all">View All</a>
             </div>
         </section>
 
@@ -61,7 +87,7 @@
             <div class="card-content">
                 <div class="info-area">
                     <div class="item-grid">
-                        @forelse ($cart_items->take(2) as $item )
+                        {{-- @forelse ($cart_items->take(2) as $item )
                             <div class="cart-mini-item">
                                 <div class="mini-info">
                                     <p class="mini-name">{{$item->product->name}}</p>
@@ -69,11 +95,9 @@
                                 </div>
                             </div>    
                         @empty
-                            <div class="empty-state">
-                                <p class="empty-msg">No Carts yet.</p>
-                            </div>
-                        @endforelse
-                    </div>
+                            <p class="empty-msg">No Carts yet</p>
+                        @endforelse --}}
+                    {{-- </div>
                     @if($cart_items->isNotEmpty())
                         <div class="cart-total-brief">
                             <p>Total: <span>{{number_format($totalPrice)}}</span></p>
@@ -132,7 +156,31 @@
                     @endif
                 </div>
             </div>
+                    <div class="cart-total-brief">
+                        <p>Total: <span>{{number_format($totalPrice)}}</span></p>
+                    </div>
+                    @endif --}}
+                    <a href="{{ route('cart') }}" class="view-all">View Cart</a>
+            </div>
         </section>
+
+        <section class="dashboard-card">
+            <h3><i class="fa-solid fa-heart"></i> Favorite</h3>
+            <div class="card-content">
+                <div class="filter-options">
+                    <label><input type="radio" name="fav" checked> Restaurants</label>
+                    <label><input type="radio" name="fav"> Products</label>
+                </div>
+                </div>
+        </section>
+
+        <section class="dashboard-card">
+            <h3><i class="fa-solid fa-bag-shopping"></i> Purchased</h3>
+            <div class="card-content">
+                </div>
+        </section>
+    </div>
+</div>
 
         {{-- 4. Purchased --}}
         <section class="dashboard-card">
@@ -144,8 +192,10 @@
                 <div class="btn-container">
                     <a href="#" class="btn-back">View Order History</a>
                 </div>
-            </div>
         </section>
     </div>
 </div>
+@endsection
+@endsection
+
 @endsection
