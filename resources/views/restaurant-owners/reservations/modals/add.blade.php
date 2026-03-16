@@ -1,16 +1,13 @@
 
 <!-- Modal -->
-<div class="modal fade" id="editReservationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editReservationModalLabel" aria-hidden="true">
+<div class="modal fade" id="addReservationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addReservationModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center" style="border-bottom:none;">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
         <div class="modal-body pt-3">
-          <h1 class="fs-3 text-center mb-5 text-underline-accent" id="editReservationModalLabel">
-            <i class="fa-regular fa-pen-to-square"></i>Edit Reservation
-         </h1>
-
+          <h1 class="fs-3 text-center mb-5  text-underline-accent" id="addReservationModalLabel">+ Add New Reservation</h1>
             <form action="">
                 @csrf
             <div class="row g-3">
@@ -95,8 +92,8 @@
             </div>
         </div>
       <div class="modal-footer border-top-0">
-        <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-navy">Save Changes</button>
+        <button type="button" class="btn btn-outline-orange" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-orange">Add Reservation</button>
       </div>
       </form>
     </div>

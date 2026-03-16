@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -17,6 +17,8 @@ use App\Models\User;
 //Restaurant
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\Favorite_KitsController;
+use App\Http\Controllers\Favorite_RestaurantsController;
 
 //Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
@@ -59,6 +61,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+    // ---  Reservation  ---
+   Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
+    Route::get('/', [ReservationController::class, 'index'])->name('index');
+    
+    Route::post('/store', [ReservationController::class, 'store'])->name('store');
+
+    Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+
+    Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
+
+    Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
+});
+    // ---  Cart ---
+    Route::prefix('cart')->name('cart.')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index'); // route('cart.index')
+        Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('destroy');
+    });
+    Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
+    });
+
+
+   // favorite zone
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/favorite/kits', [Favorite_KitsController::class, 'index'])->name('favorite_kits');
+    Route::get('/favorite/restaurant', [Favorite_RestaurantsController::class, 'index'])->name('favorite_restaurants');
+}); 
+    
+    // --- Payment ---
+    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
     // --- 3. Reservation  ---
    Route::prefix('reservations')->name('reservations.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');            
@@ -77,7 +108,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //     Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
 //     // --- 5. Payment ---
 //     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-});
+// });
 
 
 // admin
@@ -105,11 +136,12 @@ Route::prefix('admin')
         )->name('admin.dashboard');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+
 
 //Product
+// Route::get('/product', function () {
+//     return view('product.index');
+// });
 Route::get('/products', function () {
     return view('products.index');
 })->name('products.index');

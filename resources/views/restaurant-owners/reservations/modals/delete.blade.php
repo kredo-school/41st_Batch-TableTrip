@@ -1,46 +1,35 @@
-<!-- Delete Reservation Modal -->
-<div class="modal fade" id="deleteReservationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="deleteReservationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header" style="border-bottom: none;">
-                <button type="button" class="btn-close justify-content-end" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
 
-            <div class="modal-body mb-4 text-center">
-                <h3 class="modal-title mb-4" id="deleteReservationModalLabel"
-                    style="text-decoration: underline; text-underline-offset: 6px; text-decoration-color:#D96B52;">
-                    Cancel Reservation
-                </h3>
 
-                <div class="container px-4 py-2" style="font-family: 'Sen', sans-serif;">
-                    <p class="mb-4">
-                        Are you sure you want to cancel this reservation?
-                    </p>
-
-                    <ul class="text-start d-inline-block mb-4">
-                        <li class="mb-2">Date: July 20, 2026</li>
-                        <li class="mb-2">Time: 19:00</li>
-                        <li class="mb-2">Guests: 2</li>
-                        <li class="mb-2">Name: John Smith</li>
-                    </ul>
-
-                    <div class="text-center">
-                        <button type="button" class="btn btn-outline-orange me-3" data-bs-dismiss="modal">
-                            Back
-                        </button>
-
-                        <form action="" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-orange">
-                                Yes, Cancel
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="deleteReservationModal" tabindex="-1" aria-labelledby="delete-reservationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <h1 class="modal-title fs-3 text-underline-accent text-center mb-3" id="deleteReservationModalLabel">Delete Reservation</h1>
+            <p class="text-center mb-3" style="font-family: 'Sen',sans-serif;">
+                Are you sure you want to delete this reservation? <br>
+                This action cannot be undone.
+            </p>
+             <div class="w-50 mx-auto" style="font-family: 'Sen',sans-serif;">
+                <ul>
+                    <li class="mb-3">Name: <span class="fw-bold">John Doe</span></li>
+                    <li class="mb-3">Date: Mar 3, 2026</li>
+                    <li class="mb-3">Time: 17:00</li>
+                    <li class="mb-3">Guests: 4</li>
+                </ul>
+             </div>
+      </div>
+      <div class="modal-footer border-top-0 d-flex justify-content-center">
+        <button type="button" class="btn btn-outline-orange" data-bs-dismiss="modal">Close</button>
+        <form action="">
+         @csrf
+            <button type="submit" class="btn btn-orange">Delete</button>
+        </form>
+        
+      </div>
     </div>
+  </div>
 </div>
