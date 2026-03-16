@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminLoginController;
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
 use App\Http\Controllers\DashboardController; // 一般ユーザー用
 // use App\Http\Controllers\ForgetController;  
@@ -90,10 +91,6 @@ Route::prefix('admin')->group(function () {
     Route::post('/login',
         [AdminLoginController::class, 'login']
     );
-
-    Route::post('/logout',
-        [AdminLoginController::class, 'logout']
-    )->name('admin.logout');
 });
 
 Route::prefix('admin')
@@ -103,11 +100,11 @@ Route::prefix('admin')
         Route::get('/dashboard',
             [DashboardController::class, 'index']
         )->name('admin.dashboard');
+    
+        Route::post('/logout',
+            [AdminLoginController::class, 'logout']
+    )->name('admin.logout');
 });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
 
 //Product
 Route::get('/products', function () {
@@ -168,5 +165,4 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
     });
-
 });
