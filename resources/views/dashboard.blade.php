@@ -90,17 +90,57 @@
             </div>
         </section>
 
+        {{-- favorite --}}
         <section class="dashboard-card">
             <h3><i class="fa-solid fa-heart"></i> Favorite</h3>
-            <div class="card-content">
-                <div class="filter-options" >
-                    <label><input type="radio" name="fav" checked> Restaurants</label>
-                    <label><input type="radio" name="fav"> Products</label>
+            
+            {{-- フォームにして、変更時に自動送信 (onchange="this.form.submit()") --}}
+            <form action="{{ route('dashboard') }}" method="GET" id="fav-form">
+                <div class="selection-group">
+                    <input type="radio" name="tab" id="show-restaurants" value="restaurants" 
+                        {{ request('tab', 'restaurants') == 'restaurants' ? 'checked' : '' }} 
+                        onchange="this.form.submit()">
+                    <label for="show-restaurants">Restaurants</label>
+
+                    <input type="radio" name="tab" id="show-products" value="products" 
+                        {{ request('tab') == 'products' ? 'checked' : '' }} 
+                        onchange="this.form.submit()">
+                    <label for="show-products">Kits</label>
+                </div>
+            </form>
+            <hr>
+
+            {{-- PHPの条件分岐で表示を切り替え --}}
+            @if(request('tab', 'restaurants') == 'restaurants')
+                <div id="favorite-restaurant-area">
+                    <h2>Favorite Restaurants</h2>
+                    <div class="row">
+                        @forelse ($favorite_restaurants as $restaurant)
+                            <div class="col-md-3"><p>{{ $restaurant->restaurant_name }}</p></div>
+                        @empty
+                            <p>No favorite restaurants yet.</p>
+                        @endforelse
+                    </div>
+                </div>
+                {{-- ボタンのリンク先もPHPで制御 --}}
+                <div class="btn-container">
+                    <a href="{{ route('favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
+                </div>
+            @else
+                <div id="favorite-product-area">
+                    <h2>Favorite Kits</h2>
+                    <div class="row">
+                        @forelse ($favorite_kits as $kit)
+                            <div class="col-md-3"><p>{{ $kit->product->name ?? 'N/A' }}</p></div>
+                        @empty
+                            <p>No favorite kits yet.</p>
+                        @endforelse
+                    </div>
                 </div>
                 <div class="btn-container">
-                         <a href=# class="btn-back">View Favorite</a>
+                    <a href="{{ route('favorite_kits') }}" class="btn-back">View All Kits</a>
                 </div>
-            </div>
+            @endif
         </section>
 
         <section class="dashboard-card">
