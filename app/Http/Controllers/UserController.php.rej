@@ -1,0 +1,10 @@
+diff a/app/Http/Controllers/UserController.php b/app/Http/Controllers/UserController.php	(rejected hunks)
+@@ -55,7 +55,7 @@
+             $user->profile_picture = $path;
+         }
+ 
+-        $user->save(); 
++        $user->save();  
+ 
+         return redirect('/mypage')->with('success', 'Your profile has been updated!');
+     }
