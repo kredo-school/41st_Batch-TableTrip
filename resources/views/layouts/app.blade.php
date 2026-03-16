@@ -44,12 +44,13 @@
                             <i class="bi bi-search fs-5 text-dark"></i>
                         </button>
                     </form>
+                    
 
                     <!-- Right: Icons + Dropdown -->
 
                     <div class="d-flex align-items-center gap-3">
                       @guest
-                          <a href="{{ route('register') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
+                          <a href="{{ route('register.show') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
                              Register
                           </a>
 
@@ -59,7 +60,16 @@
                       @endguest
 
                       @auth
-                       @if (!request()->is('admin/*'))  {{-- we need to fix later --}}
+                       @if (Auth::user()->is_admin )  
+                        {{-- Admin --}}
+                             <form method="POST" action="{{ route('user.show') }}" class="m-0">
+                                 @csrf
+                                    <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
+                                        Logout
+                                    </button>
+                              </form>
+                        @else
+                        {{-- Normal User --}}
                             <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
                             <i class="bi bi-bell"></i>
                             </a>
@@ -88,14 +98,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            @else
-                                 <form method="POST" action="#" class="m-0">
-                                @csrf
-                                <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
-                                    Logout
-                                </button>
-                            </form>
-                        
+                             
                           @endif
                         @endauth
                     </div>
@@ -133,7 +136,7 @@
                             Restaurant owners & partners
                         </div>
 
-                        <a href="/partner" class="btn btn-light rounded-pill px-5 py-2 fw-semibold">
+                        <a href="{{ route('owner.register') }}" class="btn btn-light rounded-pill px-5 py-2 fw-semibold">
                             Partner with us
                         </a>
 
@@ -147,6 +150,6 @@
 
         </footer>
 
-
+     @stack('scripts')
     </body>
 </html>

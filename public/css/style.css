@@ -33,7 +33,7 @@ h2.custom-header {
 }
 
 .btn-custom {
-    font-family: 'Playfair Display',serif;
+    font-family: 'Sen', sans-serif;
     border-radius: 0 !important;
     padding: 12px 30px;
     font-weight: 700;
@@ -138,7 +138,7 @@ h2.custom-header {
 .forget-text {
     color: #e2725b;
     font-size: 0.9rem;
-    font-family: 'Playfair Display',serif;
+    font-family: 'Sen', sans-serif;
     min-width: 300px; 
     text-align: right;
 }
@@ -340,13 +340,13 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 
 /* --- Cart Page Styles --- */
 
-.cart-list-container{
-    max-width:900px;
-    margin:50px auto;
-    background-color:#f7f5f0;
-    padding:30px;
-    border:1px solid #ddd;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+.cart-outer-wrapper {
+    background-color: #f7f5f0;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
 .cart-header {
@@ -475,21 +475,6 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
     cursor: pointer;
 }
 
-.empty-state {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 150px; 
-    width: 100%;
-}
-
-.empty-msg {
-    color: #888;
-    font-size: 1.1rem;
-    font-family: 'Playfair Display', serif;
-    text-align: center;
-}
-
 
 /* reservations */
 .reservation-list-container{
@@ -510,43 +495,28 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
     width: 100%;
     padding-bottom: 10px;
 }
-.table-custom {
-    width: 100%; 
-    border-collapse: collapse; 
-    margin-top: 20px;
-    background-color: #fff;
-    border: 1px solid #b5a397; 
-}
-
-.table-custom th, 
-.table-custom td {
-    border: 1px solid #b5a397 !important;
-    padding: 12px 15px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.table-custom th {
-    background-color: #f7f5f0; 
-    font-weight: bold;
-    color: #4a4a4a;
-}
-.table-custom tbody tr:hover {
-    background-color: #fdfaf0;
-}
-
-
-.table-custom .fa-location-pin {
-    color: #e2725b;
-}
-
-
-.edit-icons {
+.table-wrapper {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    border: none !important;
-} 
+    width: 100%;
+}
+.table-custom{
+    width: 100px;
+    border-collapse:collapse;
+    margin-top: 20px;
+    background: #fff;
+}
+
+.table-custom th, .table-custom td{
+    border:1px solid #b5a397;
+    padding:10px 12px;
+    text-align:center;
+}
+
+.table-custom th{
+    background-color: #f7f5f0;
+    font-weight: bold;
+}
 
 .btn-container{
     text-align:center;

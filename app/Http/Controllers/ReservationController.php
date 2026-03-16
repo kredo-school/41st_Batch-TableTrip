@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reservation;
@@ -11,7 +13,7 @@ class ReservationController extends Controller
 
         $reservations = Reservation::where('user_id', $user->id)
             ->with('restaurant')
-            ->orderBy('reserved_at','asc')
+            ->orderBy('reservation_date','asc')
             ->get();
         return view('user.reservations.index', compact('reservations'));
     }
