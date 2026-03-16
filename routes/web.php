@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login',
         [AdminLoginController::class, 'login']
     );
+});
 
 Route::prefix('admin')
     ->middleware(['auth'])
@@ -44,6 +45,7 @@ Route::prefix('admin')
             [AdminLoginController::class, 'logout']
     )->name('admin.logout');
 });
+
 
 //Product
 Route::get('/product', function () {
