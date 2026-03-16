@@ -127,5 +127,6 @@
         </div>
     </div>
 </div>
+@include('restaurant-owners.reservations.modals.edit')
 @include('restaurant-owners.reservations.modals.delete')
 @endsection

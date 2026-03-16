@@ -42,7 +42,7 @@
                                 {{-- guests --}}
                                 <td>{{ $reservation->number_of_guests }}</td>
                                 <td class="edit-icons">
-                                    {{-- <a href="{{ route('reservation.edit',$reservation->id) }}" class=""> --}}
+                                    <a href="{{ route('reservation.edit',$reservation->id) }}" class="">
                                         <i class="fa-regular fa-calender-check"></i>
                                     </a>
                                     <i class="fa-solid fa-user" style="margin-left:5px;"></i>
@@ -56,9 +56,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                <div class="btn-container ">
-                    <a href="{{ route('reservations.index') }}" class="view-all btn-back">View Reservations</a>
-                </div>
+                <a href="{{ route('reservations.index') }}" class="view-all">View All</a>
             </div>
         </section>
         {{-- cart part --}}
@@ -66,7 +64,7 @@
             <h3><i class="fa-solid fa-cart-shopping"></i>Cart</h3>
             <div class="card-content">
                     <div class="item-grid">
-                        @forelse ($cart_items->take(2) as $item )
+                        {{-- @forelse ($cart_items->take(2) as $item )
                             <div class="cart-mini-item">
                                 <div class="mini-img">
                                     <img src="#" alt="" >
@@ -77,85 +75,43 @@
                                 </div>
                             </div>    
                         @empty
-                            <div class="empty-state">
-                                <p class="empty-msg">No Carts yet.</p>
-                            </div>
-                        @endforelse
-                    </div>
+                            <p class="empty-msg">No Carts yet</p>
+                        @endforelse --}}
+                    {{-- </div>
                     @if($cart_items->isNotEmpty())
                     <div class="cart-total-brief">
                         <p>Total: <span>{{number_format($totalPrice)}}</span></p>
                     </div>
-                    @endif
-                     <div class="btn-container">
-                         <a href="{{ route('cart') }}" class="btn-back">View Cart</a>
-                    </div>
-                    
+                    @endif --}}
+                    <a href="{{ route('cart') }}" class="view-all">View Cart</a>
             </div>
         </section>
 
-        {{-- favorite --}}
         <section class="dashboard-card">
             <h3><i class="fa-solid fa-heart"></i> Favorite</h3>
-            
-            {{-- フォームにして、変更時に自動送信 (onchange="this.form.submit()") --}}
-            <form action="{{ route('dashboard') }}" method="GET" id="fav-form">
-                <div class="selection-group">
-                    <input type="radio" name="tab" id="show-restaurants" value="restaurants" 
-                        {{ request('tab', 'restaurants') == 'restaurants' ? 'checked' : '' }} 
-                        onchange="this.form.submit()">
-                    <label for="show-restaurants">Restaurants</label>
-
-                    <input type="radio" name="tab" id="show-products" value="products" 
-                        {{ request('tab') == 'products' ? 'checked' : '' }} 
-                        onchange="this.form.submit()">
-                    <label for="show-products">Kits</label>
+            <div class="card-content">
+                <div class="filter-options">
+                    <label><input type="radio" name="fav" checked> Restaurants</label>
+                    <label><input type="radio" name="fav"> Products</label>
                 </div>
-            </form>
-            <hr>
-
-            {{-- PHPの条件分岐で表示を切り替え --}}
-            @if(request('tab', 'restaurants') == 'restaurants')
-                <div id="favorite-restaurant-area">
-                    <h2>Favorite Restaurants</h2>
-                    <div class="row">
-                        @forelse ($favorite_restaurants as $restaurant)
-                            <div class="col-md-3"><p>{{ $restaurant->restaurant_name }}</p></div>
-                        @empty
-                            <p>No favorite restaurants yet.</p>
-                        @endforelse
-                    </div>
                 </div>
-                {{-- ボタンのリンク先もPHPで制御 --}}
-                <div class="btn-container">
-                    <a href="{{ route('favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
-                </div>
-            @else
-                <div id="favorite-product-area">
-                    <h2>Favorite Kits</h2>
-                    <div class="row">
-                        @forelse ($favorite_kits as $kit)
-                            <div class="col-md-3"><p>{{ $kit->product->name ?? 'N/A' }}</p></div>
-                        @empty
-                            <p>No favorite kits yet.</p>
-                        @endforelse
-                    </div>
-                </div>
-                <div class="btn-container">
-                    <a href="{{ route('favorite_kits') }}" class="btn-back">View All Kits</a>
-                </div>
-            @endif
         </section>
 
         <section class="dashboard-card">
             <h3><i class="fa-solid fa-bag-shopping"></i> Purchased</h3>
             <div class="card-content">
-                <div class="btn-container">
-                            <a href=# class="btn-back">View Order History</a>
                 </div>
-            </div>
         </section>
     </div>
 </div>
+
+        <section class="dashboard-card">
+            <h3><i class="fa-solid fa-bag-shopping"></i> Purchased</h3>
+            <div class="card-content">
+                </div>
+        </section>
+    </div>
+</div>
+@endsection
 
 @endsection

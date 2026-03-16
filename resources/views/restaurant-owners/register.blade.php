@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.owner')
 
 @section('title', 'Restaurant Owner Registration')
 
@@ -64,58 +64,111 @@
 
   <div class="col-12 col-lg-6 ms-lg-auto" style="background-color:rgb(231, 207, 192); padding: 30px; border-radius: 10px;">
     <h1 class="text-white mb-4 text-center">Request an Account</h1>
-    <form action="">
+    <form action="{{ route('owner.register.store') }}" method="post">
         @csrf
         <div class="mb-3">
             <label for="restaurant_name" class="text-white">Restaurant Name</label>
-            <input type="text" class="form-control" id="restaurant_name" name="restaurant_name" autofocus>
+            <input type="text" class="form-control bg-white" id="restaurant_name" name="restaurant_name" autofocus>
+             @error('restaurant_name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="email" class="text-white">Email</label>
             <input type="email" class="form-control" id="email" name="email">
+             @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="phone" class="text-white">Phone Number</label>
-            <input type="text" class="form-control" id="phone" name="phone">        
+            <input type="text" class="form-control" id="phone" name="phone">  
+             @error('phone')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror      
         </div>
-       <div class="mb-3">
-            <label for="country" class="text-white form-label">Country</label>
-            <select class="form-select" id="country" name="country" style="border: none;">
-                <option value="" selected disabled>Select Country</option>
-                <option value="Japan">Japan</option>
-                <option value="United States">United States</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="Singapore">Singapore</option>
-                <option value="Australia">Australia</option>
-            </select>
-        </div>
+    
+      <div class="row g-3 mb-3">
 
-        <div class="row g-2 mb-3">
-            <div class="col-12 col-md-6">
-                <label for="postal_code" class="text-white form-label">Postal Code</label>
-                <input type="text" class="form-control" id="postal_code" name="postal_code">
+            <div class="col-md-6">
+                <label for="prefecture" class="text-white form-label">Prefecture</label>
+                <select class="form-select" id="prefecture" name="prefecture" style="border: none;">
+                    <option value="" selected disabled>Select Prefecture</option>
+                    <option value="Hokkaido">Hokkaido</option>
+                    <option value="Fukuoka">Fukuoka</option>
+                    <option value="Akita">Akita</option>
+                    <option value="Tokyo">Tokyo</option>
+                    <option value="Osaka">Osaka</option>
+                </select>
+
+                 @error('prefecture')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
             </div>
 
-            <div class="col-12 col-md-6">
-                <label for="state_region" class="text-white form-label">State / Region</label>
-                <input type="text" class="form-control" id="state_region" name="state_region" >
+            <div class="col-md-6">
+                <label for="city" class="text-white form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city">
+                 @error('city')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
             </div>
-        </div>
 
-        <div class="mb-3">
-            <label for="city" class="text-white form-label">City</label>
-            <input type="text" class="form-control" id="city" name="city">
         </div>
         <div class="mb-3">
-            <label for="address_line" class="text-white form-label">Street Address</label>
+            <label for="address_line" class="text-white form-label">Address Line</label>
             <input type="text" class="form-control" id="address_line" name="address_line">
+             @error('address_line')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
+        <div class="mb-3">
+            <label for="password" class="text-white form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+             @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="mb-5">
+            <label for="password_confirmation" class="text-white form-label">Password Confirm</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+             @error('password_confirmation')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        
             <button type="submit" class="btn btn-navy w-100 w-md-auto px-4">Submit Request</button>
        
     </form>
-  </div>
 
-</div>
-</div>
 
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const successModal = new bootstrap.Modal(document.getElementById('registerSuccessModal'));
+                successModal.show();
+            });
+        </script>
+    @endif
+    </div>
+</div>
+ @include('restaurant-owners.register_success_modal')
+</div>
+  
 @endsection
