@@ -8,7 +8,6 @@ use App\Models\Reservation;
 class DashboardController extends Controller
 
 {
-  // DashboardController.php  
 
 public function index(Request $request)
 {
