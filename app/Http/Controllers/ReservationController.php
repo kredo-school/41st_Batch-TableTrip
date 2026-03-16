@@ -9,10 +9,10 @@ class ReservationController extends Controller
     public function index(){
         $user=Auth::user();
 
-        $reservations=$user->reservations()
+        $reservations = Reservation::where('user_id', $user->id)
             ->with('restaurant')
             ->orderBy('reserved_at','asc')
             ->get();
-        return view ('user.reservations.index',compact('reservations'));
+        return view('user.reservations.index', compact('reservations'));
     }
 }

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Reservation;
 
 class DashboardController extends Controller
 
@@ -28,3 +29,4 @@ public function index(Request $request)
         'latest_reservations', 'cart_items', 'totalPrice', 'favorite_restaurants', 'favorite_kits' 
     ));
 }}
+

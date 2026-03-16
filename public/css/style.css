@@ -290,16 +290,19 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 }
 
 /* dashboard */
+
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    background-color: #f8f4f0; 
 }
 
 .welcome-text {
     text-align: center;
     font-size: 3rem;
     font-family: 'Playfair display',serif;
+    font-family: 'Serif', Georgia;
     border-bottom: 2px solid #d4a373;
     display: inline-block;
     width: 100%;

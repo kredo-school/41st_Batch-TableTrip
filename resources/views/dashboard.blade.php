@@ -4,6 +4,10 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
+@section('title', 'Login') 
+
+@section('content')
+<link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
 
 <div class="dashboard-container">
     <h2 class="welcome-text">Welcome, {{ Auth::user()->first_name }}!</h2>
@@ -153,6 +157,5 @@
         </section>
     </div>
 </div>
-
 
 @endsection
