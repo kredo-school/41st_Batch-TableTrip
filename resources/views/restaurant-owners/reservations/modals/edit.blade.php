@@ -1,104 +1,70 @@
+<!-- Edit Reservation Modal -->
+<div class="modal fade" id="editReservationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="editReservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;">
+                <button type="button" class="btn-close justify-content-end" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
 
-<!-- Modal -->
-<div class="modal fade" id="editReservationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editReservationModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header text-center" style="border-bottom:none;">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-        <div class="modal-body pt-3">
-          <h1 class="fs-3 text-center mb-5 text-underline-accent" id="editReservationModalLabel">
-            <i class="fa-regular fa-pen-to-square"></i>Edit Reservation
-         </h1>
+            <div class="modal-body mb-4">
+                <h3 class="modal-title mb-4 text-center" id="editReservationModalLabel"
+                    style="text-decoration: underline; text-underline-offset: 6px; text-decoration-color:#D96B52;">
+                    Edit Reservation
+                </h3>
 
-            <form action="">
-                @csrf
-            <div class="row g-3">
+                <div class="container px-4 py-2">
+                    <form action="" method="POST" style="font-family: 'Sen', sans-serif;">
+                        @csrf
+                        @method('PATCH')
 
-                {{-- Date --}}
-                <div class="col-12 col-md-4">
-                    <label class="form-label">
-                        <i class="fa-regular fa-calendar me-1"></i>
-                        Date
-                    </label>
-                    <input type="date" class="form-control">
-                </div>
+                        <div class="mb-3">
+                            <label for="reservation_date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="reservation_date" name="date"
+                                value="">
+                        </div>
 
-                {{-- Time --}}
-                <div class="col-12 col-md-4">
-                    <label class="form-label">
-                        <i class="fa-regular fa-clock me-1"></i>
-                        Time
-                    </label>
-                    <input type="time" class="form-control">
-                </div>
+                        <div class="mb-3">
+                            <label for="reservation_time" class="form-label">Time</label>
+                            <input type="time" class="form-control" id="reservation_time" name="time"
+                                value="">
+                        </div>
 
-                {{-- Guests --}}
-                <div class="col-12 col-md-4">
-                    <label class="form-label" >
-                        <i class="fa-solid fa-users me-1"></i>
-                        <span style="font-size: 0.75rem;">Number of Guests</span>
-                    </label>
-                    <input type="number" class="form-control">
-                </div>
+                        <div class="mb-3">
+                            <label for="reservation_guests" class="form-label">Guests</label>
+                            <input type="number" class="form-control" id="reservation_guests" name="guests"
+                                min="1" value="">
+                        </div>
 
-                {{-- Name --}}
-                <div class="col-12">
-                    <label class="form-label">
-                        <i class="fa-regular fa-user me-1"></i>
-                        Full Name
-                    </label>
-                    <input type="text" class="form-control">
-                </div>
+                        <div class="mb-3">
+                            <label for="reservation_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="reservation_name" name="name"
+                                value="">
+                        </div>
 
-                {{-- Phone --}}
-                <div class="col-12">
-                    <label class="form-label">
-                        <i class="fa-solid fa-phone me-1"></i>
-                        Phone Number
-                    </label>
-                    <input type="text" class="form-control">
-                </div>
+                        <div class="mb-3">
+                            <label for="reservation_phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="reservation_phone" name="phone"
+                                value="">
+                        </div>
 
-                {{-- Email --}}
-                <div class="col-12">
-                    <label class="form-label">
-                        <i class="fa-regular fa-envelope me-1"></i>
-                        Email Address
-                    </label>
-                    <input type="email" class="form-control">
-                </div>
+                        <div class="mb-4">
+                            <label for="reservation_requests" class="form-label">Special Requests</label>
+                            <textarea class="form-control" id="reservation_requests" name="special_requests" rows="3"></textarea>
+                        </div>
 
-                {{-- Requests --}}
-                <div class="col-12">
-                    <label class="form-label">
-                        <i class="fa-regular fa-comment me-1"></i>
-                        Special Requests
-                    </label>
-                    <textarea class="form-control" rows="4"></textarea>
-                </div>
-
-                {{-- Status --}}
-                <div class="col-12 col-md-4">
-                    <label class="form-label">
-                        <i class="fa-solid fa-circle-info me-1"></i>
-                        Status
-                    </label>
-                    <select class="form-select">
-                        <option>Confirmed</option>
-                        <option>Pending</option>
-                        <option>Completed</option>
-                        <option>Cancelled</option>
-                        <option>No-show</option>
-                    </select>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-navy me-3" data-bs-dismiss="modal">
+                                Back
+                            </button>
+                            <button type="submit" class="btn btn-navy">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-      <div class="modal-footer border-top-0">
-        <button type="button" class="btn btn-outline-navy" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-navy">Save Changes</button>
-      </div>
-      </form>
     </div>
-  </div>
 </div>

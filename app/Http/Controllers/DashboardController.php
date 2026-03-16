@@ -1,31 +1,33 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Reservation;
 
 class DashboardController extends Controller
 
 {
+  // DashboardController.php 
 
-public function index(Request $request)
-{
+public function index() {
     $user = Auth::user();
-    $tab = $request->query('tab', 'restaurants');
+ 
+    // indicate reservation lists
+    $latest_reservations=$user->reservations()
+        ->with('restaurant')
+        ->orderBy('reservation_date','asc')
+        ->take(4)
+        ->get();
 
-    $latest_reservations = $user->reservations()->with('restaurant')->latest()->take(5)->get();
     $cart_items = $user->cartItems()->with('product')->get();
-    $totalPrice = $cart_items->sum(function($item) {
-        return $item->product->price * $item->quantity;
-    });
+    $totalPrice = $cart_items->sum(fn($item) => ($item->product->price ?? 0) * $item->quantity);
 
-
-    $favorite_restaurants = $user->favorite_restaurants()->get();
-    $favorite_kits = $user->favorite_kits()->with('product')->get();
-
-    return view('dashboard', compact(
-        'latest_reservations', 'cart_items', 'totalPrice', 'favorite_restaurants', 'favorite_kits' 
-    ));
+    return view('dashboard', [
+        'latest_reservations' => $latest_reservations, 
+        'cart_items' => $cart_items,
+        'totalPrice' => $totalPrice,
+    ]);
 }}
-

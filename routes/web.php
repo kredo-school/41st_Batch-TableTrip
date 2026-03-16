@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -11,6 +11,7 @@ use App\Http\Controllers\CartController;
 
 // Admin
 use App\Http\Controllers\Admin\AdminLoginController;
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
 use App\Http\Controllers\DashboardController; // 一般ユーザー用
 
@@ -21,8 +22,6 @@ use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 //Restaurant
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\Favorite_KitsController;
-use App\Http\Controllers\Favorite_RestaurantsController;
 
 //Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
@@ -114,7 +113,7 @@ Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased
 //     Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
 //     // --- 5. Payment ---
 //     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-// });
+});
 
 
 // admin
@@ -127,10 +126,6 @@ Route::prefix('admin')->group(function () {
     Route::post('/login',
         [AdminLoginController::class, 'login']
     );
-
-    Route::post('/logout',
-        [AdminLoginController::class, 'logout']
-    )->name('admin.logout');
 });
 
 Route::prefix('admin')
@@ -140,14 +135,13 @@ Route::prefix('admin')
         Route::get('/dashboard',
             [DashboardController::class, 'index']
         )->name('admin.dashboard');
+    
+        Route::post('/logout',
+            [AdminLoginController::class, 'logout']
+    )->name('admin.logout');
 });
 
-
-
 //Product
-// Route::get('/product', function () {
-//     return view('product.index');
-// });
 Route::get('/products', function () {
     return view('products.index');
 })->name('products.index');
@@ -206,5 +200,4 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
     });
-
 });

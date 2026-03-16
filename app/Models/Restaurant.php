@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Reservation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Restaurant extends Authenticatable
 {
-    use HasFactory;
-
     protected $fillable = [
         'restaurant_name',
         'email',
@@ -28,12 +26,12 @@ class Restaurant extends Authenticatable
         'password',
     ];
 
-    protected $hidden = [
+     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    protected $casts = [
+     protected $casts = [
         'approved_at' => 'datetime',
     ];
 
