@@ -49,7 +49,7 @@
 
                     <div class="d-flex align-items-center gap-3">
                       @guest
-                          <a href="{{ route('register') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
+                          <a href="{{ route('register.show') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
                              Register
                           </a>
 

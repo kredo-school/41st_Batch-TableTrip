@@ -5,14 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\PurchasedController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CartController;
+
+// Admin
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
 use App\Http\Controllers\DashboardController; // 一般ユーザー用
+
 // use App\Http\Controllers\ForgetController;  
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CartController;
+
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
-use App\Models\User;
 
 //Restaurant
 use App\Http\Controllers\RestaurantController;
@@ -86,7 +90,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorite/kits', [Favorite_KitsController::class, 'index'])->name('favorite_kits');
     Route::get('/favorite/restaurant', [Favorite_RestaurantsController::class, 'index'])->name('favorite_restaurants');
-}); 
+    // purchased
+Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
+});
     
     // --- Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
