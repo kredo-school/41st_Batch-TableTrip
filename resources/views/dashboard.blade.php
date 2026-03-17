@@ -190,7 +190,7 @@
                     <p class="text-center text-muted">Check your order history.</p>
                 </div>
                 <div class="btn-container">
-                    <a href="#" class="btn-back">View Order History</a>
+                    <a href="{{ route('purchased.index') }}" class="btn-back">View Order History</a>
                 </div>
         </section>
     </div>
