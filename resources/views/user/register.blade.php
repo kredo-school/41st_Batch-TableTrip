@@ -1,4 +1,6 @@
-<x-guest-layout>
+@extends('layouts.app')
+
+@section('content')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
    <div class="container d-flex justify-content-center align-items-center vh-100 p-3">
         <div class="card custom-card p-5 shadow-sm" style="max-width: 500px; width: 100%;">
@@ -184,4 +186,5 @@
             }
         });
     </script>
-</x-guest-layout>
+
+    @endsection

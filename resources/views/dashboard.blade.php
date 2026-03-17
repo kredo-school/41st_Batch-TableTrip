@@ -19,9 +19,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>Restaurants</th>
-                                <th>Location</th>
-                                <th>Map</th>
+                                <th>Restaurant</th>
                                 <th>Guests</th>
                                 <th>Edit</th>
                             </tr>
@@ -32,52 +30,24 @@
                                     <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('y-n-j') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
                                     <td>{{ $reservation->restaurant->name ?? 'N/A' }}</td>
-                                    <td>{{ $reservation->restaurant->location ?? 'N/A' }}</td>
-                                    <td><i class="fa-solid fa-location-dot" style="color: #e2725b;"></i></td>
                                     <td>{{ $reservation->number_of_guests }}</td>
                                     <td class="edit-icons">
-                                        <i class="fa-regular fa-calendar-check"></i>
-                                        <i class="fa-solid fa-user" style="margin-left:5px;"></i>
-                                        <i class="fa-solid fa-rotate-left" style="margin-left:5px;"></i>
+                                        <a href="{{ route('reservation.edit', $reservation->id) }}">
+                                            <i class="fa-regular fa-calendar-check"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center py-4">No Reservations yet</td>
+                                    <td colspan="5" class="text-center py-4">No Reservations yet</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div class="btn-container">
-                    <a href="{{ route('reservations.index') }}" class="btn-back">View Reservations</a>
+                    <a href="{{ route('reservations.index') }}" class="btn-back">View All</a>
                 </div>
-                                <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('y-n-j') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
-                                {{-- restaurant name --}}
-                                <td>{{ $reservation->restaurant->name ?? 'N/A' }}</td>
-                                {{-- location--}}
-                                <td>{{ $reservation->restaurant->location ?? 'N/A' }}</td>
-                                {{-- Map icon --}}
-                                <td><i class="fa-solid fa-location-dot" style="color: #e2725b;"></i></td>
-                                {{-- guests --}}
-                                <td>{{ $reservation->number_of_guests }}</td>
-                                <td class="edit-icons">
-                                    <a href="{{ route('reservation.edit',$reservation->id) }}" class="">
-                                        <i class="fa-regular fa-calender-check"></i>
-                                    </a>
-                                    <i class="fa-solid fa-user" style="margin-left:5px;"></i>
-                                    <i class="fa-solid fa-rotate-left" style="margin-left:5px;"></i>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" style="text-align:center; padding:20px;">No Reservations yet</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                <a href="{{ route('reservations.index') }}" class="view-all">View All</a>
             </div>
         </section>
 
@@ -87,25 +57,25 @@
             <div class="card-content">
                 <div class="info-area">
                     <div class="item-grid">
-                        {{-- @forelse ($cart_items->take(2) as $item )
+                        @forelse ($cart_items->take(2) as $item)
                             <div class="cart-mini-item">
                                 <div class="mini-info">
-                                    <p class="mini-name">{{$item->product->name}}</p>
-                                    <p class="mini-price">{{ number_format($item->product->price) }} (x{{ $item->quantity }})</p>
+                                    <p class="mini-name">{{ $item->product->name ?? 'Unknown' }}</p>
+                                    <p class="mini-price">{{ number_format($item->product->price ?? 0) }} (x{{ $item->quantity }})</p>
                                 </div>
-                            </div>    
+                            </div>
                         @empty
-                            <p class="empty-msg">No Carts yet</p>
-                        @endforelse --}}
-                    {{-- </div>
+                            <p class="empty-msg">No items in cart</p>
+                        @endforelse
+                    </div>
                     @if($cart_items->isNotEmpty())
                         <div class="cart-total-brief">
-                            <p>Total: <span>{{number_format($totalPrice)}}</span></p>
+                            <p>Total: <span>{{ number_format($totalPrice) }}</span></p>
                         </div>
                     @endif
                 </div>
                 <div class="btn-container">
-                    <a href="{{ route('cart') }}" class="btn-back">View Cart</a>
+                    <a href="{{ route('user.cart') }}" class="btn-back">View Cart</a>
                 </div>
             </div>
         </section>
@@ -130,23 +100,21 @@
                     </form>
                     <hr>
 
-                    @if(request('tab', 'restaurants') == 'restaurants')
-                        <div class="row">
+                    <div class="row">
+                        @if(request('tab', 'restaurants') == 'restaurants')
                             @forelse ($favorite_restaurants as $restaurant)
-                                <div class="col-12"><p>{{ $restaurant->restaurant_name }}</p></div>
+                                <div class="col-12"><p>{{ $restaurant->name ?? $restaurant->restaurant_name }}</p></div>
                             @empty
                                 <p class="text-muted">No favorite restaurants yet.</p>
                             @endforelse
-                        </div>
-                    @else
-                        <div class="row">
+                        @else
                             @forelse ($favorite_kits as $kit)
                                 <div class="col-12"><p>{{ $kit->product->name ?? 'N/A' }}</p></div>
                             @empty
                                 <p class="text-muted">No favorite kits yet.</p>
                             @endforelse
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
                 <div class="btn-container">
                     @if(request('tab', 'restaurants') == 'restaurants')
@@ -156,31 +124,7 @@
                     @endif
                 </div>
             </div>
-                    <div class="cart-total-brief">
-                        <p>Total: <span>{{number_format($totalPrice)}}</span></p>
-                    </div>
-                    @endif --}}
-                    <a href="{{ route('cart') }}" class="view-all">View Cart</a>
-            </div>
         </section>
-
-        <section class="dashboard-card">
-            <h3><i class="fa-solid fa-heart"></i> Favorite</h3>
-            <div class="card-content">
-                <div class="filter-options">
-                    <label><input type="radio" name="fav" checked> Restaurants</label>
-                    <label><input type="radio" name="fav"> Products</label>
-                </div>
-                </div>
-        </section>
-
-        <section class="dashboard-card">
-            <h3><i class="fa-solid fa-bag-shopping"></i> Purchased</h3>
-            <div class="card-content">
-                </div>
-        </section>
-    </div>
-</div>
 
         {{-- 4. Purchased --}}
         <section class="dashboard-card">
@@ -192,10 +136,8 @@
                 <div class="btn-container">
                     <a href="{{ route('purchased.index') }}" class="btn-back">View Order History</a>
                 </div>
+            </div>
         </section>
     </div>
 </div>
-@endsection
-@endsection
-
 @endsection
