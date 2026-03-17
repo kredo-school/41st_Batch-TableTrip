@@ -155,6 +155,7 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
         Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
+        Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
     });
 
 });

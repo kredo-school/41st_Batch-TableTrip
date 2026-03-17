@@ -3,7 +3,7 @@
 @section('title', 'Reservations')
 
 @section('content')
-<div class="container mx-auto my-3">
+<div class="mx-5 my-3">
     <div class="row mt-5">
         @include('restaurant-owners.sidebar')
 
@@ -105,7 +105,7 @@
                                                     default => 'bg-light text-dark',
                                                 };
                                             @endphp
-                                            <span class="badge rounded-pill {{ $statusClass }}">{{ $reservation->status}}</span>
+                                            <span class="p-2 badge rounded-pill {{ $statusClass }}">{{ $reservation->status}}</span>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editReservationModal" data-id="${item.id}">Edit</button>
@@ -115,7 +115,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $reservations->links() }}
+                            {{ $reservations->links('layouts.pagination.custom') }}
                         </div>
                     </div>
                 </div>
