@@ -5,12 +5,18 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
-use App\Http\Controllers\DashboardController; // 一般ユーザー用
-// use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
+
+// Admin
+use App\Http\Controllers\Admin\AdminLoginController;
+
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\DashboardController; // 一般ユーザー用
+
+// use App\Http\Controllers\ForgetController;  
+
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Models\User;
@@ -60,6 +66,37 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+    // ---  Reservation  ---
+   Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
+    Route::get('/', [ReservationController::class, 'index'])->name('index');
+    
+    Route::post('/store', [ReservationController::class, 'store'])->name('store');
+
+    Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+
+    Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
+
+    Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
+});
+    // ---  Cart ---
+    Route::prefix('cart')->name('cart.')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index'); // route('cart.index')
+        Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('destroy');
+    });
+    Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
+    });
+
+
+   // favorite zone
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/favorite/kits', [Favorite_KitsController::class, 'index'])->name('favorite_kits');
+    Route::get('/favorite/restaurant', [Favorite_RestaurantsController::class, 'index'])->name('favorite_restaurants');
+    // purchased
+Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
+});
+    
+    // --- Payment ---
+    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
     // --- 3. Reservation  ---
    Route::prefix('reservations')->name('reservations.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');            
@@ -91,10 +128,6 @@ Route::prefix('admin')->group(function () {
     Route::post('/login',
         [AdminLoginController::class, 'login']
     );
-
-    Route::post('/logout',
-        [AdminLoginController::class, 'logout']
-    )->name('admin.logout');
 });
 
 Route::prefix('admin')
@@ -104,11 +137,11 @@ Route::prefix('admin')
         Route::get('/dashboard',
             [DashboardController::class, 'index']
         )->name('admin.dashboard');
+    
+        Route::post('/logout',
+            [AdminLoginController::class, 'logout']
+    )->name('admin.logout');
 });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
 
 //Product
 Route::get('/products', function () {
@@ -119,6 +152,17 @@ Route::get('/products/{id}', function ($id) {
     return view('products.show'); 
 })->name('products.show');
 
+Route::get('/cart', function () {
+    return view('products.cart');
+})->name('cart.index');
+
+Route::get('/cart/confirm', function () {
+    return view('products.confirm');
+})->name('cart.confirm');
+
+Route::get('/cart/thanks', function () {
+    return view('products.thanks');
+})->name('cart.thanks');
 
 // for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
@@ -157,5 +201,4 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
         Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
     });
-
 });
