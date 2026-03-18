@@ -1,0 +1,102 @@
+/* 三角形のリボン本体 */
+.triangle-ribbon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 180px 200px 0 0; /* 三角形のサイズ */
+    border-color: #D97652 transparent transparent transparent; /* オレンジ色 */
+    z-index: 1;
+}
+
+/* リボンの上の文字（Easyなど） */
+.ribbon-text {
+    position: absolute;
+    top: 24px;
+    left: 12px;
+    transform: rotate(-45deg); /* 文字を斜めに */
+    transform-origin: center;
+    color: white;
+    font-weight: bold;
+    font-size: 45px;
+    z-index: 2;
+    white-space: nowrap;
+}
+
+/* カード自体の設定（リボンを固定するために必要） */
+.card.position-relative {
+    overflow: hidden; /* カードからはみ出たリボンを隠す */
+}
+
+/* カートを右上に固定するスタイル */
+.floating-cart {
+    position: fixed; /* 画面に固定 */
+    top: 80px;       /* 上から20px */
+    right: 20px;     /* 右から20px */
+    z-index: 2100;   /* 他の要素（1020など）より確実に上にする */
+    
+    background-color: #ffffff; /* カートの色 */
+    color: #ffffff;
+    padding: 10px 25px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.cart-link {
+    text-decoration: none;
+    color: #2c3e50 !important; /* 文字を白に強制 */
+    display: block;
+}
+
+.cart-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -3px;
+    right: -10px;
+    background-color: #e74c3c;
+    color: white;
+    font-size: 1rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.cart-text {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* カート画面用のミニリボン */
+.mini-triangle-ribbon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 0;
+    height: 0;
+    border-top: 35px solid #D96D55; /* イメージに合わせたオレンジ系 */
+    border-right: 35px solid transparent;
+    z-index: 1;
+}
+
+.mini-ribbon-text {
+    position: absolute;
+    top: 11px;
+    left: 9px;
+    color: #fff;
+    font-size: 0.5rem;
+    font-weight: bold;
+    transform: rotate(-45deg);
+    z-index: 2;
+}
+
+/* カート画面のフォント調整 */
+.cart-page {
+    letter-spacing: 0.05em;
+}
