@@ -6,20 +6,46 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
 
-    public function index(){
-        $owner = Auth::guard('restaurant')->user();
+   public function index(Request $request)
+{
+    $owner = Auth::guard('restaurant')->user();
 
-        $reservations = Reservation::where('restaurant_id',$owner->id)
-        ->latest()
-        ->paginate(5);
+    $query = Reservation::where('restaurant_id', $owner->id);
 
-        return view('restaurant-owners.reservations.index',compact('owner','reservations'));
+    // 名前検索
+    if ($request->filled('nameSearch')) {
+        $keyword = trim($request->nameSearch);
+        $query->where('full_name', 'like', '%' . $keyword . '%');
     }
+
+    // status検索
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
+
+    // 日付検索
+    if ($request->filled('date')) {
+    $query->whereDate('reservation_date', $request->date);
+
+    } elseif (!$request->filled('nameSearch') && !$request->filled('status')) {
+        // 何も検索してない時だけ
+        $query->whereDate('reservation_date', '>=', Carbon::today());
+    }
+
+    $reservations = $query
+        ->orderBy('reservation_date', 'asc')
+        ->orderBy('reservation_time', 'asc')
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('restaurant-owners.reservations.index', compact('owner', 'reservations'));
+}
 
     public function store(Request $request){
         
