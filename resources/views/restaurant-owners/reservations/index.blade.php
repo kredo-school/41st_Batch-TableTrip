@@ -33,7 +33,7 @@
                     </select>
                 </div>
                 <div class="col-12 col-lg-1 mb-3">
-                    <a href="{{ route('owner.reservations') }}" class="btn btn-outline-navy">
+                    <a href="{{ route('owner.reservations', ['month' => request('month', now()->format('Y-m'))]) }}" class="btn btn-outline-dark">
                         Reset
                     </a>
                 </div>
@@ -41,37 +41,83 @@
          </form>
 
             {{-- calendar / table area --}}
+            @php
+                use Carbon\Carbon;
+
+                $month = $currentMonth->copy();
+                $startOfMonth = $month->copy()->startOfMonth();
+                $endOfMonth = $month->copy()->endOfMonth();
+
+                $startDayOfWeek = $startOfMonth->dayOfWeek;
+                $daysInMonth = $endOfMonth->day;
+
+                $prevMonth = $month->copy()->subMonth()->format('Y-m');
+                $nextMonth = $month->copy()->addMonth()->format('Y-m');
+
+                $calendarDays = [];
+
+                for ($i = 0; $i < $startDayOfWeek; $i++) {
+                    $calendarDays[] = null;
+                }
+
+                for ($day = 1; $day <= $daysInMonth; $day++) {
+                    $calendarDays[] = $month->copy()->day($day);
+                }
+            @endphp
             <div class="row g-4 mb-5">
                 <div class="col-12 col-xl-5">
-                    <div class="card p-4 calendar-card">
+                    <div class="calendar-card p-4 border rounded bg-white">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <button type="button" id="prevMonth" class="btn btn-sm btn-light calendar-nav-btn">
+                            <a href="{{ route('owner.reservations', array_merge(request()->except('page', 'date'), ['month' => $prevMonth])) }}"
+                            class="btn btn-light">
                                 <i class="fa-solid fa-chevron-left"></i>
-                            </button>
+                            </a>
 
-                            <h4 id="calendarTitle" class="mb-0 text-center flex-grow-1">February 2026</h4>
+                            <h3 class="mb-0">{{ $month->format('F Y') }}</h3>
 
-                            <button type="button" id="nextMonth" class="btn btn-sm btn-light calendar-nav-btn">
+                            <a href="{{ route('owner.reservations', array_merge(request()->except('page', 'date'), ['month' => $nextMonth])) }}"
+                            class="btn btn-light">
                                 <i class="fa-solid fa-chevron-right"></i>
-                            </button>
+                            </a>
                         </div>
 
-                        <table class="table table-borderless text-center calendar-table mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Sun</th>
-                                    <th>Mon</th>
-                                    <th>Tue</th>
-                                    <th>Wed</th>
-                                    <th>Thu</th>
-                                    <th>Fri</th>
-                                    <th>Sat</th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {{-- JS --}}
-                            </tbody>
-                        </table>
+                        <div class="calendar-grid text-center">
+                            <div class="fw-bold">Sun</div>
+                            <div class="fw-bold">Mon</div>
+                            <div class="fw-bold">Tue</div>
+                            <div class="fw-bold">Wed</div>
+                            <div class="fw-bold">Thu</div>
+                            <div class="fw-bold">Fri</div>
+                            <div class="fw-bold">Sat</div>
+
+                            @foreach ($calendarDays as $date)
+                                @if ($date === null)
+                                    <div class="calendar-cell empty"></div>
+                                @else
+                                    @php
+                                        $formattedDate = $date->format('Y-m-d');
+                                        $hasReservation = array_key_exists($formattedDate, $reservationCounts);
+                                        $count = $reservationCounts[$formattedDate] ?? 0;
+                                        $isSelected = request('date') === $formattedDate;
+                                        $isToday = $date->isToday();
+                                    @endphp
+
+                                    <a href="{{ route('owner.reservations', array_merge(request()->except('page'), [
+                                        'date' => $formattedDate,
+                                        'month' => $month->format('Y-m')
+                                    ])) }}"
+                                    class="calendar-cell text-decoration-none text-dark {{ $isSelected ? 'selected' : '' }}">
+                                        <div class="day-number {{ $isSelected ? 'selected' : '' }} {{ !$isSelected && $isToday ? 'today' : '' }}">
+                                            {{ $date->day }}
+                                        </div>
+
+                                        @if ($hasReservation)
+                                            <span class="reservation-dot"></span>
+                                        @endif
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
@@ -109,7 +155,7 @@
                                             <td class="pe-3">
                                                 @php
                                                     $statusClass = match($reservation->status) {
-                                                        'pending' => 'bg-warning text-dark',
+                                                        'pending' => 'bg-warning',
                                                         'confirmed' => 'bg-success',
                                                         'cancelled' => 'bg-danger',
                                                         'completed' => 'bg-primary',
@@ -122,7 +168,9 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editReservationModal-{{ $reservation->id }}">
+                                                    Edit
+                                                </button>
                                             </td>
                                         </tr>
                                     @empty
@@ -144,5 +192,20 @@
     </div>
 </div>
  @include('restaurant-owners.reservations.modals.add')
- @include('restaurant-owners.reservations.modals.edit')
+ @foreach($reservations as $reservation)
+  @include('restaurant-owners.reservations.modals.edit')
+@endforeach
+@if (session('open_edit_modal'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalId = 'editReservationModal-{{ session('open_edit_modal') }}';
+            const modalElement = document.getElementById(modalId);
+
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
+        });
+    </script>
+@endif
 @endsection

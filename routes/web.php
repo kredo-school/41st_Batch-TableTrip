@@ -7,7 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CartController;
+// use App\Http\Controllers\CartController;
 
 // Admin
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -79,21 +79,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
 });
     // ---  Cart ---
-    Route::prefix('cart')->name('cart.')->group(function () {
-        Route::get('/', [CartController::class, 'index'])->name('index'); // route('cart.index')
-        Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('destroy');
-    });
-    Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
+    // Route::prefix('cart')->name('cart.')->group(function () {
+    //     Route::get('/', [CartController::class, 'index'])->name('index'); // route('cart.index')
+    //     Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('destroy');
+    // });
+    // Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
     });
 
-
-   // favorite zone
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/favorite/kits', [Favorite_KitsController::class, 'index'])->name('favorite_kits');
-    Route::get('/favorite/restaurant', [Favorite_RestaurantsController::class, 'index'])->name('favorite_restaurants');
-    // purchased
-Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
-});
     
     // --- Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
@@ -112,10 +104,10 @@ Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased
     //     Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('destroy');
     // });
     
-//     Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
-//     // --- 5. Payment ---
-//     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-});
+    // Route::get('/cart-page', [CartController::class, 'index'])->name('cart');
+    // --- 5. Payment ---
+    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
+
 
 
 // admin
@@ -200,5 +192,6 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
         Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
         Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
+        Route::patch('/reservations/{id}',[OwnerReservationController::class,'update'])->name('reservations.update');
     });
 });
