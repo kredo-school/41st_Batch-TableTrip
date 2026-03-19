@@ -71,13 +71,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ---  Reservation  ---
    Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
     Route::get('/', [ReservationController::class, 'index'])->name('index');
-    
     Route::post('/store', [ReservationController::class, 'store'])->name('store');
-
     Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
-
     Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-
     Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
     });
 });
@@ -185,5 +181,6 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
         Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
         Route::patch('/reservations/{id}',[OwnerReservationController::class,'update'])->name('reservations.update');
+        Route::get('/reservations/{id}',[OwnerReservationController::class,'show'])->name('reservations.show');
     });
 });
