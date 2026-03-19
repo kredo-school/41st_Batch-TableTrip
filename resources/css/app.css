@@ -377,7 +377,7 @@ h6{
 
 .day-number.selected {
     border: solid 2px #df7654;
-    color: #df7654;
+    color: #333;
     font-weight: 700;
 }
 

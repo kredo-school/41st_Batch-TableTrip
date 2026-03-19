@@ -135,7 +135,7 @@
                                         <th>Date</th>
                                         <th>Name</th>
                                         <th>Guests</th>
-                                        <th>Phone</th>
+                                        {{-- <th>Phone</th> --}}
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -149,9 +149,9 @@
                                                     {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}
                                                 </small>
                                             </td>
-                                            <td class="ps-3">{{ $reservation->full_name }}</td>
+                                            <td class="ps-4">{{ $reservation->full_name }}</td>
                                             <td class="ps-4">{{ $reservation->number_of_people }}</td>
-                                            <td>{{ $reservation->phone }}</td>
+                                            {{-- <td>{{ $reservation->phone }}</td> --}}
                                             <td class="pe-3">
                                                 @php
                                                     $statusClass = match($reservation->status) {
