@@ -5,11 +5,10 @@
    Dashboard
 </a>
 
-<a href="{{ route('admin.orders') }}"
+<a href="#"
    class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
    Orders
 </a>
-
 {{-- Orders Page作ったら 
     <a href="{{ route('admin.orders.index') }}"
    class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
@@ -40,7 +39,6 @@
 </div>
 
 </nav>
-
 
 @push('scripts')
 
