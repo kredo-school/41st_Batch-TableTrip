@@ -29,6 +29,9 @@ use App\Http\Controllers\PurchasedController; // 追加
 use App\Http\Controllers\Favorite_KitsController;
 use App\Http\Controllers\Favorite_RestaurantsController;
 
+//Product
+use App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
@@ -131,6 +134,9 @@ Route::prefix('admin')
 });
 
 //Product
+// 登録画面を表示するURL
+Route::get('/products/create', [OrderController::class, 'create'])->name('products.create');
+
 Route::get('/products', function () {
     return view('products.index');
 })->name('products.index');
@@ -150,6 +156,11 @@ Route::get('/cart/confirm', function () {
 Route::get('/cart/thanks', function () {
     return view('products.thanks');
 })->name('cart.thanks');
+
+Route::get('/order/details', [OrderController::class, 'showDetails']);
+
+// データを保存するURL（ボタンを押した時に動く）
+Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
 
 // for checking layouts
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
