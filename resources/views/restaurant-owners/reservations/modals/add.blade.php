@@ -5,7 +5,7 @@
       <div class="modal-header text-center" style="border-bottom:none;">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <div class="modal-body pt-3">
+        <div class="modal-body pt-3 m-3">
           <h1 class="fs-3 text-center mb-5  text-underline-accent" id="addReservationModalLabel">+ Add New Reservation</h1>
             <form action="{{ route('owner.reservations.store') }}" method="post">
                 @csrf
@@ -17,7 +17,7 @@
                         <i class="fa-regular fa-calendar me-1"></i>
                         Date
                     </label>
-                    <input type="date" class="form-control" name="reservation_date" id="reservation_date">
+                    <input type="date" class="form-control" name="reservation_date" id="reservation_date" value="{{ old('date')}}">
                         @error('reservation_date')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -31,7 +31,7 @@
                         <i class="fa-regular fa-clock me-1"></i>
                         Time
                     </label>
-                    <input type="time" class="form-control" name="reservation_time" id="reservation_time">
+                    <input type="time" class="form-control" name="reservation_time" id="reservation_time" value="{{ old('reservation_time')}}">
                         @error('reservation_time')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                         <i class="fa-solid fa-users me-1"></i>
                         <span style="font-size: 0.75rem;">Number of Guests</span>
                     </label>
-                    <input type="number" class="form-control" name="number_of_people" id="number_of_people"> 
+                    <input type="number" class="form-control" name="number_of_people" id="number_of_people" value="{{ old('number_of_people')}}"> 
                         @error('number_of_people')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -59,7 +59,7 @@
                         <i class="fa-regular fa-user me-1"></i>
                         Full Name
                     </label>
-                    <input type="text" class="form-control" name="full_name" id="full_name">
+                    <input type="text" class="form-control" name="full_name" id="full_name" value="{{ old('full_name')}}">
                       @error('full_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
                         <i class="fa-solid fa-phone me-1"></i>
                         Phone Number
                     </label>
-                    <input type="text" class="form-control" name="phone" id="phone">
+                    <input type="text" class="form-control" name="phone" id="phone" value="{{ old('phone')}}">
                         @error('phone')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -87,7 +87,7 @@
                         <i class="fa-regular fa-envelope me-1"></i>
                         Email Address
                     </label>
-                    <input type="email" class="form-control" name="email" id="email">
+                    <input type="email" class="form-control" name="email" id="email" value="{{ old('email')}}">
                        @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -101,7 +101,7 @@
                         <i class="fa-regular fa-comment me-1"></i>
                         Special Requests
                     </label>
-                    <textarea class="form-control" rows="4" name="special_request" id="special_request"></textarea>
+                    <textarea class="form-control" rows="4" name="special_request" id="special_request">{{ old('special_request') }}</textarea>
                        @error('special_request')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -115,7 +115,7 @@
                         <i class="fa-solid fa-circle-info me-1"></i>
                         Status
                     </label>
-                    <select class="form-select" name="status" id="status">
+                    <select class="form-select" name="status" id="status" value="{{ old('status')}}">
                         <option value="confirmed">Confirmed</option>
                         <option value="pending">Pending</option>
                         <option value="completed">Completed</option>

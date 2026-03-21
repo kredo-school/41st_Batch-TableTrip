@@ -21,5 +21,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        \App\Models\Category::create([
+            'name' => 'Meal Kit'
+        ]);
+
+        $this->call(ProductSeeder::class);
     }
 }
