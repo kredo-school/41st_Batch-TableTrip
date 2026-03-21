@@ -13,7 +13,9 @@ class ReservationController extends Controller
 
         $reservations = Reservation::where('user_id', $user->id)
             ->with('restaurant')
-            ->orderBy('reservation_date','asc')
+            ->orderBy('reserved_at','asc')
+            ->with('restaurant_id')
+            ->orderBy('reserved_at','asc')
             ->get();
         return view('user.reservations.index', compact('reservations'));
     }

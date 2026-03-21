@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TableTrip') }}|@yield('title')</title>
+        <title>{{ config('app.name', 'TableTrip') }} | @yield('title')</title>
 
          <!--Fontawesome-->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -88,6 +88,7 @@
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end">
+                                    {{-- logout --}}
                                     <li>
                                     <form action="/logout" method="POST" class="m-0">
                                         @csrf 
@@ -95,6 +96,25 @@
                                           <i class="bi bi-box-arrow-right me-2"></i> Logout
                                         </button>
                                     </form>
+                                    </li>
+                                    {{-- edit profile --}}
+                                    <li>
+                                        <a href="{{ route('user.edit')}}" class="dropdown-item">
+                                            <i class="bi bi-person me-2"></i> Edit Profile
+                                        </a>
+                                    </li>
+                                    
+                                    {{-- inquiry --}}
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                        <i class="bi bi-envelope me-2"></i> Inquiry
+                                        </a>
+                                    </li>
+                                    {{-- edit payment setting --}}
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="bi bi-credit-card me-2"></i> Payment
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
