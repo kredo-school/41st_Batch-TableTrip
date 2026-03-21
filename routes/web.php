@@ -62,7 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
 
-// --- 3. My Page & Profile ---
+// --- 3. My Page & Profile  ---
     Route::prefix('mypage')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'show'])->name('show');
         Route::get('/edit', [UserController::class, 'edit'])->name('edit');
