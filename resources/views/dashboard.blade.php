@@ -80,52 +80,60 @@
             </div>
         </section>
 
-        {{-- 3. Favorite --}}
-        <section class="dashboard-card">
-            <h3><i class="fa-solid fa-heart"></i> Favorite</h3>
-            <div class="card-content">
-                <div class="info-area">
-                    <form action="{{ route('dashboard') }}" method="GET" id="fav-form">
-                        <div class="selection-group">
-                            <input type="radio" name="tab" id="show-restaurants" value="restaurants" 
-                                {{ request('tab', 'restaurants') == 'restaurants' ? 'checked' : '' }} 
-                                onchange="this.form.submit()">
-                            <label for="show-restaurants">Restaurants</label>
+       
+{{-- 3. Favorite --}}
+<section class="dashboard-card">
+    <h3><i class="fa-solid fa-heart"></i> Favorite</h3>
+    <div class="card-content">
+        <div class="info-area">
+            
+            <form action="{{ route('dashboard') }}" method="GET" id="fav-form">
+                <div class="selection-group">
+                    <input type="radio" name="tab" id="show-restaurants" value="restaurants" 
+                        {{ request('tab', 'restaurants') == 'restaurants' ? 'checked' : '' }} 
+                        onchange="this.form.submit()">
+                    <label for="show-restaurants">Restaurants</label>
 
-                            <input type="radio" name="tab" id="show-products" value="products" 
-                                {{ request('tab') == 'products' ? 'checked' : '' }} 
-                                onchange="this.form.submit()">
-                            <label for="show-products">Kits</label>
+                    <input type="radio" name="tab" id="show-products" value="products" 
+                        {{ request('tab') == 'products' ? 'checked' : '' }} 
+                        onchange="this.form.submit()">
+                    <label for="show-products">Kits</label>
+                </div>
+            </form>
+            <hr>
+
+            <div class="row">
+                @if(request('tab', 'restaurants') == 'restaurants')
+                   
+                    @forelse ($favorite_restaurants ?? [] as $restaurant)
+                        <div class="col-12">
+                            <p>{{ $restaurant->name ?? $restaurant->restaurant_name }}</p>
                         </div>
-                    </form>
-                    <hr>
-
-                    <div class="row">
-                        @if(request('tab', 'restaurants') == 'restaurants')
-                            @forelse ($favorite_restaurants as $restaurant)
-                                <div class="col-12"><p>{{ $restaurant->name ?? $restaurant->restaurant_name }}</p></div>
-                            @empty
-                                <p class="text-muted">No favorite restaurants yet.</p>
-                            @endforelse
-                        @else
-                            @forelse ($favorite_kits as $kit)
-                                <div class="col-12"><p>{{ $kit->product->name ?? 'N/A' }}</p></div>
-                            @empty
-                                <p class="text-muted">No favorite kits yet.</p>
-                            @endforelse
-                        @endif
-                    </div>
-                </div>
-                <div class="btn-container">
-                    @if(request('tab', 'restaurants') == 'restaurants')
-                        <a href="{{ route('favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
-                    @else
-                        <a href="{{ route('favorite_kits') }}" class="btn-back">View All Kits</a>
-                    @endif
-                </div>
+                    @empty
+                        <p class="text-muted">No favorite restaurants yet.</p>
+                    @endforelse
+                @else
+                    
+                    @forelse ($favorite_kits ?? [] as $kit)
+                        <div class="col-12">
+                            <p>{{ $kit->product->name ?? 'N/A' }}</p>
+                        </div>
+                    @empty
+                        <p class="text-muted">No favorite kits yet.</p>
+                    @endforelse
+                @endif
             </div>
-        </section>
+        </div>
 
+        <div class="btn-container">
+            @if(request('tab', 'restaurants') == 'restaurants')
+                <a href="{{ route('favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
+            @else
+                <a href="{{ route('favorite_kits') }}" class="btn-back">View All Kits</a>
+            @endif
+        </div>
+    </div>
+</section>
         {{-- 4. Purchased --}}
         <section class="dashboard-card">
             <h3><i class="fa-solid fa-bag-shopping"></i> Purchased</h3>

@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Restaurant;
 
 class Reservation extends Model
 {
+    use HasFactory;
+
     protected $fillable = [ 
-        'restaurants_id',
+        'restaurant_id',    // 'restaurants_id' から修正（単数形が一般的）
         'user_id',
-        'reservation_date',
-        'reservation_time',
-        'number_of_people',
+        'reserved_at',
+        'number_of_people', // もしDBが number_of_guests ならそちらに合わせてください
         'full_name',
         'phone',
         'email',
@@ -24,16 +24,18 @@ class Reservation extends Model
     ];
 
     protected $casts = [
-        'reservation_date' => 'date',
+        'reserved_at' => 'date',
         'visited_at' => 'datetime',
     ];
 
-    // : BelongsTo -> IDE補完・laravel推奨・型安全　
+ 
     public function restaurant(): BelongsTo
     {
-        return $this->belongsTo(Restaurant::class);
+
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
     }
 
+  
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
