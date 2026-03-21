@@ -27,5 +27,5 @@ public function index(Request $request)
     return view('dashboard', compact(
         'latest_reservations', 'cart_items', 'totalPrice', 'favorite_restaurants', 'favorite_kits' 
     ));
-}}
+}};
 
