@@ -20,6 +20,7 @@
                     <th>Edit</th>
                 </tr>
             </thead>
+            
             <tbody>
                 @forelse ($cart_items as $item)
                     <tr>
