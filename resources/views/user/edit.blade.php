@@ -4,6 +4,7 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+
 <div class="edit-wrapper">
     <div class="edit-card">
         <h2 class="edit-title">Edit User Account</h2>
@@ -100,4 +101,8 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> 6e6d6e04e2e1843a4131091d9148ff06917c9590
