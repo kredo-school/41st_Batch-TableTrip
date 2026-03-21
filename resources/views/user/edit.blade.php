@@ -4,6 +4,7 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+
 <div class="edit-wrapper">
     <div class="edit-card">
         <h2 class="edit-title">Edit User Account</h2>
