@@ -8,33 +8,29 @@
     <div class="edit-card">
         <h2 class="edit-title">Edit User Account</h2>
 
-        {{-- 1. Update Form--}}
+        {{-- Update Form --}}
         <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data" id="update-form">
             @csrf
             @method('PUT')
 
             <div class="form-grid">
-                {{-- Profile Picture --}}
+                {{-- Profile Picture--}}
                 <div class="form-row">
                     <label>Profile Picture</label>
                     <div class="input-field profile-section">
                         <label for="profile_picture" class="profile-upload-label">
-                            @if($user->profile_picture)
-                                <img id="profile_picture_preview" src="{{ asset('storage/' . $user->profile_picture) }}" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
-                            @else
-                                <img id="profile_picture_preview" src="" style="display: none; width: 60px; height: 60px; object-fit: cover;" class="rounded-circle">
-                                <svg id="default_svg" width="50" height="50" viewBox="0 0 64 64">
-                                    <circle cx="32" cy="32" r="30" stroke="#4A4A4A" fill="none" />
-                                    <path d="M32 32C37 32 41 28 41 23S37 14 32 14 23 18 23 23 27 32 32 32Z" stroke="#4A4A4A" fill="none"/>
-                                    <path d="M50 50C50 44 45 40 32 40S14 44 14 50" stroke="#4A4A4A" fill="none"/>
-                                </svg>
-                            @endif
+                            <svg id="default_svg" class="upload-icon" width="50" height="50" viewBox="0 0 64 64">
+                                <circle cx="32" cy="32" r="30" stroke="#4A4A4A" fill="none" />
+                                <path d="M32 32C37 32 41 28 41 23S37 14 32 14 23 18 23 23 27 32 32 32Z" stroke="#4A4A4A" fill="none"/>
+                                <path d="M50 50C50 44 45 40 32 40S14 44 14 50" stroke="#4A4A4A" fill="none"/>
+                            </svg>
+                            <span class="upload-status">Done!</span>
+                            <input type="file" name="profile_picture" id="profile_picture" class="hidden-input" accept="image/*" required>
                         </label>
-                        <input type="file" name="profile_picture" id="profile_picture" style="display:none;" accept="image/*" onchange="previewImage(this);">
                     </div>
                 </div>
 
-                {{--edit information --}}
+                {{-- Edit Information --}}
                 <div class="form-row">
                     <label>First Name</label>
                     <div class="input-field"><input type="text" name="first_name" class="form-control" value="{{ old('first_name', $user->first_name) }}" required></div>
@@ -60,8 +56,8 @@
                     <div class="input-field"><input type="text" name="postal_code" class="form-control" value="{{ old('postal_code', $user->postal_code) }}" required></div>
                 </div>
 
-                {{-- Address & Country  --}}
-               <div class="form-row">
+                {{-- Address --}}
+                <div class="form-row">
                     <label for="address">Address</label>
                     <div class="input-field">
                         <input type="text" name="address" id="address" class="form-control" value="{{ old('address', $user->address) }}" required>
@@ -88,39 +84,20 @@
             </div>
         </form>
 
-        {{--button area --}}
+        {{-- Button Area --}}
         <div class="edit-actions-container">
-            {{-- 1. Update Button  --}}
             <button type="submit" form="update-form" class="btn-update">Update Account</button>
 
-            {{-- 2. Delete Form --}}
-            <form action="{{ route('user.destroy') }}" method="POST" onsubmit="return confirm('Are you sure?');" class="m-0">
+            <form action="{{ route('user.destroy') }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete your account?');" class="m-0">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn-delete">Delete Account</button>
             </form>
 
-            {{-- 3. Back Button --}}
-            <a href="{{ route('dashboard') }}" class="btn-back" onclick="return confirm ('Any unsaved changes will be lost. Are you sure you want to return to the dashboard?');">
+            <a href="{{ route('dashboard') }}" class="btn-back" onclick="return confirm('Any unsaved changes will be lost. Are you sure you want to return to the dashboard?');">
                 <i class="fa-solid fa-house"></i> Back to Dashboard
             </a>
         </div>
     </div>
 </div>
-
-<script>
-function previewImage(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var img = document.getElementById('profile_picture_preview');
-            img.src = e.target.result;
-            img.style.display = 'block';
-            var svg = document.getElementById('default_svg');
-            if(svg) svg.style.display = 'none';
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-</script>
 @endsection
