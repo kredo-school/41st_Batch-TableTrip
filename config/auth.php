@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'restaurant'=>[
+            'driver' => 'session',
+            'provider' => 'restaurant',
+        ]
     ],
 
     /*
@@ -69,6 +73,11 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'restaurant' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Restaurant::class,
+        ]
     ],
 
     /*
