@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; 
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
+use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
 
 //Restaurant
 use App\Http\Controllers\RestaurantController;
@@ -182,9 +183,16 @@ Route::prefix('owner')->name('owner.')->group(function () {
     Route::middleware('auth:restaurant')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
+
+        //Reservations
         Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
         Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
         Route::patch('/reservations/{id}',[OwnerReservationController::class,'update'])->name('reservations.update');
         Route::get('/reservations/{id}',[OwnerReservationController::class,'show'])->name('reservations.show');
+
+        //Orders
+        Route::get('/orders',[OwnerOrdersController::class,'index'])->name('orders');
+        Route::get('/orders/{id}',[OwnerOrdersController::class,'show'])->name('orders.show');
+        Route::patch('/orders/{id}',[OwnerOrdersController::class,'update'])->name('orders.update');
     });
 });

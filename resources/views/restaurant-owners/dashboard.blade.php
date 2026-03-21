@@ -123,7 +123,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h3 class="mb-2 text-underline-accent">This Week Revenue </h3>
-                             <p class="fs-3 text-center" style="font-family: 'Sen',sans-serif;">$12,800 <span class="text-danger ps-3">+12%</span> from last week</p>
+                             <p class="fs-3 text-center font-sen"> $12,800 <span class="text-danger ps-3">+12%</span> from last week</p>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h3 class="text-underline-accent">Top Selling</h3>
-                             <p class="fs-3 text-center" style="font-family: 'Sen',sans-serif;">Teriyaki Chicken <span class="text-danger ps-3">32</span>orders</p>
+                             <p class="fs-3 text-center font-sen">Teriyaki Chicken <span class="text-danger ps-3">32</span>orders</p>
                         </div>
                     </div>
                 </div>

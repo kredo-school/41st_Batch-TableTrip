@@ -76,4 +76,9 @@ class User extends Authenticatable
   
     //     return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
     // }
+
+    // Restaurant-owner 
+    public function user(){
+        return $this->belongTo(User::class);
+    }
 }

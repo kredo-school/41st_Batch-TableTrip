@@ -195,17 +195,4 @@
  @foreach($reservations as $reservation)
   @include('restaurant-owners.reservations.modals.edit')
 @endforeach
-@if (session('open_edit_modal'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modalId = 'editReservationModal-{{ session('open_edit_modal') }}';
-            const modalElement = document.getElementById(modalId);
-
-            if (modalElement) {
-                const modal = new bootstrap.Modal(modalElement);
-                modal.show();
-            }
-        });
-    </script>
-@endif
 @endsection
