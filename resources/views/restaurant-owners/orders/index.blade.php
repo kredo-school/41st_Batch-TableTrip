@@ -3,14 +3,12 @@
 @section('title','Orders')
     
 @section('content')
-<div class="container mx-auto my-5">
+<div class="mx-5 my-5">
     <div class="row">
         @include('restaurant-owners.sidebar')
-
-        <div class="col-12 col-lg-9">
-
+        <div class="col-12 col-lg-9 px-5">
             <div class="row g-3 mb-3">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6 ">
                     <div class="input-group search-group">
                         <span class="input-group-text bg-white">
                             <i class="fa-solid fa-magnifying-glass"></i>

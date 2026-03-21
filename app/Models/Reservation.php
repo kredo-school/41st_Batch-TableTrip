@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Restaurant;
 
 class Reservation extends Model
 {
+    use HasFactory;
+    
     protected $fillable = [ 
         'restaurants_id',
         'user_id',

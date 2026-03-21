@@ -3,7 +3,7 @@
 @section('title', 'Reservation Details')
 
 @section('content')
-<div class="container my-5 mx-auto">
+<div class="my-5 mx-5">
     <div class="row">
         @include('restaurant-owners.sidebar')
       
