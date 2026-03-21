@@ -17,25 +17,17 @@
 
 @include('partials.header')
 
-<div class="container-fluid">
-
-<div class="row">
-
 @include('admin.partials.sidebar')
 
-<main class="col-md-10 ms-sm-auto px-md-4 py-4">
-
-@yield('content')
-
+<main class="main-content px-md-4">
+    @yield('content')
 </main>
-
-</div>
-
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @stack('scripts')
+
+@include('partials.footer')
 
 </body>
 

@@ -59,3 +59,7 @@ Route::view('/restaurant-page', 'restaurants.restaurant_page');
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
 });
+
+// Admin Order Detail Page //
+Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])
+    ->name('admin.orders.show');

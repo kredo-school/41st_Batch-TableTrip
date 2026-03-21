@@ -46,7 +46,7 @@
                         </td>
 
                         <td>
-                            <a href="#" class="action-link">View</a>
+                            <a href="{{ route('admin.orders.show', $order->id) }}" class="action-link">View</a>
                             </td>
                     </tr>
                     @endforeach
