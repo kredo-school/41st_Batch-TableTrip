@@ -241,6 +241,30 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
     padding: 10px 20px;
     border-radius: 10px;
 }
+.hidden-input {
+    display: none;
+}
+
+.upload-icon {
+    transition: all 0.3s;
+}
+
+.hidden-input:valid + .upload-icon {
+    stroke: #28a745; 
+    transform: scale(0.9);
+    opacity: 0.5;
+}
+
+.upload-status {
+    display: none;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.hidden-input:valid ~ .upload-status {
+    display: block; 
+}
+
 
 /* edit payment */
 .payment-body{
