@@ -100,16 +100,24 @@
                         <input type="text" name="postal_code" id="postal_code" class="form-control" value="{{ old('postal_code') }}" placeholder="postal code">
                     </div>
                 </div>
-
-                <div class="row mb-3 align-items-start">
-                    <div class="col-sm-4">
-                        <label class="form-label mt-1">Address</label>
+                {{-- Address Row --}}
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-sm-4">
+                            <label for="address" class="form-label">Address</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" name="address" id="address" class="form-control" value="{{ old('address') }}" placeholder="address">
+                        </div>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="d-flex flex-column gap-2">
-                            <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="address">
-                            <select name="country" class="form-select text-muted" required >
-                                <option value="" class="text-muted">country</option>
+
+                    {{-- Country Row --}}
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-sm-4">
+                            <label for="country" class="form-label">Country</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <select name="country" id="country" class="form-select text-muted" required>
+                                <option value="" class="text-muted">Select country</option>
                                 <option value="Japan" {{ old('country')=='Japan'?'selected':'' }}>Japan</option>
                                 <option value="USA" {{ old('country')=='USA'?'selected':'' }}>USA</option>
                                 <option value="South Korea" {{ old('country')=='South Korea'?'selected':'' }}>South Korea</option>
@@ -140,7 +148,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
 
                 <div class="row mb-3 align-items-center">
                     <div class="col-sm-4">
