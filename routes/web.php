@@ -8,9 +8,9 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\PurchasedController; // 追加
+use App\Http\Controllers\PurchasedController; 
 use App\Http\Controllers\Favorite_KitsController;
 use App\Http\Controllers\Favorite_RestaurantsController;
 
@@ -38,13 +38,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- Dashboard ---
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // --- 1. Cart (ここを修正しました) ---
+    // --- 1. Cart \
     Route::prefix('cart')->name('user.')->group(function () {
-        Route::get('/', [CartController::class, 'index'])->name('cart'); // これで route('user.cart') が有効になります
+        Route::get('/', [CartController::class, 'index'])->name('cart'); 
         Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('cart_destroy');
     });
 
-    // --- 2. Purchased (購入履歴ページを追加) ---
+    // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
 
     // --- 3. My Page & Profile ---
