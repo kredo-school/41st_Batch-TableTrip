@@ -17,14 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User', 'password' => bcrypt('password')]
+        );
 
-        \App\Models\Category::create([
-            'name' => 'Meal Kit'
-        ]);
+        \App\Models\Category::firstOrCreate(
+            ['name' => 'Meal Kit']
+        );
 
         $this->call(ProductSeeder::class);
     }

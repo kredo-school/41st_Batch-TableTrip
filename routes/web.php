@@ -116,17 +116,14 @@ Route::prefix('admin')
 // 登録画面を表示するURL
 Route::get('/products/create', [OrderController::class, 'create'])->name('products.create');
 
-Route::get('/products', function () {
-    return view('products.index');
-})->name('products.index');
+Route::get('/products', [OrderController::class, 'index'])->name('products.index');
 
-Route::get('/products/{id}', function ($id) {
-    return view('products.show'); 
-})->name('products.show');
+Route::get('/products/{id}', [OrderController::class, 'show'])->name('products.show');
 
-Route::get('/cart', function () {
-    return view('products.cart');
-})->name('cart.index');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
 Route::get('/cart/confirm', function () {
     return view('products.confirm');

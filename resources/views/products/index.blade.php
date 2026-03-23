@@ -10,7 +10,7 @@
             <a href="{{ route('cart.index') }}" class="cart-link">
                 <div class="cart-wrapper">
                     <i class="bi bi-cart-fill fs-2"></i>
-                    <span class="cart-badge">1</span> {{-- 商品数を表示するバッジ --}}
+                    <span class="cart-badge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
                 </div>
                 <p class="cart-text">Items</p>
             </a>
@@ -154,126 +154,91 @@
 
            {{-- 商品グリッド --}}
             <div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+                @forelse($products as $product)
                 <div class="col">
-                    <a href="{{ route('products.show', ['id' => 1]) }}" class="text-decoration-none text-dark d-block h-100">
-                    <div class="card h-100 shadow-sm border-0 position-relative">
-                        <div class="triangle-ribbon"></div>
-                        <div class="ribbon-text">Easy</div>
-                        <img src="{{ asset('images/journykit.png') }}" class="card-img-top" alt="Journey Kit">
-                        {{-- テキスト内容 --}}
-                <div class="card-body pt-3 text-start">
-                    <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Journey Kit</h4>
-                    
-                    {{-- タグ (Cool) --}}
-                    <div class="mb-2">
-                        <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Cool</span>
-                    </div>
+                    <div class="card h-100 border-0 position-relative" style="background-color: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
 
-                    {{-- 星評価とカート --}}
-                    <div class="d-flex justify-content-between align-items-end mt-3">
-                        <div>
-                            <div class="text-warning mb-1" style="font-size: 1.5rem;">
-                                ★★★★★
+                        {{-- リボン --}}
+                        @if($product->badge)
+                            @php
+                                $badgeColor = match($product->badge) {
+                                    'Easy'    => '#D97652',
+                                    'Special' => '#E8C43A',
+                                    'Kids OK' => '#3DBDB5',
+                                    default   => '#D97652',
+                                };
+                            @endphp
+                            <div class="triangle-ribbon" style="border-color: {{ $badgeColor }} transparent transparent transparent;"></div>
+                            <div class="ribbon-text" style="font-size: {{ $product->badge === 'Kids OK' ? '26px' : '36px' }};">{{ $product->badge }}</div>
+                        @endif
+
+                        {{-- 商品画像（クリックで詳細へ） --}}
+                        <a href="{{ route('products.show', ['id' => $product->id]) }}" class="text-decoration-none text-dark">
+                            @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}"
+                                     class="card-img-top"
+                                     alt="{{ $product->name }}"
+                                     style="object-fit: cover; height: 190px; width: 100%;">
+                            @else
+                                <img src="https://via.placeholder.com/300x190?text=No+Image"
+                                     class="card-img-top"
+                                     alt="No Image"
+                                     style="height: 190px; object-fit: cover;">
+                            @endif
+                        </a>
+
+                        <div class="card-body px-3 pt-3 pb-3 text-start">
+                            {{-- 商品名 + 価格（クリックで詳細へ） --}}
+                            <a href="{{ route('products.show', ['id' => $product->id]) }}" class="text-decoration-none text-dark">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    <h5 class="fw-bold mb-0" style="font-family: serif; color: #333;">{{ $product->name }}</h5>
+                                    <span class="fw-bold text-nowrap ms-2" style="font-size: 0.95rem; color: #333;">¥{{ number_format($product->price) }}-</span>
+                                </div>
+
+                                {{-- タグ --}}
+                                @if($product->tag)
+                                <div class="mb-2">
+                                    <span class="border border-dark px-2 py-0" style="font-size: 0.75rem; border-radius: 3px;">{{ $product->tag }}</span>
+                                </div>
+                                @endif
+                            </a>
+
+                            {{-- 星評価 + カート --}}
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div>
+                                    <div class="mb-0" style="font-size: 1.1rem; line-height: 1;">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            @if($i <= floor($product->rating))
+                                                <span style="color: #F5A623;">★</span>
+                                            @else
+                                                <span style="color: #ddd;">★</span>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    <span class="text-muted" style="font-size: 0.7rem;">{{ $product->rating }} (40)</span>
+                                </div>
+
+                                {{-- カートボタン --}}
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <button type="submit" class="border-0 bg-transparent text-center" style="cursor: pointer;">
+                                        <i class="bi bi-cart-fill" style="font-size: 1.6rem; color: #2c3e50;"></i>
+                                        <p class="mb-0" style="font-size: 0.6rem; font-weight: bold; color: #2c3e50;">Add Cart</p>
+                                    </button>
+                                </form>
                             </div>
-                            <span class="small text-muted">5.0 (40)</span>
                         </div>
-                        
-                        {{-- カートボタン --}}
-                        <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
-                            <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
-                            <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
-                        </div>
+
                     </div>
-                    
-                    {{-- 価格 (デザインに合わせて追加) --}}
-                    <p class="mt-2 mb-0 fw-bold h5">¥2,480~</p>
                 </div>
-            </div>
-        </a>
-    </div>
-
-
-
-
-    {{-- 2つ目の商品（ダミー） --}}
-        <div class="col">
-            <div class="card h-100 shadow-sm border-0 position-relative p-3" style="background-color: #fcfbf9; border-radius: 15px;">
-                <div class="position-relative">
-                    <img src="https://via.placeholder.com/300x200?text=Product+2" class="card-img-top" alt="Sample" style="border-radius: 10px;">
+                @empty
+                <div class="col-12 text-center text-muted py-5">
+                    <p>No products found.</p>
                 </div>
-                <div class="card-body pt-3 text-start">
-                    <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Traditional Pasta</h4>
-                    <div class="mb-2">
-                        <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Flash Flozen</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-end mt-3">
-                        <div>
-                            <div class="text-warning mb-1" style="font-size: 1.5rem;">★★★★☆</div>
-                            <span class="small text-muted">4.2 (15)</span>
-                        </div>
-                        <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
-                            <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
-                            <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
-                        </div>
-                    </div>
-                    <p class="mt-2 mb-0 fw-bold h5">¥1,850~</p>
-                </div>
+                @endforelse
             </div>
         </div>
-
-        {{-- 3つ目の商品（ダミー） --}}
-        <div class="col">
-            <div class="card h-100 shadow-sm border-0 position-relative p-3" style="background-color: #fcfbf9; border-radius: 15px;">
-                <div class="position-relative">
-                    <img src="https://via.placeholder.com/300x200?text=Product+3" class="card-img-top" alt="Sample" style="border-radius: 10px;">
-                </div>
-                <div class="card-body pt-3 text-start">
-                    <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Spicy Curry Kit</h4>
-                    <div class="mb-2">
-                        <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Cool</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-end mt-3">
-                        <div>
-                            <div class="text-warning mb-1" style="font-size: 1.5rem;">★★★★★</div>
-                            <span class="small text-muted">4.8 (22)</span>
-                        </div>
-                        <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
-                            <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
-                            <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
-                        </div>
-                    </div>
-                    <p class="mt-2 mb-0 fw-bold h5">¥2,100~</p>
-                </div>
-            </div>
-        </div>
-
-        {{-- 4つ目の商品（ここから2行目） --}}
-        <div class="col">
-            <div class="card h-100 shadow-sm border-0 position-relative p-3" style="background-color: #fcfbf9; border-radius: 15px;">
-                <div class="position-relative">
-                    <img src="https://via.placeholder.com/300x200?text=Product+4" class="card-img-top" alt="Sample" style="border-radius: 10px;">
-                </div>
-                <div class="card-body pt-3 text-start">
-                    <h4 class="fw-bold mb-2" style="font-family: serif; color: #333;">Green Salad Mix</h4>
-                    <div class="mb-2">
-                        <span class="border border-dark px-3 py-1 small" style="border-radius: 2px;">Flash Frozen</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-end mt-3">
-                        <div>
-                            <div class="text-warning mb-1" style="font-size: 1.5rem;">★★★☆☆</div>
-                            <span class="small text-muted">3.5 (8)</span>
-                        </div>
-                        <div class="text-center" style="cursor: pointer; margin-bottom: -30px;">
-                            <i class="bi bi-cart-fill fs-2" style="color: #2c3e50;"></i>
-                            <p class="mb-0" style="font-size: 0.7rem; font-weight: bold;">Add Cart</p>
-                        </div>
-                    </div>
-                    <p class="mt-2 mb-0 fw-bold h5">¥1,200~</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     // メニュー全体の開閉
