@@ -67,6 +67,20 @@ h2.custom-header {
     align-items: center;
     justify-content: center;
 }
+.btn-equal {
+    flex: 1;                
+    display: inline-flex;   
+    align-items: center;    
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: 0.3s;
+    border-radius: 8px;     
+    box-sizing: border-box; 
+    padding: 0;            
+}
 
 .btn-custom:hover {
     opacity: 0.7;
@@ -77,6 +91,17 @@ h2.custom-header {
     position: relative;
     display: inline-block;
     transition: transform 0.2s ease;
+}
+.btn-register.btn-custom {
+    background-color: #FF6F61 !important;
+    border: none !important;
+    color: #ffffff !important;
+}
+.btn-back.btn-custom {
+    background-color: transparent !important;
+    border: 1px solid #000000 !important;
+    color: #000000 !important;
+    text-decoration: none;
 }
 
 .profile-upload-label:hover {
@@ -111,10 +136,14 @@ h2.custom-header {
 .profile-preview-img {
     width: 60px;
     height: 60px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 1px solid #D1CFC0;
-    display: none; }
+    object-fit: cover; 
+    border-radius: 50%; 
+    pointer-events: none; 
+}
+
+profile-default-svg {
+    pointer-events: none; 
+}
 
 .file-name-text {
     font-size: 0.65rem;
@@ -356,7 +385,7 @@ input[type="text"], input[type="email"], input[type="password"], select {
     font-size: 18px;
 }
 
-.btn-register {
+/* .btn-register {
     display: block;
     margin: 20px auto 0;
     padding: 10px 50px;
@@ -364,7 +393,7 @@ input[type="text"], input[type="email"], input[type="password"], select {
     border: 1px solid #ccc;
     cursor: pointer;
     font-weight: bold;
-}
+} */
 
 .btn-register:hover {
     background-color: #eee;
@@ -635,16 +664,7 @@ input[type="text"], input[type="email"], input[type="password"], select {
     margin-top:30px;
 }
 
-.btn-back {
-    display:inline-block;
-    padding:10px 25px;
-    background-color: #4a4a4a;
-    color:white;
-    text-decoration: none;
-    border-radius:5px;
-    font-family: 'Playfair Display',serif;
-    transition:0.3s;
-}
+
 
 .btn-back:hover {
     background-color: #e2725b;
