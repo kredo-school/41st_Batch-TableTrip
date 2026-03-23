@@ -14,13 +14,15 @@
 /* リボンの上の文字（Easyなど） */
 .ribbon-text {
     position: absolute;
-    top: 24px;
-    left: 12px;
-    transform: rotate(-45deg); /* 文字を斜めに */
+    top: 42px;
+    left: -14px;
+    width: 165px;
+    text-align: center;
+    transform: rotate(-45deg);
     transform-origin: center;
     color: white;
     font-weight: bold;
-    font-size: 45px;
+    font-size: 36px;
     z-index: 2;
     white-space: nowrap;
 }
@@ -80,20 +82,24 @@
     left: 8px;
     width: 0;
     height: 0;
-    border-top: 35px solid #D96D55; /* イメージに合わせたオレンジ系 */
-    border-right: 35px solid transparent;
+    border-top: 70px solid #D96D55;
+    border-right: 75px solid transparent;
     z-index: 1;
 }
 
 .mini-ribbon-text {
     position: absolute;
-    top: 11px;
-    left: 9px;
+    top: 25px;
+    left: 4px;
+    width: 65px;
+    text-align: center;
     color: #fff;
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     font-weight: bold;
     transform: rotate(-45deg);
+    transform-origin: center;
     z-index: 2;
+    white-space: nowrap;
 }
 
 /* カート画面のフォント調整 */
