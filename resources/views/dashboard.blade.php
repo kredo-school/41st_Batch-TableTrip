@@ -105,7 +105,7 @@
             <div class="row">
                 @if(request('tab', 'restaurants') == 'restaurants')
                    
-                    @forelse ($favorite_restaurants ?? [] as $restaurant)
+                    @forelse ($favoriterestaurants ?? [] as $restaurant)
                         <div class="col-12">
                             <p>{{ $restaurant->name ?? $restaurant->restaurant_name }}</p>
                         </div>
@@ -114,7 +114,7 @@
                     @endforelse
                 @else
                     
-                    @forelse ($favorite_kits ?? [] as $kit)
+                    @forelse ($favoritekits ?? [] as $kit)
                         <div class="col-12">
                             <p>{{ $kit->product->name ?? 'N/A' }}</p>
                         </div>
