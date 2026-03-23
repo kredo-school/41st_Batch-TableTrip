@@ -23,9 +23,7 @@
                     <div class="col-sm-8 text-center text-sm-start">
                         <label for="profile_picture" class="profile-upload-label">
                             {{-- Image for preview --}}
-                            <img id="profile_picture_preview" src="#" alt="Preview" class="profile-preview-img">
-
-                            {{-- Default SVG Icon --}}
+                            <img id="profile_picture_preview" src="#" alt="Preview" class="profile-preview-img" style="display: none;">
                             <svg id="default_svg" width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="profile-default-svg">
                                 <path d="M32 32C37.5228 32 42 27.5228 42 22C42 16.4772 37.5228 12 32 12C26.4772 12 22 16.4772 22 22C22 27.5228 26.4772 32 32 32Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M52 52C52 46.4772 47.5228 42 42 42H22C16.4772 42 12 46.4772 12 52" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -145,9 +143,14 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ url()->previous() }}" class="btn btn-custom btn-back">Back</a>
-                    <button type="submit" class="btn btn-custom btn-register">Register</button>
+                <div class="row mt-5">
+                    <div class="col-sm-4"></div> 
+                    <div class="col-sm-8">
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="{{ route('login') }}" class="btn-back btn-equal text-center">BACK</a>
+                            <button type="submit" class="btn-register btn-equal">REGISTER</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
