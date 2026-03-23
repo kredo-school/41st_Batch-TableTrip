@@ -48,6 +48,15 @@ h2.custom-header {
     border: none !important;
     color: #ffffff !important;
 }
+.profile-upload-label:hover svg {
+    background-color: #f8f9fa !important;
+    transition: 0.3s;
+}
+
+.profile-upload-label img {
+    border-radius: 50%;
+    aspect-ratio: 1 / 1; 
+}
 
 .btn-back {
     background-color: transparent !important;
@@ -85,6 +94,32 @@ h2.custom-header {
 
 #profile_picture {
     display: none;
+}
+.profile-default-svg {
+    border: 1px solid #D1CFC0;
+    border-radius: 50%;
+    padding: 8px;
+    background-color: #ffffff;
+    display: inline-block;
+}
+
+.profile-upload-label {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.profile-preview-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #D1CFC0;
+    display: none; }
+
+.file-name-text {
+    font-size: 0.65rem;
+    color: #6c757d;
+    margin-top: 4px;
 }
 
 /* login user */
@@ -165,50 +200,96 @@ h2.custom-header {
 }
 
 /* edit user */
-.edit-card{
+.profile-upload-label:hover {
+    opacity: 0.9;
+}
+.camera-btn {
+    transition: transform 0.2s;
+}
+.profile-upload-label:hover .camera-btn {
+    transform: scale(1.1);
+}
+.edit-wrapper {
+    padding: 60px 20px;
+    background-color: #f7f5f0;
+}
+
+.edit-card {
     background-color: #f7f5f0;
     border: 1px solid #D1CFC0;
     padding: 40px;
-    max-width: 600px;
+    max-width: 650px;
     margin: auto;
 }
 
-.form-row{
-    display:flex;
+.edit-title {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    border-bottom: 2px solid #d4a373; 
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    font-size: 3.5rem; 
+    font-weight: bold;
+}
+
+.form-row {
+    display: flex;
     align-items: center;
-    margin-bottom:15px;
-}
-.form-row label{
-    width:150px;
-    font-family: 'Playfair Display',serif;
-    color:#000000;
+    margin-bottom: 15px;
 }
 
-.input-field{
-    flex-grow:1;
+.form-row label {
+    width: 150px; 
+    font-family: 'Playfair Display', serif;
+    color: #000000;
 }
 
-input[type="text"], input[type="number"], input[type="email"], input[type="password"], select {
+.input-field {
+    flex-grow: 1;
+}
+
+input[type="text"], input[type="email"], input[type="password"], select {
     width: 100%;
     border: 1px solid #D1CFC0;
     background-color: #fff;
     padding: 8px;
 }
-.btn-update {
-    background-color: #88C999; 
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
+
+.edit-actions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
 }
-.btn-delete {
-    background-color: #F68B8B; 
-    color: white;
+.btn-update, .btn-delete, .btn-back {
+    flex: 1;
+    max-width: 200px;
+    height: 45px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
     border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
 }
 
+.btn-update { background-color: #88C999; color: white; }
+.btn-delete { background-color: #F68B8B; color: white; }
+.btn-back { background-color: #f8f9fa; color: #333; border: 1px solid #D1CFC0 !important; }
+
+.btn-update:hover, .btn-delete:hover, .btn-back:hover {
+    opacity: 0.8;
+}
+
+.hidden-input {
+    display: none;
+}
 /* edit payment */
 .payment-body{
     background-color:#f7f5f0 !important;

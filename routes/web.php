@@ -8,6 +8,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\Favorite_KitsController;
+use App\Http\Controllers\Favorite_RestaurantsController;
+
 
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -23,8 +26,6 @@ use App\Http\Controllers\RestaurantController;
 
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\PurchasedController; 
-use App\Http\Controllers\Favorite_KitsController;
-use App\Http\Controllers\Favorite_RestaurantsController;
 
 //Product
 use App\Http\Controllers\OrderController;
@@ -62,7 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
 
-// --- 3. My Page & Profile ---
+// --- 3. My Page & Profile  ---
     Route::prefix('mypage')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'show'])->name('show');
         Route::get('/edit', [UserController::class, 'edit'])->name('edit');
@@ -149,7 +150,6 @@ Route::get('/cart/thanks', function () {
 
 Route::get('/order/details', [OrderController::class, 'showDetails']);
 
-// データを保存するURL（ボタンを押した時に動く）
 Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
 
 // for checking layouts
