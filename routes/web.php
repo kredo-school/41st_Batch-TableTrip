@@ -8,8 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\CartController;
-use App\Http\Controllers\User\Favorite_KitsController;
-use App\Http\Controllers\User\Favorite_RestaurantsController;
+use App\Http\Controllers\User\FavoriteKitsController;
+use App\Http\Controllers\User\FavoriteRestaurantsController;
 
 
 //Admin
@@ -101,8 +101,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // --- 5. Favorites ---
-    Route::get('/favorite/kits', [Favorite_KitsController::class, 'index'])->name('favorite_kits');
-    Route::get('/favorite/restaurant', [Favorite_RestaurantsController::class, 'index'])->name('favorite_restaurants');
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favorite_kits');
+    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favorite_restaurants');
     
     // --- 5. Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
