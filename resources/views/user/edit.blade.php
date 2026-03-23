@@ -145,7 +145,7 @@
                 <div class="edit-actions-container">
                     <button type="submit" class="btn-update">Update</button>
                     <button type="button" class="btn-delete" onclick="event.preventDefault(); if(confirm('Are you sure?')) document.getElementById('delete-form').submit();">Delete</button>
-                    <a href="{{ route('dashboard') }}" class="btn-back">
+                    <a href="{{ route('dashboard') }}" class="btn-back" onclick="return confirm('You have unsaved changes. Are you sure you want to leave?');">
                         <i class="fa-solid fa-house"></i> Back to Dashboard
                     </a>
                 </div>
