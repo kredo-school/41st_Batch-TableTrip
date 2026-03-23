@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@yield('scripts')
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     
@@ -16,48 +16,40 @@
                 @csrf 
 
                 {{-- Profile Picture Section --}}
-                <div class="row mb-4 align-items-center">
-                    <div class="col-sm-4 text-start">
-                        <label class="form-label text-nowrap">Profile Picture</label>
-                    </div>
-                    <div class="col-sm-8 text-center text-sm-start">
-                        <label for="profile_picture" class="profile-upload-label" style="cursor: pointer;">
-                            @if(Auth::check() && Auth::user()->profile_picture)
-                                <img id="profile_picture_preview" 
-                                    src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
-                                    alt="Preview" 
-                                    class="profile-preview-img" 
-                                    style="display: inline-block;">
-                                <svg id="default_svg" style="display: none;" ...> </svg>
-                            @else
-                                <img id="profile_picture_preview" 
-                                    src="#" 
-                                    alt="Preview" 
-                                    class="profile-preview-img" 
-                                    style="display: none;">
-                                <svg id="default_svg" width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="profile-default-svg">
-                                    <path d="M32 32C37.5228 32 42 27.5228 42 22C42 16.4772 37.5228 12 32 12C26.4772 12 22 16.4772 22 22C22 27.5228 26.4772 32 32 32Z" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M52 52C52 46.4772 47.5228 42 42 42H22C16.4772 42 12 46.4772 12 52" stroke="#4A4A4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <circle cx="32" cy="32" r="31" stroke="#4A4A4A" stroke-width="2"/>
-                                </svg>
-                            @endif
-                        </label>
-
-                        <input type="file" name="profile_picture" id="profile_picture" accept="image/*" class="d-none">
-                        <div id="file-name" class="file-name-text">Tap icon to upload</div>
-                    </div>
+                            <div class="row mb-4 align-items-center">
+                <div class="col-sm-4">
+                    <label class="form-label">Profile Picture</label>
                 </div>
 
-                {{-- Validation Errors --}}
-                @if($errors->any())
-                    <div class="alert alert-danger p-2 small mb-4" style="border-radius: 0; border: 1px solid #dc3545;">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <div class="col-sm-8 text-center text-sm-start">
+                    <label for="profile_picture" class="profile-upload-label">
+
+                        {{-- preview --}}
+                        <img id="profile_picture_preview"
+                             src="#"
+                             class="profile-preview-img"
+                             style="display:none;">
+
+                        {{-- default icon --}}
+                        <svg id="default_svg" width="60" height="60" viewBox="0 0 64 64" class="profile-default-svg">
+                            <circle cx="32" cy="32" r="31" stroke="#4A4A4A" stroke-width="2"/>
+                        </svg>
+
+                    </label>
+
+                    <input type="file" name="profile_picture" id="profile_picture" class="d-none">
+                    <div id="file-name" class="file-name-text">Tap icon to upload</div>
+                </div>
+            </div>
+
+            {{-- errors --}}
+            @if($errors->any())
+                <div class="alert alert-danger small">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
 
                 {{-- Input Fields --}}
                 <div class="row mb-3 align-items-center">
@@ -168,7 +160,7 @@
         </div>
     </div>
 
-    @section('scripts')
-        <script src="{{ asset('js/profile.js') }}"></script> 
-    @endsection
+   @push('scripts')
+    <script src="{{ asset('js/profile.js') }}"></script> 
+    @endpush
 @endsection
