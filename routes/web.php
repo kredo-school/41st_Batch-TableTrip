@@ -172,6 +172,16 @@ Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
 Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
 Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
 
+<<<<<<< HEAD
+// Admin Orders Table //
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
+});
+
+// Admin Order Detail Page //
+Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])
+    ->name('admin.orders.show');
+=======
 //Restaurant Page
 Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');
 
@@ -191,3 +201,4 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::patch('/reservations/{id}',[OwnerReservationController::class,'update'])->name('reservations.update');
     });
 });
+>>>>>>> c783076bdab960bbf4746fcfbcb4849ca7372fa4
