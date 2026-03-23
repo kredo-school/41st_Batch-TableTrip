@@ -7,7 +7,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\AdminLoginController;
 
+//Admin
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminOrdersController;
+
 use App\Http\Controllers\DashboardController; // 一般ユーザー用
 // use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\PaymentController;
@@ -80,8 +83,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
 });
 
-
-// admin
+// ADMIN
+// Admin Login page
 Route::prefix('admin')->group(function () {
 
     Route::get('/login',
@@ -93,6 +96,7 @@ Route::prefix('admin')->group(function () {
     );
 });
 
+//Admin Dashboard(Overview) page
 Route::prefix('admin')
     ->middleware(['auth'])
     ->group(function () {
@@ -105,6 +109,21 @@ Route::prefix('admin')
             [AdminLoginController::class, 'logout']
     )->name('admin.logout');
 });
+
+//Admin Order Lists/Detail
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('/orders', [AdminOrdersController::class, 'index'])
+        ->name('orders.index');
+
+    Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])
+        ->name('orders.show');
+
+});
+
+//Admin Rewards - Dashboard
+// Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
+
 
 //Product
 Route::get('/products', function () {
@@ -147,16 +166,6 @@ Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
 Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
 Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
 
-<<<<<<< HEAD
-// Admin Orders Table //
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
-});
-
-// Admin Order Detail Page //
-Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])
-    ->name('admin.orders.show');
-=======
 //Restaurant Page
 Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');
 
@@ -176,4 +185,3 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
     });
 });
->>>>>>> c783076bdab960bbf4746fcfbcb4849ca7372fa4

@@ -5,7 +5,7 @@
    Dashboard
 </a>
 
-<a href="{{ route('admin.orders') }}"
+<a href="{{ route('admin.orders.index') }}"
    class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
    Orders
 </a>

@@ -98,8 +98,8 @@
 </div>
 
 <div class="text-center mt-5">
-    <a href="{{ route('admin.orders') }}" class="back-link">
-        Back to list
+    <a href="{{ route('admin.orders.index') }}" class="back-link">
+    Back to list
     </a>
 </div>
 
