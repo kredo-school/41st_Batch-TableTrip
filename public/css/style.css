@@ -278,6 +278,30 @@ input[type="text"], input[type="email"], input[type="password"], select {
     transition: 0.3s;
     white-space: nowrap;
 }
+.hidden-input {
+    display: none;
+}
+
+.upload-icon {
+    transition: all 0.3s;
+}
+
+.hidden-input:valid + .upload-icon {
+    stroke: #28a745; 
+    transform: scale(0.9);
+    opacity: 0.5;
+}
+
+.upload-status {
+    display: none;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.hidden-input:valid ~ .upload-status {
+    display: block; 
+}
+
 
 .btn-update { background-color: #88C999; color: white; }
 .btn-delete { background-color: #F68B8B; color: white; }
