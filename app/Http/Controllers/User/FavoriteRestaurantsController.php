@@ -12,6 +12,6 @@ public function index()
         $user = Auth::user();
         $favorite_restaurants = $user->favorite_restaurants()->get();
 
-        return view('user.favorite_restaurants', compact('favorite_restaurants'));
+        return view('user.favoriterestaurants', compact('favorite_restaurants'));
     }
 }
