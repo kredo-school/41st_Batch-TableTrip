@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class Favorite_KitsController extends Controller

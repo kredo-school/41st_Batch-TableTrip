@@ -8,8 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\CartController;
-use App\Http\Controllers\Favorite_KitsController;
-use App\Http\Controllers\Favorite_RestaurantsController;
+use App\Http\Controllers\User\Favorite_KitsController;
+use App\Http\Controllers\User\Favorite_RestaurantsController;
 
 
 //Admin
