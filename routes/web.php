@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
 use App\Http\Controllers\Admin\AdminOrdersController;
 
+
 //Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
@@ -79,9 +80,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ---  Reservation  ---
    Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
     Route::get('/', [ReservationController::class, 'index'])->name('index');
+    
     Route::post('/store', [ReservationController::class, 'store'])->name('store');
+
     Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+
     Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
+
     Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
     });
 });
@@ -210,5 +215,6 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/orders',[OwnerOrdersController::class,'index'])->name('orders');
         Route::get('/orders/{id}',[OwnerOrdersController::class,'show'])->name('orders.show');
         Route::patch('/orders/{id}',[OwnerOrdersController::class,'update'])->name('orders.update');
+
     });
 });
