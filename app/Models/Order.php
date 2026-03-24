@@ -12,15 +12,12 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
-}
 
-// class Order extends Model
-// {
-//     protected $fillable = [
-//         'user_id',
-//         'restaurant_id',
-//         'total_price',
-//         'status',
-//         'created_at'
-//     ];
-// }
+    protected $fillable = [
+        'user_id',
+        'restaurant_id',
+        'total_price',
+        'status',
+        'created_at'
+    ];
+}

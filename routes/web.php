@@ -15,11 +15,13 @@ use App\Http\Controllers\User\FavoriteRestaurantsController;
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminOrdersController;
 
 //Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
+use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
 
 //Restaurant
 use App\Http\Controllers\RestaurantController;
@@ -77,13 +79,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ---  Reservation  ---
    Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
     Route::get('/', [ReservationController::class, 'index'])->name('index');
-    
     Route::post('/store', [ReservationController::class, 'store'])->name('store');
-
     Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
-
     Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-
     Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
     });
 });
@@ -179,7 +177,6 @@ Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
 Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
 Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
 
-<<<<<<< HEAD
 // Admin Orders Table //
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
@@ -188,7 +185,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 // Admin Order Detail Page //
 Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])
     ->name('admin.orders.show');
-=======
 //Restaurant Page
 Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');
 
@@ -203,9 +199,16 @@ Route::prefix('owner')->name('owner.')->group(function () {
     Route::middleware('auth:restaurant')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
+
+        //Reservations
         Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
         Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
         Route::patch('/reservations/{id}',[OwnerReservationController::class,'update'])->name('reservations.update');
+        Route::get('/reservations/{id}',[OwnerReservationController::class,'show'])->name('reservations.show');
+
+        //Orders
+        Route::get('/orders',[OwnerOrdersController::class,'index'])->name('orders');
+        Route::get('/orders/{id}',[OwnerOrdersController::class,'show'])->name('orders.show');
+        Route::patch('/orders/{id}',[OwnerOrdersController::class,'update'])->name('orders.update');
     });
 });
->>>>>>> c783076bdab960bbf4746fcfbcb4849ca7372fa4

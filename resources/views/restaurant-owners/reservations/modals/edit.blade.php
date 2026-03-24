@@ -33,7 +33,7 @@
                         <div class="mb-3">
                             <label for="reservation_time" class="form-label">Time</label>
                             <input type="time" class="form-control @error('reservation_time') is-invalid @enderror" id="reservation_time_{{ $reservation->id }}" name="reservation_time"
-                                value="{{ old('reservation_time',$reservation->reservation_time)}}">
+                                value="{{ old('reservation_time',$reservation->reservation_time->format('H:i'))}}">
                                  @error('reservation_time')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

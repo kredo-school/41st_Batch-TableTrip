@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Restaurant;
 
 class Reservation extends Model
 {
     use HasFactory;
-
     protected $fillable = [ 
         'restaurant_id',    // 'restaurants_id' から修正（単数形が一般的）
         'user_id',
@@ -24,7 +25,8 @@ class Reservation extends Model
     ];
 
     protected $casts = [
-        'reserved_at' => 'date',
+        'reservation_date' => 'date',
+        'reservation_time' => 'datetime:H:i',
         'visited_at' => 'datetime',
     ];
 

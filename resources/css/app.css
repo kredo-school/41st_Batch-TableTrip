@@ -44,11 +44,22 @@ h6{
     font-size: 1rem;
 }
 
+
+
 .text-underline-accent {
     text-decoration: underline;
     text-underline-offset: 6px;
     text-decoration-color: #D96B52;
 }
+
+.text-orange{
+  color: #d96b52;
+}
+
+.font-sen{
+  font-family:"Sen", sans-serif;
+}
+
 
 /* =========================
    Brand Buttons
@@ -118,6 +129,29 @@ h6{
 .btn-outline-navy:hover{
   background-color:#243340;
   color:#ffffff;
+}
+
+/* app.blade */
+.bg-header{
+  background-color: #f2f2f2;
+}
+
+.header-logo{
+  width: 44px;
+  height: 44px;
+}
+
+.header-search{
+  max-width: 520px;
+  height: 38px;
+}
+
+.bg-navy{
+  background-color: #243340;;
+}
+.footer-border{
+  height: 1px;
+  background-color: rgba(255,255,255,.35);
 }
 
 /* Restaurant Page */
