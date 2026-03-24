@@ -50,6 +50,10 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class); 
     }
 
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
 
     public function purchased(): HasMany
     {
@@ -63,6 +67,9 @@ class User extends Authenticatable
     }
 
     public function favorite_kits()
+    {
+        return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
+    }
 {
     return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
 }

@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; 
+use App\Models\Product;
+use App\Models\Favorite;
+use Illuminate\Support\Facades\Auth; 
 
 class OrderController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products    = Product::all();
+        $favoriteIds = Auth::check()
+            ? Favorite::where('user_id', Auth::id())->pluck('product_id')->toArray()
+            : [];
 
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products', 'favoriteIds'));
     }
 
     public function show($id)

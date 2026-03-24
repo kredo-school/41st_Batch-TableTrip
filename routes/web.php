@@ -29,6 +29,7 @@ use App\Http\Controllers\PurchasedController;
 
 //Product
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,6 +145,15 @@ Route::get('/cart/confirm', function () {
 Route::get('/cart/thanks', function () {
     return view('products.thanks');
 })->name('cart.thanks');
+
+Route::get('/cart/track', function () {
+    return view('products.track');
+})->name('cart.track');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+});
 
 Route::get('/order/details', [OrderController::class, 'showDetails']);
 
