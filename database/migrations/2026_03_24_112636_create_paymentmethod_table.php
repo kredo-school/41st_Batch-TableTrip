@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('paymentmethod', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('strip_id')->nullable();
+            $table->string('stripe_id')->nullable();
             $table->string('gateway_token');
             $table->string('brand');
             $table->string('last4',4);
             $table->string('exp_month');
             $table->string('exp_year');
-            $table->boolean('is_default');
+            $table->boolean('is_default')->default(false);
 
             $table->timestamps();
         });
