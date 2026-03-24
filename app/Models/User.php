@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// 大事：これがないと reservations(): HasMany でエラーになります
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * 開発中のDB設計に合わせた fillable 設定
-     */
     protected $fillable = [
+        'profile_picture',
         'first_name',
         'last_name',
         'user_name',
@@ -25,7 +22,7 @@ class User extends Authenticatable
         'postal_code',
         'address',
         'country',
-        'profile_picture',
+        
     ];
 
     protected $hidden = [
@@ -41,24 +38,22 @@ class User extends Authenticatable
         ];
     }
 
-    // --- 以下、ダッシュボードに必要なリレーション群 ---
-
-    /**
-     * カートアイテムとの連携
-     */
+    
     public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
 
-    /**
-     * 予約履歴との連携
-     */
+    
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class); 
     }
 
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
 
     public function purchased(): HasMany
     {
@@ -80,5 +75,10 @@ class User extends Authenticatable
     // Restaurant-owner 
     public function user(){
         return $this->belongTo(User::class);
+    }
+
+    public function favorite_kits()
+    {
+        return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
     }
 }

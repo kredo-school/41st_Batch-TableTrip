@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        \App\Models\Category::create([
-            'name' => 'Meal Kit'
-        ]);
+        \App\Models\Category::firstOrCreate(
+            ['name' => 'Meal Kit']
+        );
 
         $this->call(ProductSeeder::class);
 

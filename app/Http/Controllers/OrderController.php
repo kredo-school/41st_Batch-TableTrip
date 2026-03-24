@@ -3,10 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; 
+use App\Models\Product;
+use App\Models\Favorite;
+use Illuminate\Support\Facades\Auth; 
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        $products    = Product::all();
+        $favoriteIds = Auth::check()
+            ? Favorite::where('user_id', Auth::id())->pluck('product_id')->toArray()
+            : [];
+
+        return view('products.index', compact('products', 'favoriteIds'));
+    }
+
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+
+        return view('products.show', compact('product'));
+    }
+
     public function showDetails()
     {
         $product = Product::first();
@@ -22,34 +41,36 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // ① 入力チェック（imageを追加）
+        // ① バリデーション
         $request->validate([
-            'name' => 'required',
+            'name'            => 'required',
             'restaurant_name' => 'required',
-            'location' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 画像の形式とサイズ制限
+            'location'        => 'required',
+            'image'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // --- 画像の保存処理を追加 ---
+        // ② 画像保存
         $imagePath = null;
         if ($request->hasFile('image')) {
-            // storage/app/public/products フォルダに保存
             $imagePath = $request->file('image')->store('products', 'public');
         }
 
-        // ② データベースに保存する
+        // ③ DB保存（image_path を追加）
         Product::create([
-            'name' => $request->name,
-            'category_id' => 1,
+            'name'            => $request->name,
+            'category_id'     => 1,
             'restaurant_name' => $request->restaurant_name,
-            'location' => $request->location,
-            'price' => $request->price,
-            'ingredients' => $request->ingredients ?? 'No data',
-            'allergens' => $request->allergens,
-            'description' => $request->description,
+            'location'        => $request->location,
+            'price'           => $request->price,
+            'ingredients'     => $request->ingredients ?? 'No data',
+            'allergens'       => $request->allergens,
+            'description'     => $request->description,
+            'image'           => $imagePath,
+            'badge'           => $request->badge,
+            'tag'             => $request->tag,
         ]);
 
-        // ③ 保存が終わったら、一覧画面（または詳細画面）に戻す
         return redirect()->route('products.index')->with('success', 'Product registered successfully!');
     }
+
 }

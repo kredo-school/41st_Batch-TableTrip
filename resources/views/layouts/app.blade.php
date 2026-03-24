@@ -70,51 +70,65 @@
                               </form>
                         @else
                         {{-- Normal User --}}
+                            {{-- Normal User --}}
                             <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
-                            <i class="bi bi-bell"></i>
+                                <i class="bi bi-bell"></i>
                             </a>
 
                             <a href="/cart" class="text-dark fs-4" aria-label="cart">
-                            <i class="bi bi-cart"></i>
+                                <i class="bi bi-cart"></i>
                             </a>
 
                             <div class="dropdown">
-                                <button class="btn p-0 border-0 bg-transparent text-dark fs-4"
+                                <button class="btn p-0 border-0 bg-transparent text-dark"
                                         type="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                         aria-label="account menu">
-                                    <i class="bi bi-person-circle"></i>
+                                    
+                                    {{-- Profile Icon Logic --}}
+                                    @if(Auth::user()->profile_picture)
+                                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
+                                            alt="User Icon" 
+                                            class="rounded-circle border" 
+                                            style="width: 32px; height: 32px; object-fit: cover;">
+                                    @else
+                                        <i class="bi bi-person-circle fs-4"></i>
+                                    @endif
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    {{-- logout --}}
+                                    {{-- Edit Profile --}}
                                     <li>
-                                    <form action="/logout" method="POST" class="m-0">
-                                        @csrf 
-                                        <button type="submit" class="dropdown-item">
-                                          <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                        </button>
-                                    </form>
-                                    </li>
-                                    {{-- edit profile --}}
-                                    <li>
-                                        <a href="{{ route('user.edit')}}" class="dropdown-item">
+                                        <a href="{{ route('user.edit') }}" class="dropdown-item">
                                             <i class="bi bi-person me-2"></i> Edit Profile
                                         </a>
                                     </li>
                                     
-                                    {{-- inquiry --}}
+                                    {{-- Inquiry --}}
                                     <li>
                                         <a href="#" class="dropdown-item">
-                                        <i class="bi bi-envelope me-2"></i> Inquiry
+                                            <i class="bi bi-envelope me-2"></i> Inquiry
                                         </a>
                                     </li>
-                                    {{-- edit payment setting --}}
+
+                                    {{-- Payment --}}
                                     <li>
                                         <a href="#" class="dropdown-item">
                                             <i class="bi bi-credit-card me-2"></i> Payment
                                         </a>
+                                    </li>
+
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    {{-- Logout --}}
+                                    <li>
+                                        <form action="/logout" method="POST" class="m-0">
+                                            @csrf 
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                            </button>
+                                        </form>
                                     </li>
                                 </ul>
                             </div>

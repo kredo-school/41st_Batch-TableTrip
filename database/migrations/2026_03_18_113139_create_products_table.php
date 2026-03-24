@@ -22,6 +22,8 @@ return new class extends Migration
             $table->text('ingredients');        // 原材料
             $table->string('allergens');        // アレルギー情報 (例: 小麦、卵、乳成分)
             $table->string('image')->nullable(); // 商品画像パス
+            $table->string('badge')->nullable(); // リボンラベル (Easy, Special, Kids OK)
+            $table->string('tag')->nullable();   // 四角バッジ (Cool, Flash Frozen)
             $table->foreignId('category_id')->constrained(); // カテゴリID
             $table->timestamps();
         });
