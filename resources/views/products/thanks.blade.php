@@ -74,9 +74,9 @@
 
         {{-- 下部ボタン --}}
         <div class="d-flex justify-content-between gap-3">
-            <button class="btn text-white w-50 py-3 fw-bold" style="background-color: #D96D55; border-radius: 5px; font-family: serif;">
+            <a href="{{ route('cart.track') }}" class="btn text-white w-50 py-3 fw-bold" style="background-color: #D96D55; border-radius: 5px; font-family: serif;">
                 Track Your Order
-            </button>
+            </a>
             <button class="btn text-white w-50 py-3 fw-bold" style="background-color: #2c3e50; border-radius: 5px; font-family: serif;">
                 View Order Details
             </button>

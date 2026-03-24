@@ -188,6 +188,22 @@
                         </a>
 
                         <div class="card-body px-3 pt-3 pb-3 text-start">
+                            {{-- ハートボタン --}}
+                            @auth
+                            <form action="{{ route('favorites.toggle') }}" method="POST"
+                                  style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="border-0 bg-transparent p-0" style="cursor: pointer;">
+                                    @if(in_array($product->id, $favoriteIds))
+                                        <i class="bi bi-heart-fill" style="font-size: 1.4rem; color: #e74c3c;"></i>
+                                    @else
+                                        <i class="bi bi-heart" style="font-size: 1.4rem; color: #e74c3c;"></i>
+                                    @endif
+                                </button>
+                            </form>
+                            @endauth
+
                             {{-- 商品名 + 価格（クリックで詳細へ） --}}
                             <a href="{{ route('products.show', ['id' => $product->id]) }}" class="text-decoration-none text-dark">
                                 <div class="d-flex justify-content-between align-items-start mb-1">
