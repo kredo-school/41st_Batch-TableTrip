@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TableTrip') }}|@yield('title')</title>
+        <title>{{ config('app.name', 'TableTrip') }} | @yield('title')</title>
 
          <!--Fontawesome-->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -70,31 +70,65 @@
                               </form>
                         @else
                         {{-- Normal User --}}
+                            {{-- Normal User --}}
                             <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
-                            <i class="bi bi-bell"></i>
+                                <i class="bi bi-bell"></i>
                             </a>
 
                             <a href="/cart" class="text-dark fs-4" aria-label="cart">
-                            <i class="bi bi-cart"></i>
+                                <i class="bi bi-cart"></i>
                             </a>
 
                             <div class="dropdown">
-                                <button class="btn p-0 border-0 bg-transparent text-dark fs-4"
+                                <button class="btn p-0 border-0 bg-transparent text-dark"
                                         type="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                         aria-label="account menu">
-                                    <i class="bi bi-person-circle"></i>
+                                    
+                                    {{-- Profile Icon Logic --}}
+                                    @if(Auth::user()->profile_picture)
+                                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
+                                            alt="User Icon" 
+                                            class="rounded-circle border" 
+                                            style="width: 32px; height: 32px; object-fit: cover;">
+                                    @else
+                                        <i class="bi bi-person-circle fs-4"></i>
+                                    @endif
                                 </button>
 
                                 <ul class="dropdown-menu dropdown-menu-end">
+                                    {{-- Edit Profile --}}
                                     <li>
-                                    <form action="/logout" method="POST" class="m-0">
-                                        @csrf 
-                                        <button type="submit" class="dropdown-item">
-                                          <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                        </button>
-                                    </form>
+                                        <a href="{{ route('user.edit') }}" class="dropdown-item">
+                                            <i class="bi bi-person me-2"></i> Edit Profile
+                                        </a>
+                                    </li>
+                                    
+                                    {{-- Inquiry --}}
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="bi bi-envelope me-2"></i> Inquiry
+                                        </a>
+                                    </li>
+
+                                    {{-- Payment --}}
+                                    <li>
+                                        <a href="#" class="dropdown-item">
+                                            <i class="bi bi-credit-card me-2"></i> Payment
+                                        </a>
+                                    </li>
+
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    {{-- Logout --}}
+                                    <li>
+                                        <form action="/logout" method="POST" class="m-0">
+                                            @csrf 
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                            </button>
+                                        </form>
                                     </li>
                                 </ul>
                             </div>

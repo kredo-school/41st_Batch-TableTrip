@@ -5,10 +5,18 @@
    Dashboard
 </a>
 
+<<<<<<< Updated upstream
+<a href="{{ route('admin.orders') }}"
+   class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+   Orders
+</a>
+
+=======
 <a href="#"
    class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
    Orders
 </a>
+>>>>>>> Stashed changes
 {{-- Orders Page作ったら 
     <a href="{{ route('admin.orders.index') }}"
    class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
@@ -40,6 +48,10 @@
 
 </nav>
 
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
 @push('scripts')
 
 <script>

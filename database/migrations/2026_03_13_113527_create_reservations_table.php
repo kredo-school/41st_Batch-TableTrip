@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('reservation_date');
             $table->time('reservation_time');
 
+            $table->date('reserved_at');
             $table->integer('number_of_people');
 
             $table->string('full_name');

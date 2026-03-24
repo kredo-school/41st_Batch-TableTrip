@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use App\Models\User;
+
 
 class UserController extends Controller
 {
@@ -21,9 +20,11 @@ class UserController extends Controller
         return view('user.edit',compact('user'));
     }
 
-  public function update(Request $request)
+    // update user
+   public function update(Request $request)
     {
-        $user = User::findOrFail(Auth::id());
+        // ensure we have an Eloquent User model (so save() is available)
+        $user = \App\Models\User::findOrFail(Auth::id());
 
         $request->validate([
             'first_name'      => 'required|string|max:255',
@@ -38,61 +39,51 @@ class UserController extends Controller
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user->first_name  = $request->first_name;
-        $user->last_name   = $request->last_name;
-        $user->user_name   = $request->user_name;
-        $user->email       = $request->email;
-        $user->tel         = $request->tel;
+        $user->first_name = $request->first_name;
+        $user->last_name  = $request->last_name;
+        $user->user_name  = $request->user_name;
+        $user->email      = $request->email;
+        $user->tel        = $request->tel;
         $user->postal_code = $request->postal_code;
-        $user->address     = $request->address;
-        $user->country     = $request->country;
-
+        $user->address    = $request->address;
+        $user->country    = $request->country;
         if ($request->filled('password')) {
             $user->password = Hash::make($request->input('password'));
         }
 
         if ($request->hasFile('profile_picture')) {
-  
-            if ($user->profile_picture) {
-                Storage::disk('public')->delete($user->profile_picture);
-            }
-
-  
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
             $user->profile_picture = $path;
         }
 
-        $user->save();
+        $user->save();  
 
-
-        return redirect('/dashboard')->with('success', 'Your profile has been updated!');
+        return redirect('/mypage')->with('success', 'Your profile has been updated!');
     }
 
-   public function destroy()
-{
-    $userId = Auth::id();
-    $user = User::findOrFail($userId); 
+    // delete user
+    public function destroy()
+    {
 
-    if ($user->profile_picture) {
-        Storage::disk('public')->delete($user->profile_picture);
+        // retrieve the Eloquent User model instance to ensure delete() is available
+        $user = \App\Models\User::find(Auth::id());
+        if ($user) {
+            Auth::logout(); // logout before deleting the record
+            $user->delete(); // delete user record
+            return redirect('/')->with('success', 'Your account has been deleted.');
+        }
+
+        // if no user found, ensure logout and redirect
+        Auth::logout();
+        return redirect('/')->with('error', 'User not found.');
     }
-    $user->delete();
-
-
-    Auth::logout();
-
-    return redirect('/')->with('success', 'Your account has been deleted.');
-}
-/**
-     * Log the user out of the application.
-     */
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Logged out successfully!');
+        return redirect('/login')->with('success', 'You have successfully logged out!');
     }
+
 }
