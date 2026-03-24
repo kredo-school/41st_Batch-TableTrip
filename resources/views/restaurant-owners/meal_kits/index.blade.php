@@ -3,7 +3,7 @@
 @section('title', 'Meal Kits')
 
 @section('content')
-<div class="container my-5">
+<div class="m-5">
     <div class="row">
         @include('restaurant-owners.sidebar')
 
@@ -18,31 +18,29 @@
 
             <div class="row g-3 mb-5">
 
-                <div class="col12 col-lg-3">
+                <div class="col-12 col-lg-4">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0">
                             <i class="fa-solid fa-magnifying-glass text-muted"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="Search meal kit">
+                        <input type="text" class="form-control " placeholder="Search meal kit">
                     </div>
                 </div>
 
-                <div class="col12 col-lg-3">
-                    <select class="form-select">
+                <div class="col-12 col-lg-3">
+                    <select class="form-select  rounded">
                         <option>Status</option>
                     </select>
                 </div>
 
-                <div class="col12 col-lg-3">
-                    <select class="form-select">
-                        <option>Draft</option>
+                <div class="col-12 col-lg-3">
+                    <select class="form-select  rounded">
+                        <option>All Category</option>
                     </select>
                 </div>
 
-                <div class="col12 col-lg-3">
-                    <select class="form-select">
-                        <option>All Category</option>
-                    </select>
+                <div class="col-12 col-lg-2">
+                    <a href="{{ route('owner.products') }}" class="btn btn-outline-navy">Reset</a>
                 </div>
 
             </div>
