@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(Purchased::class);
     }
 
+    // public function visited():HasMany
+    // {
+    //     return $this->hasMany(Visited::class);
+    // }
+
 
     public function favorite_restaurants()
     {
