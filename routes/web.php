@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\FavoriteKitsController;
@@ -68,6 +69,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
+// Visited
+    // Route::get('/visited', [VisitedController::class, 'index'])->name('visited.index');
 
 // --- 3. My Page & Profile  ---
     Route::prefix('mypage')->name('user.')->group(function () {
@@ -95,7 +98,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     
     // --- Payment ---
-    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
+    Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
+        Route::resource('payment-methods', PaymentMethodController::class);
+});
+   
+
+    
 
     // --- 3. Reservation  ---
    Route::prefix('reservations')->name('reservations.')->group(function () {
@@ -107,8 +115,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // --- 5. Favorites ---
-    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favorite_kits');
-    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favorite_restaurants');
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favoritekits');
+    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favoriterestaurants');
     
     // --- 5. Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
