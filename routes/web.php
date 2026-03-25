@@ -93,7 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // --- Payment ---
     Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
-        Route::resource('payment-methods', PaymentMethodController::class);
+        Route::resource('payment_method', PaymentMethodController::class);
 });
    
 
