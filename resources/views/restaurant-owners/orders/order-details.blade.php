@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.owner')
 
-@section('title', 'Reservation Details')
+@section('title', 'Order Details')
 
 @section('content')
 <div class="my-5 mx-5">
@@ -160,6 +160,4 @@
         </div>
     </div>
 </div>
-
-@include('restaurant-owners.orders.modals.cancel')
 @endsection
