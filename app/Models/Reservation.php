@@ -14,7 +14,7 @@ class Reservation extends Model
     protected $fillable = [ 
         'restaurant_id',    // 'restaurants_id' から修正（単数形が一般的）
         'user_id',
-        'reserved_at',
+        'reserved_date',
         'number_of_people', // もしDBが number_of_guests ならそちらに合わせてください
         'full_name',
         'phone',

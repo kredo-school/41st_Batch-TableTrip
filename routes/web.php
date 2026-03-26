@@ -202,6 +202,7 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
         //Meal kits
         Route::get('/products',[OwnerProductController::class,'index'])->name('products');
+        Route::patch('/products/{id}',[OwnerProductController::class,'toggleVisibility'])->name('products.toggleVisibility');
 
     });
 });
