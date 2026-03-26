@@ -26,30 +26,58 @@
                                 @forelse($methods as $method)
                                 <tr>
                                     <td><i class="fab fa-cc-{{ strtolower($method->brand) }} fa-2x"></i></td>
-                                    <td>{{ $method->brand }} ****{{ $method->last4 }}</td>
                                     <td>
-                                        <form action="{{ route('user.payment_method.update', $method->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            @method('PUT')
-                                            <select name="exp_month" class="form-select-sm">
-                                                @for ($m = 1; $m <= 12; $m++)
-                                                    <option value="{{ sprintf('%02d', $m) }}" {{ $method->exp_month == $m ? 'selected' : '' }}>{{ sprintf('%02d', $m) }}</option>
-                                                @endfor
-                                            </select>
-                                            <select name="exp_year" class="form-select-sm">
-                                                @for ($y = date('y'); $y <= date('y') + 10; $y++)
-                                                    <option value="{{ $y }}" {{ $method->exp_year == $y ? 'selected' : '' }}>{{ $y }}</option>
-                                                @endfor
-                                            </select>
-                                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                                        </form>
+                                        {{ $method->brand }} ****{{ $method->last4 }}
+                                        {{-- default --}}
+                                        @if($method->is_default)
+                                            <span class="badge bg-success ms-2" style="background-color: #78c2ad !important;">Default</span>
+                                        @else
+                                            <form action="{{ route('user.payment_method.default', $method->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-link p-0 ms-2 text-decoration-none text-muted small badge-default" style="font-size: 0.8rem;">
+                                                    Set as Default
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
-                                    {{-- delete --}}
                                     <td>
-                                        <form action="{{ route('user.payment_method.destroy', $method->id) }}" method="POST">
+                                        <div class="d-flex justify-content-center gap-2">
+                                            {{-- Edit button --}}
+                                            <button type="button" class="btn btn-sm btn-outline-primary edit-button m-0"
+                                                data-id="{{ $method->id }}"
+                                                data-month="{{ sprintf('%02d', $method->exp_month) }}"
+                                                data-year="{{ $method->exp_year }}"
+                                                data-holder="{{ $method->holder_name }}"
+                                                data-last4="{{ $method->last4 }}">
+                                                Edit
+                                            </button>
+                                            {{-- update --}}
+                                            <form action="{{ route('user.payment_method.update', $method->id) }}" method="POST" class="d-flex align-items-center gap-1 m-0">
+                                                @csrf
+                                                @method('PUT')
+                                                
+                                                <select name="exp_month" class="form-select form-select-sm" style="width: auto; min-width: 60px;">
+                                                    @for ($m = 1; $m <= 12; $m++)
+                                                        <option value="{{ sprintf('%02d', $m) }}" {{ $method->exp_month == $m ? 'selected' : '' }}>{{ sprintf('%02d', $m) }}</option>
+                                                    @endfor
+                                                </select>
+                                                
+                                                <select name="exp_year" class="form-select form-select-sm" style="width: auto; min-width: 70px;">
+                                                    @for ($y = date('y'); $y <= date('y') + 10; $y++)
+                                                        <option value="{{ $y }}" {{ $method->exp_year == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                                    @endfor
+                                                </select>
+
+                                                <button type="submit" class="btn btn-sm btn-update" style="padding: 5px 15px;">Update</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('user.payment_method.destroy', $method->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn text-danger"><i class="fas fa-trash"></i></button>
+                                            <button type="submit" class="btn btn-trash btn-delete-card"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -62,6 +90,7 @@
                         </table>
                     </div>
                 </div>
+
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul class="mb-0">
@@ -73,17 +102,25 @@
                 @endif
 
                 <div class="payment-card">
-                    <h4 class="fw-bold mb-4">Register / Edit</h4>
+                    <h4 class="fw-bold mb-4" id="form-title">Register / Edit</h4>
                     <form id="payment-form" action="{{ route('user.payment_method.store') }}" method="POST">
                         @csrf
-                        <div class="mb-3">
+                        <div id="method-field"></div>
+
+                        {{-- card number --}}
+                        <div class="mb-3" id="card-number-container">
                             <label class="small fw-bold">Card Number</label>
-                            <input type="text" name="card_number" class="form-control" maxlength="19" inputmode="numeric" autocomplete="cc-number">
+                            <input type="text" name="card_number" id="card_number" class="form-control" maxlength="16">
+                            <small class="text-muted" id="edit-notice" style="display:none;">
+                                ※ Editing mode: Enter a new number only if you wish to change it. (Current: **** <span id="display-last4"></span>)
+                            </small>
                         </div>
+
+                        {{-- expired information --}}
                         <div class="row mb-3">
                             <div class="col-6">
                                 <label class="small fw-bold">Month</label>
-                                <select name="exp_month" class="form-select form-custom-input" required>
+                                <select name="exp_month" id="exp_month" class="form-select" required>
                                     @for ($m = 1; $m <= 12; $m++)
                                         <option value="{{ sprintf('%02d', $m) }}">{{ sprintf('%02d', $m) }}</option>
                                     @endfor
@@ -91,22 +128,22 @@
                             </div>
                             <div class="col-6">
                                 <label class="small fw-bold">Year</label>
-                                <select name="exp_year" class="form-select form-custom-input" required>
+                                <select name="exp_year" id="exp_year" class="form-select" required>
                                     @for ($y = date('y'); $y <= date('y') + 10; $y++)
                                         <option value="{{ $y }}">{{ $y }}</option>
                                     @endfor
                                 </select>
                             </div>
                         </div>
+
                         <div class="mb-4">
                             <label class="small fw-bold">Holder Name</label>
-                            <input type="text" name="holder_name" class="form-control form-custom-input" placeholder="TARO KREDO">
+                            <input type="text" name="holder_name" id="holder_name" class="form-control" placeholder="TARO KREDO">
                         </div>
                         
                         <div class="text-center">
-                            <button type="submit">Add Card</button>
-                            <button type="submit" class="btn btn-primary btn-rounded mx-1">Update</button>
-                            <button type="reset" class="btn btn-outline-secondary btn-rounded mx-1">Cancel</button>
+                            <button type="submit" id="submit-button" class="btn-add">Add Card</button>
+                            <button type="button" id="cancel-edit" class="btn btn-outline-secondary mx-1" style="display:none;">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -121,3 +158,7 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/payment.js') }}"></script>
+@endpush
