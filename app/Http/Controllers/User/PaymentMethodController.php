@@ -15,19 +15,23 @@ class PaymentMethodController extends Controller
     }
 
     // register
-   public function store(Request $request)
+  public function store(Request $request)
 {
-    dd($request->all());
+   
+    $cardNumber = str_replace(' ', '', $request->card_number);
+
+    $request->merge([
+        'card_number' => $cardNumber
+    ]);
+
     $request->validate([
-        'card_number' => 'required|numeric|digits_between:14,16',
+        'card_number' => 'required|digits_between:14,16',
         'exp_month'   => 'required',
         'exp_year'    => 'required',
-        'cvc'         => 'required|digits_between:3,4',
         'holder_name' => 'required|string|max:50',
     ]);
 
-   
-    $last4 = substr($request->card_number, -4); 
+    $last4 = substr($cardNumber, -4);
     $token = 'tok_test_' . uniqid(); 
     
     
@@ -52,11 +56,34 @@ class PaymentMethodController extends Controller
     return redirect()->route('user.payment_method.index')->with('success', 'Your payment has been registered!!');
     }
     // delete 
-    public function destroy(PaymentMethod $paymentMethod)
+   public function destroy(PaymentMethod $payment_method) 
     {
-        if ($paymentMethod->user_id === Auth::id()) {
-            $paymentMethod->delete();
+        if ($payment_method->user_id === Auth::id()) {
+            $payment_method->delete();
         }
-        return back();
+        return back()->with('success', 'Your card has been  deleted successfully.');
     }
-}
+
+    // update
+   public function update(Request $request, PaymentMethod $payment_method) 
+        {
+
+            if ($payment_method->user_id !== Auth::id()) {
+                abort(403);
+            }
+
+            $request->validate([
+                'exp_month' => 'required',
+                'exp_year'  => 'required',
+            ]);
+
+            
+            $payment_method->update([
+                'exp_month' => $request->exp_month,
+                'exp_year'  => $request->exp_year,
+            ]);
+
+            return back()->with('success', 'Your card has been updated successfully.');
+        }
+    }
+
