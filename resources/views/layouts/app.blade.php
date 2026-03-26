@@ -114,7 +114,7 @@
 
                                     {{-- Payment --}}
                                     <li>
-                                        <a href="#" class="dropdown-item">
+                                        <a href="{{ route('user.payment_method.index') }}" class="dropdown-item">
                                             <i class="bi bi-credit-card me-2"></i> Payment
                                         </a>
                                     </li>

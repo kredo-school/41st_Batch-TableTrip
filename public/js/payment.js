@@ -22,4 +22,15 @@ document.addEventListener('DOMContentLoaded', function() {
     defaultBadges.forEach(badge => {
         badge.style.cursor = 'pointer';
     });
+    document.querySelector('input[name="card_number"]').addEventListener('input', function (e) {
+    this.value = this.value.replace(/\D/g, '').substring(0, 16);
+});
+
+document.querySelector('input[name="expire"]').addEventListener('input', function (e) {
+    let v = this.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 3) {
+        v = v.substring(0, 2) + '/' + v.substring(2);
+    }
+    this.value = v;
+});
 });

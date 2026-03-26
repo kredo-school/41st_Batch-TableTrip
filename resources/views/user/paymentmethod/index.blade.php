@@ -28,13 +28,27 @@
                                     <td><i class="fab fa-cc-{{ strtolower($method->brand) }} fa-2x"></i></td>
                                     <td>{{ $method->brand }} ****{{ $method->last4 }}</td>
                                     <td>
-                                        @if($method->is_default)
-                                            <span class="badge bg-success">Default</span>
-                                        @endif
+                                        <form action="{{ route('user.payment_method.update', $method->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="exp_month" class="form-select-sm">
+                                                @for ($m = 1; $m <= 12; $m++)
+                                                    <option value="{{ sprintf('%02d', $m) }}" {{ $method->exp_month == $m ? 'selected' : '' }}>{{ sprintf('%02d', $m) }}</option>
+                                                @endfor
+                                            </select>
+                                            <select name="exp_year" class="form-select-sm">
+                                                @for ($y = date('y'); $y <= date('y') + 10; $y++)
+                                                    <option value="{{ $y }}" {{ $method->exp_year == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                                @endfor
+                                            </select>
+                                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                        </form>
                                     </td>
+                                    {{-- delete --}}
                                     <td>
                                         <form action="{{ route('user.payment_method.destroy', $method->id) }}" method="POST">
-                                            @csrf @method('DELETE')
+                                            @csrf
+                                            @method('DELETE')
                                             <button type="submit" class="btn text-danger"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
@@ -64,7 +78,7 @@
                         @csrf
                         <div class="mb-3">
                             <label class="small fw-bold">Card Number</label>
-                            <input type="text" name="card_number" class="form-control form-custom-input" placeholder="0000 0000 0000 0000" maxlength="16" pattern="\[0-9]{14,16}" >
+                            <input type="text" name="card_number" class="form-control" maxlength="19" inputmode="numeric" autocomplete="cc-number">
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
@@ -90,6 +104,7 @@
                         </div>
                         
                         <div class="text-center">
+                            <button type="submit">Add Card</button>
                             <button type="submit" class="btn btn-primary btn-rounded mx-1">Update</button>
                             <button type="reset" class="btn btn-outline-secondary btn-rounded mx-1">Cancel</button>
                         </div>
