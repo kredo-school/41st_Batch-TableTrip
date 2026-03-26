@@ -762,3 +762,74 @@ input[type="text"], input[type="email"], input[type="password"], select {
     background-color: #f0b560;
     color: white;
 }
+
+
+/* payment method */
+.payment-title {
+    font-size: 4rem; 
+    font-weight: 800;
+    margin-bottom: 50px;
+    letter-spacing: -1px; 
+}
+.payment-container {
+    background-color: #f4f7f6;
+    font-family: 'Playfair Display', serif;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+.payment-card {
+    background: #ffffff;
+    border: 1px solid #dcdcdc; 
+    border-radius: 8px; 
+    padding: 2.5rem;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02); 
+}
+
+.payment-card-header, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.form-custom-input {
+    font-family: sans-serif; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px;
+    background-color: #fff;
+}
+
+.form-custom-input:focus {
+    background-color: #fff;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    outline: none;
+}
+label.small {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.btn-rounded {
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.brand-icons i {
+    margin: 0 8px;
+    color: #adb5bd;
+    transition: color 0.3s;
+}
+
+.brand-icons i:hover {
+    color: #4a90e2;
+}
