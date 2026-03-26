@@ -114,7 +114,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // --- 5. Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-
+    Route::patch('/payment-method/{payment_method}/default', [PaymentMethodController::class, 'setDefault'])->name('user.payment_method.default');
 
 /*
 |--------------------------------------------------------------------------
