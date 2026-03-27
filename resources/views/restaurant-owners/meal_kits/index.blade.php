@@ -11,7 +11,7 @@
 
             {{-- Add Button --}}
             <div class="d-flex justify-content-end mb-4">
-                <a href="#" class="btn btn-orange px-4 py-2">
+                <a href="{{ route('owner.products.create') }}" class="btn btn-orange px-4 py-2">
                     +Add Meal Kit
                 </a>
             </div>
@@ -53,6 +53,12 @@
 
             </div>
          </form>
+         @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
             {{-- table --}}
             <div class="card rounded-4 shadow-sm border-0 overflow-hidden">
@@ -76,9 +82,9 @@
                              
                             <tr>
                                 <td class="ps-4" style="width: 140px;">
-                                    <img src="{{ asset('/images/journykit.png') }}"
-                                        alt="Bibimbap"
-                                        class="img-fluid rounded-3">
+                                    <img src="{{ asset('storage/' . $product->image) }}"
+                                        alt="product image"
+                                        class="product-image rounded">
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->price }}</td>
@@ -105,7 +111,7 @@
                                     {{ $status }}
                                 </span>
                                </td>
-                                <td>{{ $product->updated_at }}</td>
+                                <td>{{ $product->updated_at->format('Y M d, H:i') }}</td>
 
                                 <td class="text-center">
                                     <a href="" class="btn"><i class="fa-regular fa-pen-to-square text-navy"></i>Edit</a>

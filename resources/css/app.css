@@ -560,3 +560,11 @@ h6{
     gap: 8px;           
 }
 
+/* Restaurant Owner Meal Kit*/
+.product-image{
+  width: 100%;
+  max-width: 300px;
+  height: 100%;
+  max-height: 100px;
+  object-fit: cover;
+}

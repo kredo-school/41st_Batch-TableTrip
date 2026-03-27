@@ -1,0 +1,65 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // Main image preview
+    const mainImageInput = document.getElementById('main_image');
+    const mainImagePreview = document.getElementById('main_image_preview');
+    const mainImagePlaceholder = document.getElementById('main_image_placeholder');
+
+    if (mainImageInput && mainImagePreview && mainImagePlaceholder) {
+        mainImageInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+
+            if (!file) {
+                mainImagePreview.src = '#';
+                mainImagePreview.classList.add('d-none');
+                mainImagePlaceholder.classList.remove('d-none');
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                mainImagePreview.src = e.target.result;
+                mainImagePreview.classList.remove('d-none');
+                mainImagePlaceholder.classList.add('d-none');
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Additional images preview
+    const additionalImagesInput = document.getElementById('additional_images');
+    const additionalImagesPreview = document.getElementById('additional_images_preview');
+
+    if (additionalImagesInput && additionalImagesPreview) {
+        additionalImagesInput.addEventListener('change', function (event) {
+            additionalImagesPreview.innerHTML = '';
+
+            const files = event.target.files;
+
+            if (!files.length) return;
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const col = document.createElement('div');
+                    col.className = 'col-6 col-md-3';
+
+                    col.innerHTML = `
+                        <img
+                            src="${e.target.result}"
+                            alt="Additional image preview"
+                            class="img-fluid rounded-3 border"
+                            style="width: 100%; height: 120px; object-fit: cover;"
+                        >
+                    `;
+
+                    additionalImagesPreview.appendChild(col);
+                };
+
+                reader.readAsDataURL(file);
+            });
+        });
+    }
+});

@@ -211,6 +211,8 @@ Route::prefix('owner')->name('owner.')->group(function () {
         //Meal kits
         Route::get('/products',[OwnerProductController::class,'index'])->name('products');
         Route::patch('/products/{id}',[OwnerProductController::class,'toggleVisibility'])->name('products.toggleVisibility');
+        Route::get('/products/create',[OwnerProductController::class,'create'])->name('products.create');
+        Route::post('/product/store/',[OwnerProductController::class,'store'])->name('products.store');
 
     });
 });
