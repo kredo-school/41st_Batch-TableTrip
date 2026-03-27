@@ -5,6 +5,7 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+
 <div class="container py-5 d-flex flex-column align-items-center">
     <div class="card purchase-card p-4 shadow-sm">
         <h2 class="mb">My Favorites</h2>
