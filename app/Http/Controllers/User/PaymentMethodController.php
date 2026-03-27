@@ -19,6 +19,15 @@ class PaymentMethodController extends Controller
 {
    
     $cardNumber = str_replace(' ', '', $request->card_number);
+    $last4 = substr($cardNumber, -4);
+
+    $exists = PaymentMethod::where('user_id', Auth::id())
+                            ->where('last4', $last4)
+                            ->exists();
+
+    if ($exists) {
+        return back()->withErrors(['card_number' => 'This card is already registered.'])->withInput();
+    }
 
     $request->merge([
         'card_number' => $cardNumber
@@ -30,7 +39,6 @@ class PaymentMethodController extends Controller
         'exp_year'    => 'required',
         'holder_name' => 'required|string|max:50',
     ]);
-
     $last4 = substr($cardNumber, -4);
     $token = 'tok_test_' . uniqid(); 
     
@@ -65,25 +73,51 @@ class PaymentMethodController extends Controller
     }
 
     // update
-   public function update(Request $request, PaymentMethod $payment_method) 
-        {
-
-            if ($payment_method->user_id !== Auth::id()) {
-                abort(403);
-            }
-
-            $request->validate([
-                'exp_month' => 'required',
-                'exp_year'  => 'required',
-            ]);
-
-            
-            $payment_method->update([
-                'exp_month' => $request->exp_month,
-                'exp_year'  => $request->exp_year,
-            ]);
-
-            return back()->with('success', 'Your card has been updated successfully.');
+    public function update(Request $request, PaymentMethod $payment_method) 
+    {
+        if ($payment_method->user_id !== Auth::id()) {
+            abort(403);
         }
+
+        $request->validate([
+            'card_number' => 'nullable|digits_between:14,16',
+            'exp_month'   => 'required',
+            'exp_year'    => 'required',
+            'holder_name' => 'required|string|max:50',
+        ]);
+
+        $data = [
+            'exp_month'   => $request->exp_month,
+            'exp_year'    => $request->exp_year,
+            'holder_name' => $request->holder_name,
+        ];
+
+        if ($request->filled('card_number')) {
+            $cardNumber = str_replace(' ', '', $request->card_number);
+            $data['last4'] = substr($cardNumber, -4);
+            
+            $brand = 'Visa';
+            if (str_starts_with($cardNumber, '5')) { $brand = 'Mastercard'; }
+            if (str_starts_with($cardNumber, '3')) { $brand = 'JCB'; }
+            $data['brand'] = $brand;
+        }
+
+        $payment_method->update($data);
+
+        return back()->with('success', 'Your card has been updated successfully.');
     }
+    public function setDefault(PaymentMethod $payment_method)
+    {
+        
+        if ($payment_method->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        PaymentMethod::where('user_id', Auth::id())->update(['is_default' => false]);
+
+        $payment_method->update(['is_default' => true]);
+
+        return back()->with('success', 'Default payment method updated.');
+    }
+}
 
