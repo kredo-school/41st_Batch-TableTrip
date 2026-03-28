@@ -3,7 +3,7 @@
 @section('title','Meal Kit Details')
 
 @section('content')
-  <div class="container mx-auto my-5">
+  <div class="m-5">
      <div class="row">
         @include('restaurant-owners.sidebar')
 
@@ -14,20 +14,42 @@
 
                 {{-- ribbon --}}
                 <div class="difficulty-ribbon">
-                    <span>Easy</span>
+                    <span class="display-4">{{ $product->difficulty_level }}</span>
                 </div>
 
                 {{-- image --}}
-                <div class="text-center mb-3">
-                    <img src="{{ asset('images/journykit.png') }}" alt="Journey Kit" class="img-fluid meal-kit-image mx-auto">
+                <div id="productCarousel" class="carousel slide">
+                    <div class="carousel-inner">
+                        @forelse($images as $key => $image)
+                            <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                                <img src="{{ asset('storage/' . $image->image_url) }}"
+                                    class="img-fluid meal-kit-image mx-auto"
+                                    alt="product image">
+                            </div>
+                        @empty
+                            <div class="carousel-item active">
+                                <img src="{{ asset('storage/' . $product->image) }}"
+                                    class="img-fluid meal-kit-image mx-auto"
+                                    alt="product image">
+                            </div>
+                        @endforelse
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
                 </div>
 
                 {{-- body --}}
                 <div class="px-2">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <div>
-                            <h2 class="meal-kit-title mb-1">Journey Kit</h2>
-                            <p class="meal-kit-subtitle mb-0">Hokkaido | Kitchen Sapporo</p>
+                            <h2 class="meal-kit-title mb-1">{{ $product->name }}</h2>
+                            <p class="meal-kit-subtitle mb-0">{{ $product->restaurant->prefecture }} | {{ $product->restaurant->restaurant_name }}</p>
                         </div>
 
                         <div class="text-end">
@@ -35,10 +57,10 @@
                                 <span class="badge text-dark border rounded-pill px-2 py-1">Cool</span>
                                 <div class="d-flex align-items-center gap-1 small">
                                     <i class="fa-solid fa-users"></i>
-                                    <span>serving</span>
+                                    <span>serving {{ $product->serving }}</span>
                                 </div>
                             </div>
-                            <div class="meal-kit-price">$ 20.5</div>
+                            <div class="meal-kit-price">$ {{ $product->price }}</div>
                         </div>
                     </div>
 
@@ -53,33 +75,24 @@
                         <div class="col-10">
                             <h5 class="section-title mb-1">Description</h5>
                             <p class="small mb-3">
-                                "Enjoy the authentic taste of Hokkaido right at your dining
-                                table. Made with fresh, local ingredients."
+                                {{ $product->description }}
                             </p>
 
                             <h5 class="section-title mb-1">Ingredients</h5>
                             <p class="small mb-1">
-                                Chicken leg, Potato, Carrot, Onion, Tomato paste, Garlic,
-                                Ginger, Original spice blend, Vegetable oil, Salt.
+                                {{ $product->ingredient }}
                             </p>
                             <p class="small mb-0">
-                                Allergens : Wheat, Soy, Chicken
+                                Allergens : {{ $product->allergens }}
                             </p>
-                        </div>
-
-                        <div class="col-2 d-flex flex-column justify-content-end align-items-center">
-                            <button type="button" class="btn p-0 border-0 bg-transparent text-center">
-                                <i class="fa-solid fa-cart-shopping fs-1 text-dark"></i>
-                                <div class="small mt-1">Add Cart</div>
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="my-3 d-flex justify-content-center">
-                <a href="" class="btn btn-outline-navy mx-3">Back</a>
-                <a href="" class="btn btn-navy mx-3">Edit</a>
+                <a href="{{ route('owner.products') }}" class="btn btn-outline-navy mx-3">Back</a>
+                <a href="{{ route('owner.products.edit',$product->id) }}" class="btn btn-navy mx-3">Edit</a>
             </div>
 
 

@@ -18,7 +18,7 @@
             <i class="fa-solid fa-truck me-2"></i>Orders
         </a>
 
-        <a href="{{ route('owner.products') }}" class="list-group-item fs-5 {{ request()->is('owner/products*') ? 'active' : '' }}">
+        <a href="{{ route('owner.products') }}" class="list-group-item fs-5 {{ request()->is('owner/product*') ? 'active' : '' }}">
             <i class="fa-solid fa-utensils me-2"></i>Meal Kit
         </a>
 
