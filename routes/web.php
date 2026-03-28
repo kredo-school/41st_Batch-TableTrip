@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
+use App\Http\Controllers\User\InquiryController;
 
 
 //Admin
@@ -66,7 +67,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('cart'); 
         Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('cart_destroy');
     });
+    // Inquiry
+Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
 
+    Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
+
+    Route::post('/send', [InquiryController::class, 'send'])->name('send');
+});
 // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
 // Visited
@@ -115,8 +124,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // --- 5. Favorites ---
-    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favoritekits');
-    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favoriterestaurants');
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favorite_kits');
+    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favorite_restaurants');
     
     // --- 5. Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);

@@ -5,11 +5,12 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+
 <div class="container py-5 d-flex flex-column align-items-center">
     <div class="card purchase-card p-4 shadow-sm">
         <h2 class="mb">My Favorites</h2>
         <div class="selection-group mb-4">
-            <input type="radio" name="fav-tab" id="go-restaurants" onchange="location.href='{{ route('favoriterestaurants') }}'">
+            <input type="radio" name="fav-tab" id="go-restaurants" onchange="location.href='{{ route('favorite_restaurants') }}'">
             <label for="go-restaurants">Restaurants</label>
 
             <input type="radio" name="fav-tab" id="stay-kits" checked>
