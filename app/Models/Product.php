@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
+use App\Models\Restaurant;
 
 class Product extends Model
 {
@@ -17,6 +18,11 @@ class Product extends Model
         return $this->hasMany(AbleImage::class,'target_id')
         ->where('target_type','product')
         ->orderBy('display_order');
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
     }
 }
  

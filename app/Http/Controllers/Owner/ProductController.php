@@ -340,4 +340,16 @@ class ProductController extends Controller
         dd($e->getMessage());
     }
     }
+
+   public function show($id)
+    {
+        $product = Product::findOrFail($id);
+
+        $images = AbleImage::where('target_type', 'product')
+            ->where('target_id', $product->id)
+            ->orderBy('display_order')
+            ->get();
+
+        return view('restaurant-owners.meal_kits.details', compact('product', 'images'));
+    }
 }

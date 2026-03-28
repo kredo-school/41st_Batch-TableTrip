@@ -63,7 +63,7 @@
             {{-- table --}}
             <div class="card rounded-4 shadow-sm border-0 overflow-hidden">
                 <div class="card-body p-0">
-                    <table class="table align-middle mb-5 mx-3 text-center">
+                    <table class="table align-middle mb-5 mx-3 text-center table-hover">
                         <thead>
                             <tr class="border-bottom">
                                 <th class="ps-4 py-4">IMAGE</th>
@@ -80,7 +80,7 @@
                         
                          @forelse ($products as $product)
                              
-                            <tr>
+                            <tr onclick="window.location='{{ route('owner.products.details',$product->id) }}'">
                                 <td class="ps-4" style="width: 140px;">
                                     <img src="{{ asset('storage/' . $product->image) }}"
                                         alt="product image"
@@ -114,7 +114,7 @@
                                 <td>{{ $product->updated_at->format('Y M d, H:i') }}</td>
 
                                 <td class="text-center">
-                                    <a href="{{ route('owner.products.edit',$product->id) }}" class="btn"><i class="fa-regular fa-pen-to-square text-navy"></i>Edit</a>
+                                    <a href="{{ route('owner.products.edit',$product->id) }}" class="btn" onclick="event.stopPropagation();"><i class="fa-regular fa-pen-to-square text-navy"></i>Edit</a>
                                    
                                     <form action="{{ route('owner.products.toggleVisibility', $product->id) }}" method="POST" class="d-inline">
                                         @csrf
@@ -122,10 +122,10 @@
 
                                         @if ($product->is_visible)
                                             <button class="btn">
-                                                <i class="fa-regular fa-eye-slash text-secondary"></i> Hide
+                                                <i class="fa-regular fa-eye-slash text-secondary" onclick="event.stopPropagation();"></i> Hide
                                             </button>
                                         @else
-                                            <button class="btn">
+                                            <button class="btn" onclick="event.stopPropagation();">
                                                 <i class="fa-regular fa-eye"></i> Unhide
                                             </button>
                                         @endif
