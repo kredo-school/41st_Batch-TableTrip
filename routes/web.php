@@ -72,8 +72,7 @@ Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
 });
 // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
-// Visited
-    // Route::get('/visited', [VisitedController::class, 'index'])->name('visited.index');
+    
 
 // --- 3. My Page & Profile  ---
     Route::prefix('mypage')->name('user.')->group(function () {
