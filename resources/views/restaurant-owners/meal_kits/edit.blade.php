@@ -1,166 +1,263 @@
 @extends('layouts.owner')
 
-@section('title', 'Add Meal Kit')
+@section('title', 'Edit Meal Kit')
 
 @section('content')
-<div class="container my-5">
-    <div class="row">
+<div class="m-5">
+    <div class="row mt-5">
         @include('restaurant-owners.sidebar')
 
         <div class="col-12 col-lg-9">
             <div class="mx-auto" style="max-width: 820px;">
-                <h1 class="text-center mb-5" style="text-decoration: underline; text-underline-offset: 10px; text-decoration-color: #D96B52;">
+                <h1 class="text-center mb-5 text-underline-accent">
                     Edit Meal Kit
                 </h1>
 
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('owner.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PATCH')
 
                     <div class="row g-5">
-                        {{-- Left --}}
-                        <div class="col-md-6">
-                            <h2 class="mb-4">Basic Infomation</h2>
 
+                        {{-- LEFT --}}
+                        <div class="col-md-6">
+                            <h2 class="mb-4">Basic Information</h2>
+
+                            {{-- Name --}}
                             <div class="mb-4">
-                                <label for="meal_kit_name" class="form-label">Meal Kit Name</label>
-                                <input type="text" id="meal_kit_name" name="meal_kit_name" class="form-control form-transparent" placeholder="Enter meal kit name">
+                                <label class="form-label">Meal Kit Name</label>
+                                <input type="text" name="name"
+                                    class="form-control form-transparent @error('name') is-invalid @enderror"
+                                    value="{{ old('name', $product->name) }}">
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
+                            {{-- Price --}}
                             <div class="mb-4">
-                                <label for="price" class="form-label">Price</label>
+                                <label class="form-label">Price</label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
-                                    <input type="text" id="price" name="price" class="form-control form-transparent">
+                                    <input type="number" name="price"
+                                        class="form-control form-transparent @error('price') is-invalid @enderror"
+                                        value="{{ old('price', $product->price) }}">
                                 </div>
+                                @error('price')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
 
+                            {{-- Serving --}}
                             <div class="mb-4">
-                                <label for="serving" class="form-label">Serving</label>
-                                <select id="serving" name="serving" class="form-select form-transparent">
-                                    <option selected>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
+                                <label class="form-label">Serving</label>
+                                <input type="number" name="serving"
+                                    class="form-control form-transparent @error('serving') is-invalid @enderror"
+                                    value="{{ old('serving', $product->serving) }}">
+                                @error('serving')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
+                            {{-- Stock --}}
                             <div class="mb-4">
-                                <label for="stock_quantity" class="form-label">Stock Quantity</label>
-                                <select id="stock_quantity" name="stock_quantity" class="form-select form-transparent">
-                                    <option selected>1</option>
-                                    <option>2</option>
-                                    <option>5</option>
-                                    <option>10</option>
-                                </select>
+                                <label class="form-label">Stock</label>
+                                <input type="number" name="stock"
+                                    class="form-control form-transparent @error('stock') is-invalid @enderror"
+                                    value="{{ old('stock', $product->stock) }}">
+                                @error('stock')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
+                            {{-- Category --}}
                             <div class="mb-4">
-                                <label for="category" class="form-label">Category</label>
-                                <select id="category" name="category" class="form-select form-transparent">
-                                    <option selected>Select category</option>
-                                    <option>Korean</option>
-                                    <option>Japanese</option>
-                                    <option>Chinese</option>
+                                <label class="form-label">Category</label>
+                                <select name="category_id"
+                                    class="form-select form-transparent @error('category_id') is-invalid @enderror">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
+                            {{-- Difficulty --}}
                             <div class="mb-5">
-                                <label for="difficulty_level" class="form-label">Difficulty Level</label>
-                                <select id="difficulty_level" name="difficulty_level" class="form-select form-transparent">
-                                    <option selected>Easy</option>
-                                    <option>Medium</option>
-                                    <option>Hard</option>
+                                <label class="form-label">Difficulty Level</label>
+                                <select name="difficulty_level"
+                                    class="form-select form-transparent @error('difficulty_level') is-invalid @enderror">
+                                    @foreach(['easy','medium','hard'] as $level)
+                                        <option value="{{ $level }}"
+                                            {{ old('difficulty_level', $product->difficulty_level) == $level ? 'selected' : '' }}>
+                                            {{ ucfirst($level) }}
+                                        </option>
+                                    @endforeach
                                 </select>
+                                @error('difficulty_level')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
+                            {{-- Main Image --}}
                             <div class="mb-3">
                                 <label class="form-label">Upload Image</label>
-                                <label for="main_image" class="border rounded-4 w-100 d-flex flex-column justify-content-center align-items-center text-secondary"
+
+                                <label for="main_image"
+                                    class="border rounded-4 w-100 d-flex justify-content-center align-items-center text-secondary overflow-hidden"
                                     style="height: 120px; cursor: pointer;">
-                                    <span style="font-size: 3rem; line-height: 1;">+</span>
-                                    <span>Main image（Thumbnail）</span>
+
+                                    <img id="main_image_preview"
+                                        src="{{ $product->image ? asset('storage/'.$product->image) : '' }}"
+                                        class="w-100 h-100 {{ $product->image ? '' : 'd-none' }}"
+                                        style="object-fit: cover;">
+
+                                    <span id="main_image_placeholder"
+                                        class="{{ $product->image ? 'd-none' : '' }}">
+                                        + Main Image
+                                    </span>
                                 </label>
+
                                 <input type="file" id="main_image" name="main_image" class="d-none">
+
+                                @error('main_image')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        {{-- Right --}}
+                        {{-- RIGHT --}}
                         <div class="col-md-6">
-                            <h2 class="mb-4">Food Infomation</h2>
+                            <h2 class="mb-4">Food Information</h2>
 
+                            {{-- Ingredients --}}
                             <div class="mb-4">
-                                <label for="ingredients" class="form-label">Ingredients</label>
-                                <textarea id="ingredients" name="ingredients" class="form-control mb-5 form-transparent" rows="4"
-                                    placeholder="Enter ingredients
-                                                (e.g
-                                                Chicken,Poteto,Onion,Soy ...">
-                                </textarea>
+                                <label class="form-label">Ingredients</label>
+                                <textarea name="ingredients"
+                                    class="form-control form-transparent @error('ingredients') is-invalid @enderror"
+                                    rows="4">{{ old('ingredients', $product->ingredients) }}</textarea>
+                                @error('ingredients')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="mb-4">
-                                <label class="form-label">Allergens</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="wheat" name="allergens[]" value="Wheat">
-                                            <label class="form-check-label " for="wheat">Wheat</label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="milk" name="allergens[]" value="Milk">
-                                            <label class="form-check-label " for="milk">Milk</label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="shirimp" name="allergens[]" value="Shirimp">
-                                            <label class="form-check-label " for="shirimp">Shirimp</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="egg" name="allergens[]" value="Egg">
-                                            <label class="form-check-label" for="egg">Egg</label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="soy" name="allergens[]" value="Soy">
-                                            <label class="form-check-label" for="soy">Soy</label>
-                                        </div>
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input" type="checkbox" id="penuts" name="allergens[]" value="Penuts">
-                                            <label class="form-check-label" for="penuts">Penuts</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center gap-2 mt-2">
-                                    <div class="form-check mb-0">
-                                        <input class="form-check-input" type="checkbox" id="other_allergen">
-                                    </div>
-                                    <input type="text" class="form-control form-transparent" name="other_allergen" placeholder="Other">
-                                </div>
-                            </div>
+                            {{-- Allergens --}}
+                            @php
+                                $selected = old('allergens', explode(', ', $product->allergens ?? ''));
+                            @endphp
 
                             <div class="mb-5">
-                                <label for="expiration_description" class="form-label">Expiratioin Description</label>
-                                <textarea id="expiration_description" name="expiration_description" class="form-control form-transparent" rows="5"
-                                    placeholder="Arrives within 3days after shipping."></textarea>
+                                <label class="form-label">Allergens</label>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        @foreach(['Wheat','Milk','Shrimp'] as $a)
+                                            <div class="form-check mb-2">
+                                                <input type="checkbox" name="allergens[]" value="{{ $a }}"
+                                                    class="form-check-input"
+                                                    {{ in_array($a, $selected) ? 'checked' : '' }}>
+                                                <label class="form-check-label">{{ $a }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <div class="col-6">
+                                        @foreach(['Egg','Soy','Peanuts'] as $a)
+                                            <div class="form-check mb-2">
+                                                <input type="checkbox" name="allergens[]" value="{{ $a }}"
+                                                    class="form-check-input"
+                                                    {{ in_array($a, $selected) ? 'checked' : '' }}>
+                                                <label class="form-check-label">{{ $a }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                @error('allergens')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+
+                                <div class="mt-2">
+                                    <input type="text" name="other_allergen"
+                                        class="form-control form-transparent"
+                                        placeholder="Other"
+                                        value="{{ old('other_allergen') }}">
+                                </div>
                             </div>
 
+                             <div class="mb-5">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea id="description" name="description" class="form-control form-transparent mb-5" rows="5"
+                                    placeholder="Write Description.">{{ old('description',$product->description) }}</textarea>
+                                @error('description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror      
+                            </div>
+
+                            {{-- Additional Images --}}
                             <div class="mb-3">
-                                <label class="form-label d-block invisible">Additional Image</label>
-                                <label for="additional_images" class="border rounded-4 w-100 d-flex flex-column justify-content-center align-items-center text-secondary"
+                                <label class="form-label">Additional Images</label>
+
+                                @if($product->images->isNotEmpty())
+                                    <div class="row g-2 mb-3">
+                                        @foreach($product->images as $image)
+                                            @if($image->display_order > 1)
+                                                <div class="col-4 col-md-3 position-relative" id="image-{{ $image->id }}">
+                                                    <img src="{{ asset('storage/' . $image->image_url) }}"
+                                                        alt="Additional image"
+                                                        class="w-100 rounded additional-image">
+
+                                                    <button type="button"
+                                                        class="btn btn-danger rounded-circle position-absolute top-0 end-0 d-flex align-items-center justify-content-center delete-image-btn"
+                                                        style="width: 28px; height: 28px;"
+                                                        data-id="{{ $image->id }}"
+                                                        data-url="{{ route('owner.products.images.destroy', $image->id) }}"
+                                                        style="width: 28px; height: 28px;">
+                                                        ×
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <label for="additional_images"
+                                    class="border rounded-4 w-100 d-flex justify-content-center align-items-center text-secondary"
                                     style="height: 120px; cursor: pointer;">
-                                    <span style="font-size: 3rem; line-height: 1;">+</span>
-                                    <span>Additional Images（optional）</span>
+                                    + Add Images
                                 </label>
-                                <input type="file" id="additional_images" name="additional_images[]" class="d-none" multiple>
+
+                                <input type="file" id="additional_images"
+                                    name="additional_images[]"
+                                    class="d-none"
+                                    multiple
+                                    accept="image/*">
+
+                                <div id="additional_images_preview" class="row g-2 mt-2"></div>
+
+                                @error('additional_images')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+
+                                @error('additional_images.*')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-center gap-3 mt-5">
-                        <a href="#" class="btn btn-outline-navy px-5">Cancel</a>
+                        <a href="{{ route('owner.products') }}" class="btn btn-outline-navy px-5">Cancel</a>
                         <button type="submit" class="btn btn-navy px-5">Save</button>
                     </div>
+
                 </form>
             </div>
         </div>

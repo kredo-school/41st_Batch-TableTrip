@@ -209,10 +209,14 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::patch('/orders/{id}',[OwnerOrdersController::class,'update'])->name('orders.update');
 
         //Meal kits
-        Route::get('/products',[OwnerProductController::class,'index'])->name('products');
-        Route::patch('/products/{id}',[OwnerProductController::class,'toggleVisibility'])->name('products.toggleVisibility');
-        Route::get('/products/create',[OwnerProductController::class,'create'])->name('products.create');
-        Route::post('/product/store/',[OwnerProductController::class,'store'])->name('products.store');
+        Route::get('/product',[OwnerProductController::class,'index'])->name('products');
+        Route::patch('/product/{id}/visibility',[OwnerProductController::class,'toggleVisibility'])->name('products.toggleVisibility');
+        Route::get('/product/create',[OwnerProductController::class,'create'])->name('products.create');
+        Route::post('/product/store',[OwnerProductController::class,'store'])->name('products.store');
+        Route::get('/product/{id}/edit',[OwnerProductController::class,'edit'])->name('products.edit');
+        Route::patch('/product/{id}',[OwnerProductController::class,'update'])->name('products.update');
+        Route::delete('/product/images/{id}', [OwnerProductController::class, 'destroyImage'])->name('products.images.destroy');
+        
 
     });
 });

@@ -63,3 +63,42 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.delete-image-btn');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', async () => {
+            if (!confirm('Delete this image?')) return;
+
+            const imageId = button.dataset.id;
+            const url = button.dataset.url;
+
+            console.log('delete url:', url);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Delete failed:', response.status, errorText);
+                    alert('削除失敗');
+                    return;
+                }
+
+                document.getElementById(`image-${imageId}`)?.remove();
+
+            } catch (error) {
+                console.error(error);
+                alert('エラー発生');
+            }
+        });
+    });
+});

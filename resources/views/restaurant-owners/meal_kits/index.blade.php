@@ -63,7 +63,7 @@
             {{-- table --}}
             <div class="card rounded-4 shadow-sm border-0 overflow-hidden">
                 <div class="card-body p-0">
-                    <table class="table align-middle mb-0 mx-3 text-center">
+                    <table class="table align-middle mb-5 mx-3 text-center">
                         <thead>
                             <tr class="border-bottom">
                                 <th class="ps-4 py-4">IMAGE</th>
@@ -114,7 +114,7 @@
                                 <td>{{ $product->updated_at->format('Y M d, H:i') }}</td>
 
                                 <td class="text-center">
-                                    <a href="" class="btn"><i class="fa-regular fa-pen-to-square text-navy"></i>Edit</a>
+                                    <a href="{{ route('owner.products.edit',$product->id) }}" class="btn"><i class="fa-regular fa-pen-to-square text-navy"></i>Edit</a>
                                    
                                     <form action="{{ route('owner.products.toggleVisibility', $product->id) }}" method="POST" class="d-inline">
                                         @csrf
@@ -143,13 +143,6 @@
                         </tbody>
                     </table>
                     {{ $products->links('layouts.pagination.custom') }}
-
-
-                    <div class="d-flex justify-content-center align-items-center py-4">
-                        <a href="#" class="text-decoration-none text-muted fs-5 me-4">&lt;</a>
-                        <span class="fs-5">1</span>
-                        <a href="#" class="text-decoration-none text-muted fs-5 ms-4">&gt;</a>
-                    </div>
                 </div>
             </div>
         </div>
