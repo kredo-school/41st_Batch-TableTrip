@@ -62,11 +62,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('cart_destroy');
     });
     // Inquiry
-   Route::prefix('user/inquiry')->name('user.inquiry.')->group(function() {
-    Route::get('/', [InquiryController::class, 'index'])->name('index');    
+Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
+
+    Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
+
     Route::post('/send', [InquiryController::class, 'send'])->name('send');
 });
-
 // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
 // Visited

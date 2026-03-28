@@ -108,7 +108,7 @@
                                     
                                     {{-- Inquiry --}}
                                     <li>
-                                        <a href="#" class="dropdown-item">
+                                        <a href="{{ route('user.inquiry.dashboard') }}" class="dropdown-item">
                                             <i class="bi bi-envelope me-2"></i> Inquiry
                                         </a>
                                     </li>
