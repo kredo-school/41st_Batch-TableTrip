@@ -5,38 +5,53 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reservation;
-use App\Models\Order; 
 use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
-    public function index(Request $request)
-{
-    $user = Auth::user();
-    $today = \Carbon\Carbon::today()->toDateString();
+    
+    public function index()
+    {
+        $user = Auth::user();
+        
+        
+        $reservations = Reservation::where('user_id', $user->id)
+            ->with('restaurant')
+            ->orderBy('reservation_date', 'desc')
+            ->orderBy('reservation_time', 'desc')
+            ->get();
 
-    $latest_reservations = Reservation::where('user_id', $user->id)
-        ->where('reservation_date', '>=', $today)
-        ->with('restaurant')
-        ->get();
+        return view('user.reservations.index', compact('reservations'));
+    }
 
-    $past_reservations = Reservation::where('user_id', $user->id)
-        ->where('reservation_date', '<', $today)
-        ->with('restaurant')
-        ->latest()
-        ->take(5)
-        ->get();
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'restaurant_id' => 'required|exists:restaurants,id',
+            'reservation_date' => 'required|date|after_or_equal:today',
+            'reservation_time' => 'required',
+            'number_of_people' => 'required|integer|min:1',
+        ]);
+
+        Reservation::create([
+            'user_id' => Auth::id(),
+            'restaurant_id' => $validated['restaurant_id'],
+            'reservation_date' => $validated['reservation_date'],
+            'reservation_time' => $validated['reservation_time'],
+            'number_of_people' => $validated['number_of_people'],
+            'status' => 'pending', 
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Reservation completed!');
+    }
 
 
-    $purchased_items = \App\Models\Order::where('user_id', $user->id)
-        ->latest()
-        ->take(5)
-        ->get();
+    public function destroy($id)
+    {
+        $reservation = Reservation::where('user_id', Auth::id())->findOrFail($id);
+        $reservation->delete();
 
-    return view('dashboard', compact(
-        'latest_reservations',
-        'past_reservations',
-        'purchased_items'
-    ));
-}
+        return redirect()->back()->with('success', 'Reservation cancelled.');
+    }
+
 }
