@@ -1,5 +1,7 @@
 body {
     background-color: #F7F5F0;
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
 .login-card {
@@ -58,17 +60,24 @@ body {
 }
 
 main{
-margin-left:var(--sidebar-width);
+overflow:visible;
+min-height:100vh;
+padding-top:30px;
+padding-bottom:100px;
+}
+
+.main-content{
+margin-left:274px;
 }
 
 .sidebar{
 top:70px;
-height:calc(100vh - 70px);
-width:var(--sidebar-width);
+width:274px;
 background-color:#F7F5F0 !important;
 padding-top:50px;
 position:fixed;
 left:0;
+z-index:1000;
 }
 
 /* Admin Menu items */
@@ -187,7 +196,6 @@ font-size:13px;
     border-radius:0px;
     box-shadow:0 3px 8px rgba(0,0,0,0.05);
     transition:all 0.2s ease, box-shadow 0.2s ease;
-    height:100%;
     width:100%;
     font-family: 'Playfair Display', serif;
 }
@@ -238,10 +246,6 @@ font-size:13px;
     font-family:'Playfair Display', serif;
 }
 
-main{
-    overflow:visible;
-}
-
 .recent-orders{
 list-style:none;
 padding:0;
@@ -277,6 +281,8 @@ font-family:'Playfair Display', serif;
 
 header input{
 font-family:'Playfair Display', serif;
+position:relative;
+z-index:1100;
 }
 
 /*Orders Table*/
@@ -362,7 +368,6 @@ background:#565555;
 color:#FFFFFF;
 }
 
-
 .pagination .page-link {
     border: none;
     background: transparent;
@@ -393,5 +398,200 @@ color:#FFFFFF;
 }
 
 .admin-home-link:hover {
+    color: #000;
+}
+
+.order-title{
+text-align:center;
+font-family:'Playfair Display', serif;
+font-size:42px;
+color:#ffffff;
+margin-top:-15px;
+margin-bottom: 30px;
+}
+
+.order-wrapper{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:flex-start;
+gap:10px;
+
+background:#B8D9D0;
+padding:40px;
+border-radius:16px;
+
+max-width:720px;
+width:100%;
+
+margin:30px auto;
+}
+
+/* LEFT */
+.user-card{
+color:#ffffff;
+font-family:'Playfair Display', serif;
+}
+
+.user-top{
+display:flex;
+gap:15px;
+align-items:center;
+margin-bottom:20px;
+}
+
+.user-icon{
+width:60px;
+height:60px;
+border-radius:50%;
+border:2px solid #000;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+background:#fff;
+}
+
+.user-id{
+font-size:14px;
+opacity:0.8;
+}
+
+.user-status{
+font-size:16px;
+}
+
+.dot{
+display:inline-block;
+width:10px;
+height:10px;
+border-radius:50%;
+background:#6ecf7f;
+margin-right:6px;
+}
+
+.user-card p{
+margin-bottom:14px;
+}
+
+.user-card span{
+opacity:0.7;
+}
+
+.section-title{
+margin-top:20px;
+}
+
+.sub{
+opacity:0.9;
+font-size:14px;
+line-height:1.6;
+}
+
+/* RIGHT */
+.order-card{
+background:rgba(255,255,255,0.43); /* ←これ */
+padding:30px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+font-family:'Playfair Display', serif;
+}
+
+.order-content{
+display:flex;
+gap:40px;
+width:100%;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.order-title.inside{
+font-size:28px;
+color:#ffffff;
+text-align:center;
+margin-bottom:10px;
+}
+
+.user-card,
+.order-card{
+flex:1; /* ←これに変更 */
+min-width:280px; /* 最低幅 */
+}
+
+.order-id{
+font-size:18px;
+margin-bottom:10px;
+}
+
+.status-line{
+margin-bottom:10px;
+}
+
+.yellow{
+background:#f3d36b;
+}
+
+.date{
+text-align:center;
+margin:10px 0 20px;
+}
+
+.restaurant{
+margin-bottom:10px;
+}
+
+.divider{
+border-bottom:1px dashed #ccc;
+margin:15px 0;
+}
+
+.items-title{
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.item-row,
+.price-row{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+font-size:14px;
+}
+
+.item-row span,
+.price-row span{
+word-break:break-word;
+}
+
+.total{
+text-align:right;
+font-size:20px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.points{
+text-align:right;
+font-size:12px;
+opacity:0.7;
+}
+
+/* BUTTON */
+.edit-btn{
+background:#fff;
+border:none;
+padding:5px 25px;
+border-radius:8px;
+font-family:'Playfair Display', serif;
+}
+
+.back-link{
+font-size:14px;
+color:#777;
+font-family:'Playfair Display', serif;
+text-decoration: none;
+}
+
+.back-link:hover {
     color: #000;
 }

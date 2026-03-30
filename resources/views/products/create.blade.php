@@ -66,6 +66,27 @@
 
                 <input type="hidden" name="category_id" value="1">
 
+                {{-- バッジ選択（リボン） --}}
+                <div class="mb-3">
+                    <label class="form-label text-secondary">Badge (Ribbon)</label>
+                    <select name="badge" class="form-select">
+                        <option value="">-- None --</option>
+                        <option value="Easy"    {{ old('badge') == 'Easy'    ? 'selected' : '' }}>Easy</option>
+                        <option value="Special" {{ old('badge') == 'Special' ? 'selected' : '' }}>Special</option>
+                        <option value="Kids OK" {{ old('badge') == 'Kids OK' ? 'selected' : '' }}>Kids OK</option>
+                    </select>
+                </div>
+
+                {{-- タグ選択（四角バッジ） --}}
+                <div class="mb-3">
+                    <label class="form-label text-secondary">Tag</label>
+                    <select name="tag" class="form-select">
+                        <option value="">-- None --</option>
+                        <option value="Cool"         {{ old('tag') == 'Cool'         ? 'selected' : '' }}>Cool</option>
+                        <option value="Flash Frozen" {{ old('tag') == 'Flash Frozen' ? 'selected' : '' }}>Flash Frozen</option>
+                    </select>
+                </div>
+
                 {{-- 画像選択ボタンを追加 --}}
                 <div class="mb-3">
                     <label class="form-label text-secondary">Product Image</label>
