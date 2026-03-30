@@ -11,18 +11,26 @@ class ReservationController extends Controller
 {
     
     public function index()
-    {
-        $user = Auth::user();
-        
-        
-        $reservations = Reservation::where('user_id', $user->id)
-            ->with('restaurant')
-            ->orderBy('reservation_date', 'desc')
-            ->orderBy('reservation_time', 'desc')
-            ->get();
+{
+    $user = Auth::user();
+    $today = \Carbon\Carbon::today()->toDateString();
+    
+    // upcoming 
+    $upcoming_reservations = Reservation::where('user_id', $user->id)
+        ->where('reservation_date', '>=', $today)
+        ->with('restaurant')
+        ->orderBy('reservation_date', 'asc') 
+        ->get();
 
-        return view('user.reservations.index', compact('reservations'));
-    }
+    // past
+    $past_reservations = Reservation::where('user_id', $user->id)
+        ->where('reservation_date', '<', $today)
+        ->with('restaurant')
+        ->orderBy('reservation_date', 'desc') 
+        ->get();
+
+    return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations'));
+}
 
     public function store(Request $request)
     {
