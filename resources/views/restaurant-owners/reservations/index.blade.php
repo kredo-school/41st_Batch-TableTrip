@@ -142,7 +142,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($reservations as $reservation)
-                                        <tr>
+                                        <tr onclick="window.location='{{ route('owner.reservations.show', $reservation->id) }}'">
                                             <td>
                                                 <div>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('M d, Y') }}</div>
                                                 <small class="text-muted">
@@ -168,7 +168,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editReservationModal-{{ $reservation->id }}">
+                                                <button onclick="event.stopPropagation();" type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editReservationModal-{{ $reservation->id }}">
                                                     Edit
                                                 </button>
                                             </td>
@@ -195,17 +195,4 @@
  @foreach($reservations as $reservation)
   @include('restaurant-owners.reservations.modals.edit')
 @endforeach
-@if (session('open_edit_modal'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modalId = 'editReservationModal-{{ session('open_edit_modal') }}';
-            const modalElement = document.getElementById(modalId);
-
-            if (modalElement) {
-                const modal = new bootstrap.Modal(modalElement);
-                modal.show();
-            }
-        });
-    </script>
-@endif
 @endsection

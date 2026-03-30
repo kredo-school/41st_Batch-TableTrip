@@ -17,11 +17,15 @@ use App\Http\Controllers\User\InquiryController;
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminOrdersController;
+
 
 //Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
+use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
+use App\Http\Controllers\owner\ProductController as OwnerProductController;
 
 //Restaurant
 use App\Http\Controllers\RestaurantController;
@@ -31,6 +35,8 @@ use App\Http\Controllers\PurchasedController;
 
 //Product
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\owner\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,17 +150,14 @@ Route::prefix('admin')->middleware(['auth']) ->group(function () {
 // 登録画面を表示するURL
 Route::get('/products/create', [OrderController::class, 'create'])->name('products.create');
 
-Route::get('/products', function () {
-    return view('products.index');
-})->name('products.index');
+Route::get('/products', [OrderController::class, 'index'])->name('products.index');
 
-Route::get('/products/{id}', function ($id) {
-    return view('products.show'); 
-})->name('products.show');
+Route::get('/products/{id}', [OrderController::class, 'show'])->name('products.show');
 
-Route::get('/cart', function () {
-    return view('products.cart');
-})->name('cart.index');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 
 Route::get('/cart/confirm', function () {
     return view('products.confirm');
@@ -164,29 +167,28 @@ Route::get('/cart/thanks', function () {
     return view('products.thanks');
 })->name('cart.thanks');
 
+Route::get('/cart/track', function () {
+    return view('products.track');
+})->name('cart.track');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+});
+
 Route::get('/order/details', [OrderController::class, 'showDetails']);
 
 Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
 
-// for checking layouts
-Route::view('/restaurant-page', 'restaurants.restaurant_page');
-Route::view('/restaurant-owner-page', 'restaurant-owners.register');
-Route::view('/restaurant-owner-login', 'restaurant-owners.login');
-Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
-Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
-Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
-Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
-Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
-Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
-Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
-Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
-Route::view('/restaurant-owner-page-info', 'restaurant-owners.page-management.basic-info');
-Route::view('/restaurant-owner-page-image', 'restaurant-owners.page-management.image');
-Route::view('/restaurant-owner-page-menu', 'restaurant-owners.page-management.menu');
-Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management.preview');
-Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
-Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
-Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
+// Admin Orders Table //
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
+});
+
+// Admin Order Detail Page //
+Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])
+    ->name('admin.orders.show');
+
 
 //Restaurant Page
 Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');
@@ -202,8 +204,21 @@ Route::prefix('owner')->name('owner.')->group(function () {
     Route::middleware('auth:restaurant')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
+
+        //Reservations
         Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
         Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
         Route::patch('/reservations/{id}',[OwnerReservationController::class,'update'])->name('reservations.update');
+        Route::get('/reservations/{id}',[OwnerReservationController::class,'show'])->name('reservations.show');
+
+        //Orders
+        Route::get('/orders',[OwnerOrdersController::class,'index'])->name('orders');
+        Route::get('/orders/{id}',[OwnerOrdersController::class,'show'])->name('orders.show');
+        Route::patch('/orders/{id}',[OwnerOrdersController::class,'update'])->name('orders.update');
+
+        //Meal kits
+        Route::get('/products',[OwnerProductController::class,'index'])->name('products');
+        Route::patch('/products/{id}',[OwnerProductController::class,'toggleVisibility'])->name('products.toggleVisibility');
+
     });
 });
