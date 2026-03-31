@@ -11,7 +11,7 @@
 
             {{-- Add Button --}}
             <div class="d-flex justify-content-end mb-4">
-                <a href="#" class="btn btn-orange px-4 py-2">
+                <a href="{{ route('owner.products.create') }}" class="btn btn-orange px-4 py-2">
                     +Add Meal Kit
                 </a>
             </div>
@@ -53,11 +53,17 @@
 
             </div>
          </form>
+         @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
             {{-- table --}}
             <div class="card rounded-4 shadow-sm border-0 overflow-hidden">
                 <div class="card-body p-0">
-                    <table class="table align-middle mb-0 mx-3 text-center">
+                    <table class="table align-middle mb-5 mx-3 text-center table-hover">
                         <thead>
                             <tr class="border-bottom">
                                 <th class="ps-4 py-4">IMAGE</th>
@@ -74,11 +80,11 @@
                         
                          @forelse ($products as $product)
                              
-                            <tr>
+                            <tr onclick="window.location='{{ route('owner.products.details',$product->id) }}'">
                                 <td class="ps-4" style="width: 140px;">
-                                    <img src="{{ asset('/images/journykit.png') }}"
-                                        alt="Bibimbap"
-                                        class="img-fluid rounded-3">
+                                    <img src="{{ asset('storage/' . $product->image) }}"
+                                        alt="product image"
+                                        class="product-image rounded">
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->price }}</td>
@@ -105,10 +111,10 @@
                                     {{ $status }}
                                 </span>
                                </td>
-                                <td>{{ $product->updated_at }}</td>
+                                <td>{{ $product->updated_at->format('Y M d, H:i') }}</td>
 
                                 <td class="text-center">
-                                    <a href="" class="btn"><i class="fa-regular fa-pen-to-square text-navy"></i>Edit</a>
+                                    <a href="{{ route('owner.products.edit',$product->id) }}" class="btn" onclick="event.stopPropagation();"><i class="fa-regular fa-pen-to-square text-navy"></i>Edit</a>
                                    
                                     <form action="{{ route('owner.products.toggleVisibility', $product->id) }}" method="POST" class="d-inline">
                                         @csrf
@@ -116,10 +122,10 @@
 
                                         @if ($product->is_visible)
                                             <button class="btn">
-                                                <i class="fa-regular fa-eye-slash text-secondary"></i> Hide
+                                                <i class="fa-regular fa-eye-slash text-secondary" onclick="event.stopPropagation();"></i> Hide
                                             </button>
                                         @else
-                                            <button class="btn">
+                                            <button class="btn" onclick="event.stopPropagation();">
                                                 <i class="fa-regular fa-eye"></i> Unhide
                                             </button>
                                         @endif
@@ -137,13 +143,6 @@
                         </tbody>
                     </table>
                     {{ $products->links('layouts.pagination.custom') }}
-
-
-                    <div class="d-flex justify-content-center align-items-center py-4">
-                        <a href="#" class="text-decoration-none text-muted fs-5 me-4">&lt;</a>
-                        <span class="fs-5">1</span>
-                        <a href="#" class="text-decoration-none text-muted fs-5 ms-4">&gt;</a>
-                    </div>
                 </div>
             </div>
         </div>
