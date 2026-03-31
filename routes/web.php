@@ -14,6 +14,9 @@ use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
 
 
+// home
+use App\Http\Controllers\HomeController;
+
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
@@ -37,6 +40,14 @@ use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\owner\ProductController;
+
+/*
+|--------------------------------------------------------------------------
+| Home
+|--------------------------------------------------------------------------
+*/
+Route::get('/',[HomeController::class,'index'])->name('home');
+
 
 /*
 |--------------------------------------------------------------------------
