@@ -78,8 +78,7 @@ Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
 });
 // --- 2. Purchased\
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
-// Visited
-    // Route::get('/visited', [VisitedController::class, 'index'])->name('visited.index');
+    
 
 // --- 3. My Page & Profile  ---
     Route::prefix('mypage')->name('user.')->group(function () {
@@ -115,13 +114,13 @@ Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
     
 
     // --- 3. Reservation  ---
-   Route::prefix('reservations')->name('reservations.')->group(function () {
-        Route::get('/', [ReservationController::class, 'index'])->name('index');
-        Route::post('/store', [ReservationController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
-        Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
-    });
+//    Route::prefix('reservations')->name('reservations.')->group(function () {
+//         Route::get('/', [ReservationController::class, 'index'])->name('index');
+//         Route::post('/store', [ReservationController::class, 'store'])->name('store');
+//         Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+//         Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
+//         Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
+//     });
 
     // --- 5. Favorites ---
     Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favorite_kits');
