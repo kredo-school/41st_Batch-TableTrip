@@ -173,7 +173,6 @@ class ProductController extends Controller
 
         }catch (\Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
 
             return redirect()->back()
                 ->withInput()
@@ -337,7 +336,9 @@ class ProductController extends Controller
 
     } catch (\Exception $e) {
         DB::rollBack();
-        dd($e->getMessage());
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Failed to edit product.');
     }
     }
 

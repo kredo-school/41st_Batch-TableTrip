@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const imageId = button.dataset.id;
             const url = button.dataset.url;
 
-            console.log('delete url:', url);
 
             try {
                 const response = await fetch(url, {
