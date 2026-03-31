@@ -14,7 +14,7 @@
 
                 {{-- ribbon --}}
                 <div class="difficulty-ribbon">
-                    <span class="display-4">{{ $product->difficulty_level }}</span>
+                    <span class="display-4 text-white">{{ $product->difficulty_level }}</span>
                 </div>
 
                 {{-- image --}}
