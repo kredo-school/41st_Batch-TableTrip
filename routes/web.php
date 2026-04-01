@@ -12,6 +12,12 @@ use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
+
+// notifications
+use App\Http\Controllers\Notifications\NotificationsController;
+
+
+// home
 use App\Http\Controllers\User\PaymentMethodController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -35,6 +41,17 @@ use App\Models\User;
 | Home
 |--------------------------------------------------------------------------
 */
+Route::get('/',[HomeController::class,'index'])->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Notifications
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth','verified'])->prefix('notifications')->name('notifications.')->group(function (){
+    Route::get('/',[NotificationsController::class, 'index'])->name('index');
+});
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /*
