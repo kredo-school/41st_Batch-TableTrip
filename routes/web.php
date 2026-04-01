@@ -4,7 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController; 
+
+//Admin
+use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\AdminReservationController;
+
+
+
+use App\Http\Controllers\DashboardController; // 一般ユーザー用
+// use App\Http\Controllers\ForgetController;  
+// use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -12,7 +23,6 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
-
 
 // home
 use App\Http\Controllers\HomeController;
@@ -141,21 +151,39 @@ Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
     Route::patch('/payment-method/{payment_method}/default', [PaymentMethodController::class, 'setDefault'])->name('user.payment_method.default');
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-*/
+// ADMIN
+// Admin Login page
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login']);
 });
+//Admin Dashboard(Overview) page, Admin Orders List/Detail, Admin Reservations List/Detail
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth'])
+    ->group(function () {
 
-Route::prefix('admin')->middleware(['auth']) ->group(function () {
-    Route::get('/dashboard',[DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::post('/logout',[AdminLoginController::class, 'logout'])->name('admin.logout');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/orders', [AdminOrdersController::class, 'index'])
+            ->name('orders.index');
+
+        Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])
+            ->name('orders.show');
+
+        Route::get('/reservations', [AdminReservationController::class, 'index'])
+            ->name('reservations.index');
+        
+        Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])
+            ->name('reservations.show');
+
+        Route::post('/logout', [AdminLoginController::class, 'logout'])
+            ->name('logout');
 });
 
+//Admin Rewards - Dashboard
+// Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
 
 //Product
 // 登録画面を表示するURL
@@ -191,15 +219,25 @@ Route::get('/order/details', [OrderController::class, 'showDetails']);
 
 Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
 
-// Admin Orders Table //
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
-});
-
-// Admin Order Detail Page //
-Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])
-    ->name('admin.orders.show');
-
+// for checking layouts
+Route::view('/restaurant-page', 'restaurants.restaurant_page');
+Route::view('/restaurant-owner-page', 'restaurant-owners.register');
+Route::view('/restaurant-owner-login', 'restaurant-owners.login');
+Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
+Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
+Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
+Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
+Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
+Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
+Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
+Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
+Route::view('/restaurant-owner-page-info', 'restaurant-owners.page-management.basic-info');
+Route::view('/restaurant-owner-page-image', 'restaurant-owners.page-management.image');
+Route::view('/restaurant-owner-page-menu', 'restaurant-owners.page-management.menu');
+Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management.preview');
+Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
+Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
+Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
 
 //Restaurant Page
 Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');

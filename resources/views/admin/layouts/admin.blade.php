@@ -15,20 +15,23 @@
 
 <body>
 
-@include('partials.header')
+@include('admin.partials.adminheader')
 
-@include('admin.partials.sidebar')
+<div class="main-wrapper">
 
-<main class="main-content px-md-4">
-    @yield('content')
-</main>
+    @include('admin.partials.sidebar')
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <main class="main-content px-md-4">
+        @yield('content')
+    </main>
 
-@stack('scripts')
+</div>
 
 @include('partials.footer')
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('js/admin-dashboard.js') }}"></script>
+<script src="{{ asset('js/admin.js') }}"></script>
+@stack('scripts')
 </body>
-
 </html>

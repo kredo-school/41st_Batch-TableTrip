@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Order extends Model
 {
@@ -24,13 +25,4 @@ class Order extends Model
         
         return $this->belongsTo(Product::class, 'meal_kit_id');
     }
-}
 
-//     protected $fillable = [
-//         'user_id',
-//         'restaurant_id',
-//         'total_price',
-//         'status',
-//         'created_at'
-//     ];
-// }

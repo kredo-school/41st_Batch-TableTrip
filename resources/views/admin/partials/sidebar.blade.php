@@ -5,35 +5,19 @@
    Dashboard
 </a>
 
-<<<<<<< Updated upstream
-<a href="{{ route('admin.orders') }}"
+<a href="{{ route('admin.orders.index') }}"
    class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
    Orders
 </a>
 
-=======
-<a href="#"
-   class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
-   Orders
-</a>
->>>>>>> Stashed changes
-{{-- Orders Page作ったら 
-    <a href="{{ route('admin.orders.index') }}"
-   class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
-   Orders
-</a>に変更--}}
-<a href="#">Reservations</a>
+<a href="{{ route('admin.reservations.index') }}">Reservations</a>
 <a href="#">Inquiries</a>
-
 <a href="#">Reviews</a>
-
 <a href="#">Restaurants</a>
 <a href="#">Products</a>
-
 <a href="#">Users</a>
 
 <div class="menu-item">
-
    <div class="menu-title">
       Rewards
    </div>
@@ -43,29 +27,16 @@
       <a href="/admin/points">Points</a>
       <a href="/admin/stamps">Stamp Rally</a>
    </div>
-
 </div>
 
 </nav>
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 @push('scripts')
-
 <script>
-
 document.querySelectorAll('.menu-title').forEach(item => {
-
     item.addEventListener('click', function(){
-
         this.parentElement.classList.toggle('active');
-
     });
-
 });
-
 </script>
-
 @endpush
