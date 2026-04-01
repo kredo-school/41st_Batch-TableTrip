@@ -51,11 +51,20 @@ class User extends Authenticatable
         return $this->hasMany(Reservation::class); 
     }
 
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
+    }
 
     public function purchased(): HasMany
     {
         return $this->hasMany(Purchased::class);
     }
+
+    // public function visited():HasMany
+    // {
+    //     return $this->hasMany(Visited::class);
+    // }
 
 
     public function favorite_restaurants()
@@ -63,6 +72,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Restaurant::class, 'favorite_restaurants');
     }
 
+    // public function favorite_kits()
+    // {
+  
+    //     return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
+    // }
+
+    
     public function favorite_kits()
     {
         return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
@@ -74,4 +90,5 @@ class User extends Authenticatable
                     ->withPivot('is_used', 'used_at')
                     ->withTimestamps();
     }
+
 }

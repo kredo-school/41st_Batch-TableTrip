@@ -23,23 +23,24 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Scripts -->
+        @stack('styles')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
     </head>
     <body class="d-flex flex-column min-vh-100">
-        <header class="border" style="background-color: #f2f2f2;">
+        <header class="border bg-header" >
             <div class="container-fluid py-2">
                 <div class="d-flex align-items-center justify-content-between gap-3">
 
                     <!-- Left: Logo -->
                     <a href="/" class="d-flex align-items-center text-decoration-none gap-2">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo" width="44" height="44" class="rounded-circle border">
-                        <span class="fw-semibold text-dark">Table<span style="color: #d96b52;">Trip</span></span>
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-circle border header-logo">
+                        <span class="fw-semibold text-dark">Table<span class="text-orange">Trip</span></span>
                     </a>
 
                     <!-- Center: Search (like your image) -->
                     <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="/restaurants" method="GET">
-                        <input type="text" name="q" placeholder="search" aria-label="search" class="form-control rounded-pill" style="max-width:520px; height:38px;">
+                        <input type="text" name="q" placeholder="search" aria-label="search" class="form-control rounded-pill header-search">
                         <button type="submit" class="btn p-0 ms-3" aria-label="search button">
                             <i class="bi bi-search fs-5 text-dark"></i>
                         </button>
@@ -50,11 +51,11 @@
 
                     <div class="d-flex align-items-center gap-3">
                       @guest
-                          <a href="{{ route('register.show') }}" class="btn btn-outline-navy px-3" style="color:#243340; border-color:#243340;" >
+                          <a href="{{ route('register.show') }}" class="btn btn-outline-navy px-3" >
                              Register
                           </a>
 
-                            <a href="{{ route('login') }}" class="btn btn-navy px-3" style="background-color:#243340;">
+                            <a href="{{ route('login') }}" class="btn btn-navy px-3">
                                 Login
                             </a>
                       @endguest
@@ -107,14 +108,14 @@
                                     
                                     {{-- Inquiry --}}
                                     <li>
-                                        <a href="#" class="dropdown-item">
+                                        <a href="{{ route('user.inquiry.dashboard') }}" class="dropdown-item">
                                             <i class="bi bi-envelope me-2"></i> Inquiry
                                         </a>
                                     </li>
 
                                     {{-- Payment --}}
                                     <li>
-                                        <a href="#" class="dropdown-item">
+                                        <a href="{{ route('user.payment_method.index') }}" class="dropdown-item">
                                             <i class="bi bi-credit-card me-2"></i> Payment
                                         </a>
                                     </li>
@@ -143,7 +144,7 @@
             @yield('content')
         </main>
        
-        <footer class="mt-auto" style="background-color:#243340;">
+        <footer class="mt-auto bg-navy">
             <div class="container p-5 ">
                 <div class="row g-4 align-items-center">
 
@@ -157,7 +158,7 @@
                             <a href="/contact" class="text-white text-decoration-none fs-5">Contact us</a>
                         </div>
 
-                        <div class="mt-4" style="height:1px; background: rgba(255,255,255,.35);"></div>
+                        <div class="mt-4 footer-border"></div>
 
                         <div class="text-white-50 small mt-3">
                             © {{ date('Y') }} TableTrip. All rights reserved.
@@ -166,17 +167,17 @@
 
                     <!-- Right: partner CTA -->
                     <div class="col-12 col-md-5 text-md-center text-center">
-                        <div class="text-white-50 mb-2" style="font-size: 0.95rem;">
+                        <p class="text-white-50 mb-2">
                             Restaurant owners & partners
-                        </div>
+                        </p>
 
                         <a href="{{ route('owner.register') }}" class="btn btn-light rounded-pill px-5 py-2 fw-semibold">
                             Partner with us
                         </a>
 
-                        <div class="text-white-50 mt-3" style="font-size: 0.95rem;">
+                        <p class="text-white-50 mt-3">
                             List your restaurant & sell meal kits
-                        </div>
+                        </p>
                     </div>
 
                 </div>

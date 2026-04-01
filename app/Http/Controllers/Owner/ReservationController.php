@@ -138,7 +138,14 @@ class ReservationController extends Controller
         $reservation -> status = $request->status;
         $reservation -> save();
 
-        return redirect()->route('owner.reservations');
+        return redirect()->back();
+    }
+
+    public function show($id){
+
+        $reservation = Reservation::findOrFail($id);
+
+        return view('restaurant-owners.reservations.reservation-details',compact('reservation'));
     }
     
 }

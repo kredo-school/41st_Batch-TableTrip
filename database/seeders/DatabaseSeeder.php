@@ -18,14 +18,16 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
+            'user_name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
-        \App\Models\Category::create([
-            'name' => 'Meal Kit'
-        ]);
+        \App\Models\Category::firstOrCreate(
+            ['name' => 'Meal Kit']
+        );
 
         $this->call(ProductSeeder::class);
+
+        $this->call([ReservationSeeder::class]);
     }
 }
