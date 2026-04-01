@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use Carbon\Carbon;
 
-class DashboardController extends Controller
+class AdminDashboardController extends Controller
 {
     public function index()
     {
@@ -16,11 +16,17 @@ class DashboardController extends Controller
 
         for ($i = 6; $i >= 0; $i--) {
 
-            $date = Carbon::today()->subDays($i);
+            $date = Carbon::now('Asia/Tokyo')->subDays($i);
+
+            $start = $date->copy()->startOfDay()->timezone('UTC');
+            $end = $date->copy()->endOfDay()->timezone('UTC');
 
             $labels[] = $date->format('D');
 
-            $ordersPerDay[] = Order::whereDate('created_at', $date)->count();
+            $ordersPerDay[] = Order::whereBetween('created_at', [
+                $start,
+                $end
+            ])->sum('total_price');
         }
 
         $recentOrders = Order::latest()
