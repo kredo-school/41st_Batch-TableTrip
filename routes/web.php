@@ -13,6 +13,9 @@ use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
 
+// notifications
+use App\Http\Controllers\Notifications\NotificationsController;
+
 
 // home
 use App\Http\Controllers\HomeController;
@@ -48,6 +51,15 @@ use App\Http\Controllers\owner\ProductController;
 */
 Route::get('/',[HomeController::class,'index'])->name('home');
 
+/*
+|--------------------------------------------------------------------------
+| Notifications
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth','verified'])->prefix('notifications')->name('notifications.')->group(function (){
+    Route::get('/',[NotificationsController::class, 'index'])->name('index');
+});
 
 /*
 |--------------------------------------------------------------------------
