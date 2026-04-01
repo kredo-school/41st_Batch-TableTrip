@@ -4,25 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Order extends Model
 {
     use HasFactory;
 
-        protected $table = 'purchased';
-
     protected $fillable = [
-        'user_id', 
-        'meal_kit_id', 
-        'quantity', 
-        'price_at_purchased', 
-        'ordered_at'
+        'user_id',
+        'restaurant_id',
+        'total_price',
+        'status',
+        'created_at'
     ];
 
-    public function product()
+    public function user()
     {
-        
-        return $this->belongsTo(Product::class, 'meal_kit_id');
+        return $this->belongsTo(User::class);
     }
-
+}
