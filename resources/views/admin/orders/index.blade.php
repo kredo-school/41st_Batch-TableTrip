@@ -18,13 +18,12 @@
                 <th style="width:110px;"><span class="th-label">Total</span></th>
                 <th style="width:120px;"><span class="th-label">Status</span></th>
                 <th style="width:120px;"><span class="th-label">Date</span></th>
-                <th style="width:80px;"><span class="th-label">Action</span></th>
                 </tr>
                 </thead>
 
                 <tbody>
                     @foreach($orders as $order)
-                    <tr>
+                    <tr onclick="window.location='{{ route('admin.orders.show', $order->id) }}'">
                         <td>#{{ $order->id }}</td>
 
                         <td>
@@ -43,12 +42,6 @@
 
                         <td>
                             {{ $order->created_at->format('Y-m-d') }}
-                        </td>
-
-                        <td>
-                            <a href="/admin/orders/{{ $order->id }}" style="color:red; font-weight:bold;">
-                            View
-                            </a>
                         </td>
                     </tr>
                     @endforeach

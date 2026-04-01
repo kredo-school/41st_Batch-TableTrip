@@ -21,18 +21,21 @@
             </div>
 
             <p><span>User :</span> {{ $order->user->name ?? 'Alex Farrara' }}</p>
-            <p><span>Membership Rank :</span> Bronze</p>
+            <p><span>Membership Rank :</span> {{ $order->user->rank }}</p>
             <p><span>Total Points :</span> 64pt</p>
             <p><span>Credit Card :</span> xxxx-xxxx-0005</p>
 
             <p class="section-title">Address :</p>
-            <p class="sub">1-1-1 Umeda Kita-ku, Osaka<br>530-0001</p>
+            <p class="sub">
+                {{ $order->user->address }}<br>
+                {{ $order->user->postal_code }}
+            </p>
 
             <p class="section-title">Shipping Address :</p>
             <p class="sub">1-1-1 Umeda Kita-ku, Osaka<br>530-0001</p>
 
-            <p><span>Phone :</span> +81-80-5948-0941</p>
-            <p><span>Email :</span> alex-farrara@gmail.com</p>
+            <p><span>Phone :</span>  {{ $order->user->tel }}</p>
+            <p><span>Email :</span> {{ $order->user->email }}</p>
 
         </div>
 

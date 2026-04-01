@@ -19,8 +19,8 @@ class AdminOrdersController extends Controller
 
     public function show($id)
     {
-    $order = Order::with('user')->findOrFail($id);
+        $order = Order::with('user', 'restaurant')->findOrFail($id);
 
-    return view('admin.orders.show', compact('order'));
+        return view('admin.orders.show', compact('order'));
     }
 }
