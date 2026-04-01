@@ -11,17 +11,31 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
+use App\Http\Controllers\User\InquiryController;
+use App\Http\Controllers\User\PaymentMethodController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
+use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
+use App\Http\Controllers\Owner\ProductController as OwnerProductController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavoriteController;
 use App\Models\User;
+
+/*
+|--------------------------------------------------------------------------
+| Home
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +65,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('user/cart')->name('user.')->group(function () {
         Route::get('/', [UserCartController::class, 'index'])->name('cart');
         Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
+    });
+
+    // --- Inquiry ---
+    Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
+        Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
+        Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
+        Route::post('/send', [InquiryController::class, 'send'])->name('send');
     });
 
     // --- 2. Purchased ---
@@ -83,6 +104,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // --- 6. Payment ---
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
+    Route::patch('/payment-method/{payment_method}/default', [PaymentMethodController::class, 'setDefault'])->name('user.payment_method.default');
+
+    // --- 7. Payment Method ---
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::resource('payment_method', PaymentMethodController::class);
+    });
 });
 
 /*
@@ -96,12 +123,16 @@ Route::prefix('admin')->group(function () {
     Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
-});
-
-Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])->name('admin.orders.show');
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/orders', [AdminOrdersController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])->name('orders.show');
+        Route::get('/reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
+        Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])->name('reservations.show');
+    });
 
 /*
 |--------------------------------------------------------------------------
@@ -146,9 +177,27 @@ Route::prefix('owner')->name('owner.')->group(function () {
     Route::middleware('auth:restaurant')->group(function () {
         Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
         Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
+
+        // Reservations
         Route::get('/reservations', [OwnerReservationController::class, 'index'])->name('reservations');
         Route::post('/reservations', [OwnerReservationController::class, 'store'])->name('reservations.store');
         Route::patch('/reservations/{id}', [OwnerReservationController::class, 'update'])->name('reservations.update');
+        Route::get('/reservations/{id}', [OwnerReservationController::class, 'show'])->name('reservations.show');
+
+        // Orders
+        Route::get('/orders', [OwnerOrdersController::class, 'index'])->name('orders');
+        Route::get('/orders/{id}', [OwnerOrdersController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{id}', [OwnerOrdersController::class, 'update'])->name('orders.update');
+
+        // Meal kits
+        Route::get('/product', [OwnerProductController::class, 'index'])->name('products');
+        Route::patch('/product/{id}/visibility', [OwnerProductController::class, 'toggleVisibility'])->name('products.toggleVisibility');
+        Route::get('/product/create', [OwnerProductController::class, 'create'])->name('products.create');
+        Route::post('/product/store', [OwnerProductController::class, 'store'])->name('products.store');
+        Route::get('/product/{id}/edit', [OwnerProductController::class, 'edit'])->name('products.edit');
+        Route::patch('/product/{id}', [OwnerProductController::class, 'update'])->name('products.update');
+        Route::delete('/product/images/{id}', [OwnerProductController::class, 'destroyImage'])->name('products.images.destroy');
+        Route::get('/product/{id}/details', [OwnerProductController::class, 'show'])->name('products.details');
     });
 });
 

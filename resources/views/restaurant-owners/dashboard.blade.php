@@ -14,8 +14,8 @@
                     <div class="card stat-card position-relative">
                         <div class="card-body">
                             <i class="fa-regular fa-calendar stat-icon"></i>
-                            <h5 class="card-title">Today's Reservations</h5>
-                            <h2 class="text-center">3</h2>
+                            <h5 class="card-title">Today's <br> Reservations</h5>
+                            <h2 class="text-center">{{ $reservationCount }}</h2>
                        </div>
                    </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="card stat-card position-relative">
                         <div class="card-body">
                            <i class="fa-regular fa-bell stat-icon"></i>
-                            <h5 class="card-title">Unread Notifications</h5>
+                            <h5 class="card-title">Unread <br> Notifications</h5>
                             <h2 class="text-center">3</h2>
                        </div>
                    </div>
@@ -53,9 +53,9 @@
                 <div class="col-12 col-lg-6">
                     <div class="card info-card">
                         <div class="card-body d-flex flex-column">
-                            <h3 class="card-title text-center my-3">Upcoming Reservations</h3>
-                            <div class="table-wrap mx-auto mb-3">
-                                <table class="table table-borderless align-middle table-hover table-sm">
+                            <h3 class="card-title text-center mt-3 mb-4 text-underline-accent">Upcoming Reservations</h3>       
+                                <p class="text-end text-muted">{{  \Carbon\Carbon::today()->format('M d, Y') }}</p>
+                                <table class="table align-middle table-hover text-center">
                                     <thead>
                                         <tr>
                                             <th>Time</th>
@@ -64,25 +64,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>19:00</td>
-                                            <td class="ps-4">4</td>
-                                            <td>John Smith</td>
+                                       @foreach ($todayReservations as $reservation)
+                                        <tr onclick="window.location='{{ route('owner.reservations.show', $reservation->id) }}'">
+                                            <td> {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
+                                            <td>{{ $reservation->number_of_people }}</td>
+                                            <td>{{ $reservation->full_name }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>19:00</td>
-                                            <td class="ps-4">4</td>
-                                            <td>John Smith</td>
-                                        </tr>
-                                        <tr>
-                                            <td>19:00</td>
-                                            <td class="ps-4">4</td>
-                                            <td>John Smith</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
-                            </div>
-                            <a href="" class="ms-auto pe-3 text-dark text-decoration-underline">View all</a>
+                            <a href="{{ route('owner.reservations') }}" class="ms-auto pe-3 text-dark text-decoration-underline">View all</a>
                         </div>
                     </div>
                 </div>
@@ -90,9 +81,9 @@
                 <div class="col-12 col-lg-6">
                     <div class="card info-card">
                         <div class="card-body d-flex flex-column">
-                            <h3 class="card-title text-center my-3">Latest Orders</h3>
+                            <h3 class="card-title text-center my-3 text-underline-accent">Latest Orders</h3>
                              <div class="table-wrap mb-3">
-                                <table class="table table-borderless align-middle table-hover table-sm ">
+                                <table class="table table-borderless align-middle table-hover table-sm">
                                     <thead class="table-middle text-muted">
                                         <tr>
                                             <th>Order _id</th>
@@ -131,8 +122,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="mb-2">This Week Revenue </h3>
-                             <p class="fs-3 text-center" style="font-family: 'Sen',sans-serif;">$12,800 <span class="text-danger ps-3">+12%</span> from last week</p>
+                            <h3 class="mb-2 text-underline-accent">This Week Revenue </h3>
+                             <p class="fs-3 text-center font-sen"> $12,800 <span class="text-danger ps-3">+12%</span> from last week</p>
                         </div>
                     </div>
                 </div>
@@ -141,8 +132,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h3>Top Selling</h3>
-                             <p class="fs-3 text-center" style="font-family: 'Sen',sans-serif;">Teriyaki Chicken <span class="text-danger ps-3">32</span>orders</p>
+                            <h3 class="text-underline-accent">Top Selling</h3>
+                             <p class="fs-3 text-center font-sen">Teriyaki Chicken <span class="text-danger ps-3">32</span>orders</p>
                         </div>
                     </div>
                 </div>

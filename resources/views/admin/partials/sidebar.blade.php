@@ -5,24 +5,16 @@
    Dashboard
 </a>
 
-<a href="{{ route('admin.orders') }}"
+<a href="{{ route('admin.orders.index') }}"
    class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
    Orders
 </a>
 
-{{-- Orders Page作ったら
-    <a href="{{ route('admin.orders.index') }}"
-   class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
-   Orders
-</a>に変更--}}
-<a href="#">Reservations</a>
+<a href="{{ route('admin.reservations.index') }}">Reservations</a>
 <a href="#">Inquiries</a>
-
 <a href="#">Reviews</a>
-
 <a href="#">Restaurants</a>
 <a href="#">Products</a>
-
 <a href="#">Users</a>
 
 <div class="menu-item">
@@ -42,19 +34,11 @@
 </nav>
 
 @push('scripts')
-
 <script>
-
 document.querySelectorAll('.menu-title').forEach(item => {
-
     item.addEventListener('click', function(){
-
         this.parentElement.classList.toggle('active');
-
     });
-
 });
-
 </script>
-
 @endpush
