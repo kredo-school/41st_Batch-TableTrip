@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -22,7 +22,7 @@ class User extends Authenticatable
         'postal_code',
         'address',
         'country',
-        
+
     ];
 
     protected $hidden = [
@@ -38,16 +38,16 @@ class User extends Authenticatable
         ];
     }
 
-    
+
     public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
 
-    
+
     public function reservations(): HasMany
     {
-        return $this->hasMany(Reservation::class); 
+        return $this->hasMany(Reservation::class);
     }
 
     public function favorites(): HasMany
@@ -70,7 +70,4 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
     }
-{
-    return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
-}
 }

@@ -4,32 +4,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController; 
-use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
-
-
-//Admin
 use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
-
-//Restaurant Owner
-use App\Http\Controllers\Owner\RestaurantAuthController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
-
-//Restaurant
 use App\Http\Controllers\RestaurantController;
-
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\PurchasedController; 
-
-//Product
+use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavoriteController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,16 +47,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- Dashboard ---
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // --- 1. Cart \
+    // --- 1. Cart ---
     Route::prefix('user/cart')->name('user.')->group(function () {
-        Route::get('/', [CartController::class, 'index'])->name('cart'); 
-        Route::delete('/{cartItem}', [CartController::class, 'destroy'])->name('cart_destroy');
+        Route::get('/', [UserCartController::class, 'index'])->name('cart');
+        Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
     });
 
-// --- 2. Purchased\
+    // --- 2. Purchased ---
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
 
-// --- 3. My Page & Profile  ---
+    // --- 3. My Page & Profile ---
     Route::prefix('mypage')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'show'])->name('show');
         Route::get('/edit', [UserController::class, 'edit'])->name('edit');
@@ -74,26 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-    // ---  Reservation  ---
-   Route::middleware(['auth'])->prefix('reservations')->name('reservations.')->group(function () {
-    Route::get('/', [ReservationController::class, 'index'])->name('index');
-    
-    Route::post('/store', [ReservationController::class, 'store'])->name('store');
-
-    Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
-
-    Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-
-    Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
-    });
-});
-
-    
-    // --- Payment ---
-    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-
-    // --- 3. Reservation  ---
-   Route::prefix('reservations')->name('reservations.')->group(function () {
+    // --- 4. Reservation ---
+    Route::prefix('reservations')->name('reservations.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');
         Route::post('/store', [ReservationController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
@@ -104,10 +78,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- 5. Favorites ---
     Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favorite_kits');
     Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favorite_restaurants');
-    
-    // --- 5. Payment ---
-    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 
+    // --- 6. Payment ---
+    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -117,49 +93,70 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login']);
+    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
-Route::prefix('admin')->middleware(['auth']) ->group(function () {
-    Route::get('/dashboard',[DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::post('/logout',[AdminLoginController::class, 'logout'])->name('admin.logout');
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
 });
 
+Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])->name('admin.orders.show');
 
-//Product
-// 登録画面を表示するURL
+/*
+|--------------------------------------------------------------------------
+| Product Routes
+|--------------------------------------------------------------------------
+*/
 Route::get('/products/create', [OrderController::class, 'create'])->name('products.create');
-
 Route::get('/products', [OrderController::class, 'index'])->name('products.index');
-
 Route::get('/products/{id}', [OrderController::class, 'show'])->name('products.show');
+Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
+Route::get('/order/details', [OrderController::class, 'showDetails']);
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart/confirm', function () { return view('products.confirm'); })->name('cart.confirm');
+Route::get('/cart/thanks', function () { return view('products.thanks'); })->name('cart.thanks');
+Route::get('/cart/track', function () { return view('products.track'); })->name('cart.track');
 
-Route::get('/cart/confirm', function () {
-    return view('products.confirm');
-})->name('cart.confirm');
+/*
+|--------------------------------------------------------------------------
+| Restaurant Page
+|--------------------------------------------------------------------------
+*/
+Route::get('/restaurant', [RestaurantController::class, 'show'])->name('restaurant');
 
-Route::get('/cart/thanks', function () {
-    return view('products.thanks');
-})->name('cart.thanks');
+/*
+|--------------------------------------------------------------------------
+| Restaurant Owner Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('owner')->name('owner.')->group(function () {
 
-Route::get('/cart/track', function () {
-    return view('products.track');
-})->name('cart.track');
+    Route::middleware('guest:restaurant')->group(function () {
+        Route::get('/register', [RestaurantAuthController::class, 'create'])->name('register');
+        Route::post('/register', [RestaurantAuthController::class, 'store'])->name('register.store');
+        Route::get('/login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [RestaurantAuthController::class, 'login'])->name('login.submit');
+    });
 
-Route::middleware(['auth'])->group(function () {
-    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::middleware('auth:restaurant')->group(function () {
+        Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
+        Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/reservations', [OwnerReservationController::class, 'index'])->name('reservations');
+        Route::post('/reservations', [OwnerReservationController::class, 'store'])->name('reservations.store');
+        Route::patch('/reservations/{id}', [OwnerReservationController::class, 'update'])->name('reservations.update');
+    });
 });
 
-Route::get('/order/details', [OrderController::class, 'showDetails']);
-
-Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
-
-// for checking layouts
+/*
+|--------------------------------------------------------------------------
+| Static Views (for layout checking)
+|--------------------------------------------------------------------------
+*/
 Route::view('/restaurant-page', 'restaurants.restaurant_page');
 Route::view('/restaurant-owner-page', 'restaurant-owners.register');
 Route::view('/restaurant-owner-login', 'restaurant-owners.login');
@@ -178,32 +175,3 @@ Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management
 Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
 Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
 Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');
-
-// Admin Orders Table //
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('admin.orders');
-});
-
-// Admin Order Detail Page //
-Route::get('/orders/{order}', [AdminOrdersController::class, 'show'])
-    ->name('admin.orders.show');
-
-//Restaurant Page
-Route::get('/restaurant',[RestaurantController::class,'show'])->name('restaurant');
-
-//Restaurant Owner
-Route::prefix('owner')->name('owner.')->group(function () {
-
-    Route::get('/register', [RestaurantAuthController::class, 'create'])->name('register');
-    Route::post('/register', [RestaurantAuthController::class, 'store'])->name('register.store');
-    Route::get('/login', [RestaurantAuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [RestaurantAuthController::class, 'login'])->name('login.submit');
-
-    Route::middleware('auth:restaurant')->group(function () {
-        Route::post('/logout', [RestaurantAuthController::class, 'logout'])->name('logout');
-        Route::get('/', [OwnerDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/reservations',[OwnerReservationController::class,'index'])->name('reservations');
-        Route::post('/reservations',[OwnerReservationController::class,'store'])->name('reservations.store');
-        Route::patch('/reservations/{id}',[OwnerReservationController::class,'update'])->name('reservations.update');
-    });
-});
