@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.owner')
 
 @section('title','Page Management')
 
 @section('content')
-<div class="container my-5 mx-auto">
+<div class="m-5">
     <div class="row">
         @include('restaurant-owners.sidebar')
         <div class="col-12 col-lg-9">
