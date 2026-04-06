@@ -25,7 +25,8 @@ use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
-use App\Http\Controllers\owner\ProductController as OwnerProductController;
+use App\Http\Controllers\Owner\ProductController as OwnerProductController;
+use App\Http\Controllers\Owner\PageManagementController;
 
 //Restaurant
 use App\Http\Controllers\RestaurantController;
@@ -225,7 +226,19 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::patch('/product/{id}',[OwnerProductController::class,'update'])->name('products.update');
         Route::delete('/product/images/{id}', [OwnerProductController::class, 'destroyImage'])->name('products.images.destroy');
         Route::get('/product/{id}/details',[OwnerProductController::class,'show'])->name('products.details');
-        
+
+        //Page Management
+        Route::get('/page-management', [PageManagementController::class, 'index'])->name('page-management');
+        Route::get('/page-management/image', [PageManagementController::class, 'image'])->name('page-management.image');
+        Route::get('/page-management/menu', [PageManagementController::class, 'menu'])->name('page-management.menu');
+        Route::get('/page-management/preview', [PageManagementController::class, 'preview'])->name('page-management.preview');
+        Route::patch('/page-management/basic-info', [PageManagementController::class, 'updateBasicInfo'])->name('page-management.updateBasicInfo');
+        Route::patch('/page-management/image', [PageManagementController::class, 'updateImage'])->name('page-management.updateImage');
+        Route::post('/page-management/menu', [PageManagementController::class, 'addMenu'])->name('page-management.addMenu');
+        Route::patch('/page-management/menu/update/{id}', [PageManagementController::class, 'updateMenu'])->name('page-management.updateMenu');
+        Route::post('/page-management/menu/', [PageManagementController::class, 'storeMenu'])->name('page-management.storeMenu');
+        Route::delete('/page-management/menu/delete/{id}', [PageManagementController::class, 'deleteMenu'])->name('page-management.deleteMenu');
+
 
     });
 });

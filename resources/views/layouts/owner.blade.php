@@ -27,7 +27,7 @@
         
     </head>
     <body class="d-flex flex-column min-vh-100"
-    data-modal-id="{{ session('open_edit_modal') ? 'editReservationModal-' . session('open_edit_modal') : '' }}">
+      data-modal-id="{{ session('open_modal') }}">
         <header class="border bg-header">
             <div class="container-fluid py-2">
                 <div class="d-flex align-items-center justify-content-between gap-3">

@@ -85,35 +85,36 @@
                              <div class="table-wrap mb-3">
                                 <table class="table table-borderless align-middle table-hover table-sm">
                                     <thead class="table-middle text-muted">
-                                        <tr>
-                                            <th>Order _id</th>
-                                            <th>ordered at</th>
-                                            <th>Status</th>
-                                        </tr>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Updated At</th>
+                                                <th>Status</th>
+                                            </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>#1234</td>
-                                            <td>Mar 7 11:30</td>
-                                            <td><span class="badge bg-warning text-dark">Pending</span></td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>#1235</td>
-                                            <td>Mar 7 12:00</td>
-                                            <td><span class="badge bg-success">Completed</span></td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td>#1236</td>
-                                            <td>Mar 7 12:30</td>
-                                            <td><span class="badge bg-danger">Cancelled</span></td>
-                                            
-                                        </tr>
+                                        @foreach ($pendingOrder as $order)
+                                            <tr onclick="window.location='{{ route('owner.orders.show', $order->id) }}'" style="cursor:pointer;">
+                                                <td>{{ $order->id }}</td>
+                                                <td>{{ $order->created_at->format('M d, Y') }}</td>
+                                                <td>
+                                                    @php
+                                                    $statusClass = match($order->status){
+                                                        'pending' => 'bg-warning',
+                                                        'preparing' => 'bg-success',
+                                                        'cancelled' => 'bg-danger',
+                                                        'shipping' => 'bg-primary',
+                                                        'delivered' => 'bg-secondary',
+                                                        default => 'bg-light text-dark',
+                                                    }
+                                                    @endphp
+                                                    <span class="badge bg-warning {{ $statusClass }}">{{ $order->status }}</span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                            <a href="" class="ms-auto pe-3 text-dark text-decoration-underline">View all</a>
+                            <a href="{{ route('owner.orders') }}" class="ms-auto pe-3 text-dark text-decoration-underline">View all</a>
                         </div>
                     </div>
                 </div>

@@ -22,7 +22,7 @@
             <i class="fa-solid fa-utensils me-2"></i>Meal Kit
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/page-management') ? 'active' : '' }}">
+        <a href="{{ route('owner.page-management') }}" class="list-group-item fs-5 {{ request()->is('owner/page-management*') ? 'active' : '' }}">
             <i class="fa-solid fa-globe me-2"></i>Page Management
         </a>
 
