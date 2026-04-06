@@ -30,7 +30,8 @@ use App\Http\Controllers\Owner\ReservationController as OwnerReservationControll
 use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
 use App\Http\Controllers\Owner\ProductController as OwnerProductController;
 use App\Http\Controllers\Owner\PageManagementController;
-
+use App\Http\Controllers\Owner\ReviewsController as OwnerReviewsController;
+use App\Http\Controllers\Owner\NotificationController as OwnerNotificationController;
 //Restaurant
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
@@ -230,6 +231,12 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::patch('/page-management/menu/update/{id}', [PageManagementController::class, 'updateMenu'])->name('page-management.updateMenu');
         Route::post('/page-management/menu/', [PageManagementController::class, 'storeMenu'])->name('page-management.storeMenu');
         Route::delete('/page-management/menu/delete/{id}', [PageManagementController::class, 'deleteMenu'])->name('page-management.deleteMenu');
+
+        // Reviews
+        Route::get('/reviews', [OwnerReviewsController::class, 'index'])->name('reviews');
+
+        // Notifications
+        Route::get('/notifications', [OwnerNotificationController::class, 'index'])->name('notifications');
 
 
     });
