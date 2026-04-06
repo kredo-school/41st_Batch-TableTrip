@@ -9,10 +9,11 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::table('reservations', function (Blueprint $table) {
-             $table->string('email')->nullable()->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('points')->default(0);
+            $table->enum('rank', ['bronze', 'silver', 'gold', 'diamond'])->default('bronze');
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('reservations', function (Blueprint $table) {
-            $table->string('email')->nullable(false)->change();
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

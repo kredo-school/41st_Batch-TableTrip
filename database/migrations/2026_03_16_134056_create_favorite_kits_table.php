@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('meal_kit_id')->constrained()->onDelete('cascade'); 
+            $table->unsignedBigInteger('meal_kit_id');
             $table->timestamps();
         });
     }

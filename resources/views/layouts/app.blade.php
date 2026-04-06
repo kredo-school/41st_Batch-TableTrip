@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TableTrip') }} | @yield('title')</title>
+        <title>{{ config('app.name', 'TableTrip') }}|@yield('title')</title>
 
          <!--Fontawesome-->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -72,9 +72,24 @@
                         @else
                         {{-- Normal User --}}
                             {{-- Normal User --}}
-                            <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
-                                <i class="bi bi-bell"></i>
-                            </a>
+                        <a href="{{ route('notifications.index') }}" class="text-dark fs-4 position-relative" aria-label="notifications">
+                            <i class="bi bi-bell"></i>
+
+                            @auth
+                                @php
+                                    $hasUnread = \App\Models\Notification::where('recipient_id', Auth::id())
+                                        ->where('recipient_type', get_class(Auth::user()))
+                                        ->where('is_completed', false)
+                                        ->exists();
+                                @endphp
+
+                                @if($hasUnread)
+                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" style="width: 10px; height: 10px;">
+                                        <span class="visually-hidden">New notifications</span>
+                                    </span>
+                                @endif
+                            @endauth
+                        </a>
 
                             <a href="/cart" class="text-dark fs-4" aria-label="cart">
                                 <i class="bi bi-cart"></i>
