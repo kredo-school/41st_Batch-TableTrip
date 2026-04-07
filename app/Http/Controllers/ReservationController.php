@@ -10,26 +10,27 @@ use Carbon\Carbon;
 class ReservationController extends Controller
 {
     
-    public function index()
+public function index()
 {
     $user = Auth::user();
-    $today = \Carbon\Carbon::today()->toDateString();
-    
-    // upcoming 
-    $upcoming_reservations = Reservation::where('user_id', $user->id)
-        ->where('reservation_date', '>=', $today)
-        ->with('restaurant')
-        ->orderBy('reservation_date', 'asc') 
+
+    // upcoming reservation
+    $upcoming_reservations = $user->reservations()
+        ->where('reservation_date', '>=', now()->toDateString())
+        ->where('status', '!=', 'visited') 
+                ->orderBy('reservation_date', 'asc')
         ->get();
 
-    // past
-    $past_reservations = Reservation::where('user_id', $user->id)
-        ->where('reservation_date', '<', $today)
-        ->with('restaurant')
-        ->orderBy('reservation_date', 'desc') 
+    // past reservation
+    $past_visits = $user->reservations()
+        ->where(function($query) {
+            $query->where('reservation_date', '<', now()->toDateString())
+                  ->orWhere('status', 'visited');
+        })
+        ->orderBy('reservation_date', 'desc')
         ->get();
-
-    return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations'));
+        
+    return view('user.reservations.index', compact('upcoming_reservations', 'past_visits'));
 }
 
     public function store(Request $request)
