@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -39,16 +39,16 @@ class User extends Authenticatable
         ];
     }
 
-    
+
     public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
 
-    
+
     public function reservations(): HasMany
     {
-        return $this->hasMany(Reservation::class); 
+        return $this->hasMany(Reservation::class);
     }
 
     public function favorites(): HasMany
@@ -74,14 +74,17 @@ class User extends Authenticatable
 
     // public function favorite_kits()
     // {
-  
     //     return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
     // }
 
-    
     public function favorite_kits()
     {
         return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
+    }
+
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
     }
 
     public function coupons()
@@ -90,5 +93,4 @@ class User extends Authenticatable
                     ->withPivot('is_used', 'used_at')
                     ->withTimestamps();
     }
-
 }
