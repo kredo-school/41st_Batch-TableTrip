@@ -13,7 +13,7 @@ return new class extends Migration
         $table->foreignId('user_id'); 
         $table->integer('meal_kit_id');
         $table->integer('quantity');
-        $table->integer('price_at_purchased');
+        $table->integer('total_price');
         $table->timestamp('ordered_at');
         $table->timestamps();
     });
