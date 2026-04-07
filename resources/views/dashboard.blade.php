@@ -82,7 +82,7 @@
                 @endif
             </div>
             <div class="btn-container">
-                <a href="{{ route('user.cart') }}" class="btn-back">View Cart</a>
+                <a href="/cart" class="btn-back">View Cart</a>
             </div>
         </section>
 
