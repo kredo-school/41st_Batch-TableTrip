@@ -16,7 +16,7 @@ return new class extends Migration
         $table->id();
 
         $table->foreignId('user_id');
-
+        $table->foreignId('meal_kit_id')->constrained();
         $table->foreignId('restaurant_id');
 
         $table->integer('total_price');

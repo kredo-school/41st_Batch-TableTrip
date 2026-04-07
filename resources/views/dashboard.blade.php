@@ -167,7 +167,7 @@
                                 <div class="col-12">
                                     <p>
                                         {{ $item->product->name ?? 'Meal Kit' }}
-                                        <small class="text-muted">x{{ $item->quantity }} ({{ $item->ordered_at }})</small>
+                                        <small class="text-muted">x{{ $item->quantity }} ({{ $item->created_at }})</small>
                                     </p>
                                 </div>
                             @empty

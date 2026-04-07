@@ -23,7 +23,7 @@
 
                 <tbody>
                     @foreach($orders as $order)
-                    <tr onclick="window.location='{{ route('admin.orders.show', $order->id) }}'">
+                    <tr class="clickable-row" data-id="{{ $order->id }}" data-type="orders">
                         <td>#{{ $order->id }}</td>
 
                         <td>
