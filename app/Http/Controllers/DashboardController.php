@@ -37,7 +37,7 @@ class DashboardController extends Controller
         // history
         $purchased_items = Order::where('user_id', $user->id)
             ->with('product') 
-            ->orderBy('ordered_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
