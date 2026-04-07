@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title','Orders')
+@section('title','Reservations')
 
 @section('content')
 
@@ -23,7 +23,7 @@
 
                 <tbody>
                     @foreach($reservations as $reservation)
-                    <tr onclick="window.location='{{ route('admin.reservations.show', $reservation->id) }}'">
+                    <tr class="clickable-row" data-id="{{ $reservation->id }}" data-type="reservations">
                         <td>#{{ $reservation->id }}</td>
 
                         <td>
