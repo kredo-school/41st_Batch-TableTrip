@@ -14,4 +14,11 @@ class AdminReservationController extends Controller
 
         return view('admin.reservations.index', compact('reservations'));
     }
+
+    public function show($id)
+    {
+        $reservation = Reservation::with('user')->findOrFail($id);
+
+        return view('admin.reservations.show', compact('reservation'));
+    }
 }

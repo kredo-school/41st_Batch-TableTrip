@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 // クラス名をコントローラーの呼び出し（Purchased）に合わせる
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Purchased extends Model
 {
     use HasFactory;
@@ -25,4 +28,27 @@ class Purchased extends Model
     // {
     //     return $this->belongsTo(MealKit::class, 'meal_kit_id');
     // }
+}
+        'order_id',
+        'user_id',
+        'meal_kit_id',
+        'quantity',
+        'price_at_purchased',
+        'ordered_at',
+    ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'meal_kit_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

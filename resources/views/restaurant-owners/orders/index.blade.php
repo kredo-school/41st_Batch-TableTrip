@@ -86,7 +86,7 @@
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->created_at->format('M d, Y') }}</td>
                                     <td>{{ $order->user->last_name}} {{ $order->user->first_name }}</td>
-                                    <td class="ps-4">2</td>
+                                    <td class="ps-4">{{ $order->purchasedItems->count() }}</td>
                                     <td>{{ $order->total_price }}</td>
                                     <td>
                                         @php
