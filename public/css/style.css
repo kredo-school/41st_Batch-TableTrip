@@ -762,3 +762,182 @@ input[type="text"], input[type="email"], input[type="password"], select {
     background-color: #f0b560;
     color: white;
 }
+
+
+/* payment method */
+.payment-title {
+    font-size: 4rem; 
+    font-weight: 800;
+    margin-bottom: 50px;
+    letter-spacing: -1px; 
+}
+.payment-container {
+    background-color: #f4f7f6;
+    font-family: 'Playfair Display', serif;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+.payment-card {
+    background: #ffffff;
+    border: 1px solid #dcdcdc; 
+    border-radius: 8px; 
+    padding: 2.5rem;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02); 
+}
+
+.payment-card-header, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.form-custom-input {
+    font-family: sans-serif; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 12px;
+    background-color: #fff;
+}
+
+.form-custom-input:focus {
+    background-color: #fff;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    outline: none;
+}
+label.small {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.btn-rounded {
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.brand-icons i {
+    margin: 0 8px;
+    color: #adb5bd;
+    transition: color 0.3s;
+}
+
+.brand-icons i:hover {
+    color: #4a90e2;
+}
+/* payment */
+
+body {
+    background-color:  #f4fdf9;
+    font-family: 'Playfair Display', serif;
+}
+.table-responsive::-webkit-scrollbar {
+    width: 6px;  
+    height: 6px; 
+}
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #78c2ad; 
+    border-radius: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #64a694;
+}
+.table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+    border-top: none;
+}
+.table td {
+    white-space: nowrap; 
+    vertical-align: middle;
+    padding: 12px 8px;
+}
+.payment-title, .payment-card h4, h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #4a4a4a;
+    border-bottom: 2px solid #d96b52; 
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 30px;
+}
+
+.payment-card {
+    background-color: #fdfaf0; 
+    border: 1px solid #e2e2e2;
+    padding: 40px;
+    margin-bottom: 20px;
+}
+
+label {
+    color: #4a4a4a;
+    margin-bottom: 5px;
+}
+
+.form-control, .form-select {
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 4px; 
+    padding: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #64a694 !important;
+}
+
+.btn-danger, .text-danger {
+    background-color: #ff7851 !important; 
+    border: none;
+    color: white !important;
+    padding: 8px 30px;
+    border-radius: 8px;
+}
+
+.btn.text-danger {
+    padding: 5px 10px;
+}
+
+.btn-outline-secondary, .btn-back-custom {
+    color: #6c757d;
+    text-decoration: none;
+    border: 1px solid #6c757d;
+    padding: 8px 20px;
+    border-radius: 8px;
+}
+.btn-update, .btn-add {
+    background-color: #78c2ad !important; 
+    border: none !important;
+    color: white !important;
+    padding: 8px 30px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+.btn-delete {
+    background-color: #ff7851 !important;
+    border: none;
+    color: white !important;
+    padding: 8px 30px;
+    border-radius: 8px;
+}
+.btn-trash {
+    background: none !important;
+    border: none !important;
+    color: #ff7851 !important; 
+    padding: 5px;
+    font-size: 1.2rem;
+}

@@ -1,17 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.owner')
 
-@section('title', 'Reservation Details')
+@section('title', 'Order Details')
 
 @section('content')
-<div class="container my-5 mx-auto">
+<div class="my-5 mx-5">
     <div class="row">
         @include('restaurant-owners.sidebar')
 
         <div class="col-12 col-lg-9">
             <div class="row mb-3">
                 <div class="col-12 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 text-muted">
-                    <p class="mb-0">Order / Order #1234</p>
-                    <a href="#" class="text-decoration-none">| Back to Orders</a>
+                    <p class="mb-0">Order / Order {{ $order->id }}</p>
+                    <a href="{{ route('owner.orders') }}" class="text-decoration-none">| Back to Orders</a>
                 </div>
             </div>
 
@@ -21,31 +21,30 @@
                 </div>
             </div>
 
-            <div class="row bg-white rounded border-1 p-3 mb-4" style="font-family: 'Sen','sans-serif';">
+            <div class="row bg-white rounded border-1 p-3 mb-4 font-sen">
                 <div class="col">
                     <div class="row mb-4 border-bottom p-2">
                         <div class="col d-flex justify-content-between align-items-center">
                             <h2>Order Summary </h2>
-                            <p class="text-muted">Apr 23,2025, 10:22AM</p>
+                            <p class="text-muted">{{ $order->created_at->format('M d, Y') }}</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col text-center border-end p-2">
-                            <h5 class="mb-3">Customer Info</h5>
-                            <ul>
-                                <li>Yuta Nakamura</li>
-                                <li>yuta.n@email.com</li>
-                                <li>090-1234-5678</li>
+                        <div class="col justify-items-center border-end p-2">
+                            <h5 class="mb-3 text-underline-accent">Customer Info</h5>
+                            <ul class="text-start">
+                                <li class="mb-2"><i class="fa-regular fa-user"></i> {{ $order->user->last_name }} {{ $order->user->first_name }}</li>
+                                <li class="mb-2"><i class="fa-regular fa-envelope"></i> {{ $order->user->email }}</li>
+                                <li class="mb-2"><i class="fa-solid fa-phone"></i> {{ $order->user->tel }}</li>
                             </ul>
                         </div>
                         <div class="col text-center border-end p-2">
-                            <h5 class="mb-3">Shipping Address</h5>
-                            <p>123 Maple Street, Apt 4B
-                               San Francisco, CA 94103
-                               United States</p>
+                            <h5 class="mb-3 text-underline-accent">Shipping Address</h5>
+                            {{-- Shipping address に変える --}}
+                            <p>{{ $order->user->address }}</p>
                         </div>
                         <div class="col text-center p-2">
-                            <h5 class="mb-3">Payment Info</h5>
+                            <h5 class="mb-3 text-underline-accent">Payment Info</h5>
 
                             <p class="border border-2 rounded mb-2 w-75 mx-auto py-1 px-2 d-flex justify-content-between align-items-center">
                                 <span>
@@ -60,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row bg-white border rounded overflow-hidden p-3" style="font-family: 'Sen','sans-serif';">
+            <div class="row bg-white border rounded overflow-hidden p-3 font-sen">
 
                 {{-- Left: Order --}}
                 <div class="col-8 p-0 border-end">
@@ -124,28 +123,34 @@
                         <h2 class="h4 mb-0">Order Status</h2>
                     </div>
 
-                    <div class="p-3">
-                        <div class="mb-3">
-                            <select class="form-select rounded">
-                                <option selected>Pending</option>
-                                <option>Preparing</option>
-                                <option>Shipping</option>
-                                <option>Delivered</option>
-                                <option>Cancelled</option>
-                            </select>
+                    <div class="p-3 mt-3">
+                        <form action="{{ route('owner.orders.update', $order->id) }}" method="post">
+                            @csrf
+                            @method('patch')
+                        <div class="my-3">
+                        <select class="form-select rounded @error('status') is-invalid @enderror" name="status" id="status_{{ $order->id }}">
+                            <option value="pending" {{ old('status', $order->status) == 'pending' ? 'selected' : '' }}>Pending</option>
+                            <option value="preparing" {{ old('status', $order->status) == 'preparing' ? 'selected' : '' }}>Preparing</option>
+                            <option value="shipping" {{ old('status', $order->status) == 'shipping' ? 'selected' : '' }}>Shipping</option>
+                            <option value="delivered" {{ old('status',$order->status) == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                            <option value="cancelled" {{ old('status', $order->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                        </select>
+                            @error('status')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
-                        <div class="d-grid gap-3 ">
-                            <button class="btn btn-navy mb-5">
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-navy mb-5">
                                 Update Status
                             </button>
+                        </form>
 
-                            <button 
-                                class="btn btn-outline-orange"
-                                data-bs-toggle="modal"
-                                data-bs-target="#cancelOrderModal">
-                                Cancel Order
-                            </button>
+                            <a href="{{ route('owner.orders') }}" class="btn btn-outline-navy mt-5">
+                                Back
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -155,6 +160,4 @@
         </div>
     </div>
 </div>
-
-@include('restaurant-owners.orders.modals.cancel')
 @endsection

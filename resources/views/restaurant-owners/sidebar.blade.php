@@ -10,15 +10,15 @@
         <a href="{{ route('owner.dashboard') }}" class="list-group-item fs-5 {{ request()->is('owner') ? 'active' : '' }}">
             <i class="fa-regular fa-house me-2"></i>Dashboard
         </a>
-        <a href="{{ route('owner.reservations') }}" class="list-group-item fs-5 {{ request()->is('owner/reservations') ? 'active' : '' }}">
+        <a href="{{ route('owner.reservations') }}" class="list-group-item fs-5 {{ request()->is('owner/reservations*') ? 'active' : '' }}">
             <i class="fa-regular fa-calendar me-2"></i>Reservations
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/orders') ? 'active' : '' }}">
+        <a href="{{ route('owner.orders') }}" class="list-group-item fs-5 {{ request()->is('owner/orders*') ? 'active' : '' }}">
             <i class="fa-solid fa-truck me-2"></i>Orders
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/mealkit') ? 'active' : '' }}">
+        <a href="{{ route('owner.products') }}" class="list-group-item fs-5 {{ request()->is('owner/product*') ? 'active' : '' }}">
             <i class="fa-solid fa-utensils me-2"></i>Meal Kit
         </a>
 
