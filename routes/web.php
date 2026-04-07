@@ -234,6 +234,7 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
         // Reviews
         Route::get('/reviews', [OwnerReviewsController::class, 'index'])->name('reviews');
+        Route::post('/reviews/{id}/reply', [OwnerReviewsController::class, 'reply'])->name('reviews.reply');
 
         // Notifications
         Route::get('/notifications', [OwnerNotificationController::class, 'index'])->name('notifications');
