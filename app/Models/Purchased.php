@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-// クラス名をコントローラーの呼び出し（Purchased）に合わせる
 class Purchased extends Model
 {
     use HasFactory;
