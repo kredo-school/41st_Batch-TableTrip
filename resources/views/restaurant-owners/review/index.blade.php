@@ -7,102 +7,75 @@
     <div class="row">
         @include('restaurant-owners.sidebar')
         <div class="col-12 col-lg-9">
-            <h1 class="text-underline-accent mb-3">Reviews</h1>
-            {{-- Review Card : reply form --}}
-            <div class="card border rounded-0 mb-4">
-                <div class="card-body p-4">
-
-                    <h4 class="mb-4">To Restaurant</h4>
-
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div class="d-flex align-items-start">
-                            <div class="me-3">
-                                <i class="fa-solid fa-circle-user fs-1 text-dark"></i>
-                            </div>
-
-                            <div>
-                                <div class="d-flex align-items-center flex-wrap gap-2">
-                                    <span>Delicious Restaurant</span>
-                                    <div class="text-warning small">★★★★★</div>
-                                    <span class="small">4.0</span>
-                                </div>
-                                <div>Yuki</div>
-                            </div>
-                        </div>
-
-                        <div class="text-muted small">Apr 12, 2025</div>
-                    </div>
-
-                    <div class="ps-1 pe-1 mb-4" style="font-size: 1.1rem; line-height: 1.5;">
-                        The sushi was incredibly fresh and beautifully presented.<br>
-                        The atmosphere was warm and inviting, and the staff<br>
-                        made us feel very welcome.<br>
-                        Definitely one of the best Japanese restaurants in the area.
-                    </div>
-
-                    <form action="" method="POST">
-                        @csrf
-                        <div class="d-flex gap-2">
-                            <input type="text"
-                                name="reply"
-                                class="form-control"
-                                placeholder="Reply to this review">
-                            <button type="submit" class="btn btn-navy px-4">Send</button>
-                        </div>
-                    </form>
-
-                </div>
+            <div class="w-75 mx-auto">
+                <h1 class="text-underline-accent mb-4 ">Reviews</h1>
             </div>
+            @foreach ($reviews as $review)
+                {{-- Review Card : reply form --}}
+                <div class="card border rounded-0 mb-4 shadow-sm w-75 mx-auto">
+                    <div class="card-body p-4">
+                        <h4 class="mb-4">{{ $review->comment_type === 'product' ? 'To Meal kit' : 'To Restaurant' }}</h4>
 
-
-            {{-- Review Card : replied --}}
-            <div class="card border rounded-0">
-                <div class="card-body p-4">
-
-                    <h4 class="mb-4">To Meal kit</h4>
-
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div class="d-flex align-items-start">
-                            <div class="me-3">
-                                <i class="fa-solid fa-circle-user fs-1 text-dark"></i>
-                            </div>
-
-                            <div>
-                                <div class="d-flex align-items-center flex-wrap gap-2">
-                                    <span>Delicious Restaurant</span>
-                                    <div class="text-warning small">★★★★★</div>
-                                    <span class="small">4.0</span>
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div class="d-flex align-items-start">
+                                <div class="me-3">
+                                    @if (optional($review->user->profile_picture))
+                                        <img src="{{ asset('storage/'.$review->user->profile_picture) }}" alt="" class="review-icon rounded-circle">
+                                    @else
+                                       <i class="fa-solid fa-circle-user fs-1 text-dark"></i>
+                                    @endif
+                                    
                                 </div>
-                                <div>Ray</div>
-                            </div>
-                        </div>
 
-                        <div class="text-muted small">Nov 30, 2025</div>
-                    </div>
-
-                    <div class="ps-3 pe-1 mb-3" style="font-size: 1.1rem; line-height: 1.5;">
-                        The sushi was incredibly fresh and beautifully presented.<br>
-                        The atmosphere was warm and inviting, and the staff<br>
-                        made us feel very welcome.<br>
-                        Definitely one of the best Japanese restaurants in the area.
-                    </div>
-
-                    <div class="ps-2">
-                        <div class="d-flex align-items-start gap-2">
-                            <i class="fa-solid fa-reply mt-1"></i>
-                            <div>
-                                <div class="mb-1">Restaurant replay:</div>
-                                <div style="font-size: 1.1rem; line-height: 1.5;">
-                                    Thank you for your kind review.<br>
-                                    We’re very happy to hear that you enjoyed your experience.<br>
-                                    We look forward to welcoming you again!
+                                <div>
+                                    <strong>{{ $review->user->user_name }}</strong>
+                                    <div class="d-flex align-items-center flex-wrap gap-2">
+                                        <div class="text-warning">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $review->rating)
+                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                @else
+                                                    <i class="fa-regular fa-star text-warning"></i>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        <span class="small">{{ $review->rating }}.0</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
+                            <div class="text-muted small">{{ $review->created_at->format('M d, Y') }}</div>
+                        </div>
+
+                        <div class="ps-1 pe-1 mb-4 font-sen">
+                            {{ $review->comment }}
+                        </div>
+                        @if ($review->replies->isNotEmpty())
+                           <div class="ps-2">
+                                <div class="d-flex align-items-start gap-2">
+                                    <i class="fa-solid fa-reply mt-1"></i>
+                                    <div>
+                                        <h5 class="mb-2">Restaurant reply:</h5>
+                                        <p class="font-sen">
+                                            {{ $review->replies->first()->comment }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        @else
+                            <form action="{{ route('owner.reviews.reply',$review->id) }}" method="POST">
+                                @csrf
+                                <div class="d-flex gap-2">
+                                    <input type="text" name="comment" class="form-control" placeholder="Reply to this review">
+                                    <button type="submit" class="btn btn-navy px-4">Send</button>
+                                </div>
+                            </form>
+                        @endif
+                    </div>
                 </div>
-            </div>
+            @endforeach
+             {{ $reviews->links('layouts.pagination.custom') }}
         </div>
     </div>
 </div>
