@@ -22,15 +22,15 @@
             <i class="fa-solid fa-utensils me-2"></i>Meal Kit
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/page-management') ? 'active' : '' }}">
+        <a href="{{ route('owner.page-management') }}" class="list-group-item fs-5 {{ request()->is('owner/page-management*') ? 'active' : '' }}">
             <i class="fa-solid fa-globe me-2"></i>Page Management
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/reviews') ? 'active' : '' }}">
+        <a href="{{ route('owner.reviews') }}" class="list-group-item fs-5 {{ request()->is('owner/reviews*') ? 'active' : '' }}">
             <i class="fa-solid fa-star me-2"></i>Reviews
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/notifications') ? 'active' : '' }}">
+        <a href="{{ route('owner.notifications') }}" class="list-group-item fs-5 {{ request()->is('owner/notifications') ? 'active' : '' }}">
             <i class="fa-regular fa-bell me-2"></i>Notifications
         </a>
 
