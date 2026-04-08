@@ -4,6 +4,22 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+
+//Admin
+use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\AdminReservationController;
+use App\Http\Controllers\Admin\AdminInquiryController;
+
+
+
+use App\Http\Controllers\DashboardController; // 一般ユーザー用
+// use App\Http\Controllers\ForgetController;  
+// use App\Http\Controllers\DashboardController; 
+use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\User\PaymentMethodController;  
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\PaymentController;
@@ -14,10 +30,9 @@ use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
 use App\Http\Controllers\User\PaymentMethodController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\AdminOrdersController;
-use App\Http\Controllers\Admin\AdminReservationController;
+
+//Restaurant Owner
+use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
@@ -120,19 +135,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login']);
-    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth'])
     ->group(function () {
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/orders', [AdminOrdersController::class, 'index'])->name('orders.index');
-        Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])->name('orders.show');
-        Route::get('/reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
-        Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])->name('reservations.show');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/orders', [AdminOrdersController::class, 'index'])
+            ->name('orders.index');
+
+        Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])
+            ->name('orders.show');
+
+        Route::get('/reservations', [AdminReservationController::class, 'index'])
+            ->name('reservations.index');
+
+        Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])
+            ->name('reservations.show');
+
+        Route::get('/inquiries', [AdminInquiryController::class, 'index'])
+            ->name('inquiries.index');
+
+        Route::post('/logout', [AdminLoginController::class, 'logout'])
+            ->name('logout');
     });
+
+//Admin Rewards - Dashboard
+// Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
+
+//Product
+// 登録画面を表示するURL
 
 /*
 |--------------------------------------------------------------------------
