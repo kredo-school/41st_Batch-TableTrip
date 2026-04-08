@@ -76,8 +76,15 @@
                                 <i class="bi bi-bell"></i>
                             </a>
 
-                            <a href="/cart" class="text-dark fs-4" aria-label="cart">
+                            <a href="/cart" class="text-dark fs-4 position-relative" aria-label="cart">
                                 <i class="bi bi-cart"></i>
+                                @php $cartCount = array_sum(array_column(session('cart', []), 'quantity')); @endphp
+                                @if($cartCount > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                                          style="background-color:#e74c3c; font-size:0.6rem;">
+                                        {{ $cartCount }}
+                                    </span>
+                                @endif
                             </a>
 
                             <div class="dropdown">
