@@ -82,7 +82,7 @@
                 @endif
             </div>
             <div class="btn-container">
-                <a href="/cart" class="btn-back">View Cart</a>
+                <a href="{{ route('user.cart') }}" class="btn-back">View Cart</a>
             </div>
         </section>
 
@@ -167,7 +167,7 @@
                                 <div class="col-12">
                                     <p>
                                         {{ $item->product->name ?? 'Meal Kit' }}
-                                        <small class="text-muted">x{{ $item->quantity }} ({{ $item->created_at }})</small>
+                                        <small class="text-muted">x{{ $item->quantity }} ({{ $item->ordered_at }})</small>
                                     </p>
                                 </div>
                             @empty

@@ -72,24 +72,9 @@
                         @else
                         {{-- Normal User --}}
                             {{-- Normal User --}}
-                        <a href="{{ route('notifications.index') }}" class="text-dark fs-4 position-relative" aria-label="notifications">
-                            <i class="bi bi-bell"></i>
-
-                            @auth
-                                @php
-                                    $hasUnread = \App\Models\Notification::where('recipient_id', Auth::id())
-                                        ->where('recipient_type', get_class(Auth::user()))
-                                        ->where('is_completed', false)
-                                        ->exists();
-                                @endphp
-
-                                @if($hasUnread)
-                                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle" style="width: 10px; height: 10px;">
-                                        <span class="visually-hidden">New notifications</span>
-                                    </span>
-                                @endif
-                            @endauth
-                        </a>
+                            <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
+                                <i class="bi bi-bell"></i>
+                            </a>
 
                             <a href="/cart" class="text-dark fs-4" aria-label="cart">
                                 <i class="bi bi-cart"></i>
