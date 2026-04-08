@@ -11,8 +11,9 @@ class PurchasedController extends Controller
 {
     public function index()
     {
-        $purchased = Purchased::where('user_id', Auth::id()) 
-            ->orderBy('ordered_at', 'desc') 
+        $purchased = Purchased::where('user_id', Auth::id())
+            ->with('product')
+            ->orderBy('ordered_at', 'desc')
             ->get();
         return view('user.purchased.index', compact('purchased'));
     }
