@@ -1,4 +1,3 @@
-console.log("JS動いてるよ");
 
 document.addEventListener('DOMContentLoaded', function () {
     const confirmModal = document.getElementById('reservationConfirmModal');

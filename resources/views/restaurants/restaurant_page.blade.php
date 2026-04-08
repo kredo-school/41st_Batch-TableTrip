@@ -7,10 +7,13 @@
 @section('content')
   {{-- Hero --}}
   <section class="container-fluid p-0">
-       @php
-          $heroImage = $restaurant->images->firstWhere('display_order', 1);
+      @php
+          $heroImage = $restaurant->images?->firstWhere('display_order', 1);
       @endphp
-    <img src="{{ $heroImage ? asset('storage/' . $heroImage->image_url) : asset('images/restaurant-hero.png') }}" class="w-100" style="max-height:420px; object-fit:cover;" alt="hero">
+      <img src="{{ $heroImage ? asset('storage/' . $heroImage->image_url) : ''}}"
+          class="w-100"
+          style="max-height:420px; object-fit:cover;"
+          alt="hero">
   </section>
 
   <div class="container py-4">
@@ -26,8 +29,8 @@
     {{-- Gallery 2 photos --}}
     <section class="row g-3 mt-2">
       @php
-          $gallery1 = $restaurant->images->firstWhere('display_order', 2);
-          $gallery2 = $restaurant->images->firstWhere('display_order', 3);
+        $gallery1 = $restaurant->images?->firstWhere('display_order', 2);
+        $gallery2 = $restaurant->images?->firstWhere('display_order', 3);
       @endphp
       <div class="col-12 col-md-6">
         <img src="{{ $gallery1 ? asset('storage/' . $gallery1->image_url) : asset('images/sample1.png') }}" class="w-100 rounded" style="height:200px; object-fit:cover;" alt="">
