@@ -239,7 +239,7 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/product/{id}/edit', [OwnerProductController::class, 'edit'])->name('products.edit');
         Route::patch('/product/{id}', [OwnerProductController::class, 'update'])->name('products.update');
         Route::delete('/product/images/{id}', [OwnerProductController::class, 'destroyImage'])->name('products.images.destroy');
-        Route::get('/product/{id}/details', [OwnerProductController::class, 'show'])->name('products.details');
+        Route::get('/product/{id}/details', [OwnerProductController::class, 'show'])->name('products.details');        
     });
 });
 
