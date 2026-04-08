@@ -66,6 +66,9 @@ h2.custom-header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-width: 180px; 
+    padding: 10px 20px;
+    border-radius: 12px;
 }
 .btn-equal {
     flex: 1;                

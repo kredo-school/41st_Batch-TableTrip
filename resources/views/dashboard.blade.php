@@ -52,8 +52,10 @@
                         @endforelse
                     </tbody>
                 </table>
-                <a href="{{ route('reservations.index') }}" class="view-all">View All</a>
-            </div>
+                </div> 
+                <div class="btn-container">
+                    <a href="{{ route('reservations.index') }}" class="btn-back">View All Reservations</a>
+                </div>
         </section>
 
         {{-- cart part --}}
