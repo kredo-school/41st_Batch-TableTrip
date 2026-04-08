@@ -14,6 +14,7 @@ use App\Models\Restaurant;
 use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Product;
+use App\Models\Review;
 
 class PageManagementController extends Controller
 {
@@ -232,8 +233,16 @@ class PageManagementController extends Controller
         $owner = Auth::guard('restaurant')->user();
         $restaurant = Restaurant::findOrFail($owner->id);
         $menus = $restaurant->menus()->get();
-        $products = Product::where('restaurant_id', $restaurant->id)->get();
+        $products = Product::where('restaurant_id', $owner->id)->get();
+        $reviews = Review::with(['user', 'replies'])
+        ->where('restaurant_id', $owner->id)
+        ->where('comment_type', 'visit') // レストランレビューのみ取得
+        ->whereNotNull('user_id') // ユーザーIDがnullでないレビューのみ取得
+        ->whereNull('parent_id') // 親レビューのみ取得
+        ->orderBy('created_at', 'desc')
+        ->take(5)
+        ->get();
 
-        return view('restaurant-owners.page-management.preview', compact('restaurant', 'menus', 'products'));
+        return view('restaurant-owners.page-management.preview', compact('restaurant', 'menus', 'products', 'reviews'));
     }
 }

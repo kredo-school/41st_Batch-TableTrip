@@ -12,7 +12,7 @@
 
              {{-- Hero --}}
             <section class="container-fluid p-0">
-                 @php
+                @php
                     $heroImage = $restaurant->images->firstWhere('display_order', 1);
                 @endphp
 
@@ -291,26 +291,52 @@
 
                 {{-- Reviews --}}
                 <section class="mt-5 mb-4">
-                <h2 class="text-center my-5" style="text-decoration: underline; text-underline-offset: 6px; text-decoration-color:#D96B52;">Reviews</h2>
+                <h2 class="text-center my-5 text-underline-accent">Reviews</h2>
 
                 <div class="d-grid gap-3">
-                    @for($i=0; $i<2; $i++)
+                    @foreach ($reviews as $review)
                     <div class="card">
                         <div class="card-body">
-                        <div class="d-flex align-items-start gap-3">
-                            <i class="bi bi-person-circle fs-2"></i>
-                            <div class="flex-grow-1">
-                            <div class="fw-semibold">Delicious Restaurant</div>
-                            <div class="small text-warning">★★★★★</div>
-                            <div class="small text-muted mt-1">
-                                The sushi was incredibly fresh and beautifully presented...
+                            <div class="d-flex align-items-start gap-3 mb-3">
+                                @if (optional($review->user->profile_picture))
+                                    <img src="{{ asset('storage/'.$review->user->profile_picture) }}" alt="" class="review-icon rounded-circle">
+                                @else
+                                    <i class="fa-solid fa-circle-user fs-1 text-dark"></i>
+                                @endif
+                                <div class="flex-grow-1">
+                                    <div class="fw-semibold">{{ $review->user->user_name }}</div>
+                                    <div class="small text-warning">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $review->rating)
+                                                <i class="fa-solid fa-star text-warning"></i>
+                                            @else
+                                                <i class="fa-regular fa-star text-warning"></i>
+                                            @endif
+                                        @endfor
+                                        <span class="small">{{ $review->rating }}.0</span>
+                                    </div>
+                                    <div class=" mt-1">
+                                        {{ $review->comment }}
+                                    </div>
+                                </div>
+                                <div class="small text-muted">{{ $review->created_at->format('M d,Y') }}</div>
                             </div>
-                            </div>
-                            <div class="small text-muted">Apr 12, 2026</div>
-                        </div>
+                            @if ($review->replies->isNotEmpty())
+                                <div class="ps-2">
+                                    <div class="d-flex align-items-start gap-2">
+                                        <i class="fa-solid fa-reply mt-1"></i>
+                                        <div>
+                                            <span class="mb-2 fw-light">Restaurant reply:</span>
+                                            <p class="font-sen ms-3 text-muted">
+                                                {{ $review->replies->first()->comment }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                             @endif
                         </div>
                     </div>
-                    @endfor
+                    @endforeach
                 </div>
                 </section>
 

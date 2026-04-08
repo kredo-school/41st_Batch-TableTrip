@@ -179,7 +179,8 @@ Route::get('/cart/track', function () { return view('products.track'); })->name(
 | Restaurant Page
 |--------------------------------------------------------------------------
 */
-Route::get('/restaurant', [RestaurantController::class, 'show'])->name('restaurant');
+Route::get('/restaurant/{id}', [RestaurantController::class, 'show'])->name('restaurant');
+Route::post('/restaurant/{id}', [RestaurantController::class, 'store'])->name('restaurant.reserve');
 
 /*
 |--------------------------------------------------------------------------
