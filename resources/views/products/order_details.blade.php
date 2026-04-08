@@ -1,58 +1,108 @@
-@extends('admin.layouts.admin') {{-- 親ファイルを指定 --}}
-
-@section('title', 'Products List') {{-- タブに表示されるタイトル --}}
+@extends('layouts.app')
+@vite(['resources/css/product-list.css'])
 
 @section('content')
-<div class="text-center">
-    <h1 class="main-title mb-5 mt-4" style="font-family: 'Playfair Display', serif; font-size: 3.5rem; position: relative; display: inline-block;">
-        Products
-        <div style="position: absolute; bottom: -10px; left: 10%; width: 80%; height: 2px; background: linear-gradient(to right, transparent, #d1e7dd, transparent);"></div>
-    </h1>
+<div style="background-color: #F9F7F2; min-height: 100vh; font-family: serif;">
+    <div class="container py-5" style="max-width: 600px;">
 
-    <div class="card border-0 shadow-sm bg-white p-3 mx-auto" style="max-width: 1000px; border-radius: 10px;">
-        <table class="table table-hover align-middle text-center mb-0" style="font-size: 0.9rem;">
-            <thead class="text-secondary border-bottom">
-                <tr>
-                    <th class="fw-normal py-3">ID</th>
-                    <th class="fw-normal py-3">Product</th>
-                    <th class="fw-normal py-3">Restaurant</th>
-                    <th class="fw-normal py-3">Prefecture</th>
-                    <th class="fw-normal py-3">Allergens</th> 
-                    <th class="fw-normal py-3">Status</th>
-                    <th class="fw-normal py-3">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="text-secondary">#{{ $product->id }}</td>
-                    <td class="fw-bold">{{ $product->name }}</td>
-                    <td>{{ $product->restaurant_name }}</td>
-                    <td>{{ $product->location }}</td>
-                    <td>
-                        <span class="badge bg-light text-dark border-0 px-3 py-2" style="font-weight: normal;">
-                            {{ $product->allergens }}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="badge rounded-pill bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2">
-                            Approved
-                        </span>
-                    </td>
-                    <td>
-                        <button class="btn btn-dark btn-sm px-3 py-1" style="font-size: 0.8rem; background-color: #2d3748;">View</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <h2 class="fw-bold text-center mb-5">Order Details</h2>
 
-    <div class="d-flex justify-content-center mt-5">
-        <ul class="pagination pagination-sm border-0">
-            <li class="page-item active"><a class="page-link border-0 bg-transparent text-dark fw-bold" href="#">1</a></li>
-            <li class="page-item"><a class="page-link border-0 bg-transparent text-secondary" href="#">2</a></li>
-            <li class="page-item"><a class="page-link border-0 bg-transparent text-secondary" href="#">3</a></li>
-            <li class="page-item"><a class="page-link border-0 bg-transparent text-secondary" href="#">4</a></li>
-        </ul>
+        <p class="text-muted text-center mb-4">Order #{{ $order['id'] }} &nbsp;·&nbsp; {{ $order['ordered_at'] }}</p>
+
+        {{-- 商品一覧 --}}
+        @php $total = 0; @endphp
+        @foreach($order['items'] as $id => $item)
+        @php
+            $product = (object) $item['product'];
+            $subtotal = $product->price * $item['quantity'];
+            $total += $subtotal;
+        @endphp
+        <div class="card mb-3 border-dark shadow-sm" style="border-radius: 5px;">
+            <div class="row g-0 align-items-center">
+                <div class="col-4 p-2 position-relative">
+                    @if(!empty($product->badge))
+                        @php
+                            $badgeColor = match($product->badge) {
+                                'Easy'    => '#D97652',
+                                'Special' => '#E8C43A',
+                                'Kids OK' => '#3DBDB5',
+                                default   => '#D97652',
+                            };
+                        @endphp
+                        <div class="mini-triangle-ribbon" style="border-top-color: {{ $badgeColor }};"></div>
+                        <span class="mini-ribbon-text" style="font-size: {{ $product->badge === 'Kids OK' ? '0.5rem' : '0.65rem' }};">{{ $product->badge }}</span>
+                    @endif
+                    @if(!empty($product->image))
+                        <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded border" alt="{{ $product->name }}">
+                    @else
+                        <img src="{{ asset('images/journykit.png') }}" class="img-fluid rounded border" alt="Item">
+                    @endif
+                </div>
+                <div class="col-8">
+                    <div class="card-body py-2">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="fw-bold mb-1">{{ $product->name }}</h5>
+                                <p class="text-muted small mb-1">{{ $product->location }} | {{ $product->restaurant_name }}</p>
+                                @if(!empty($product->tag))
+                                    @php
+                                        $tagStyle = $product->tag === 'Flash Frozen'
+                                            ? 'background-color:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd;'
+                                            : 'background-color:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;';
+                                    @endphp
+                                    <span style="font-size:0.7rem; border-radius:3px; padding:1px 6px; font-weight:600; {{ $tagStyle }}">
+                                        {{ $product->tag === 'Flash Frozen' ? '❄ Flash Frozen' : '🧊 Cool' }}
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="text-end">
+                                <p class="fw-bold mb-0">¥{{ number_format($product->price) }}-</p>
+                                <p class="text-muted small mb-0">× {{ $item['quantity'] }}</p>
+                            </div>
+                        </div>
+                        <div class="text-end mt-1">
+                            <span class="fw-bold small">Subtotal: ¥{{ number_format($subtotal) }}-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+
+        {{-- 合計 --}}
+        <div class="card border-dark shadow-sm mb-4" style="border-radius: 5px; background-color: #fff;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                    <span class="h5 fw-bold">Total</span>
+                    <span class="h4 fw-bold">¥{{ number_format($total) }}-</span>
+                </div>
+            </div>
+        </div>
+
+        {{-- 配送先 --}}
+        <div class="card border-dark shadow-sm mb-4" style="border-radius: 5px; background-color: #fff;">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Shipping Address</h5>
+                @auth
+                    <p class="small mb-1">Name: {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</p>
+                    <p class="small mb-1">Address: {{ Auth::user()->address ?? 'N/A' }}</p>
+                    <p class="small mb-0">Phone: {{ Auth::user()->tel ?? 'N/A' }}</p>
+                @else
+                    <p class="small mb-0">Guest order</p>
+                @endauth
+            </div>
+        </div>
+
+        {{-- ボタン --}}
+        <div class="d-flex gap-3 justify-content-center mt-4">
+            <a href="{{ route('purchased.index') }}" class="btn text-white py-2 px-4 fw-bold" style="background-color: #2c3e50; border-radius: 5px; font-family: serif;">
+                <i class="bi bi-clock-history me-2"></i>Purchase History
+            </a>
+            <a href="{{ route('products.index') }}" class="btn py-2 px-4 fw-bold" style="background-color: transparent; border: 1px solid #2c3e50; color: #2c3e50; border-radius: 5px; font-family: serif;">
+                <i class="bi bi-bag me-2"></i>Continue Shopping
+            </a>
+        </div>
+
     </div>
 </div>
 @endsection
