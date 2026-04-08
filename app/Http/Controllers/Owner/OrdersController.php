@@ -38,14 +38,13 @@ class OrdersController extends Controller
             $query->where('status',$request->status);
         }
 
-        $orders = $query->with('purchasedItems.product')->paginate(10);
+        $orders = $query->paginate(10);
 
         return view('restaurant-owners.orders.index',compact('orders'));
     }
 
     public function show($id){
-
-        $order = Order::with(['purchasedItems.product'])->findOrFail($id);
+        $order = Order::findOrFail($id);
 
         return view('restaurant-owners.orders.order-details',compact('order'));
     }
