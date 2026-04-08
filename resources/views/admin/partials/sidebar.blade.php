@@ -18,6 +18,7 @@
 <a href="#">Users</a>
 
 <div class="menu-item">
+
    <div class="menu-title">
       Rewards
    </div>
@@ -27,6 +28,7 @@
       <a href="/admin/points">Points</a>
       <a href="/admin/stamps">Stamp Rally</a>
    </div>
+
 </div>
 
 </nav>

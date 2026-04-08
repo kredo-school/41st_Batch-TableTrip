@@ -411,7 +411,8 @@ input[type="text"], input[type="email"], input[type="password"], select {
 .welcome-text {
     text-align: center;
     font-size: 3rem;
-    font-family: 'Playfair display', Georgia, serif;
+    font-family: 'Playfair display',serif;
+    font-family: 'Serif', Georgia;
     border-bottom: 2px solid #d4a373;
     display: inline-block;
     width: 100%;
@@ -429,10 +430,8 @@ input[type="text"], input[type="email"], input[type="password"], select {
     background: #fff;
     border: 1px solid #ddd;
     padding: 20px;
-    min-height: 400px; 
+    min-height: 300px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
 }
 
 .dashboard-card h3 {
@@ -443,30 +442,9 @@ input[type="text"], input[type="email"], input[type="password"], select {
     margin-bottom: 15px;
 }
 
-
-.card-content {
-    flex-grow: 1;         
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-}
-
-.info-area {
-    flex-grow: 1;          
-}
-
-.btn-container {
-    text-align: center;
-    margin-top: 20px;      
-}
-
 @media (max-width: 768px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
-    }
-    
-    .welcome-text {
-        font-size: 2rem;
     }
 }
 

@@ -123,7 +123,7 @@
                                     </span>
                                 </label>
 
-                                <input type="file" id="main_image" name="main_image" class="d-none">
+                                <input type="file" id="main_image" name="main_image" class="d-none @error('main_image') is-invalid @enderror">
 
                                 @error('main_image')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
