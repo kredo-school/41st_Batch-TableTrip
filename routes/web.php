@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminReservationController;
+use App\Http\Controllers\Admin\AdminInquiryController;
 
 
 
@@ -26,12 +27,6 @@ use App\Http\Controllers\User\InquiryController;
 
 // home
 use App\Http\Controllers\HomeController;
-
-//Admin
-use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
-use App\Http\Controllers\Admin\AdminOrdersController;
-
 
 //Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
@@ -177,9 +172,16 @@ Route::prefix('admin')
         
         Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])
             ->name('reservations.show');
+        
+        Route::get('/inquiries', [AdminInquiryController::class, 'index'])
+            ->name('inquiries.index');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
+
+        Route::get('/inquiries', [AdminInquiryController::class, 'index'])
+            ->name('inquiries.index');
+
 });
 
 //Admin Rewards - Dashboard

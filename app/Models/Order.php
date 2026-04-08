@@ -10,15 +10,20 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $table = 'purchased';
+    protected $table = 'orders';
 
     protected $fillable = [
         'user_id', 
         'meal_kit_id', 
         'quantity', 
-        'price_at_purchased', 
+        'total_price', 
         'ordered_at'
     ];
+
+        public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function product()
     {
