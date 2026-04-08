@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Reservation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\Category;
-use App\Models\AbleImage;
-use App\Models\Menu;
 
 class Restaurant extends Authenticatable
 {
@@ -27,7 +24,6 @@ class Restaurant extends Authenticatable
         'approval_status',
         'approved_at',
         'password',
-        'status',
     ];
 
      protected $hidden = [
@@ -47,16 +43,5 @@ class Restaurant extends Authenticatable
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-    public function images()
-    {
-        return $this->hasMany(AbleImage::class, 'target_id')
-            ->where('target_type', 'restaurant')
-            ->orderBy('display_order');
-    }
-
-    public function menus()
-    {
-        return $this->hasMany(Menu::class);
     }
 }

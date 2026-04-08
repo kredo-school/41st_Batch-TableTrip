@@ -1,6 +1,6 @@
 <!-- Delete Menu Modal -->
 <div class="modal fade"
-     id="deleteMenuModal-{{ $menu->id }}"
+     id="deleteMenuModal"
      data-bs-backdrop="static"
      data-bs-keyboard="false"
      tabindex="-1"
@@ -20,7 +20,9 @@
 
             <div class="modal-body text-center px-4 pb-4 pt-2">
 
-                <h3 class="mb-3 text-underline-accent" id="deleteMenuModalLabel">
+                <h3 class="mb-3"
+                    id="deleteMenuModalLabel"
+                    style="text-decoration: underline; text-underline-offset: 6px; text-decoration-color:#D96B52;">
                     Delete Menu
                 </h3>
 
@@ -32,14 +34,15 @@
                 {{-- menu preview --}}
                 <div class="mb-4">
 
-                    @if($menu->image)
-                            <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" class="edit-menu-image rounded">
-                        @else
-                            <img src="{{ asset('images/no-image.png') }}" alt="No image" class="menu-image rounded">
-                        @endif    
-                    <p class="mb-0">{{ $menu->name }}</p>
-                    <small class="text-muted">${{ $menu->price }}</small>
-                    
+                    <img
+                        src="{{ asset('images/menu3.png') }}"
+                        alt="Assorted Sushi Plate"
+                        class="img-fluid rounded mb-2"
+                        style="width:120px;height:120px;object-fit:cover;">
+
+                    <p class="mb-0">Assorted Sushi Plate</p>
+                    <small class="text-muted">$5</small>
+
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
@@ -51,7 +54,7 @@
                         Cancel
                     </button>
 
-                    <form action="{{ route('owner.page-management.deleteMenu', $menu->id) }}" method="POST">
+                    <form action="" method="POST">
                         @csrf
                         @method('DELETE')
 

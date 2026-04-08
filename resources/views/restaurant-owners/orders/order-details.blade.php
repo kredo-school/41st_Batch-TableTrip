@@ -44,24 +44,23 @@
                             <p>{{ $order->user->address }}</p>
                         </div>
                         <div class="col text-center p-2">
-                            <h5 class="mb-5 text-underline-accent">Payment Info</h5>
+                            <h5 class="mb-3 text-underline-accent">Payment Info</h5>
 
                             <p class="border border-2 rounded mb-2 w-75 mx-auto py-1 px-2 d-flex justify-content-between align-items-center">
                                 <span>
                                     <i class="fa-regular fa-credit-card me-1"></i>
                                     <i class="fa-brands fa-cc-jcb"></i>
                                 </span>
-                                @if($order->user->paymentMethods->isNotEmpty())
-                                    <span>*******{{ $order->user->paymentMethods->first()->last4 }}</span>
-                                @else
-                                    <span>No Card</span>
-                                @endif
+                                <span>*******2345</span>
                             </p>
+
+                            <h5 class="mt-2">Total: $45.32</h5>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row bg-white border rounded overflow-hidden p-3 font-sen">
+
                 {{-- Left: Order --}}
                 <div class="col-8 p-0 border-end">
                     <div class="px-3 py-2 border-bottom">
@@ -79,34 +78,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($order->purchasedItems as $item)
-                                    <tr>
-                                        <td class="border-0" style="width: 90px;">
-                                            <img src="{{ asset('storage/' . $item->product->image) }}" alt="meal_kit" class="img-fluid rounded" style="max-width: 72px;">
-                                        </td>
-                                        <td class="border-0">{{ $item->product->name }}</td>
-                                        <td class="border-0 text-center">{{ $item->quantity }}</td>
-                                        <td class="border-0 text-end">${{ number_format($item->price_at_purchased, 2) }}</td>
-                                    </tr>
-                                @endforeach
+                                <tr>
+                                    <td class="border-0" style="width: 90px;">
+                                        <img src="{{ asset('images/journykit.png') }}" alt="Journey Kit" class="img-fluid rounded" style="max-width: 72px;">
+                                    </td>
+                                    <td class="border-0">Bibimbap</td>
+                                    <td class="border-0 text-center">1</td>
+                                    <td class="border-0 text-end">$25.12</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="border-0" style="width: 90px;">
+                                        <img src="{{ asset('images/journykit.png') }}" alt="Chicken Rice Bowl" class="img-fluid rounded" style="max-width: 72px;">
+                                    </td>
+                                    <td class="border-0">Chicken Rice Bowl</td>
+                                    <td class="border-0 text-center">1</td>
+                                    <td class="border-0 text-end">$18.20</td>
+                                </tr>
                             </tbody>
                         </table>
-
-                        @php
-                            $subtotal = 0;
-                        @endphp
-
-                        @foreach($order->purchasedItems as $item)
-                            @php
-                                $subtotal += $item->price_at_purchased * $item->quantity;
-                            @endphp
-                        @endforeach
 
                         <table class="table mb-0">
                             <tbody>
                                 <tr>
                                     <td class="py-2">Subtotal:</td>
-                                    <td class="py-2 text-end">${{ number_format($subtotal, 2) }}</td>
+                                    <td class="py-2 text-end">$43.32</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2">Shipping Fee</td>
@@ -114,7 +110,7 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2 fw-semibold">Total:</td>
-                                    <td class="py-2 text-end fw-semibold">${{ number_format($subtotal, 2) }}</td>
+                                    <td class="py-2 text-end fw-semibold">$43.32</td>
                                 </tr>
                             </tbody>
                         </table>

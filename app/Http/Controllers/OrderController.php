@@ -9,14 +9,54 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products    = Product::all();
+        $query = Product::where('is_visible', true);
+
+        // Favorites tab
+        if ($request->tab === 'favorites' && Auth::check()) {
+            $favIds = Favorite::where('user_id', Auth::id())->pluck('product_id');
+            $query->whereIn('id', $favIds);
+        }
+
+        // Price filter
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', (int) $request->price_max);
+        }
+
+        // Rating filter
+        if ($request->filled('ratings')) {
+            $query->whereIn(\DB::raw('FLOOR(rating)'), $request->ratings);
+        }
+
+        // Location filter
+        if ($request->filled('locations')) {
+            $query->whereIn('location', $request->locations);
+        }
+
+        // Category filter
+        if ($request->filled('categories')) {
+            $query->whereIn('category_id', $request->categories);
+        }
+
+        // Sort
+        switch ($request->sort) {
+            case 'price_asc':  $query->orderBy('price', 'asc');   break;
+            case 'price_desc': $query->orderBy('price', 'desc');  break;
+            case 'rating':     $query->orderBy('rating', 'desc'); break;
+            default:           $query->orderBy('id', 'desc');     break;
+        }
+
+        $products    = $query->get();
+        $categories  = \App\Models\Category::all();
+        $locations   = Product::where('is_visible', true)->distinct()->pluck('location')->sort()->values();
+        $priceMax    = Product::where('is_visible', true)->max('price') ?? 10000;
+
         $favoriteIds = Auth::check()
             ? Favorite::where('user_id', Auth::id())->pluck('product_id')->toArray()
             : [];
 
-        return view('products.index', compact('products', 'favoriteIds'));
+        return view('products.index', compact('products', 'favoriteIds', 'categories', 'locations', 'priceMax'));
     }
 
     public function show($id)
