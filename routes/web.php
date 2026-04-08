@@ -1,5 +1,9 @@
 <?php
 
+// search
+use App\Http\Controllers\Search\SearchController;
+
+// user
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -40,6 +44,12 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavoriteController;
 use App\Models\User;
 
+/*
+|--------------------------------------------------------------------------
+| Search
+|--------------------------------------------------------------------------
+*/
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 /*
 |--------------------------------------------------------------------------
 | Home
