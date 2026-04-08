@@ -51,9 +51,7 @@
 
             <p class="date">15 / 02 / 2026</p>
 
-            <p class="restaurant">
-                Restaurant : {{ $order->product->restaurant_name ?? '' }}
-            </p>
+            <p class="restaurant">Restaurant : Bistro Lapin</p>
 
             <div class="divider"></div>
 

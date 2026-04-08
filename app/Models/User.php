@@ -82,11 +82,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
     }
 
-    public function paymentMethods()
-    {
-        return $this->hasMany(PaymentMethod::class);
-    }
-
     public function coupons()
     {
         return $this->belongsToMany(\App\Models\Coupon::class, 'user_coupons')

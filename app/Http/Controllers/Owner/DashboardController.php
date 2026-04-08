@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use App\Models\Reservation;
-use App\Http\Controllers\Owner\OrdersController;
 
 class DashboardController extends Controller
 {
@@ -25,9 +23,7 @@ class DashboardController extends Controller
 
         $reservationCount = $todayReservations->count();
 
-        $pendingOrder = Order::where('restaurant_id',$owner->id)->where('status','pending')->get();
 
-
-        return view('restaurant-owners.dashboard',compact('todayReservations','reservationCount','pendingOrder'));
+        return view('restaurant-owners.dashboard',compact('todayReservations','reservationCount'));
     }
 }

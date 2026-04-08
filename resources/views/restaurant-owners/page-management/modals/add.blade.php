@@ -13,17 +13,13 @@
                     Add Menu
                 </h3>
 
-                <form action="{{ route('owner.page-management.storeMenu') }}" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('POST')
 
                     <div class="mb-3">
                         <label for="add_menu_name" class="form-label mb-1">Name *</label>
-                        <input type="text" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" id="add_menu_name" name="name"
+                        <input type="text" class="form-control" id="add_menu_name" name="name"
                             placeholder="name of menu">
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <div class="row align-items-end mb-4">
@@ -31,19 +27,13 @@
                             <label for="add_menu_price" class="form-label mb-1">Price *</label>
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input type="text" value="{{ old('price') }}" class="form-control @error('price') is-invalid @enderror" id="add_menu_price" name="price">
+                                <input type="text" class="form-control" id="add_menu_price" name="price">
                             </div>
-                            @error('price')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         <div class="col-md-5">
                             <label for="add_menu_photo" class="form-label mb-1">Photo</label>
-                            <input type="file" value="{{ old('image') }}" class="form-control @error('image') is-invalid @enderror" id="add_menu_photo" name="image">
-                            @error('image')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror   
+                            <input type="file" class="form-control" id="add_menu_photo" name="photo">
                         </div>
 
                         <div class="col-md-3">
