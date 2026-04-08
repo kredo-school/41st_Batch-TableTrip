@@ -39,13 +39,14 @@
                     </a>
 
                     <!-- Center: Search (like your image) -->
-                    <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="/restaurants" method="GET">
-                        <input type="text" name="q" placeholder="search" aria-label="search" class="form-control rounded-pill header-search">
+                    <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="{{ route('search') }}" method="GET">
+                        <input type="text" name="keyword" placeholder="search" aria-label="search" 
+                            class="form-control rounded-pill header-search" value="{{ request('keyword') }}">
+                        
                         <button type="submit" class="btn p-0 ms-3" aria-label="search button">
                             <i class="bi bi-search fs-5 text-dark"></i>
                         </button>
                     </form>
-                    
 
                     <!-- Right: Icons + Dropdown -->
 
