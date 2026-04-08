@@ -5,18 +5,7 @@
 <div class="product-page" style="background-color: #F9F7F2; min-height: 100vh;">
     
 
-        {{-- 右上の浮遊カートボタン --}}
-        <div class="floating-cart">
-            <a href="{{ route('cart.index') }}" class="cart-link">
-                <div class="cart-wrapper">
-                    <i class="bi bi-cart-fill fs-2"></i>
-                    <span class="cart-badge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
-                </div>
-                <p class="cart-text">Items</p>
-            </a>
-        </div>
-
-        <div class="container py-5">
+<div class="container py-5">
         {{-- タイトル部分 --}}
         <div class="text-center mb-5">
             <h2 class="display-6 fw-bold" style="color: #4A4A4A; text-decoration: underline orange;">Product list</h2>
@@ -258,6 +247,12 @@
                 </div>
                 @endforelse
             </div>
+        </div>
+
+        <div class="btn-back-container text-center my-5">
+            <a href="{{ route('dashboard') }}" class="btn-back-custom">
+                <i class="bi bi-house-door-fill me-2"></i>Back to Dashboard
+            </a>
         </div>
 
 <script>

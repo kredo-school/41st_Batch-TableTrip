@@ -48,7 +48,9 @@ class CartController extends Controller
             session(['cart' => $cart]);
         }
 
-        return back();
+        return $request->redirect === 'confirm'
+            ? redirect()->route('cart.confirm')
+            : back();
     }
 
     public function remove(Request $request)
@@ -57,6 +59,15 @@ class CartController extends Controller
         unset($cart[$request->product_id]);
         session(['cart' => $cart]);
 
-        return back();
+        return $request->redirect === 'confirm'
+            ? redirect()->route('cart.confirm')
+            : back();
+    }
+
+    public function confirm()
+    {
+        $cart  = session('cart', []);
+        $total = array_sum(array_map(fn($i) => $i['product']['price'] * $i['quantity'], $cart));
+        return view('products.confirm', compact('cart', 'total'));
     }
 }
