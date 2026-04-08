@@ -23,22 +23,25 @@ use App\Http\Controllers\DashboardController; // 一般ユーザー用
 // use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
-
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
-use App\Http\Controllers\User\PaymentMethodController;
+
+
+// notifications
+use App\Http\Controllers\Notifications\NotificationsController;
+
+
+// home
 use App\Http\Controllers\HomeController;
 
 //Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
-use App\Http\Controllers\Owner\RestaurantAuthController;
+// use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
 use App\Http\Controllers\Owner\ProductController as OwnerProductController;
@@ -168,6 +171,9 @@ Route::prefix('admin')
 
         Route::get('/inquiries', [AdminInquiryController::class, 'index'])
             ->name('inquiries.index');
+        
+        Route::get('/inquiries/{id}', [AdminInquiryController::class, 'show'])
+            ->name('inquiries.show');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
