@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('restaurants', function (Blueprint $table) {
-            $table->string('status')->default('draft')->after('approval_status');
+        Schema::create('replies', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('inquiry_id')->constrained()->cascadeOnDelete();
+            $table->text('message');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('restaurants', function (Blueprint $table) {
-            $table->dropColumn('status');
-        });
+        Schema::dropIfExists('replies');
     }
 };

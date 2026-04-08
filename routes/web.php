@@ -4,6 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+
+//Admin
+use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\AdminReservationController;
+use App\Http\Controllers\Admin\AdminInquiryController;
+
+
+
+// use App\Http\Controllers\ForgetController;  
+// use App\Http\Controllers\DashboardController; 
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\PaymentController;
@@ -12,27 +25,15 @@ use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
-
-// notifications
-use App\Http\Controllers\Notifications\NotificationsController;
-
-
-// home
 use App\Http\Controllers\User\PaymentMethodController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\AdminOrdersController;
-use App\Http\Controllers\Admin\AdminReservationController;
-use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+
+//Restaurant Owner
 use App\Http\Controllers\Owner\RestaurantAuthController;
+use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
 use App\Http\Controllers\Owner\ProductController as OwnerProductController;
-use App\Http\Controllers\Owner\PageManagementController;
-use App\Http\Controllers\Owner\ReviewsController as OwnerReviewsController;
-use App\Http\Controllers\Owner\NotificationController as OwnerNotificationController;
-//Restaurant
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\PurchasedController;
@@ -45,17 +46,6 @@ use App\Models\User;
 | Home
 |--------------------------------------------------------------------------
 */
-Route::get('/',[HomeController::class,'index'])->name('home');
-
-/*
-|--------------------------------------------------------------------------
-| Notifications
-|--------------------------------------------------------------------------
-*/
-
-Route::middleware(['auth','verified'])->prefix('notifications')->name('notifications.')->group(function (){
-    Route::get('/',[NotificationsController::class, 'index'])->name('index');
-});
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /*
@@ -141,19 +131,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login']);
-    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
 Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth'])
     ->group(function () {
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::get('/orders', [AdminOrdersController::class, 'index'])->name('orders.index');
-        Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])->name('orders.show');
-        Route::get('/reservations', [AdminReservationController::class, 'index'])->name('reservations.index');
-        Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])->name('reservations.show');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/orders', [AdminOrdersController::class, 'index'])
+            ->name('orders.index');
+
+        Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])
+            ->name('orders.show');
+
+        Route::get('/reservations', [AdminReservationController::class, 'index'])
+            ->name('reservations.index');
+
+        Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])
+            ->name('reservations.show');
+
+        Route::get('/inquiries', [AdminInquiryController::class, 'index'])
+            ->name('inquiries.index');
+
+        Route::post('/logout', [AdminLoginController::class, 'logout'])
+            ->name('logout');
     });
+
+//Admin Rewards - Dashboard
+// Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
+
+//Product
+// 登録画面を表示するURL
 
 /*
 |--------------------------------------------------------------------------
@@ -219,28 +229,7 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/product/{id}/edit', [OwnerProductController::class, 'edit'])->name('products.edit');
         Route::patch('/product/{id}', [OwnerProductController::class, 'update'])->name('products.update');
         Route::delete('/product/images/{id}', [OwnerProductController::class, 'destroyImage'])->name('products.images.destroy');
-        Route::get('/product/{id}/details',[OwnerProductController::class,'show'])->name('products.details');
-
-        //Page Management
-        Route::get('/page-management', [PageManagementController::class, 'index'])->name('page-management');
-        Route::get('/page-management/image', [PageManagementController::class, 'image'])->name('page-management.image');
-        Route::get('/page-management/menu', [PageManagementController::class, 'menu'])->name('page-management.menu');
-        Route::get('/page-management/preview', [PageManagementController::class, 'preview'])->name('page-management.preview');
-        Route::patch('/page-management/basic-info', [PageManagementController::class, 'updateBasicInfo'])->name('page-management.updateBasicInfo');
-        Route::patch('/page-management/image', [PageManagementController::class, 'updateImage'])->name('page-management.updateImage');
-        Route::post('/page-management/menu', [PageManagementController::class, 'addMenu'])->name('page-management.addMenu');
-        Route::patch('/page-management/menu/update/{id}', [PageManagementController::class, 'updateMenu'])->name('page-management.updateMenu');
-        Route::post('/page-management/menu/', [PageManagementController::class, 'storeMenu'])->name('page-management.storeMenu');
-        Route::delete('/page-management/menu/delete/{id}', [PageManagementController::class, 'deleteMenu'])->name('page-management.deleteMenu');
-
-        // Reviews
-        Route::get('/reviews', [OwnerReviewsController::class, 'index'])->name('reviews');
-        Route::post('/reviews/{id}/reply', [OwnerReviewsController::class, 'reply'])->name('reviews.reply');
-
-        // Notifications
-        Route::get('/notifications', [OwnerNotificationController::class, 'index'])->name('notifications');
-
-
+        Route::get('/product/{id}/details', [OwnerProductController::class, 'show'])->name('products.details');
     });
 });
 

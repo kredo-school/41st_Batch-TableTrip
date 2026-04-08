@@ -97,7 +97,7 @@ class ReservationController extends Controller
         $reservation -> status = $request->status;
         $reservation -> save();
 
-        return redirect()->back()->with('success', 'Reservation added successfully.')->with('open_modal', 'addReservationModal');;
+        return redirect()->back()->with('success', 'Reservation added successfully.');
     }
 
     public function update(Request $request , $id){
@@ -118,7 +118,7 @@ class ReservationController extends Controller
             ->back()
             ->withErrors($validator)
             ->withInput()
-            ->with('open_modal','editReservationModal-' . $id);
+            ->with('open_edit_modal', $id);
     }
 
 

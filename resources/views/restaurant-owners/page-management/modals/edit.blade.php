@@ -1,4 +1,4 @@
-<div class="modal fade" id="editMenuModal-{{ $menu->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="editMenuModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="editMenuModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-3">
@@ -13,36 +13,28 @@
                     Edit Menu
                 </h3>
 
-                <form action="{{ route('owner.page-management.updateMenu', $menu->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
 
                     <div class="text-center mb-3 justify-content-center">
-                        @if($menu->image)
-                            <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" class="edit-menu-image rounded">
-                        @else
-                            <img src="{{ asset('images/no-image.png') }}" alt="No image" class="menu-image rounded">
-                        @endif    
+                        <img src="{{ asset('images/menu3.png') }}" alt="Assorted Sushi Plate"
+                            class="img-fluid rounded"
+                            style="width: 120px; height: 120px; object-fit: cover;">
                     </div>
 
                     <div class="row align-items-end mb-3">
                         <div class="col-md-4">
-                            <label for="edit_menu_price" class="form-label mb-1 @error('price') is-invalid @enderror">Price *</label>
+                            <label for="edit_menu_price" class="form-label mb-1">Price *</label>
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input type="text" class="form-control" id="edit_menu_price" name="price" value="{{ old('price', $menu->price) }}">
+                                <input type="text" class="form-control" id="edit_menu_price" name="price" value="25">
                             </div>
-                                @error('price')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                         </div>
 
                         <div class="col-md-5">
-                            <label for="edit_menu_photo" class="form-label mb-1 @error('image') is-invalid @enderror">Change Photo</label>
-                            <input type="file" class="form-control" id="edit_menu_photo" name="image">
-                            @error('image')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label for="edit_menu_photo" class="form-label mb-1">Change Photo</label>
+                            <input type="file" class="form-control" id="edit_menu_photo" name="photo">
                         </div>
 
                         <div class="col-md-3">
@@ -52,11 +44,8 @@
 
                     <div class="mb-4">
                         <label for="edit_menu_name" class="form-label mb-1">Name *</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="edit_menu_name" name="name"
-                            value="{{ old('name', $menu->name) }}" placeholder="name of menu">
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <input type="text" class="form-control" id="edit_menu_name" name="name"
+                            value="Assorted Sushi Plate">
                     </div>
 
                     <div class="d-flex justify-content-center gap-3">

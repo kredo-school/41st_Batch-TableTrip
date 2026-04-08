@@ -51,7 +51,14 @@
                 <div class="d-flex align-items-center flex-wrap gap-2 mt-2">
                     <h4 class="fw-bold mb-0" style="font-family: serif; color: #333;">{{ $product->name }}</h4>
                     @if($product->tag)
-                        <span class="border border-dark px-2 py-0 small" style="border-radius: 3px; font-size: 0.75rem;">{{ $product->tag }}</span>
+                        @php
+                            $tagStyle = $product->tag === 'Flash Frozen'
+                                ? 'background-color:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd;'
+                                : 'background-color:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;';
+                        @endphp
+                        <span style="font-size:0.75rem; border-radius:3px; padding:2px 8px; font-weight:600; {{ $tagStyle }}">
+                            {{ $product->tag === 'Flash Frozen' ? '❄ Flash Frozen' : '🧊 Cool' }}
+                        </span>
                     @endif
                     <span class="fw-bold ms-auto" style="font-size: 1.1rem;">¥{{ number_format($product->price) }}-</span>
                 </div>

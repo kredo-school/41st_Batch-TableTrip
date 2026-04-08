@@ -9,30 +9,22 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $table = 'orders';
-
     protected $fillable = [
         'user_id',
         'restaurant_id',
         'total_price',
         'status',
+        'created_at'
     ];
-
-    public function purchasedItems()
-    {
-        return $this->hasMany(Purchased::class, 'order_id');
-    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-
     public function product()
     {
         return $this->belongsTo(Product::class, 'meal_kit_id');
     }
-     
-}
 
+}

@@ -76,7 +76,12 @@
         @empty
         <div class="text-center text-muted py-5">
             <p>Your cart is empty.</p>
-            <a href="{{ route('products.index') }}" class="btn btn-dark">Back to Products</a>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{{ route('products.index') }}" class="btn btn-dark">Back to Products</a>
+                <a href="{{ route('dashboard') }}" class="btn" style="background-color: transparent; border: 1px solid #000; color: #000; text-decoration: none;">
+                    <i class="bi bi-house-door-fill me-2"></i>Back to Dashboard
+                </a>
+            </div>
         </div>
         @endforelse
 
@@ -107,9 +112,12 @@
                    style="background-color: #D96D55; border-radius: 5px; text-decoration: none; display: block; text-align: center; font-family: serif; font-weight: bold;">
                     Checkout
                 </a>
-                <div class="text-center mt-4">
-                    <a href="{{ route('products.index') }}" class="text-decoration-none text-muted">
-                        <i class="bi bi-arrow-left"></i> Back to Product List
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <a href="{{ route('products.index') }}" class="btn" style="background-color: transparent; border: 1px solid #000; color: #000; text-decoration: none;">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Product List
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="btn" style="background-color: transparent; border: 1px solid #000; color: #000; text-decoration: none;">
+                        <i class="bi bi-house-door-fill me-2"></i>Back to Dashboard
                     </a>
                 </div>
             </div>
