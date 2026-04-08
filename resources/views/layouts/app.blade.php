@@ -34,18 +34,19 @@
 
                     <!-- Left: Logo -->
                     <a href="/" class="d-flex align-items-center text-decoration-none gap-2">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-circle border header-logo">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-circle border header-logo" style="width:44px; height:44px; object-fit:cover; flex-shrink:0;">
                         <span class="fw-semibold text-dark">Table<span class="text-orange">Trip</span></span>
                     </a>
 
                     <!-- Center: Search (like your image) -->
-                    <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="/restaurants" method="GET">
-                        <input type="text" name="q" placeholder="search" aria-label="search" class="form-control rounded-pill header-search">
+                    <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="{{ route('search') }}" method="GET">
+                        <input type="text" name="keyword" placeholder="search" aria-label="search" 
+                            class="form-control rounded-pill header-search" value="{{ request('keyword') }}">
+                        
                         <button type="submit" class="btn p-0 ms-3" aria-label="search button">
                             <i class="bi bi-search fs-5 text-dark"></i>
                         </button>
                     </form>
-                    
 
                     <!-- Right: Icons + Dropdown -->
 

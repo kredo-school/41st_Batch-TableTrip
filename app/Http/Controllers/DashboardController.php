@@ -16,6 +16,10 @@ class DashboardController extends Controller
         $user = Auth::user();
         $today = Carbon::today()->toDateString();
 
+
+        // point
+        // $total_points = PointHistory::where('user_id', $user->id)->sum('points');
+
         // --- 1. upcoming reservation) ---
         $latest_reservations = $user->reservations()
             ->where('reservation_date', '>=', $today)

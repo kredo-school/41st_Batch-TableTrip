@@ -66,6 +66,9 @@ h2.custom-header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-width: 180px; 
+    padding: 10px 20px;
+    border-radius: 12px;
 }
 .btn-equal {
     flex: 1;                
@@ -226,6 +229,23 @@ profile-default-svg {
 .btn-login-submit:hover {
     background-color: #d1634f; 
     transform: translateY(-1px); 
+}
+
+
+/* point illustlate */
+.user-points {
+    font-size: 1.2rem;
+    margin-left: 15px;
+    background-color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.point-summary-card h3 {
+    border-bottom: 1px solid #e2725b;
 }
 
 /* edit user */
