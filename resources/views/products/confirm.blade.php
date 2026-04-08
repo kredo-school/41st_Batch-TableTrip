@@ -3,39 +3,84 @@
 @section('content')
 <div class="confirm-page" style="background-color: #F9F7F2; min-height: 100vh; font-family: serif;">
     <div class="container py-5" style="max-width: 600px;">
-        
+
         <h2 class="text-center mb-5 fw-bold">Confirm your order</h2>
 
-        {{-- 商品リスト（カート画面より少しシンプルに） --}}
-        @for ($i = 0; $i < 3; $i++)
+        @forelse($cart as $id => $item)
+        @php $product = (object) $item['product']; @endphp
         <div class="card mb-3 border-dark shadow-sm" style="border-radius: 5px;">
             <div class="row g-0 align-items-center">
                 <div class="col-4 p-2 position-relative">
-                    <div class="mini-triangle-ribbon"></div>
-                    <span class="mini-ribbon-text">Easy</span>
-                    <img src="{{ asset('images/journykit.png') }}" class="img-fluid rounded border" alt="Item">
+                    @if(!empty($product->badge))
+                        @php
+                            $badgeColor = match($product->badge) {
+                                'Easy'    => '#D97652',
+                                'Special' => '#E8C43A',
+                                'Kids OK' => '#3DBDB5',
+                                default   => '#D97652',
+                            };
+                        @endphp
+                        <div class="mini-triangle-ribbon" style="border-top-color: {{ $badgeColor }};"></div>
+                        <span class="mini-ribbon-text" style="font-size: {{ $product->badge === 'Kids OK' ? '0.5rem' : '0.65rem' }};">{{ $product->badge }}</span>
+                    @endif
+                    @if(!empty($product->image))
+                        <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded border" alt="{{ $product->name }}">
+                    @else
+                        <img src="https://via.placeholder.com/150?text=No+Image" class="img-fluid rounded border" alt="No Image">
+                    @endif
                 </div>
                 <div class="col-8">
                     <div class="card-body py-2">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h5 class="fw-bold mb-1">Journey Kit</h5>
-                                <p class="text-muted small mb-0">Hokkaido | Kitchen Sapporo</p>
+                                <h5 class="fw-bold mb-1">{{ $product->name }}</h5>
+                                <p class="text-muted small mb-0">{{ $product->location }} | {{ $product->restaurant_name }}</p>
                             </div>
-                            <p class="fw-bold mb-0">¥2,480-</p>
+                            <p class="fw-bold mb-0">¥{{ number_format($product->price) }}-</p>
                         </div>
-                        <div class="text-end mt-2">
-                            <span class="border border-dark px-3 py-1" style="border-radius: 5px;">－ 2 ＋</span>
-                            <i class="bi bi-trash text-danger ms-2"></i>
+
+                        {{-- 数量操作 --}}
+                        <div class="d-flex justify-content-end align-items-center mt-2">
+                            <div class="border border-dark d-flex align-items-center px-2 py-1" style="border-radius: 5px;">
+                                <form action="{{ route('cart.update') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $id }}">
+                                    <input type="hidden" name="quantity" value="{{ $item['quantity'] - 1 }}">
+                                    <input type="hidden" name="redirect" value="confirm">
+                                    <button class="btn btn-sm p-0 border-0">－</button>
+                                </form>
+                                <span class="mx-3 fw-bold">{{ $item['quantity'] }}</span>
+                                <form action="{{ route('cart.update') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $id }}">
+                                    <input type="hidden" name="quantity" value="{{ $item['quantity'] + 1 }}">
+                                    <input type="hidden" name="redirect" value="confirm">
+                                    <button class="btn btn-sm p-0 border-0">＋</button>
+                                </form>
+                            </div>
+                            <form action="{{ route('cart.remove') }}" method="POST" class="d-inline">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $id }}">
+                                <input type="hidden" name="redirect" value="confirm">
+                                <button class="btn btn-sm text-danger ms-3 border-0 bg-transparent">
+                                    <i class="bi bi-trash fs-5"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @endfor
+        @empty
+        <div class="text-center text-muted py-5">
+            <p>Your cart is empty.</p>
+            <a href="{{ route('products.index') }}" class="btn btn-dark">Back to Products</a>
+        </div>
+        @endforelse
 
+        @if(count($cart) > 0)
         <div class="text-center my-5">
-            <h3 class="fw-bold">Total amount : ¥7,440-</h3>
+            <h3 class="fw-bold">Total amount : ¥{{ number_format($total) }}-</h3>
         </div>
 
         <hr class="border-dark">
@@ -48,7 +93,7 @@
                 <p class="mb-1">Address : 1-2-3 Kita-ku, Sapporo-shi, Hokkaido, Japan 060-0000</p>
                 <p class="mb-1">Phone : +81 80-1234-5678</p>
             </div>
-            <a href="#" class="text-dark position-absolute bottom-0 end-0 p-2" style="font-size: 1.2rem;">
+            <a href="{{ route('user.edit') }}?from=confirm" class="text-dark position-absolute bottom-0 end-0 p-2" style="font-size: 1.2rem;">
                 <i class="bi bi-pencil-square"></i>
             </a>
         </div>
@@ -63,7 +108,7 @@
                 <p class="mb-1">Expiry Date : 2030/05/28</p>
                 <p class="mb-1">Cardholder: TARO YAMADA</p>
             </div>
-            <a href="#" class="text-dark position-absolute bottom-0 end-0 p-2" style="font-size: 1.2rem;">
+            <a href="{{ route('user.payment_method.index') }}?from=confirm" class="text-dark position-absolute bottom-0 end-0 p-2" style="font-size: 1.2rem;">
                 <i class="bi bi-pencil-square"></i>
             </a>
         </div>
@@ -72,16 +117,17 @@
 
         {{-- 確定ボタン --}}
         <div class="text-center mt-5">
-            <a href="{{ route('cart.thanks') }}" class="btn text-white px-5 py-3 fs-3 mb-3" 
+            <a href="{{ route('cart.thanks') }}" class="btn text-white px-5 py-3 fs-3 mb-3"
             style="background-color: #D96D55; border-radius: 5px; min-width: 300px; font-family: serif; font-weight: bold; text-decoration: none; display: inline-block;">
                 Place your order
             </a>
             <br>
-            <a href="{{ route('cart.index') }}" class="text-dark text-decoration-none text-muted display: block; text-align: center; font-family: serif;">
-                <i class="bi bi-arrow-left"></i> Back to Cart </a>
+            <a href="{{ route('cart.index') }}" class="text-dark text-decoration-none text-muted">
+                <i class="bi bi-arrow-left"></i> Back to Cart
+            </a>
         </div>
+        @endif
 
     </div>
 </div>
 @endsection
-

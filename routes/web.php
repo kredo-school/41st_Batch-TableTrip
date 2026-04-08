@@ -1,5 +1,9 @@
 <?php
 
+// search
+use App\Http\Controllers\Search\SearchController;
+
+// user
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -41,6 +45,12 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavoriteController;
 use App\Models\User;
 
+/*
+|--------------------------------------------------------------------------
+| Search
+|--------------------------------------------------------------------------
+*/
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 /*
 |--------------------------------------------------------------------------
 | Home
@@ -180,7 +190,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
-Route::get('/cart/confirm', function () { return view('products.confirm'); })->name('cart.confirm');
+Route::get('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
 Route::get('/cart/thanks', function () { return view('products.thanks'); })->name('cart.thanks');
 Route::get('/cart/track', function () { return view('products.track'); })->name('cart.track');
 
