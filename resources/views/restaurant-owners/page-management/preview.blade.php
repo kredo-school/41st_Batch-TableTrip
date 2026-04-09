@@ -12,13 +12,9 @@
 
              {{-- Hero --}}
             <section class="container-fluid p-0">
-                 @php
-                    $heroImage = $restaurant->images->firstWhere('display_order', 1);
-                @endphp
-
-                @if ($heroImage)
-                    <img src="{{ asset('storage/' . $heroImage->image_url) }}" class="img-fluid rounded hero-image w-100" style="max-height:420px; object-fit:cover;" alt="hero">
-                @endif
+                
+                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded hero-image w-100" style="max-height:420px; object-fit:cover;" alt="hero">
+               
             </section>
 
             <div class="container py-4">
@@ -33,16 +29,12 @@
 
                 {{-- Gallery 2 photos --}}
                 <section class="row g-3 mt-2">
-                    @php
-                        $gallery1 = $restaurant->images->firstWhere('display_order', 2);
-                        $gallery2 = $restaurant->images->firstWhere('display_order', 3);
-
-                    @endphp
+                   
                 <div class="col-12 col-md-6">
-                     <img src="{{ $gallery1 ? asset('storage/'.$gallery1->image_url): asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
+                     <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
                 </div>
                 <div class="col-12 col-md-6">
-                    <img src="{{ $gallery2 ? asset('storage/'.$gallery2->image_url): asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
+                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
                 </div>
                 </section>
 
