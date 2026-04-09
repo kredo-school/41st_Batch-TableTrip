@@ -10,7 +10,7 @@
     <div class="card-body">
 
         <div class="orders-table-wrapper">
-            <table class="table table-sm align-middle orders-table text-center">
+            <table class="table align-middle orders-table text-center">
                 <thead>
                     <tr>
                         <th><span class="th-label">Name</span></th>
@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     @foreach($inquiries as $inquiry)
-                    <tr>
+                    <tr onclick="window.location='{{ route('admin.inquiries.show', $inquiry->id) }}'">
                         <td>{{ $inquiry->name }}</td>
                         <td>{{ $inquiry->email }}</td>
                         <td>{{ $inquiry->message }}</td>

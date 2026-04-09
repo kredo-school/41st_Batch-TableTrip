@@ -20,16 +20,21 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 
 // use App\Http\Controllers\ForgetController;  
 // use App\Http\Controllers\DashboardController; 
-
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ForgetController;
+use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\FavoriteKitsController;
 use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
-use App\Http\Controllers\User\PaymentMethodController;
+
+
+// notifications
+use App\Http\Controllers\Notifications\NotificationsController;
+
+
+// home
 use App\Http\Controllers\HomeController;
 
 //Restaurant Owner
@@ -166,6 +171,9 @@ Route::prefix('admin')
 
         Route::get('/inquiries', [AdminInquiryController::class, 'index'])
             ->name('inquiries.index');
+        
+        Route::get('/inquiries/{id}', [AdminInquiryController::class, 'show'])
+            ->name('inquiries.show');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
@@ -193,7 +201,8 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
-Route::get('/cart/thanks', function () { return view('products.thanks'); })->name('cart.thanks');
+Route::get('/cart/thanks', [CartController::class, 'thanks'])->name('cart.thanks');
+Route::get('/cart/order-details', [CartController::class, 'orderDetails'])->name('cart.order_details');
 Route::get('/cart/track', function () { return view('products.track'); })->name('cart.track');
 
 /*

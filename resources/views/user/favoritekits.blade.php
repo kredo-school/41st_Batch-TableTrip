@@ -5,7 +5,6 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-
 <div class="container py-5 d-flex flex-column align-items-center">
     <div class="card purchase-card p-4 shadow-sm">
         <h2 class="mb">My Favorites</h2>
@@ -22,27 +21,38 @@
             @forelse($favorite_kits as $kit)
                 <div class="purchase-item">
                     <div class="item-info">
-                        <div class="item-date">Added on: {{ $kit->pivot->created_at->format('d/m/y') }}</div>
-                        <div class="item-status">Available</div> 
-                        
+                        <div class="item-date">Added on: {{ $kit->created_at->format('d/m/y') }}</div>
+                        <div class="item-status">Available</div>
+
                         <div class="row align-items-center">
                             <div class="col-sm-7">
-                                
                                 <div class="product-name">{{ $kit->product->name ?? 'Meal Kit Name' }}</div>
-                                <div class="restaurant-name">$restaurant</div>
+                                <div class="restaurant-name">{{ $kit->product->restaurant_name ?? '' }}</div>
                             </div>
                             <div class="col-sm-5 item-details">
                                 <div class="fw-bold text-danger">{{ number_format($kit->product->price ?? 0) }}円</div>
                                 <div class="mt-2 d-flex gap-3">
-                                    <i class="bi bi-trash3 fs-5 text-muted" style="cursor: pointer;"></i> 
-                                    <i class="bi bi-cart-plus fs-5 text-success" style="cursor: pointer;"></i> 
+                                    <form action="{{ route('favorites.toggle') }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $kit->product_id }}">
+                                        <button type="submit" class="btn p-0 border-0 bg-transparent">
+                                            <i class="bi bi-trash3 fs-5 text-muted"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('cart.add') }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $kit->product_id }}">
+                                        <button type="submit" class="btn p-0 border-0 bg-transparent">
+                                            <i class="bi bi-cart-plus fs-5 text-success"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="item-image d-none d-md-block">
-                        <img src="{{ asset('storage/' . ($kit->product->image_path ?? '')) }}" onerror="this.src='{{ asset('images/sample_kit.jpg') }}'" alt="Product">
+                        <img src="{{ asset('storage/' . ($kit->product->image ?? '')) }}" onerror="this.src='{{ asset('images/journykit.png') }}'" alt="Product">
                     </div>
                 </div>
             @empty
