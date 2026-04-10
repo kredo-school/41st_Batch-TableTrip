@@ -12,9 +12,13 @@
 
              {{-- Hero --}}
             <section class="container-fluid p-0">
-                
-                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded hero-image w-100" style="max-height:420px; object-fit:cover;" alt="hero">
-               
+                @if ($restaurant->heroImage)
+                    <img src="{{ asset('storage/'.$restaurant->heroImage->image_url) }}" alt="hero_image" class="img-fluid rounded hero-image w-100">
+                @else
+                    <div class="bg-light border rounded d-flex align-items-center justify-content-center hero-image w-100" >
+                        <span class="text-muted">No Hero Image Uploaded</span>
+                    </div>
+                @endif
             </section>
 
             <div class="container py-4">
@@ -31,10 +35,22 @@
                 <section class="row g-3 mt-2">
                    
                 <div class="col-12 col-md-6">
-                     <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
+                    @if ($restaurant->galleryImage1)
+                        <img src="{{ asset('storage/'.$restaurant->galleryImage1->image_url) }}" alt="gallery_image_1" class="img-fluid rounded sub-image w-100">
+                    @else
+                        <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
+                            <span class="text-muted">No Gallery Image Uploaded</span>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-12 col-md-6">
-                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
+                    @if ($restaurant->galleryImage2)
+                        <img src="{{ asset('storage/'.$restaurant->galleryImage2->image_url) }}" alt="gallery_image_2" class="img-fluid rounded sub-image w-100">
+                    @else
+                        <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
+                            <span class="text-muted">No Gallery Image Uploaded</span>
+                        </div>
+                    @endif
                 </div>
                 </section>
 

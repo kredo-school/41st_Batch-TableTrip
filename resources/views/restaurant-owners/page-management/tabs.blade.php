@@ -1,7 +1,7 @@
 <div class="mb-4 border-bottom">
     <ul class="nav nav-tabs border-0">
         <li class="nav-item">
-            <a class="nav-link {{ request()->is('owner/page-management') ? 'active' : '' }}" href="{{ route('owner.page-management') }}">Basic Info</a>
+            <a class="nav-link text-dark {{ request()->is('owner/page-management') ? 'active' : '' }}" href="{{ route('owner.page-management') }}">Basic Info</a>
         </li>
 
         <li class="nav-item">
