@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     public function index(){
-       $cart_items = Auth::user()->cartItems()->with('product')->get();
-       return view('user.cart', compact('cart_items'));
+       return redirect()->route('cart.index');
     }
 
     public function destroy($id){

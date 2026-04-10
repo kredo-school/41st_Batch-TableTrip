@@ -12,4 +12,9 @@ class AbleImage extends Model
         'image_url',
         'display_order',
     ];
+    
+    public function target()
+    {
+        return $this->morphTo();
+    }
 }

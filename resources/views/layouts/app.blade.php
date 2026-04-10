@@ -34,7 +34,7 @@
 
                     <!-- Left: Logo -->
                     <a href="/" class="d-flex align-items-center text-decoration-none gap-2">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-circle border header-logo">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-circle border header-logo" style="width:44px; height:44px; object-fit:cover; flex-shrink:0;">
                         <span class="fw-semibold text-dark">Table<span class="text-orange">Trip</span></span>
                     </a>
 
