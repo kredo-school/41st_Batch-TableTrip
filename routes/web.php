@@ -164,6 +164,15 @@ Route::prefix('admin')
         
         Route::get('/inquiries/{id}', [AdminInquiryController::class, 'show'])
             ->name('inquiries.show');
+        
+        Route::patch('/inquiries/{id}/status', [AdminInquiryController::class, 'updateStatus'])
+            ->name('inquiries.updateStatus');
+
+        Route::get('/inquiries/{id}/reply', [AdminInquiryController::class, 'replyForm'])
+            ->name('inquiries.replyForm');
+        
+        Route::post('/inquiries/{id}/reply', [AdminInquiryController::class, 'sendReply'])
+            ->name('inquiries.sendReply');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
