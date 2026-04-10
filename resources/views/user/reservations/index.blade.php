@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
 
 <div class="history-container py-5 text-center">
-
     <h1 class="history-title mb-4">
         <i class="fa-solid fa-clock-history me-2"></i>Activity History
     </h1>
@@ -19,7 +18,7 @@
             <label for="main-reservations" class="main-category-label">Reservations</label>
         </div>
 
-        {{-- --- A. Orders  --- --}}
+        {{-- ■ A. Orders --}}
         <div class="section-orders">
             <h2 class="sub-title">Order History</h2>
             <table class="history-table">
@@ -46,7 +45,7 @@
             </table>
         </div>
 
-        {{-- --- B. Reservations  --- --}}
+        {{-- ■ B. Reservations セクション --}}
         <div class="section-reservations">
             <div class="sub-selection-wrapper">
                 <input type="radio" name="history-tab" id="tab-upcoming" checked>
@@ -67,17 +66,15 @@
                                 <th>Date / Time</th>
                                 <th>Restaurant</th>
                                 <th>People</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($upcoming_reservations ?? [] as $res)
                                 <tr>
-                                    <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ $res->reservation_time }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}</td>
                                     <td><strong>{{ $res->restaurant->name }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
-                                    <td style="color: #007bff;">Confirmed</td>
                                     <td>
                                         <form action="#" method="POST" style="display:inline;">
                                             @csrf @method('DELETE')
@@ -86,7 +83,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="5" class="no-data">No upcoming reservations found</td></tr>
+                                <tr><td colspan="4" class="no-data">No upcoming reservations found</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -97,7 +94,7 @@
                     <table class="history-table">
                         <thead>
                             <tr>
-                                <th>Date</th>
+                                <th>Date / Time</th>
                                 <th>Restaurant</th>
                                 <th>Status</th>
                                 <th>Feedback</th>
@@ -106,7 +103,7 @@
                         <tbody>
                             @forelse($past_reservations ?? [] as $res)
                                 <tr>
-                                    <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}</td>
                                     <td><strong>{{ $res->restaurant->name }}</strong></td>
                                     <td>Visited</td>
                                     <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i></td>
