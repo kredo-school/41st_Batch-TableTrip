@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Reservation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Category;
+use App\Models\Menu;
+use App\Models\AbleImage;
 
 class Restaurant extends Authenticatable
 {
@@ -48,5 +51,31 @@ class Restaurant extends Authenticatable
     public function images()
     {
         return $this->morphMany(AbleImage::class, 'target');
+    }
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class, 'restaurant_id');
+    }
+
+    public function heroImage()
+    {
+        return $this->hasOne(AbleImage::class, 'target_id')
+        ->where('target_type', 'restaurant')
+        ->where('display_order', 1);
+    }
+
+    public function galleryImage1()
+    {
+        return $this->hasOne(AbleImage::class, 'target_id')
+        ->where('target_type', 'restaurant')
+        ->where('display_order', 2);
+    }
+
+    public function galleryImage2()
+    {
+        return $this->hasOne(AbleImage::class, 'target_id')
+        ->where('target_type', 'restaurant')
+        ->where('display_order', 3);
     }
 }

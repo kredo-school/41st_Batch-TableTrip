@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 
 
 // use App\Http\Controllers\ForgetController;  
-// use App\Http\Controllers\DashboardController; 
+use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -49,7 +49,7 @@ use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Owner\PageManagementController;
-use App\Http\Controllers\Owner\ReviewsController as OwnerReviewsController;
+use App\Http\Controllers\Owner\ReviewController as OwnerReviewController;
 use App\Models\User;
 
 /*
@@ -257,15 +257,16 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/page-management/image', [PageManagementController::class, 'image'])->name('page-management.image');
         Route::get('/page-management/menu', [PageManagementController::class, 'menu'])->name('page-management.menu');
         Route::get('/page-management/preview', [PageManagementController::class, 'preview'])->name('page-management.preview');
-        Route::patch('/page-management/basic-info', [PageManagementController::class, 'updateBasicInfo'])->name('page-management.updateBasicInfo');
+        Route::patch('/page-management', [PageManagementController::class, 'updateBasicInfo'])->name('page-management.updateBasicInfo');
         Route::patch('/page-management/image', [PageManagementController::class, 'updateImage'])->name('page-management.updateImage');
-        Route::post('/page-management/menu', [PageManagementController::class, 'addMenu'])->name('page-management.addMenu');
+        Route::post('/page-management/menu', [PageManagementController::class, 'storeMenu'])->name('page-management.storeMenu');
         Route::patch('/page-management/menu/update/{id}', [PageManagementController::class, 'updateMenu'])->name('page-management.updateMenu');
         Route::post('/page-management/menu/', [PageManagementController::class, 'storeMenu'])->name('page-management.storeMenu');
         Route::delete('/page-management/menu/delete/{id}', [PageManagementController::class, 'deleteMenu'])->name('page-management.deleteMenu');
 
         // Reviews
-        Route::get('/reviews', [OwnerReviewsController::class, 'index'])->name('reviews');
+        Route::get('/reviews', [OwnerReviewController::class, 'index'])->name('reviews');
+        Route::post('/reviews/{id}/reply', [OwnerReviewController::class, 'reply'])->name('reviews.reply');
 
 
 

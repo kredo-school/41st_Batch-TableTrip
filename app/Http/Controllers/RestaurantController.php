@@ -14,7 +14,7 @@ class RestaurantController extends Controller
 
     public function show($id)
     {
-        $restaurant = Restaurant::with('images')->findOrFail($id);
+        $restaurant = Restaurant::with('heroImage','galleryImage1','galleryImage2')->findOrFail($id);
         $menus = Menu::where('restaurant_id', $id)->get();
         $products = Product::where('restaurant_id', $id)->get();
         $reviews = Review::with(['user', 'replies'])
