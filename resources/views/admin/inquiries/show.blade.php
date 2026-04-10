@@ -31,7 +31,8 @@
             <p>
                 <span>Status :</span>
                 <strong class="info-value">
-                    <span class="status-dot open"></span> Open
+                    <span class="status-dot {{ $inquiry->status }}"></span>
+                    {{ ucfirst($inquiry->status) }}
                 </strong>
             </p>
 
@@ -54,9 +55,32 @@
         {!! nl2br(e($inquiry->message)) !!}
     </div>
 
-    <!-- BUTTON -->
-    <div class="text-center mt-4">
-        <button class="edit-btn reply-btn">Reply</button>
+    <!-- ACTION BUTTONS -->
+    <div class="inquiry-action-buttons mt-4">
+        <a href="{{ route('admin.inquiries.replyForm', $inquiry->id) }}" class="edit-btn reply-btn">
+            Reply
+        </a>
+
+        <form action="{{ route('admin.inquiries.updateStatus', $inquiry->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="replied">
+            <button type="submit" class="status-action-btn replied-btn">Mark as Replied</button>
+        </form>
+
+        <form action="{{ route('admin.inquiries.updateStatus', $inquiry->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="flagged">
+            <button type="submit" class="status-action-btn flagged-btn">Mark as Flagged</button>
+        </form>
+
+        <form action="{{ route('admin.inquiries.updateStatus', $inquiry->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="open">
+            <button type="submit" class="status-action-btn open-btn">Restore to Open</button>
+        </form>
     </div>
 </div>
 
