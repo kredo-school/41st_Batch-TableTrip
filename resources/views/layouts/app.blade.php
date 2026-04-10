@@ -73,7 +73,7 @@
                         @else
                         {{-- Normal User --}}
                             {{-- Normal User --}}
-                            <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
+                            <a href="{{ route('user.notifications.index') }}" class="text-dark fs-4" aria-label="notifications">
                                 <i class="bi bi-bell"></i>
                             </a>
 
@@ -132,7 +132,7 @@
 
                                     {{-- Logout --}}
                                     <li>
-                                        <form action="/logout" method="POST" class="m-0">
+                                        <form action="{{ route('user.logout') }}" method="POST" class="m-0">
                                             @csrf 
                                             <button type="submit" class="dropdown-item text-danger">
                                                 <i class="bi bi-box-arrow-right me-2"></i> Logout

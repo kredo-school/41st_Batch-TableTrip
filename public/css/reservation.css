@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sen:wght@400;700&display=swap');
+
+.history-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Sen', sans-serif;
+}
+
+.history-title, .sub-title, .history-table th {
+    font-family: 'Playfair Display', serif;
+}
+
+.history-title {
+    font-weight: 700;
+    font-size: 2.2rem;
+    border-bottom: 1px solid #e2725b;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.sub-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+
+.section-orders, .section-reservations, .content-upcoming, .content-past {
+    display: none;
+}
+
+#main-orders:checked ~ .section-orders { display: block; }
+#main-reservations:checked ~ .section-reservations { display: block; }
+#main-orders:checked ~ .main-tab-group label[for="main-orders"],
+#main-reservations:checked ~ .main-tab-group label[for="main-reservations"] {
+    background-color: #000; color: #fff;
+}
+
+#tab-upcoming:checked ~ .content-upcoming { display: table !important; width: 100%; }
+#tab-past:checked ~ .content-past { display: table !important; width: 100%; }
+#tab-upcoming:checked ~ .tab-labels-container label[for="tab-upcoming"],
+#tab-past:checked ~ .tab-labels-container label[for="tab-past"] {
+    background-color: #000; color: #fff;
+}
+
+.main-category-label, .tab-label {
+    display: inline-block;
+    border: 1px solid #d1cfc0;
+    padding: 10px 30px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.2s;
+    background: #fff;
+    min-width: 160px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border: 1px solid #d1cfc0;
+    margin-top: 10px;
+}
+
+.history-table th {
+    border: 1px solid #d1cfc0;
+    padding: 12px;
+    background-color: #fff; 
+    font-weight: 600;
+}
+
+.history-table td {
+    border: 1px solid #d1cfc0;
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.no-data {
+    padding: 40px !important;
+    color: #333;
+    font-style: italic;
+}
+
+.history-container input[type="radio"] {
+    display: none;
+}
+
+.separator-line {
+    border: 0;
+    border-top: 1px solid #e2725b;
+    margin: 30px 0;
+}
+
+
+.btn-dashboard-back {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid #d1cfc0;
+    border-radius: 12px;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-dashboard-back:hover {
+    background-color: #f7f5f0;
+}
+
+.btn-delete-link {
+    background: none;
+    border: none;
+    color: #e2725b;
+    font-weight: 700;
+    text-decoration: underline;
+}

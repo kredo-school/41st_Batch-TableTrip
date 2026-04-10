@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -31,7 +32,7 @@ use App\Http\Controllers\User\InquiryController;
 
 
 // notifications
-use App\Http\Controllers\Notifications\NotificationsController;
+use App\Http\Controllers\User\NotificationsController;
 
 
 // home
@@ -84,60 +85,60 @@ Route::middleware('guest')->group(function () {
 | Authenticated User Routes (Auth)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'verified'])->group(function () {
 
-    // --- Dashboard ---
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // --- 1. Cart ---
-    Route::prefix('user/cart')->name('user.')->group(function () {
-        Route::get('/', [UserCartController::class, 'index'])->name('cart');
-        Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
+    // hisotry
+    Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
+    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('user.favorite_restaurants');
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favoritekits');
+
+    // reservation
+    Route::prefix('reservations')->name('reservations.')->group(function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('index');
+        Route::post('/store', [ReservationController::class, 'store'])->name('store');
+        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+        Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
     });
 
-    // --- Inquiry ---
+    // inquiry
     Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
         Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
         Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
         Route::post('/send', [InquiryController::class, 'send'])->name('send');
     });
 
-    // --- 2. Purchased ---
-    Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
-
-    // --- 3. My Page & Profile ---
-    Route::prefix('mypage')->name('user.')->group(function () {
-        Route::get('/', [UserController::class, 'show'])->name('show');
-        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
-        Route::put('/', [UserController::class, 'update'])->name('update');
-        Route::delete('/', [UserController::class, 'destroy'])->name('destroy');
-    });
-
-    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-    // --- 4. Reservation ---
-    Route::prefix('reservations')->name('reservations.')->group(function () {
-        Route::get('/', [ReservationController::class, 'index'])->name('index');
-        Route::post('/store', [ReservationController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
-        Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
-    });
-
-    // --- 5. Favorites ---
-    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favorite_kits');
-    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favorite_restaurants');
-    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-
-    // --- 6. Payment ---
-    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-    Route::patch('/payment-method/{payment_method}/default', [PaymentMethodController::class, 'setDefault'])->name('user.payment_method.default');
-
-    // --- 7. Payment Method ---
+    // --- User
     Route::prefix('user')->name('user.')->group(function () {
+
+        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+        Route::patch('/update', [UserController::class, 'update'])->name('update');
+        Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+        Route::prefix('cart')->group(function () {
+            Route::get('/', [UserCartController::class, 'index'])->name('cart');
+            Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
+        });
+
+        // notification)
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::get('/', [NotificationsController::class, 'index'])->name('index');
+            Route::get('/{id}', [NotificationsController::class, 'show'])->name('show');
+            Route::patch('/{id}/complete', [NotificationsController::class, 'complete'])->name('complete');
+            Route::delete('/{id}', [NotificationsController::class, 'destroy'])->name('destroy');
+        });
+
+        // payment
         Route::resource('payment_method', PaymentMethodController::class);
     });
+
+    // checkout
+    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
 });
 
 /*
@@ -174,6 +175,15 @@ Route::prefix('admin')
         
         Route::get('/inquiries/{id}', [AdminInquiryController::class, 'show'])
             ->name('inquiries.show');
+        
+        Route::patch('/inquiries/{id}/status', [AdminInquiryController::class, 'updateStatus'])
+            ->name('inquiries.updateStatus');
+
+        Route::get('/inquiries/{id}/reply', [AdminInquiryController::class, 'replyForm'])
+            ->name('inquiries.replyForm');
+        
+        Route::post('/inquiries/{id}/reply', [AdminInquiryController::class, 'sendReply'])
+            ->name('inquiries.sendReply');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
