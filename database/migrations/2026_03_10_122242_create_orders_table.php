@@ -9,24 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-    Schema::create('orders', function (Blueprint $table) {
+    public function up(): void
+    {
+        Schema::disableForeignKeyConstraints();
 
-        $table->id();
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
 
-        $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
-        $table->foreignId('restaurant_id');
+            $table->foreignId('meal_kit_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
+            
+            $table->integer('total_price'); 
+            $table->string('status')->default('pending'); 
+            $table->timestamps();
+        });
 
-        $table->integer('total_price');
-
-        $table->string('status');
-
-        $table->timestamps();
-
-    });
-}
+        Schema::enableForeignKeyConstraints();
+    }
 
     /**
      * Reverse the migrations.
