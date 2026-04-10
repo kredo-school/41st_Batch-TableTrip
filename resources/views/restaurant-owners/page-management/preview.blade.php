@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.owner')
 
 @section('title','Page Management')
 
 @section('content')
-<div class="container my-5 mx-auto">
+<div class="m-5">
     <div class="row">
         @include('restaurant-owners.sidebar')
         <div class="col-12 col-lg-9">
@@ -12,14 +12,16 @@
 
              {{-- Hero --}}
             <section class="container-fluid p-0">
-                <img src="{{ asset('images/restaurant-hero.png') }}" class="w-100" style="max-height:420px; object-fit:cover;" alt="hero">
+                
+                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded hero-image w-100" style="max-height:420px; object-fit:cover;" alt="hero">
+               
             </section>
 
             <div class="container py-4">
 
                 {{-- Title + Heart --}}
                 <div class="d-flex align-items-center justify-content-between">
-                <h1 class="mb-0">Restaurant Sato</h1>
+                <h1 class="mb-0">{{ $restaurant->restaurant_name }}</h1>
                 <button class="btn p-0 border-0 bg-transparent" aria-label="favorite">
                     <i class="fa-regular fa-heart fs-3"></i>
                 </button>
@@ -27,75 +29,65 @@
 
                 {{-- Gallery 2 photos --}}
                 <section class="row g-3 mt-2">
+                   
                 <div class="col-12 col-md-6">
-                    <img src="{{ asset('images/sample1.png') }}" class="w-100 rounded" style="height:200px; object-fit:cover;" alt="">
+                     <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
                 </div>
                 <div class="col-12 col-md-6">
-                    <img src="{{ asset('images/sample2.png') }}" class="w-100 rounded" style="height:200px; object-fit:cover;" alt="">
+                    <img src="{{ asset('images/no-image.png') }}" class="img-fluid rounded sub-image w-100">
                 </div>
                 </section>
 
                 {{-- Description --}}
                 <section class="my-5">
-                <h5 class="fw-bold">Authentic Japanese Flavors in the Heart of the City</h5>
-                <p class="text-muted mb-0" style="max-width: 900px;">
-                    Experience carefully crafted Japanese dishes made with fresh, seasonal ingredients...
+                {{-- <h5 class="fw-bold">Authentic Japanese Flavors in the Heart of the City</h5> --}}
+                <p class="mb-0 fs-5">
+                    {{ $restaurant->description }}
                 </p>
                 </section>
 
                 {{-- Menu --}}
                 <section class="mt-4">
-                <h2 class="text-center my-5" style="text-decoration: underline; text-underline-offset: 6px; text-decoration-color:#D96B52;">Menu</h2>
+                <h2 class="text-center my-5 text-underline-accent">Menu</h2>
 
-                {{-- Bootstrap carousel --}}
-                <div id="menuCarousel" class="carousel slide" data-bs-ride="false">
-                    <div class="carousel-inner">
-
-                    {{-- 1枚目 --}}
-                    <div class="carousel-item active">
-                        <div class="row g-3 justify-content-center">
-                        @for($i=0; $i<4; $i++)
-                            <div class="col-6 col-md-3">
-                            <div class="card border-0 bg-transparent">
-                                <img src="{{ asset('images/menu1.png') }}" class="card-img-top rounded" style="height:140px; object-fit:cover;" alt="">
-                                <div class="card-body px-0 pt-2">
-                                <div class="small fw-semibold">Signature Salmon Nigiri</div>
-                                <div class="small text-muted">$9</div>
+               {{-- Bootstrap carousel --}}
+                    <div id="menuCarousel" class="carousel slide" data-bs-ride="false">
+                        
+                        <div class="carousel-inner">
+                            @foreach ($menus->chunk(4) as $chunkIndex => $menuChunk)
+                                <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
+                                    <div class="row g-3 justify-content-center">
+                                        @foreach ($menuChunk as $menu)
+                                            <div class="col-6 col-md-3">
+                                                <div class="card border-0 bg-transparent">
+                                                    <img src="{{ asset('storage/' . $menu->image) }}"
+                                                        class="card-img-top rounded"
+                                                        style="height: 140px; object-fit: cover;"
+                                                        alt="{{ $menu->name }}">
+                                                    <div class="card-body px-0 pt-2">
+                                                        <div class="small fw-semibold">{{ $menu->name }}</div>
+                                                        <div class="small text-muted">${{ $menu->price }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                        @endfor
+                            @endforeach
                         </div>
-                    </div>
 
-                    {{-- 2枚目（必要なら追加） --}}
-                    <div class="carousel-item">
-                        <div class="row g-3 justify-content-center">
-                        @for($i=0; $i<4; $i++)
-                            <div class="col-6 col-md-3">
-                            <div class="card border-0 bg-transparent">
-                                <img src="{{ asset('images/menu2.png') }}" class="card-img-top rounded" style="height:140px; object-fit:cover;" alt="">
-                                <div class="card-body px-0 pt-2">
-                                <div class="small fw-semibold">Assorted Sushi Plate</div>
-                                <div class="small text-muted">$25</div>
-                                </div>
-                            </div>
-                            </div>
-                        @endfor
-                        </div>
-                    </div>
+                        @if($menus->count() > 4)
+                            <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
 
+                            <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        @endif
                     </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
                 </section>
 
             
@@ -118,19 +110,18 @@
                             <div class="info-right">
 
                                 <div class="d-flex gap-4">
-                                    <span>Lunch</span>
-                                    <span>11:30-15:00</span>
+                                    <span>{{ $restaurant->opening_hours }}</span>
                                 </div>
 
-                                <div class="d-flex gap-4">
+                                {{-- <div class="d-flex gap-4">
                                     <span>Dinner</span>
                                     <span>17:30-22:00</span>
-                                </div>
+                                </div> --}}
 
-                                <div class="d-flex gap-4">
+                                {{-- <div class="d-flex gap-4">
                                     <span>Closed</span>
                                     <span>Monday</span>
-                                </div>
+                                </div> --}}
 
                             </div>
                     </div>
@@ -140,7 +131,7 @@
                             <i class="bi bi-telephone me-2"></i><span>Tel</span>
                         </div>
                         <div class="info-right">
-                            0120-1234-5678
+                            {{ $restaurant->phone }}
                         </div>
                         </div>
 
@@ -150,7 +141,7 @@
                             <i class="bi bi-envelope me-2"></i><span>Mail</span>
                         </div>
                         <div class="info-right">
-                            info@email.com
+                            {{ $restaurant->email }}
                         </div>
                         </div>
 
@@ -177,7 +168,7 @@
                             <i class="bi bi-geo-alt me-2"></i><span>Address</span>
                         </div>
                         <div class="info-right">
-                            3-14-8 Jingumae, Shibuya-ku, Tokyo 150-0001, Japan
+                            {{ $restaurant->address_line }} {{ $restaurant->city }} {{ $restaurant->prefecture }}
                         </div>
                         </div>
 
@@ -185,13 +176,13 @@
 
                     {{-- Map --}}
                     <div class="rounded overflow-hidden border mt-3" style="height:220px;">
-                        <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted small">Map here</div>
+                        <iframe class="w-100 h-100 d-flex align-items-center justify-content-center text-muted small" src="https://www.google.com/maps?q={{ urlencode($restaurant->address_line . ' ' . $restaurant->city . ' ' . $restaurant->prefecture) }}&output=embed" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                 </div>
 
                 {{-- Reservation --}}
                 <div class="col-12 col-lg-6 bg-white rounded p-3 border">
-                    <h4 class="text-center p-3" style="text-decoration: underline; text-underline-offset: 6px; text-decoration-color:#D96B52;">Reservation</h4>
+                    <h4 class="text-center p-3 text-underline-accent">Reservation</h4>
 
                     <form class="mt-3" action="" method="post">
                     @csrf
@@ -229,94 +220,65 @@
                 </section>
 
                 {{-- Meal Kit --}}
-                <section class="mt-5">
+               <section class="mt-5">
                 <h2 class="text-center meal-title">Meal Kit</h2>
-                <div class="text-center meal-subtitle mb-5">Enjoy Our Dishes at Home</div>
+                <div class="text-center mb-5">
+                    <span class="text-orange">Enjoy</span> Our Dishes at Home
+                </div>
 
                 <div id="mealCarousel" class="carousel slide" data-bs-ride="false">
 
                     <div class="carousel-inner">
 
-                    {{-- 1ページ --}}
-                    <div class="carousel-item active">
-                        <div class="row g-4 justify-content-center">
+                        @foreach ($products->chunk(3) as $index => $productChunk)
+                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                <div class="row g-4 justify-content-center">
 
-                        @for($i=0; $i<3; $i++)
-                        <div class="col-12 col-md-4">
-                            <div class="card border-0 bg-transparent">
+                                    @foreach ($productChunk as $product)
+                                        <div class="col-12 col-md-4">
+                                            <div class="card border-0 bg-transparent">
+                                                <img 
+                                                    src="{{ asset('storage/' . $product->image) }}"
+                                                    class="card-img-top"
+                                                    style="height:200px; object-fit:cover;"
+                                                    alt="{{ $product->name }}">
 
-                            <img 
-                                src="{{ asset('images/kit1.png') }}"
-                                class="card-img-top"
-                                style="height:200px; object-fit:cover;"
-                            >
+                                                <div class="card-body px-0 pt-2">
+                                                    <h5 class="meal-name">{{ $product->name }}</h5>
+                                                    <div class="meal-price">${{ $product->price }}</div>
+                                                </div>
 
-                            <div class="card-body px-0 pt-2">
-                                <h5 class="meal-name">Teriyaki Chicken</h5>
-                                <div class="meal-price">$25</div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                </div>
                             </div>
-
-                            </div>
-                        </div>
-                        @endfor
-
-                        </div>
-                    </div>
-
-
-                    {{-- 2ページ（必要なら） --}}
-                    <div class="carousel-item">
-                        <div class="row g-4 justify-content-center">
-
-                        @for($i=0; $i<3; $i++)
-                        <div class="col-12 col-md-4">
-                            <div class="card border-0 bg-transparent">
-
-                            <img 
-                                src="{{ asset('images/kit2.png') }}"
-                                class="card-img-top"
-                                style="height:200px; object-fit:cover;"
-                            >
-
-                            <div class="card-body px-0 pt-2">
-                                <h5 class="meal-name">Chicken Rice Bowl</h5>
-                                <div class="meal-price">$30</div>
-                            </div>
-
-                            </div>
-                        </div>
-                        @endfor
-
-                        </div>
-                    </div>
+                        @endforeach
 
                     </div>
 
+                        {{-- ← --}}
+                        @if($products->count() > 3)
+                        <button 
+                            class="carousel-control-prev"
+                            type="button"
+                            data-bs-target="#mealCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
 
-                    {{-- ← --}}
-                    <button 
-                    class="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#mealCarousel"
-                    data-bs-slide="prev">
+                        {{-- → --}}
+                        <button 
+                            class="carousel-control-next"
+                            type="button"
+                            data-bs-target="#mealCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                        @endif
 
-                    <span class="carousel-control-prev-icon"></span>
-
-                    </button>
-
-
-                    {{-- → --}}
-                    <button 
-                    class="carousel-control-next"
-                    type="button"
-                    data-bs-target="#mealCarousel"
-                    data-bs-slide="next">
-
-                    <span class="carousel-control-next-icon"></span>
-
-                    </button>
-
-                </div>
+                    </div>
                 </section>
 
                 {{-- Reviews --}}

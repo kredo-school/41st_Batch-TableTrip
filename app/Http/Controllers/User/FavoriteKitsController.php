@@ -10,8 +10,8 @@ class FavoriteKitsController extends Controller
     public function index()
 {
     $user = Auth::user();
-    
-    $favorite_kits = $user->favorite_kits()->with('product')->get();
+
+    $favorite_kits = $user->favorites()->with('product')->get();
     return view('user.favoritekits', compact('favorite_kits'));
 }
 }
