@@ -132,7 +132,7 @@
 
                                     {{-- Logout --}}
                                     <li>
-                                        <form action="/logout" method="POST" class="m-0">
+                                        <form action="{{ route('user.logout') }}" method="POST" class="m-0">
                                             @csrf 
                                             <button type="submit" class="dropdown-item text-danger">
                                                 <i class="bi bi-box-arrow-right me-2"></i> Logout
