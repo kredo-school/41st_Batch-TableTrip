@@ -44,4 +44,9 @@ class Restaurant extends Authenticatable
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function images()
+    {
+        return $this->morphMany(AbleImage::class, 'target');
+    }
 }
