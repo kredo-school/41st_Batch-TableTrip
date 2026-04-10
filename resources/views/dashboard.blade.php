@@ -142,9 +142,10 @@
 
                 <div class="btn-container">
                     @if(request('tab', 'restaurants') == 'restaurants')
-                        <a href="{{ route('favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
-                    @else
-                        <a href="{{ route('favorite_kits') }}" class="btn-back">View All Kits</a>
+                        <a href="{{ route('user.favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
+
+
+                        <a href="{{ route('user.favoritekits') }}" class="btn-back">View All Kits</a>
                     @endif
                 </div>
             </div>

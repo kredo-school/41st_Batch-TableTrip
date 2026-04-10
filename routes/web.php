@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -23,7 +24,6 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 // use App\Http\Controllers\ForgetController;  
 // use App\Http\Controllers\User\PaymentMethodController;  
 
-use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -42,7 +42,7 @@ use App\Http\Controllers\Notifications\NotificationsController;
 use App\Http\Controllers\HomeController;
 
 //Restaurant Owner
-// use App\Http\Controllers\Owner\RestaurantAuthController;
+use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;
 use App\Http\Controllers\Owner\OrdersController as OwnerOrdersController;
@@ -89,59 +89,48 @@ Route::middleware('guest')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified'])->group(function () {
-
-    // --- Dashboard ---
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // --- 1. Cart ---
+    // Activity History: Orders
+    Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
+
+    // Activity History: Reservations (Past/Upcoming)
+    Route::prefix('reservations')->name('reservations.')->group(function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('index');
+        Route::post('/store', [ReservationController::class, 'store'])->name('store');
+        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+        Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
+    });
+
+    // --- その他 (Cart, Inquiry, Favorites, Payment) ---
     Route::prefix('user/cart')->name('user.')->group(function () {
         Route::get('/', [UserCartController::class, 'index'])->name('cart');
         Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
     });
 
-    // --- Inquiry ---
     Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
         Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
         Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
         Route::post('/send', [InquiryController::class, 'send'])->name('send');
     });
 
-    // --- 2. Purchased ---
-    Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
+    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('user.favorite_restaurants');
 
-    // --- 3. My Page & Profile ---
-    Route::prefix('mypage')->name('user.')->group(function () {
-        Route::get('/', [UserController::class, 'show'])->name('show');
-        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
-        Route::put('/', [UserController::class, 'update'])->name('update');
-        Route::delete('/', [UserController::class, 'destroy'])->name('destroy');
-    });
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favoritekits');
 
-    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-    // --- 4. Reservation ---
-    Route::prefix('reservations')->name('reservations.')->group(function () {
-        Route::get('/', [ReservationController::class, 'index'])->name('index');
-        Route::post('/store', [ReservationController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
-        Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
-    });
-
-    // --- 5. Favorites ---
-    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('favorite_kits');
-    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('favorite_restaurants');
-    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-
-    // --- 6. Payment ---
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
     Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
-    Route::patch('/payment-method/{payment_method}/default', [PaymentMethodController::class, 'setDefault'])->name('user.payment_method.default');
-
-    // --- 7. Payment Method ---
     Route::prefix('user')->name('user.')->group(function () {
         Route::resource('payment_method', PaymentMethodController::class);
     });
+    Route::prefix('user')->name('user.')->group(function () {
+    Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+    Route::patch('/update', [UserController::class, 'update'])->name('update');
+    
+    Route::resource('payment_method', PaymentMethodController::class);
+});
 });
 
 /*
@@ -269,7 +258,7 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::delete('/page-management/menu/delete/{id}', [PageManagementController::class, 'deleteMenu'])->name('page-management.deleteMenu');
 
         // Reviews
-        Route::get('/reviews', [OwnerReviewsController::class, 'index'])->name('reviews');
+        // Route::get('/reviews', [OwnerReviewsController::class, 'index'])->name('reviews');
 
 
 
