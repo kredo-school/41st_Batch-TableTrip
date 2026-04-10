@@ -121,6 +121,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/edit', [UserController::class, 'edit'])->name('edit');
         Route::patch('/update', [UserController::class, 'update'])->name('update');
         Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
+        Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
         Route::prefix('cart')->group(function () {
             Route::get('/', [UserCartController::class, 'index'])->name('cart');
