@@ -103,7 +103,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
     });
 
-    // --- その他 (Cart, Inquiry, Favorites, Payment) ---
     Route::prefix('user/cart')->name('user.')->group(function () {
         Route::get('/', [UserCartController::class, 'index'])->name('cart');
         Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
@@ -128,6 +127,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('user')->name('user.')->group(function () {
     Route::get('/edit', [UserController::class, 'edit'])->name('edit');
     Route::patch('/update', [UserController::class, 'update'])->name('update');
+    Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
     
     Route::resource('payment_method', PaymentMethodController::class);
 });
