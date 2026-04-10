@@ -939,3 +939,50 @@ label {
     padding: 5px;
     font-size: 1.2rem;
 }
+
+
+/* purchased */
+
+.history-container .content-upcoming, 
+.history-container .content-past {
+    display: none;
+}
+
+.history-container #tab-orders:checked ~ .content-upcoming {
+    display: table !important; 
+    width: 100%;
+}
+
+.history-container #tab-visits:checked ~ .content-past {
+    display: table !important;
+    width: 100%;
+}
+
+.history-container input[type="radio"][name="history-tab"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #d1cfc0;
+}
+
+.history-table th {
+    background-color: #f7f5f0;
+    border: 1px solid #d1cfc0;
+    padding: 12px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+.history-table td {
+    padding: 15px;
+    border: 1px solid #d1cfc0;
+    vertical-align: middle;
+}
