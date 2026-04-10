@@ -9,45 +9,31 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::disableForeignKeyConstraints();
 
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('meal_kit_id')->constrained(); 
-            $table->foreignId('restaurant_id');
-            $table->integer('total_price');
-            $table->string('status');
+
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            $table->foreignId('meal_kit_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
+            
+            $table->integer('total_price'); 
+            $table->string('status')->default('pending'); 
             $table->timestamps();
         });
 
-<<<<<<< Updated upstream
-        $table->foreignId('user_id');
-
-        $table->foreignId('restaurant_id');
-
-        $table->integer('total_price');
-
-        $table->string('status');
-
-        $table->timestamps();
-
-    });
-}
-=======
-       
         Schema::enableForeignKeyConstraints();
     }
->>>>>>> Stashed changes
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('orders');
     }
 };
