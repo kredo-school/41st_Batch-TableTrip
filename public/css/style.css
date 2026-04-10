@@ -941,155 +941,48 @@ label {
 }
 
 
-/* --- Reservation History Page --- */
-.content-upcoming, 
-.content-past {
+/* purchased */
+
+.history-container .content-upcoming, 
+.history-container .content-past {
     display: none;
 }
 
-
-#tab-upcoming:checked ~ .content-upcoming {
-    display: block !important;
+.history-container #tab-orders:checked ~ .content-upcoming {
+    display: table !important; 
+    width: 100%;
 }
 
-#tab-past:checked ~ .content-past {
-    display: block !important;
+.history-container #tab-visits:checked ~ .content-past {
+    display: table !important;
+    width: 100%;
 }
 
-
-input[name="history-tab"] {
+.history-container input[type="radio"][name="history-tab"] {
     position: absolute;
     opacity: 0;
-    width: 0;
-    height: 0;
+    pointer-events: none;
 }
 
-.history-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    font-family: 'Sen', sans-serif;
-}
-
-.history-title {
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    color: #000000;
-    border-bottom: 2px solid #e2725b; /* TableTrip Accent Orange */
-    display: inline-block;
-    padding-bottom: 8px;
-    margin-bottom: 40px;
-    letter-spacing: 0.05em;
-    font-size: 2.5rem;
-}
-
-.selection-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.tab-labels-container {
-    display: flex;
-    justify-content: center;
-    gap: 0; /* 隙間なく並べる */
-    margin-bottom: 30px;
-}
-
-.tab-label {
-    display: inline-block;
-    padding: 12px 35px;
-    border: 1px solid #000000;
-    cursor: pointer;
-    transition: 0.3s;
-    background-color: transparent;
-    color: #000000;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    min-width: 180px;
-    text-align: center;
-}
-
-input[name="history-tab"]:checked + .tab-label {
-    background-color: #000000;
-    color: #ffffff;
-}
 
 .history-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 20px;
-    background-color: #ffffff;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #ffffff;
     border: 1px solid #d1cfc0;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
 
 .history-table th {
     background-color: #f7f5f0;
-    border-bottom: 2px solid #000000;
-    padding: 15px;
+    border: 1px solid #d1cfc0;
+    padding: 12px;
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    color: #000000;
+    font-weight: 600;
 }
 
 .history-table td {
-    padding: 18px 15px;
-    border-bottom: 1px solid #e0ddd5;
+    padding: 15px;
+    border: 1px solid #d1cfc0;
     vertical-align: middle;
-    font-size: 0.95rem;
-}
-
-
-.past-row {
-    background-color: #fdfdfd;
-}
-
-.past-row td {
-    color: #666;
-}
-
-.btn-link-delete {
-    background: transparent;
-    border: 1px solid #e2725b;
-    color: #e2725b;
-    padding: 6px 15px;
-    text-decoration: none;
-    transition: 0.3s;
-    font-weight: bold;
-    border-radius: 4px;
-}
-
-.btn-link-delete:hover {
-    background-color: #e2725b;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.btn-back-custom {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 30px;
-    border: 1px solid #000000;
-    color: #000000;
-    text-decoration: none;
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: 0.3s;
-    background: transparent;
-}
-
-.btn-back-custom:hover {
-    background-color: #000000;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-
-hr.my-4 {
-    border: 0;
-    border-top: 1px solid #d1cfc0;
-    width: 100%;
-    margin: 40px 0;
 }

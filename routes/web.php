@@ -21,10 +21,9 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 use App\Http\Controllers\DashboardController; // 一般ユーザー用
 // use App\Http\Controllers\ForgetController;  
 // use App\Http\Controllers\DashboardController; 
-use App\Http\Controllers\ForgetController;  
-use App\Http\Controllers\User\PaymentMethodController;  
+// use App\Http\Controllers\ForgetController;  
+// use App\Http\Controllers\User\PaymentMethodController;  
 
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
@@ -36,7 +35,7 @@ use App\Http\Controllers\User\PaymentMethodController;
 use App\Http\Controllers\HomeController;
 
 //Restaurant Owner
-use App\Http\Controllers\Owner\RestaurantAuthController;
+// use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\RestaurantAuthController;
 use App\Http\Controllers\Owner\ReservationController as OwnerReservationController;

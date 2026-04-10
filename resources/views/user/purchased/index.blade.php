@@ -1,15 +1,15 @@
 @extends('layouts.app')
-@section('title','Activity History')
+@section('title','History')
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
 
 <div class="history-container py-5 text-center">
-
     <h1 class="history-title mb-4">
         <i class="fa-solid fa-clock-history me-2"></i>Activity History
     </h1>
 
+    {{--：Orders vs Reservations --}}
     <div class="main-selection-wrapper">
         <input type="radio" name="main-category" id="main-orders" checked>
         <input type="radio" name="main-category" id="main-reservations">
@@ -40,7 +40,7 @@
                             <td>¥{{ number_format($order->total_price) }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" class="no-data">No order history found</td></tr>
+                        <tr><td colspan="4" class="py-5 text-muted">No order history found.</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -57,7 +57,7 @@
                     <label for="tab-past" class="tab-label">Past Visits</label>
                 </div>
 
-                <hr class="separator-line">
+                <hr class="my-4">
 
                 {{-- 1. Upcoming Table --}}
                 <div class="content-upcoming">
@@ -77,16 +77,16 @@
                                     <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ $res->reservation_time }}</td>
                                     <td><strong>{{ $res->restaurant->name }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
-                                    <td style="color: #007bff;">Confirmed</td>
+                                    <td class="text-primary">Confirmed</td>
                                     <td>
                                         <form action="#" method="POST" style="display:inline;">
                                             @csrf @method('DELETE')
-                                            <button type="submit" class="btn-delete-link" onclick="return confirm('Cancel?')">Cancel</button>
+                                            <button type="submit" class="btn-link-delete" onclick="return confirm('Cancel?')">Cancel</button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="5" class="no-data">No upcoming reservations found</td></tr>
+                                <tr><td colspan="5" class="py-5 text-muted">No upcoming reservations found.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -105,14 +105,14 @@
                         </thead>
                         <tbody>
                             @forelse($past_reservations ?? [] as $res)
-                                <tr>
+                                <tr class="past-row">
                                     <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }}</td>
-                                    <td><strong>{{ $res->restaurant->name }}</strong></td>
+                                    <td>{{ $res->restaurant->name }}</td>
                                     <td>Visited</td>
-                                    <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i></td>
+                                    <td><i class="fa-solid fa-comment-dots fs-5" style="color: #e2725b; cursor:pointer;"></i></td>
                                 </tr>
                             @empty
-                                <tr><td colspan="4" class="no-data">No past visits found</td></tr>
+                                <tr><td colspan="4" class="py-5 text-muted">No past visits found.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -122,7 +122,7 @@
     </div>
 
     <div class="mt-5">
-        <a href="{{ route('dashboard') }}" class="btn-dashboard-back">
+        <a href="{{ route('dashboard') }}" class="btn-back-custom">
             <i class="fa-solid fa-house me-2"></i>Back to Dashboard
         </a>
     </div>
