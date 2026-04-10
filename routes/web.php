@@ -35,7 +35,7 @@ use App\Http\Controllers\User\InquiryController;
 
 
 // notifications
-use App\Http\Controllers\Notifications\NotificationsController;
+use App\Http\Controllers\User\NotificationsController;
 
 
 // home
@@ -88,13 +88,18 @@ Route::middleware('guest')->group(function () {
 | Authenticated User Routes (Auth)
 |--------------------------------------------------------------------------
 */
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Activity History: Orders
+    // hisotry
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
+    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('user.favorite_restaurants');
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favoritekits');
 
-    // Activity History: Reservations (Past/Upcoming)
+    // reservation
     Route::prefix('reservations')->name('reservations.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');
         Route::post('/store', [ReservationController::class, 'store'])->name('store');
@@ -103,34 +108,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
     });
 
-    Route::prefix('user/cart')->name('user.')->group(function () {
-        Route::get('/', [UserCartController::class, 'index'])->name('cart');
-        Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
-    });
-
+    // inquiry
     Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
         Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
         Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
         Route::post('/send', [InquiryController::class, 'send'])->name('send');
     });
 
-    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('user.favorite_restaurants');
-
-    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favoritekits');
-
-    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
-    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
-    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
+    // --- User
     Route::prefix('user')->name('user.')->group(function () {
+
+        Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+        Route::patch('/update', [UserController::class, 'update'])->name('update');
+        Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
+
+        Route::prefix('cart')->group(function () {
+            Route::get('/', [UserCartController::class, 'index'])->name('cart');
+            Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
+        });
+
+        // notification)
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::get('/', [NotificationsController::class, 'index'])->name('index');
+            Route::get('/{id}', [NotificationsController::class, 'show'])->name('show');
+            Route::patch('/{id}/complete', [NotificationsController::class, 'complete'])->name('complete');
+            Route::delete('/{id}', [NotificationsController::class, 'destroy'])->name('destroy');
+        });
+
+        // payment
         Route::resource('payment_method', PaymentMethodController::class);
     });
-    Route::prefix('user')->name('user.')->group(function () {
-    Route::get('/edit', [UserController::class, 'edit'])->name('edit');
-    Route::patch('/update', [UserController::class, 'update'])->name('update');
-    Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
-    
-    Route::resource('payment_method', PaymentMethodController::class);
-});
+
+    // checkout
+    Route::resource('payment', PaymentController::class)->parameters(['payment' => 'card']);
 });
 
 /*

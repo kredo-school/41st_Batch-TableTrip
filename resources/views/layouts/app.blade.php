@@ -73,7 +73,7 @@
                         @else
                         {{-- Normal User --}}
                             {{-- Normal User --}}
-                            <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
+                            <a href="{{ route('user.notifications.index') }}" class="text-dark fs-4" aria-label="notifications">
                                 <i class="bi bi-bell"></i>
                             </a>
 
