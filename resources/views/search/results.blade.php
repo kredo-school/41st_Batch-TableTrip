@@ -6,7 +6,20 @@
 <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
 
 <div class="container py-5">
+
     {{-- restaurant results --}}
+    <div class="mb-4">
+        @if(request('keyword'))
+            <h2 class="fw-light" style="font-family: 'Playfair Display', serif;">
+                Results for "<span class="fw-bold">{{ request('keyword') }}</span>"
+            </h2>
+            <p class="text-muted small">
+                {{ $restaurants->count() + $products->count() }} items found.
+            </p>
+        @else
+            <h2 class="fw-light" style="font-family: 'Playfair Display', serif;">All Items</h2>
+        @endif
+    </div>
     <h3 class="mt-5 mb-3" style="font-family: 'Playfair Display', serif; border-bottom: 1px solid #ddd;">Restaurants</h3>
     <div class="row">
         @forelse($restaurants as $restaurant)
