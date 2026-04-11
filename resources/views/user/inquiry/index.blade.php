@@ -56,7 +56,7 @@
  {{-- Footer --}}
     <div class="btn-container">
         <a href="{{ route('dashboard') }}" class="btn-back">
-            <i class="fa-solid fa-house"></i> Home
+            <i class="fa-solid fa-house"></i> Back to Dashboard
         </a>
     </div>
 </div>

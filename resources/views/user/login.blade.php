@@ -11,6 +11,12 @@
             <div class="login-underline"></div>
         </div>
 
+        @if (session('status'))
+            <div class="alert alert-success mb-4" style="color: #155724; background-color: #d4edda; border-color: #c3e6cb; padding: 15px; border-radius: 5px; width: 100%; max-width: 400px; text-align: center;">
+                {{ session('status') }}
+            </div>
+        @endif
+
         {{-- form card --}}
     <div class="login-card">
             <form method="POST" action="{{ route('login') }}">
@@ -20,7 +26,7 @@
                 <div class="row mb-5 align-items-center">
                     <label for="email" class="form-label">Email</label>
                     <div class="col-sm-7">
-                        <input type="email"name="email" id="email" class="login-input" value="{{ old('email') }}"required autofocus>
+                        <input type="email" name="email" id="email" class="login-input" value="{{ old('email') }}" required autofocus>
                     </div>
                     @error('email')
                         <div class="text-danger">{{ $message }}</div>
