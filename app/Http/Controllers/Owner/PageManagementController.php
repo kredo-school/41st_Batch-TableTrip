@@ -73,7 +73,7 @@ class PageManagementController extends Controller
 
     public function image(){
         $owner = Auth::guard('restaurant')->user();
-        $restaurant = Restaurant::with('images')->findOrFail($owner->id);
+        $restaurant = Restaurant::with('heroImage', 'galleryImage1', 'galleryImage2')->findOrFail($owner->id);
 
         return view('restaurant-owners.page-management.image', compact('restaurant'));
     }
@@ -84,9 +84,9 @@ class PageManagementController extends Controller
         $restaurant = Restaurant::findOrFail($owner->id);
 
         $request->validate([
-            'hero_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gallery_image1' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gallery_image2' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gallery_image1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gallery_image2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         DB::beginTransaction();
@@ -109,14 +109,17 @@ class PageManagementController extends Controller
                     ->where('display_order', $displayOrder)
                     ->first();
 
-                if ($existingImage) {
-                    if (Storage::disk('public')->exists($existingImage->image_url)) {
-                        Storage::disk('public')->delete($existingImage->image_url);
-                    }
+                 if ($existingImage) {
+                    $oldPath = $existingImage->image_url;
 
                     $existingImage->update([
                         'image_url' => $path,
                     ]);
+
+                    if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->delete($oldPath);
+                    }
+
                 } else {
                     AbleImage::create([
                         'target_type'   => 'restaurant',
@@ -128,7 +131,7 @@ class PageManagementController extends Controller
             }
         }
         DB::commit();
-        return redirect()->back()->with('success', 'Images updated successfully.');
+        return redirect()->back()->with('success_image', 'Images updated successfully.');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -141,7 +144,7 @@ class PageManagementController extends Controller
         $owner = Auth::guard('restaurant')->user();
         $restaurant = Restaurant::findOrFail($owner->id);
 
-        $menus = $restaurant->menus()->paginate(5);
+        $menus = $restaurant->menus()->orderBy('created_at', 'desc')->paginate(5);
 
         return view('restaurant-owners.page-management.menu', compact('restaurant', 'menus'));
     }
@@ -179,8 +182,8 @@ class PageManagementController extends Controller
         return redirect()->back()->with('success', 'Menu added successfully.');
     }   
     
-    public function updateMenu(Request $request, $id){
-       
+    public function updateMenu(Request $request, $id)
+    {
         $owner = Auth::guard('restaurant')->user();
         $restaurant = Restaurant::findOrFail($owner->id);
 
@@ -199,18 +202,20 @@ class PageManagementController extends Controller
 
         $menu = $restaurant->menus()->findOrFail($id);
 
+        $data = [
+            'name' => $request->name,
+            'price' => $request->price,
+        ];
+
         if ($request->hasFile('image')) {
             if ($menu->image && Storage::disk('public')->exists($menu->image)) {
                 Storage::disk('public')->delete($menu->image);
             }
 
-            $menu->image = $request->file('image')->store('menu-images', 'public');
+            $data['image'] = $request->file('image')->store('menu-images', 'public');
         }
 
-        $menu->update([
-            'name' => $request->name,
-            'price' => $request->price,
-        ]);
+        $menu->update($data);
 
         return redirect()->back()->with('success', 'Menu updated successfully.');
     }
@@ -231,7 +236,7 @@ class PageManagementController extends Controller
 
     public function preview(){
         $owner = Auth::guard('restaurant')->user();
-        $restaurant = Restaurant::findOrFail($owner->id);
+        $restaurant = Restaurant::with('heroImage','galleryImage1','galleryImage2')->findOrFail($owner->id);
         $menus = $restaurant->menus()->get();
         $products = Product::where('restaurant_id', $owner->id)->get();
         $reviews = Review::with(['user', 'replies'])

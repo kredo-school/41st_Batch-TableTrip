@@ -7,13 +7,13 @@
 @section('content')
   {{-- Hero --}}
   <section class="container-fluid p-0">
-      @php
-          $heroImage = $restaurant->images?->firstWhere('display_order', 1);
-      @endphp
-      <img src="{{ $heroImage ? asset('storage/' . $heroImage->image_url) : ''}}"
-          class="w-100"
-          style="max-height:420px; object-fit:cover;"
-          alt="hero">
+      @if ($restaurant->heroImage)
+          <img src="{{ asset('storage/'.$restaurant->heroImage->image_url) }}" alt="hero_image" class="img-fluid rounded hero-image w-100">
+      @else
+          <div class="bg-light border rounded d-flex align-items-center justify-content-center hero-image w-100" >
+              <span class="text-muted">No Hero Image Uploaded</span>
+          </div>
+      @endif
   </section>
 
   <div class="container py-4">
@@ -28,15 +28,24 @@
 
     {{-- Gallery 2 photos --}}
     <section class="row g-3 mt-2">
-      @php
-        $gallery1 = $restaurant->images?->firstWhere('display_order', 2);
-        $gallery2 = $restaurant->images?->firstWhere('display_order', 3);
-      @endphp
+     
       <div class="col-12 col-md-6">
-        <img src="{{ $gallery1 ? asset('storage/' . $gallery1->image_url) : asset('images/sample1.png') }}" class="w-100 rounded" style="height:200px; object-fit:cover;" alt="">
+        @if ($restaurant->galleryImage1)
+          <img src="{{ asset('storage/'.$restaurant->galleryImage1->image_url) }}" class="w-100 rounded sub-image" alt="Gallery Image 1">
+        @else
+          <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
+            <span class="text-muted">No Gallery Image 1 Uploaded</span>
+          </div>
+        @endif
       </div>
       <div class="col-12 col-md-6">
-        <img src="{{ $gallery2 ? asset('storage/' . $gallery2->image_url) : asset('images/sample2.png') }}" class="w-100 rounded" style="height:200px; object-fit:cover;" alt="">
+        @if ($restaurant->galleryImage2)
+          <img src="{{ asset('storage/'.$restaurant->galleryImage2->image_url) }}" class="w-100 rounded sub-image"  alt="Gallery Image 2">
+        @else
+          <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
+            <span class="text-muted">No Gallery Image 2 Uploaded</span>
+          </div>
+        @endif
       </div>
     </section>
 
