@@ -10,7 +10,7 @@
             <div class="w-75 mx-auto">
                 <h1 class="text-underline-accent mb-4 ">Reviews</h1>
             </div>
-            @foreach ($reviews as $review)
+            @forelse($reviews as $review)
                 {{-- Review Card : reply form --}}
                 <div class="card border rounded-0 mb-4 shadow-sm w-75 mx-auto">
                     <div class="card-body p-4">
@@ -73,7 +73,11 @@
                         @endif
                     </div>
                 </div>
-            @endforeach
+                 @empty
+                    <div>
+                           <p class="text-center text-muted mt-5 fs-3">No reviews yet.</p>
+                    </div>
+                @endforelse
              {{ $reviews->links('layouts.pagination.custom') }}
         </div>
     </div>

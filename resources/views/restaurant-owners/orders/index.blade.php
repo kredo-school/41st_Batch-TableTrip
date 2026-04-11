@@ -81,7 +81,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($orders as $order)
+                            @forelse ($orders as $order)
                                 <tr onclick="window.location='{{ route('owner.orders.show', $order->id) }}'" style="cursor:pointer;">
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->created_at->format('M d, Y') }}</td>
@@ -102,7 +102,13 @@
                                         <span class="badge bg-warning {{ $statusClass }}">{{ $order->status }}</span>
                                     </td>
                                 </tr>
-                             @endforeach
+                                 @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center text-muted py-4">
+                                                No orders found.
+                                            </td>
+                                        </tr>
+                                 @endforelse
                         </tbody>
                     </table>
                 </div>

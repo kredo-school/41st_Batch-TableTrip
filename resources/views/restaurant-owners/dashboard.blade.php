@@ -8,6 +8,7 @@
         @include('restaurant-owners.sidebar')
        
         <div class="col-9">
+                <h1 class="text-underline-accent mb-4">Dashboard -{{ $restaurant->restaurant_name }}-</h1>
             {{-- Stat Card --}}
             <div class="row g-3 mb-3">
                 <div class="col-6 col-sm-6 col-xl-3">
@@ -64,13 +65,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       @foreach ($todayReservations as $reservation)
+                                       @forelse ($todayReservations as $reservation)
                                         <tr onclick="window.location='{{ route('owner.reservations.show', $reservation->id) }}'">
                                             <td> {{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
                                             <td>{{ $reservation->number_of_people }}</td>
                                             <td>{{ $reservation->full_name }}</td>
                                         </tr>
-                                        @endforeach
+                                        @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center text-muted py-4">No reservations for today.</td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             <a href="{{ route('owner.reservations') }}" class="ms-auto pe-3 text-dark text-decoration-underline">View all</a>
@@ -92,7 +97,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       @foreach ($orders as $order)
+                                       @forelse ($orders as $order)
                                         <tr>
                                             <td>{{ $order->id }}</td>
                                             <td>{{ $order->created_at->format('M j, h:i ') }}</td>
@@ -110,7 +115,12 @@
                                                 <span class="badge bg-warning {{ $statusClass }}">{{ $order->status }}</span>
                                             </td>
                                         </tr>
-                                       @endforeach
+                                         @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center text-muted py-4">No reservations for today.</td>
+                                        </tr>
+                                        @endforelse
+                                    
                                     </tbody>
                                 </table>
                             </div>
@@ -148,15 +158,22 @@
                     <div class="w-25">
                         <div class="card p-3 text-center revenue-card border-0 shadow-sm rounded-4">
                             <h5 class="mb-4 text-underline-accent"><i class="fa-solid fa-crown text-warning"></i> TOP PRODUCT</h5>
-                            @if ($topProduct->image)
-                                <img src="{{ asset('storage/' . $topProduct->image) }}" alt="{{ $topProduct->name }}" class="img-fluid rounded mb-3 top-product-image">
+                           @if ($topProduct && $topProduct->image)
+                                <img src="{{ asset('storage/' . $topProduct->image) }}" 
+                                    alt="{{ $topProduct->name }}" 
+                                    class="img-fluid rounded mb-3 top-product-image">
                             @else
                                 <div class="d-flex align-items-center justify-content-center bg-light rounded mb-3 top-product-image">
                                     <span>No image available</span>
                                 </div>
                             @endif
-                            <h4>{{ $productLabels[0] }}</h4>
-                            <p>{{ $productData[0] }} orders</p>
+                           @if ($topProduct)
+                                <h4>{{ $topProduct->name }}</h4>
+                                <p>{{ $topProductCount }} orders</p>
+                            @else
+                                <h4>No top product yet</h4>
+                                <p>Once orders come in, your best-selling item will appear here.</p>
+                            @endif
                         </div>
                     </div>
                 </div>
