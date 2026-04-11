@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminInquiryController;
 use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\AdminRewardController;
 
 
 // use App\Http\Controllers\ForgetPasswordController;  
@@ -200,13 +201,14 @@ Route::prefix('admin')
         Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy'])
             ->name('reviews.destroy');
 
+        Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
+            ->name('rewards.points.history');
+
+        // Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
     });
-
-//Admin Rewards - Dashboard
-// Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
 
 //Product
 // 登録画面を表示するURL
