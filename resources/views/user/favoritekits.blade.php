@@ -9,7 +9,7 @@
     <div class="card purchase-card p-4 shadow-sm">
         <h2 class="mb">My Favorites</h2>
         <div class="selection-group mb-4">
-            <input type="radio" name="fav-tab" id="go-restaurants" onchange="location.href='{{ route('favorite_restaurants') }}'">
+            <input type="radio" name="fav-tab" id="go-restaurants" onchange="location.href='{{ route('user.favorite_restaurants') }}'">
             <label for="go-restaurants">Restaurants</label>
 
             <input type="radio" name="fav-tab" id="stay-kits" checked>
