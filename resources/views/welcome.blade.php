@@ -2,15 +2,26 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
-@endpush
-
-@push('scripts')
-<script src="{{ asset('js/welcome.js') }}" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
 @endpush
 
 @section('content')
-<div class="welcome-container py-5">
-    <div class="container">
+<div class="welcome-container">
+    
+    <div class="hero-section mb-5">
+        <div class="hero-overlay">
+            <div class="container text-center">
+                <h1 class="hero-title">Experience the Art of Dining</h1>
+                <p class="hero-subtitle">Premium restaurant reservations & chef-curated meal kits delivered to your door.</p>
+                <div class="hero-buttons mt-4">
+                    <a href="{{ route('search') }}" class="btn-hero-primary">Book a Table</a>
+                    <a href="{{ route('products.index') }}" class="btn-hero-secondary">Order Meal Kits</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pb-5">
         {{-- Restaurants Section --}}
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -36,8 +47,8 @@
                     </div>
                 </div>
             @empty
-                <div class="col-12">
-                    <div class="no-data-box text-center p-5">No restaurants available yet.</div>
+                <div class="col-12 text-center py-5">
+                    <div class="no-data-box">No restaurants available yet.</div>
                 </div>
             @endforelse
         </div>
@@ -70,8 +81,8 @@
                     </div>
                 </div>
             @empty
-                <div class="col-12">
-                    <div class="no-data-box text-center p-5">No meal kits available yet.</div>
+                <div class="col-12 text-center py-5">
+                    <div class="no-data-box">No meal kits available yet.</div>
                 </div>
             @endforelse
         </div>
