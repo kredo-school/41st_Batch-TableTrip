@@ -50,7 +50,7 @@ class Restaurant extends Authenticatable
         return $this->belongsTo(Category::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }

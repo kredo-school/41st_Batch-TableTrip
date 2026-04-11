@@ -30,20 +30,20 @@
                 <p> Customer Name: {{ $notification->target->full_name }}</p>
                 <p> Number of Guests: {{ $notification->target->number_of_people }}</p>
 
-            @if ($notification->target->special_requests)
-                <p class="">
-                    Special Request: {{ $notification->target->special_requests }}
-                </p>
-            @endif
+                @if ($notification->target->special_requests)
+                    <p>
+                        Special Request: {{ $notification->target->special_requests }}
+                    </p>
+                @endif
 
-            <p class="mt-3">Please review the reservation details and take any necessary action.</p>
+                <p class="mt-3">Please review the reservation details and take any necessary action.</p>
 
-            @elseif ($notification->target_type === \App\Models\Order::class && $notification->target)
-            <p>Order ID: #{{ $notification->target->id }}</p>
+                @elseif ($notification->target_type === \App\Models\Order::class && $notification->target)
+                <p>Order ID: #{{ $notification->target->id }}</p>
 
-            <p> Total Price: ${{ number_format($notification->target->total_price, 2) }}</p>
+                <p class="mb-3"> Total Price: ${{ number_format($notification->target->total_price, 2) }}</p>
 
-            <p>Please review the order details and update the status if needed.</p>
+                <p>Please review the order details and update the status if needed.</p>
 
             @elseif ($notification->target_type === \App\Models\Review::class && $notification->target)
                 <p> 
@@ -59,12 +59,12 @@
                     Rating: {{ $notification->target->rating ?? '-' }}
                 </p>
 
-            <p>
-                Comment: {{ $notification->target->comment ?? 'No comment provided.' }}
-            </p>
+                <p>
+                    Comment: {{ $notification->target->comment ?? 'No comment provided.' }}
+                </p>
 
             @else
-            <p>{{ $notification->message }}</p>
+                <p>{{ $notification->message }}</p>
             @endif
 
             <div class="text-end text-muted small mt-3">
@@ -75,13 +75,22 @@
 
             <!-- footer -->
             <div class="modal-footer border-0 justify-content-center pb-4">
+                @if ($notification->target_type === \App\Models\Reservation::class && $notification->target)  
+                    <a href="{{ route('owner.reservations.show', $notification->target->id) }}" class="btn btn-orange px-4">
+                        View Reservation
+                    </a>
+                @elseif ($notification->target_type === \App\Models\Order::class && $notification->target)  
+                    <a href="{{ route('owner.orders.show', $notification->target->id) }}" class="btn btn-orange px-4">
+                        View Order
+                    </a>
+                @elseif ($notification->target_type === \App\Models\Review::class && $notification->target)  
+                    <a href="{{ route('owner.reviews') }}" class="btn btn-orange px-4">
+                        View Review
+                    </a>
+                @endif
 
-                <button type="button"
-                        class="btn btn-outline-orange px-4"
-                        data-bs-dismiss="modal">
-
+                <button type="button"class="btn btn-outline-orange px-4"data-bs-dismiss="modal">
                     Close
-
                 </button>
 
             </div>

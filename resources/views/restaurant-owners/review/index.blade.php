@@ -19,12 +19,11 @@
                         <div class="d-flex justify-content-between align-items-start mb-4">
                             <div class="d-flex align-items-start">
                                 <div class="me-3">
-                                    @if (optional($review->user->profile_picture))
+                                    @if (!empty($review->user->profile_picture))
                                         <img src="{{ asset('storage/'.$review->user->profile_picture) }}" alt="" class="review-icon rounded-circle">
                                     @else
                                        <i class="fa-solid fa-circle-user fs-1 text-dark"></i>
                                     @endif
-                                    
                                 </div>
 
                                 <div>
