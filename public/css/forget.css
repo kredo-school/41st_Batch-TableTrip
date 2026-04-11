@@ -1,0 +1,129 @@
+/* --- Forgotten Password Page Styles --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Sen:wght@400;700&display=swap');
+
+.login-page-wrapper {
+    background-color: #f8f5f0 !important; /* Uniform beige background */
+    min-height: 100vh;
+    font-family: 'Sen', sans-serif;
+}
+
+/* Title and the Single Underline */
+.login-header-container {
+    margin-top: -50px; /* Slight upward adjustment for balance */
+}
+
+.login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #000000;
+    margin-bottom: 15px;
+    text-decoration: none !important; /* Remove default browser underline */
+    border-bottom: none !important;   /* Ensure no double lines */
+    display: block;
+}
+
+.login-underline {
+    width: 300px; 
+    height: 1.5px;
+    background-color: #d9a09a; /* Consistent rose-gold accent */
+    margin: 0 auto;
+    border: none;
+}
+
+/* Card Design */
+.login-card {
+    background-color: #ffffff; /* Pure white card to match table/inputs */
+    border: 1px solid #e2e2e2;
+    padding: 60px 80px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.instruction-text {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 35px;
+    font-family: 'Sen', sans-serif;
+}
+
+/* Form Elements */
+.login-label {
+    font-family: 'Sen', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.login-input {
+    width: 100%;
+    border: 1px solid #d1cfc0;
+    background-color: #ffffff;
+    padding: 12px 15px;
+    border-radius: 8px;
+    outline: none;
+    font-family: 'Sen', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.login-input:focus {
+    border-color: #d9a09a;
+}
+
+/* Buttons and Links */
+.btn-login-submit {
+    background-color: #d9a09a; 
+    color: #ffffff;             
+    border: none;             
+    padding: 12px 35px;           
+    min-width: 160px;              
+    border-radius: 50px; /* Rounded pill shape for premium look */      
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif; 
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-login-submit:hover {
+    background-color: #c58e88;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(217, 160, 154, 0.3);
+}
+
+.back-to-login {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+.back-to-login:hover {
+    color: #d9a09a;
+}
+
+/* Success Alert Customization */
+.alert-success {
+    background-color: #f0f9f7;
+    border: 1px solid #76c7b0;
+    color: #2d5a4e;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 40px 30px;
+        max-width: 90%;
+    }
+    .login-title {
+        font-size: 2rem;
+    }
+}
