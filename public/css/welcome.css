@@ -4,135 +4,145 @@
     background-color: #f8f5f0 !important; 
     min-height: 100vh;
     font-family: 'Sen', sans-serif;
-    letter-spacing: 0.02em;
 }
 
+/* Hero Section Adjustments */
 .hero-section {
     position: relative;
-    height: 40vh;             
-    min-height: 300px;        
-   background-image: url('https://images.unsplash.com/photo-1550966841-3ee3ad349091?q=80&w=2000&auto=format&fit=crop');
+    height: 50vh; 
+    min-height: 400px;
+    /* Use a high-quality restaurant image */
+    background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=2000&q=80');
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 4px solid #d9a09a; 
+    border-bottom: 3px solid #d9a09a; 
 }
 
 .hero-overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%); 
+    /* Reduced darkness to show the image clearly */
+    background: rgba(0, 0, 0, 0.35); 
     display: flex;
     align-items: center;
 }
 
 .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     color: #fff;
-    font-weight: 900;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-weight: 800;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
 }
 
 .hero-subtitle {
-    font-family: 'Sen', sans-serif;
-    color: #efefef;
-    font-size: 1.3rem;
-    max-width: 750px;
-    margin: 1.5rem auto;
-    font-weight: 400;
-    opacity: 0.9;
+    font-size: 1.2rem;
+    color: #f8f8f8;
+    max-width: 600px;
+    margin: 1rem auto;
 }
 
-.btn-hero-primary, .btn-hero-secondary {
+/* Buttons */
+.btn-hero-primary {
     display: inline-block;
-    padding: 16px 45px;
-    font-size: 0.9rem;
+    padding: 12px 30px;
+    background-color: #d9a09a;
+    color: #fff;
     text-decoration: none;
     border-radius: 50px;
-    font-weight: 700;
+    font-weight: bold;
     margin: 10px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.btn-hero-primary {
-    background-color: #d9a09a;
-    color: white;
-    border: 2px solid #d9a09a;
+    transition: 0.3s;
 }
 
 .btn-hero-secondary {
+    display: inline-block;
+    padding: 12px 30px;
     background-color: transparent;
-    color: white;
-    border: 2px solid rgba(255,255,255,0.8);
+    color: #fff;
+    border: 2px solid #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    margin: 10px;
+    transition: 0.3s;
 }
 
-.btn-hero-primary:hover {
-    background-color: transparent;
-    color: white;
-    border-color: white;
-    transform: translateY(-5px);
-}
-
-.btn-hero-secondary:hover {
-    background-color: white;
-    color: #333;
-    transform: translateY(-5px);
-}
-
+/* Page Titles */
 .page-title {
     font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
     font-weight: 800;
     color: #333;
-    border-bottom: 2px solid #d9a09a;
-    display: inline-block;
-    padding-bottom: 8px;
-}
-
-.section-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    color: #444;
     border-bottom: 2px solid #d9a09a; 
     display: inline-block;
     padding-bottom: 5px;
 }
+
+/* The White Card Box (Restored) */
 .custom-item-card {
-    background: #fff;
-    border: none; 
-    border-radius: 15px; 
+    background: #ffffff; /* Pure white back to match other screens */
+    border: 1px solid #e2e2e2;
+    border-radius: 8px; 
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-    transition: all 0.5s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .custom-item-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.img-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .item-title {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 0.01em;
+    color: #222;
 }
 
 .price-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 800;
-    color: #a94442; 
+    color: #d9534f; 
 }
 
-/* レスポンシブ調整 */
+.badge-custom-kit {
+    background-color: #76c7b0; 
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+.view-all-link {
+    color: #666;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.no-data-box {
+    background: #ffffff;
+    border: 1px dashed #d9a09a;
+    border-radius: 8px;
+    color: #999;
+}
+
 @media (max-width: 768px) {
-    .hero-title { font-size: 2.8rem; }
-    .hero-subtitle { font-size: 1.1rem; }
-    .hero-section { height: 65vh; }
-    .btn-hero-primary, .btn-hero-secondary { padding: 12px 25px; font-size: 0.8rem; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-section { height: 40vh; }
 }

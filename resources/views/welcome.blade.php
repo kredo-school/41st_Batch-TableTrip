@@ -2,13 +2,12 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&display=swap" rel="stylesheet">
 @endpush
 
 @section('content')
 <div class="welcome-container">
     
-    <div class="hero-section mb-5">
+    <div class="hero-section">
         <div class="hero-overlay">
             <div class="container text-center">
                 <h1 class="hero-title">Experience the Art of Dining</h1>
@@ -21,8 +20,7 @@
         </div>
     </div>
 
-    <div class="container pb-5">
-        {{-- Restaurants Section --}}
+    <div class="container py-5">
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
                 <h2 class="page-title m-0">Featured Restaurants</h2>
@@ -47,13 +45,12 @@
                     </div>
                 </div>
             @empty
-                <div class="col-12 text-center py-5">
-                    <div class="no-data-box">No restaurants available yet.</div>
+                <div class="col-12">
+                    <div class="no-data-box text-center p-5">No restaurants available yet.</div>
                 </div>
             @endforelse
         </div>
 
-        {{-- Meal Kits Section --}}
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
                 <h2 class="page-title m-0">Signature Meal Kits</h2>
@@ -81,8 +78,8 @@
                     </div>
                 </div>
             @empty
-                <div class="col-12 text-center py-5">
-                    <div class="no-data-box">No meal kits available yet.</div>
+                <div class="col-12">
+                    <div class="no-data-box text-center p-5">No meal kits available yet.</div>
                 </div>
             @endforelse
         </div>
