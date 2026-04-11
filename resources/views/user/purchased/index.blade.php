@@ -2,7 +2,7 @@
 @section('title','Activity History')
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
+<link rel="stylesheet" href="{{ asset('css/history.css') }}">
 
 <div class="history-container py-5 text-center">
     <h1 class="history-title mb-4">
