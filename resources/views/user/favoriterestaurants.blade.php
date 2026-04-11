@@ -13,7 +13,7 @@
             <input type="radio" name="fav-tab" id="go-restaurants" checked>
             <label for="go-restaurants">Restaurants</label>
 
-            <input type="radio" name="fav-tab" id="stay-kits" onchange="location.href='{{ route('favorite_kits') }}'">
+            <input type="radio" name="fav-tab" id="stay-kits" onchange="location.href='{{ route('user.favoritekits') }}'">
             <label for="stay-kits">Kits</label>
         </div>
         <hr>
