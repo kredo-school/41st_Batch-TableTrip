@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(php artisan:*)"
+      "Bash(php artisan:*)",
+      "Bash(python3 -c \"from PIL import Image; img = Image.open\\(r''C:\\\\Users\\\\Owner\\\\Desktop\\\\41th\\\\41st_Batch-TableTrip\\\\public\\\\images\\\\logo.png''\\); print\\(img.size\\)\")",
+      "Bash(identify \"C:\\\\Users\\\\Owner\\\\Desktop\\\\41th\\\\41st_Batch-TableTrip\\\\public\\\\images\\\\logo.png\")",
+      "Bash(powershell -Command \"\\(Get-Item ''C:\\\\Users\\\\Owner\\\\Desktop\\\\41th\\\\41st_Batch-TableTrip\\\\public\\\\images\\\\logo.png''\\).Length\")",
+      "Bash(powershell -Command \"Add-Type -AssemblyName System.Drawing; \\\\$img = [System.Drawing.Image]::FromFile\\('C:\\\\Users\\\\Owner\\\\Desktop\\\\41th\\\\41st_Batch-TableTrip\\\\public\\\\images\\\\logo.png'\\); Write-Host \\\\$img.Width 'x' \\\\$img.Height\")",
+      "Bash(php -r \"list\\($w, $h\\) = getimagesize\\(''public/images/logo.png''\\); echo $w.''x''.$h;\")"
     ]
   }
 }

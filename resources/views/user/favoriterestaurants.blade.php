@@ -3,39 +3,40 @@
 @section('title', 'Favorite Restaurants')
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/favorite.css') }}">
 
-<div class="container py-5 d-flex flex-column align-items-center">
-    <div class="card purchase-card p-4 shadow-sm">
-        <h2 class="mb">My Favorites</h2>
+<div class="container py-5 d-flex flex-column align-items-center favorite-page">
+    
+    <h2 class="page-title mb-4">My Favorites</h2>
 
-        <div class="selection-group mb-4">
-            <input type="radio" name="fav-tab" id="go-restaurants" checked>
-            <label for="go-restaurants">Restaurants</label>
-
-            <input type="radio" name="fav-tab" id="stay-kits" onchange="location.href='{{ route('favorite_kits') }}'">
-            <label for="stay-kits">Kits</label>
+    <div class="favorite-content-wrapper">
+        <div class="favorite-header-tabs">
+            <div class="tab-item active"> Restaurants
+            </div>
+            <div class="tab-item" onclick="location.href='{{ route('user.favoritekits') }}'">
+                Kits
+            </div>
         </div>
-        <hr>
 
-        <div class="purchase-list-container">
+        <div class="favorite-list-body">
             @forelse($favorite_restaurants as $restaurant)
-                <div class="purchase-item">
+                <div class="purchase-item border-bottom">
                     <div class="item-info">
                         <div class="item-date">Added on: {{ $restaurant->pivot->created_at->format('d/m/y') }}</div>
-                        <div class="item-status text-success">Open Now</div> 
-                        
+                        <div class="item-status text-success">Open Now</div>
+
                         <div class="row align-items-center">
                             <div class="col-sm-7">
-                                <div class="product-name">{{ $restaurant->name }}</div>
-                                <div class="restaurant-name">
+                                <div class="product-name fw-bold">{{ $restaurant->name }}</div>
+                                <div class="restaurant-name text-muted small">
                                     <i class="bi bi-geo-alt me-1"></i>{{ $restaurant->location ?? 'Location' }}
                                 </div>
                             </div>
-                            <div class="col-sm-5 item-details">
-                                <div class="fw-bold text-muted small">Category: {{ $restaurant->category ?? 'General' }}</div>
-                                <div class="mt-2 d-flex gap-3">
+                            <div class="col-sm-5 item-details text-end">
+                                <div class="fw-bold text-muted small mb-2">Category: {{ $restaurant->category ?? 'General' }}</div>
+                                <div class="d-flex gap-3 justify-content-end">
                                     <i class="bi bi-trash3 fs-5 text-muted" style="cursor: pointer;" title="Remove"></i> 
+                                    
                                     <a href="{{ route('restaurant', $restaurant->id) }}" class="text-dark">
                                         <i class="bi bi-box-arrow-up-right fs-5"></i>
                                     </a>
@@ -44,20 +45,23 @@
                         </div>
                     </div>
 
-                    <div class="item-image d-none d-md-block">
-                        <img src="{{ asset('storage/' . $restaurant->image) }}" onerror="this.src='{{ asset('images/sample_restaurant.jpg') }}'" alt="Restaurant">
+                    <div class="item-image d-none d-md-block ms-3">
+                        <img src="{{ asset('storage/' . $restaurant->image) }}" 
+                             onerror="this.src='{{ asset('images/sample_restaurant.jpg') }}'" 
+                             alt="Restaurant" style="width: 100px; height: auto; border-radius: 4px;">
                     </div>
                 </div>
             @empty
-                <p class="text-center p-5 text-muted">No favorite restaurants found.</p>
+                <div class="no-data-message">
+                    No favorite restaurants found.
+                </div>
             @endforelse
         </div>
     </div>
 
-
-    <div class="btn-container mt-4">
-        <a href="{{ route('dashboard') }}" class="btn-back" style="text-decoration: none;">
-            <i class="fa-solid fa-house me-2"></i> Back to Dashboard
+    <div class="mt-5">
+        <a href="{{ route('dashboard') }}" class="btn-back-custom">
+            <i class="fa-solid fa-house"></i> Back to Dashboard
         </a>
     </div>
 </div>

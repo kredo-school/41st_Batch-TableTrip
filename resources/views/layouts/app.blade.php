@@ -34,18 +34,19 @@
 
                     <!-- Left: Logo -->
                     <a href="/" class="d-flex align-items-center text-decoration-none gap-2">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-circle border header-logo">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-circle border header-logo" style="width:44px; height:44px; object-fit:cover; flex-shrink:0;">
                         <span class="fw-semibold text-dark">Table<span class="text-orange">Trip</span></span>
                     </a>
 
                     <!-- Center: Search (like your image) -->
-                    <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="/restaurants" method="GET">
-                        <input type="text" name="q" placeholder="search" aria-label="search" class="form-control rounded-pill header-search">
+                    <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="{{ route('search') }}" method="GET">
+                        <input type="text" name="keyword" placeholder="search" aria-label="search" 
+                            class="form-control rounded-pill header-search" value="{{ request('keyword') }}">
+                        
                         <button type="submit" class="btn p-0 ms-3" aria-label="search button">
                             <i class="bi bi-search fs-5 text-dark"></i>
                         </button>
                     </form>
-                    
 
                     <!-- Right: Icons + Dropdown -->
 
@@ -72,12 +73,19 @@
                         @else
                         {{-- Normal User --}}
                             {{-- Normal User --}}
-                            <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
+                            <a href="{{ route('user.notifications.index') }}" class="text-dark fs-4" aria-label="notifications">
                                 <i class="bi bi-bell"></i>
                             </a>
 
-                            <a href="/cart" class="text-dark fs-4" aria-label="cart">
+                            <a href="/cart" class="text-dark fs-4 position-relative" aria-label="cart">
                                 <i class="bi bi-cart"></i>
+                                @php $cartCount = array_sum(array_column(session('cart', []), 'quantity')); @endphp
+                                @if($cartCount > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                                          style="background-color:#e74c3c; font-size:0.6rem;">
+                                        {{ $cartCount }}
+                                    </span>
+                                @endif
                             </a>
 
                             <div class="dropdown">
@@ -124,7 +132,7 @@
 
                                     {{-- Logout --}}
                                     <li>
-                                        <form action="/logout" method="POST" class="m-0">
+                                        <form action="{{ route('user.logout') }}" method="POST" class="m-0">
                                             @csrf 
                                             <button type="submit" class="dropdown-item text-danger">
                                                 <i class="bi bi-box-arrow-right me-2"></i> Logout

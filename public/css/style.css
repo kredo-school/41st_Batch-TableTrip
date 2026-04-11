@@ -66,6 +66,9 @@ h2.custom-header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-width: 180px; 
+    padding: 10px 20px;
+    border-radius: 12px;
 }
 .btn-equal {
     flex: 1;                
@@ -226,6 +229,23 @@ profile-default-svg {
 .btn-login-submit:hover {
     background-color: #d1634f; 
     transform: translateY(-1px); 
+}
+
+
+/* point illustlate */
+.user-points {
+    font-size: 1.2rem;
+    margin-left: 15px;
+    background-color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.point-summary-card h3 {
+    border-bottom: 1px solid #e2725b;
 }
 
 /* edit user */
@@ -918,4 +938,51 @@ label {
     color: #ff7851 !important; 
     padding: 5px;
     font-size: 1.2rem;
+}
+
+
+/* purchased */
+
+.history-container .content-upcoming, 
+.history-container .content-past {
+    display: none;
+}
+
+.history-container #tab-orders:checked ~ .content-upcoming {
+    display: table !important; 
+    width: 100%;
+}
+
+.history-container #tab-visits:checked ~ .content-past {
+    display: table !important;
+    width: 100%;
+}
+
+.history-container input[type="radio"][name="history-tab"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #d1cfc0;
+}
+
+.history-table th {
+    background-color: #f7f5f0;
+    border: 1px solid #d1cfc0;
+    padding: 12px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+.history-table td {
+    padding: 15px;
+    border: 1px solid #d1cfc0;
+    vertical-align: middle;
 }

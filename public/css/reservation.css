@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sen:wght@400;700&display=swap');
+
+
+.history-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Sen', sans-serif;
+}
+
+.history-title, .history-table th {
+    font-family: 'Playfair Display', serif;
+}
+
+.history-title {
+    font-weight: 700;
+    font-size: 2.2rem;
+    border-bottom: 1px solid #e2725b;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 30px;
+}
+
+.main-tab-group {
+    display: flex;
+    justify-content: center;
+}
+
+.main-category-label.active-tab {
+    background-color: #000;
+    color: #fff;
+    display: inline-block;
+    border: 1px solid #d1cfc0;
+    padding: 10px 30px;
+    font-weight: 700;
+    min-width: 160px;
+}
+
+
+.section-reservations-fixed {
+    display: block !important; 
+    width: 100%;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border: 1px solid #d1cfc0;
+    margin-top: 10px;
+}
+
+.history-table th {
+    border: 1px solid #d1cfc0;
+    padding: 12px;
+    background-color: #fff; 
+    font-weight: 600;
+    text-align: center;
+}
+
+.history-table td {
+    border: 1px solid #d1cfc0;
+    padding: 20px 15px;
+    vertical-align: middle;
+    text-align: center;
+}
+.no-data {
+    padding: 60px !important; 
+    color: #333;
+    font-style: italic;
+    background-color: #fff;
+}
+
+/* 下部ボタン */
+.btn-dashboard-back {
+    display: inline-block;
+    padding: 10px 25px;
+    border: 1px solid #d1cfc0;
+    border-radius: 12px;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-dashboard-back:hover {
+    background-color: #f7f5f0;
+}
+
+/* アクションボタン */
+.btn-delete-link {
+    background: none;
+    border: none;
+    color: #e2725b;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+}

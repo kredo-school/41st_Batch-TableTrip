@@ -9,6 +9,16 @@
     <h2 class="welcome-text">Welcome, {{ Auth::user()->first_name }}!</h2>
     {{-- reservation --}}
     <div class="dashboard-grid">
+        {{-- point illuslate --}}
+        {{-- <section class="dashboard-card point-summary-card" style="background: linear-gradient(135deg, #fff5f2 0%, #ffffff 100%);">
+            <h3><i class="fa-solid fa-star" style="color: #e2725b;"></i> My Points</h3>
+            <div class="card-content" style="text-align: center; padding: 10px 0;">
+                <p style="font-size: 2rem; font-weight: bold; color: #e2725b; margin: 0;">
+                    {{ number_format($totalPoints) }} <span style="font-size: 1rem;">pts</span>
+                </p>
+                <small class="text-muted">Available to use for your next order</small>
+            </div>
+        </section> --}}
         <section class="dashboard-card">
             <h3><i class="fa-regular fa-calendar-check"></i> Reservation</h3>
             <div class="card-content">
@@ -52,8 +62,10 @@
                         @endforelse
                     </tbody>
                 </table>
-                <a href="{{ route('reservations.index') }}" class="view-all">View All</a>
-            </div>
+                </div> 
+                <div class="btn-container">
+                    <a href="{{ route('reservations.index') }}" class="btn-back">View All Reservations</a>
+                </div>
         </section>
 
         {{-- cart part --}}
@@ -82,7 +94,7 @@
                 @endif
             </div>
             <div class="btn-container">
-                <a href="{{ route('user.cart') }}" class="btn-back">View Cart</a>
+               <a href="/cart"  class="btn-back">View Cart</a>
             </div>
         </section>
 
@@ -130,9 +142,9 @@
 
                 <div class="btn-container">
                     @if(request('tab', 'restaurants') == 'restaurants')
-                        <a href="{{ route('favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
+                        <a href="{{ route('user.favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
                     @else
-                        <a href="{{ route('favorite_kits') }}" class="btn-back">View All Kits</a>
+                        <a href="{{ route('user.favoritekits') }}" class="btn-back">View All Kits</a>
                     @endif
                 </div>
             </div>
