@@ -34,7 +34,7 @@
             <i class="fa-regular fa-bell me-2"></i>Notifications
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/settings') ? 'active' : '' }}">
+        <a href="{{ route('owner.setting') }}" class="list-group-item fs-5 {{ request()->is('owner/settings*') ? 'active' : '' }}">
             <i class="fa-solid fa-gear me-2"></i>Settings
         </a>
     </div>
@@ -76,7 +76,7 @@
                 <i class="fa-regular fa-bell me-2"></i>Notifications
             </a>
 
-            <a href="" class="list-group-item {{ request()->is('owner/settings') ? 'active' : '' }}">
+            <a href="{{ route('owner.setting') }}" class="list-group-item {{ request()->is('owner/settings') ? 'active' : '' }}">
                 <i class="fa-solid fa-gear me-2"></i>Settings
             </a>
         </div>
