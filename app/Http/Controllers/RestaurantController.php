@@ -8,13 +8,15 @@ use App\Models\Restaurant;
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Reservation;
+use App\Models\Notification;
 
 class RestaurantController extends Controller
 {
 
     public function show($id)
     {
-        $restaurant = Restaurant::with('images')->findOrFail($id);
+        $restaurant = Restaurant::with('heroImage','galleryImage1','galleryImage2')->findOrFail($id);
         $menus = Menu::where('restaurant_id', $id)->get();
         $products = Product::where('restaurant_id', $id)->get();
         $reviews = Review::with(['user', 'replies'])
@@ -43,7 +45,7 @@ class RestaurantController extends Controller
             'special_requests' => 'nullable|string|max:1000',
         ]);
 
-        $restaurant->reservations()->create([
+        $reservation = $restaurant->reservations()->create([
             'restaurant_id' => $restaurant->id,
             'user_id' => $user ? $user->id : null,
             'reservation_date' => $request->reservation_date,
@@ -54,6 +56,17 @@ class RestaurantController extends Controller
             'email' => $request->email,
             'special_requests' => $request->special_requests,
             'status' => 'pending', // デフォルトのステータスを設定
+        ]);
+
+        Notification::create([
+            'recipient_id' => $restaurant->id,
+            'recipient_type' => Restaurant::class,
+            'title' => '[Reservation] New Booking received',
+            'message' => 'You have a new reservation.',
+            'target_type' => Reservation::class,
+            'target_id' => $reservation->id,
+            'is_action_required' => true,
+            'is_completed' => false,
         ]);
 
         return redirect()->back()->with('success', 'Your reservation has been made successfully!');

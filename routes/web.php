@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardControl
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminInquiryController;
+use App\Http\Controllers\Admin\AdminReviewController;
 
 
 
@@ -26,6 +27,7 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 // use App\Http\Controllers\User\PaymentMethodController;  
 
 // use App\Http\Controllers\ForgetPasswordController;  
+use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
@@ -54,8 +56,9 @@ use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Owner\PageManagementController;
-use App\Http\Controllers\Owner\ReviewsController as OwnerReviewsController;
+use App\Http\Controllers\Owner\ReviewController as OwnerReviewController;
 use App\Models\User;
+use App\Http\Controllers\Owner\NotificationController as OwnerNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -173,11 +176,36 @@ Route::prefix('admin')
         Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])
             ->name('reservations.show');
 
+        Route::post('/reservations/{id}/status', [AdminReservationController::class, 'updateStatus'])
+            ->name('reservations.updateStatus');
+
         Route::get('/inquiries', [AdminInquiryController::class, 'index'])
             ->name('inquiries.index');
         
         Route::get('/inquiries/{id}', [AdminInquiryController::class, 'show'])
             ->name('inquiries.show');
+        
+        Route::patch('/inquiries/{id}/status', [AdminInquiryController::class, 'updateStatus'])
+            ->name('inquiries.updateStatus');
+
+        Route::get('/inquiries/{id}/reply', [AdminInquiryController::class, 'replyForm'])
+            ->name('inquiries.replyForm');
+        
+        Route::post('/inquiries/{id}/reply', [AdminInquiryController::class, 'sendReply'])
+            ->name('inquiries.sendReply');
+
+        Route::get('/reviews', [AdminReviewController::class, 'index'])
+            ->name('reviews.index');
+
+        Route::get('/reviews/{id}', [AdminReviewController::class, 'show'])
+            ->name('reviews.show');
+        
+        Route::patch('/reviews/{id}/status', [AdminReviewController::class, 'updateStatus'])
+            ->name('reviews.updateStatus');
+
+        Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy'])
+            ->name('reviews.destroy');
+
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
@@ -261,15 +289,20 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/page-management/image', [PageManagementController::class, 'image'])->name('page-management.image');
         Route::get('/page-management/menu', [PageManagementController::class, 'menu'])->name('page-management.menu');
         Route::get('/page-management/preview', [PageManagementController::class, 'preview'])->name('page-management.preview');
-        Route::patch('/page-management/basic-info', [PageManagementController::class, 'updateBasicInfo'])->name('page-management.updateBasicInfo');
+        Route::patch('/page-management', [PageManagementController::class, 'updateBasicInfo'])->name('page-management.updateBasicInfo');
         Route::patch('/page-management/image', [PageManagementController::class, 'updateImage'])->name('page-management.updateImage');
-        Route::post('/page-management/menu', [PageManagementController::class, 'addMenu'])->name('page-management.addMenu');
+        Route::post('/page-management/menu', [PageManagementController::class, 'storeMenu'])->name('page-management.storeMenu');
         Route::patch('/page-management/menu/update/{id}', [PageManagementController::class, 'updateMenu'])->name('page-management.updateMenu');
         Route::post('/page-management/menu/', [PageManagementController::class, 'storeMenu'])->name('page-management.storeMenu');
         Route::delete('/page-management/menu/delete/{id}', [PageManagementController::class, 'deleteMenu'])->name('page-management.deleteMenu');
 
         // Reviews
-        // Route::get('/reviews', [OwnerReviewsController::class, 'index'])->name('reviews');
+        Route::get('/reviews', [OwnerReviewController::class, 'index'])->name('reviews');
+        Route::post('/reviews/{id}/reply', [OwnerReviewController::class, 'reply'])->name('reviews.reply');
+
+        // Notifications
+        Route::get('/notifications', [OwnerNotificationController::class, 'index'])->name('notifications');
+        Route::patch('/notifications/{id}/read', [OwnerNotificationController::class, 'markAsRead'])->name('notifications.read');
 
 
 
