@@ -4,7 +4,6 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
-
 <div class="login-page-wrapper vh-100 d-flex flex-column align-items-center justify-content-center">
         {{-- title part --}}
         <div class="login-header-container text-center mb-5">
@@ -43,7 +42,7 @@
                     {{-- forget password--}}
                         <div class="forget-password-container mt-4 d-flex align-items-center justify-content-center gap-3">
                             <span class="forget-text">Forgotten Password?</span>
-                            <a href="{{ route('login') }}" class="btn-press">Press</a>
+                            <a href="{{ route('password.request') }}" class="btn-press">Reset</a>
                         </div>
                     {{-- connect to register --}}
                         <div class="register-link-container d-flex align-items-center justify-content-center gap-3">

@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\User\ForgetPasswordController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -19,8 +20,7 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 use App\Http\Controllers\Admin\AdminReviewController;
 
 
-
-// use App\Http\Controllers\ForgetController;  
+// use App\Http\Controllers\ForgetPasswordController;  
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -77,10 +77,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
     Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
-    Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
-    Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+    Route::get('forgot-password', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('forgot-password', [ForgetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 });
-
 /*
 |--------------------------------------------------------------------------
 | Authenticated User Routes (Auth)
