@@ -73,12 +73,18 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 |--------------------------------------------------------------------------
 */
 Route::middleware('guest')->group(function () {
+    // Login
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
+    // Register
     Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
     Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
-    Route::get('forgot-password', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    // Password Reset 
+   Route::get('forgot-password', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('forgot-password', [ForgetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    // Reset Password (Step 2)
+    Route::get('reset-password/{token}', [ForgetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('reset-password', [ForgetPasswordController::class, 'updatePassword'])->name('password.update');
 });
 /*
 |--------------------------------------------------------------------------
