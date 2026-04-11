@@ -33,9 +33,17 @@
                 @enderror
             </div>
 
-            {{-- new password input --}}
+           {{-- New Password --}}
             <div class="row mb-4 align-items-center">
                 <label for="password" class="login-label col-sm-4">New Password</label>
+                <div class="col-sm-8">
+                    <input type="password" name="password" id="password" class="login-input" required>
+                </div>
+            </div>
+
+            {{-- Confirm Password --}}
+            <div class="row mb-4 align-items-center">
+                <label for="password_confirmation" class="login-label col-sm-4">Confirm Password</label>
                 <div class="col-sm-8">
                     <input type="password" name="password_confirmation" id="password_confirmation" class="login-input" required>
                 </div>
