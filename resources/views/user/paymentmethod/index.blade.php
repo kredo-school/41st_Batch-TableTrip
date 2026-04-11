@@ -150,10 +150,15 @@
             </div>
         </div>
 
-        <div class="mt-5 pb-5">
+        <div class="mt-5 pb-5 d-flex gap-3 justify-content-center">
             <a href="{{ route('dashboard') }}" class="btn-back-custom">
                 <i class="fa-solid fa-house me-2"></i>Back to Dashboard
             </a>
+            @if(request('from') === 'confirm')
+                <a href="{{ route('cart.confirm') }}" class="btn-back-custom">
+                    <i class="bi bi-cart me-2"></i>Back to Cart
+                </a>
+            @endif
         </div>
     </div>
 </div>

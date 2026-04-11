@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sen&display=swap');
+
+body {
+    background-color: #f8f5f0; 
+}
+
+.page-title {
+    font-family: 'Playfair Display', serif; 
+    font-weight: bold;
+    border-bottom: 2px solid #d9a09a; 
+    display: inline-block;
+    padding-bottom: 5px;
+    color: #333;
+}
+
+.favorite-content-wrapper {
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.favorite-header-tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    cursor: pointer;
+    border-right: 1px solid #ddd;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.tab-item:last-child {
+    border-right: none;
+}
+
+.tab-item.active {
+    background-color: #fdfdfd;
+    font-weight: bold;
+}
+
+.tab-item:hover {
+    background-color: #f9f9f9;
+}
+
+/* リスト部分 */
+.no-data-message {
+    padding: 60px;
+    text-align: center;
+    color: #666;
+}
+
+.purchase-item {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+}
+
+/* ダッシュボードへ戻るボタン */
+.btn-back-custom {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 15px; /* 丸み */
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.btn-back-custom:hover {
+    background: #f0f0f0;
+    color: #000;
+}

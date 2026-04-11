@@ -4,18 +4,7 @@
 @section('content')
 <div style="background-color: #F9F7F2; min-height: 100vh;">
 
-    {{-- 右上の浮遊カートボタン --}}
-    <div class="floating-cart">
-        <a href="{{ route('cart.index') }}" class="cart-link">
-            <div class="cart-wrapper">
-                <i class="bi bi-cart-fill fs-2"></i>
-                <span class="cart-badge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
-            </div>
-            <p class="cart-text">Items</p>
-        </a>
-    </div>
-
-    <div class="container py-5" style="max-width: 480px;">
+<div class="container py-5" style="max-width: 480px;">
         <div class="card border-0 shadow-sm position-relative overflow-hidden" style="border-radius: 16px;">
 
             {{-- リボン --}}

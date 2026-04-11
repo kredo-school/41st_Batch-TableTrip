@@ -5,7 +5,7 @@
     <div class="edit-card">
         <h2 class="edit-title">Edit User Account</h2>
 
-        <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data" id="update-form">
+        <form action="{{ route('user.edit') }}" method="POST" enctype="multipart/form-data" id="update-form">
             @csrf
             @method('PUT')
 
@@ -148,6 +148,11 @@
                     <a href="{{ route('dashboard') }}" class="btn-back" onclick="return confirm('You have unsaved changes. Are you sure you want to leave?');">
                         <i class="fa-solid fa-house"></i> Back to Dashboard
                     </a>
+                    @if(request('from') === 'confirm')
+                        <a href="{{ route('cart.confirm') }}" class="btn-back" onclick="return confirm('You have unsaved changes. Are you sure you want to leave?');">
+                            <i class="bi bi-cart me-1"></i> Back to Cart
+                        </a>
+                    @endif
                 </div>
         </form>
 

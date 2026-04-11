@@ -1,52 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Sen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Sen:wght@400;700&display=swap');
 
 .welcome-container {
-    background-color: #f7f5f0 !important;
-    color: #000000 !important;
+    background-color: #f8f5f0 !important; 
+    min-height: 100vh;
     font-family: 'Sen', sans-serif;
 }
 
-.section-header h2 {
+
+.page-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    color: #1b1b18;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #333;
+    border-bottom: 2px solid #d9a09a; 
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
-.item-card {
+.view-all-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+.view-all-link:hover {
+    color: #d9a09a;
+}
+
+.custom-item-card {
     background: #fff;
-    border: 1px solid #e3e3e0;
-    border-radius: 4px; 
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px; 
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.item-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.08) !important;
+.custom-item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
 .img-wrapper {
     width: 100%;
     aspect-ratio: 1 / 1; 
     overflow: hidden;
+    background-color: #f0f0f0;
 }
 
 .img-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    transition: transform 0.5s ease;
 }
+
+.custom-item-card:hover .img-wrapper img {
+    transform: scale(1.05);
+}
+
 
 .item-title {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: #222;
 }
 
-.price {
-    font-size: 0.9rem;
-    font-weight: 700;
+.price-text {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #d9534f; 
+}
+
+
+.badge-custom-kit {
+    background-color: #76c7b0; 
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* データがない時 */
+.no-data-box {
+    background: rgba(255,255,255,0.5);
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    color: #999;
 }
