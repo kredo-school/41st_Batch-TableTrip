@@ -54,7 +54,7 @@
                       @auth
                       
                         {{-- Admin --}}
-                           <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
+                           <a href="{{ route('owner.notifications') }}" class="text-dark fs-4" aria-label="notifications">
                              <i class="bi bi-bell"></i>
                             </a>
 
