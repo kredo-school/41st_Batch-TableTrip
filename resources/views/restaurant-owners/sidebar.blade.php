@@ -30,7 +30,7 @@
             <i class="fa-solid fa-star me-2"></i>Reviews
         </a>
 
-        <a href="" class="list-group-item fs-5 {{ request()->is('owner/notifications') ? 'active' : '' }}">
+        <a href="{{ route('owner.notifications') }}" class="list-group-item fs-5 {{ request()->is('owner/notifications*') ? 'active' : '' }}">
             <i class="fa-regular fa-bell me-2"></i>Notifications
         </a>
 
@@ -72,7 +72,7 @@
                 <i class="fa-solid fa-star me-2"></i>Reviews
             </a>
 
-            <a href="#" class="list-group-item {{ request()->is('owner/notifications') ? 'active' : '' }}">
+            <a href="{{ route('owner.notifications') }}" class="list-group-item {{ request()->is('owner/notifications*') ? 'active' : '' }}">
                 <i class="fa-regular fa-bell me-2"></i>Notifications
             </a>
 
