@@ -385,6 +385,7 @@ color:#FFFFFF;
     background: transparent;
     border: none;
     font-weight: 600;
+    color: #000;
 }
 
 .pagination {
@@ -939,6 +940,34 @@ button,
     color:#fff;
 }
 
+.reviews-table .review-id-col{
+    width:90px;
+}
+
+.reviews-table .review-user-col{
+    width:180px;
+}
+
+.reviews-table .review-restaurant-col{
+    width:220px;
+}
+
+.reviews-table .review-rating-col{
+    width:140px;
+}
+
+.reviews-table .review-comment-col{
+    width:280px;
+}
+
+.reviews-table .review-status-col{
+    width:140px;
+}
+
+.reviews-table .review-created-col{
+    width:120px;
+}
+
 /* Review Detail */
 .review-detail-content{
     display:flex;
@@ -1100,4 +1129,34 @@ button,
 .delete-btn{
     background:#D96B52;
     color:#FFFFFF;
+}
+
+/* Point History */
+.point-history-table .col-id{
+    width:90px;
+}
+
+.point-history-table .col-user{
+    width:180px;
+}
+
+.point-history-table .col-points{
+    width:120px;
+}
+
+.point-history-table .col-type{
+    width:140px;
+}
+
+.point-history-table .col-description{
+    width:240px;
+}
+
+.point-history-table .col-date{
+    width:140px;
+}
+
+.order-status.purchase{
+    background:#B8D9D0;
+    color:#fff;
 }
