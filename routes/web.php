@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardControl
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminInquiryController;
+use App\Http\Controllers\Admin\AdminReviewController;
 
 
 
@@ -159,6 +160,9 @@ Route::prefix('admin')
         Route::get('/reservations/{id}', [AdminReservationController::class, 'show'])
             ->name('reservations.show');
 
+        Route::post('/reservations/{id}/status', [AdminReservationController::class, 'updateStatus'])
+            ->name('reservations.updateStatus');
+
         Route::get('/inquiries', [AdminInquiryController::class, 'index'])
             ->name('inquiries.index');
         
@@ -173,6 +177,19 @@ Route::prefix('admin')
         
         Route::post('/inquiries/{id}/reply', [AdminInquiryController::class, 'sendReply'])
             ->name('inquiries.sendReply');
+
+        Route::get('/reviews', [AdminReviewController::class, 'index'])
+            ->name('reviews.index');
+
+        Route::get('/reviews/{id}', [AdminReviewController::class, 'show'])
+            ->name('reviews.show');
+        
+        Route::patch('/reviews/{id}/status', [AdminReviewController::class, 'updateStatus'])
+            ->name('reviews.updateStatus');
+
+        Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy'])
+            ->name('reviews.destroy');
+
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');

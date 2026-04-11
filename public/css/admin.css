@@ -321,14 +321,6 @@ z-index:1100;
     white-space:nowrap;
 }
 
-/*Action(View)*/
-.action-link{
-    font-family:'Playfair Display', serif;
-    font-size:12px;
-    text-decoration:none;
-    color:#565555;
-}
-
 .action-link:hover{
     color:#000;
 }
@@ -923,4 +915,189 @@ button,
     border-radius:50%;
     background:#7EDC92;
     display:inline-block;
+}
+
+/* reservation PENDING btn */
+.pending-btn{
+    background:#D96B52 !important;
+    color:#FFFFFF;
+}
+
+/* Reviews status用　追加分*/
+.order-status.visible{
+    background:#B8D9D0;
+    color:#FFFFFF;
+}
+
+.order-status.hidden{
+    background:#565555;
+    color:#fff;
+}
+
+.order-status.flagged{
+    background:#D96B52;
+    color:#fff;
+}
+
+/* Review Detail */
+.review-detail-content{
+    display:flex;
+    align-items:stretch;
+    justify-content:center;
+    gap:24px;
+    flex-wrap:nowrap;
+}
+
+.review-user-card{
+    flex:0 0 280px;
+    max-width:280px;
+}
+
+.review-main-card{
+    flex:1;
+    min-width:0;
+}
+
+.review-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    margin-bottom:24px;
+}
+
+.review-rating-block{
+    text-align:right;
+    flex-shrink:0;
+}
+
+.review-info-row{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+}
+
+.review-info-label{
+    color:#FFFFFF;
+    font-family:'Playfair Display', serif;
+    font-size:18px;
+}
+
+
+.review-user-name{
+    color:#565555;
+}
+
+.review-side-label{
+    color:#FFFFFF;
+    font-weight:400;
+}
+
+.review-side-value{
+    color:#565555;
+}
+
+.review-top-block{
+    margin-bottom:8px;
+}
+
+.review-detail-label{
+    color:#FFFFFF;
+    font-family:'Playfair Display', serif;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.review-detail-line{
+    margin-bottom:8px;
+    font-family:'Playfair Display', serif;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.review-detail-label-inline{
+    color:#FFFFFF;
+    font-size:14px;
+    font-weight:400;
+}
+
+.review-detail-id-inline{
+    color:#565555;
+    font-size:14px;
+}
+.review-detail-id{
+    color:#565555;
+    font-family:'Playfair Display', serif;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.review-rating-label{
+    margin-top:8px;
+}
+
+.review-stars-inline{
+    color:#565555;
+    font-size:14px;
+    line-height:1;
+    display:inline-flex;
+    align-items:center;
+    gap:2px;
+}
+
+.review-comment-section{
+    width:100%;
+    text-align:left !important;
+}
+
+.review-comment-label{
+    margin-top:0 !important;
+    margin-bottom:8px !important;
+}
+
+.review-comment-box{
+    width:100%;
+    background:#F8F8F8;
+    border-radius:12px;
+    padding:18px 18px 36px 18px;
+
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:flex-start !important;
+
+    text-align:left !important;
+}
+
+.review-comment-text{
+    width:100%;
+    margin:0 !important;
+    color:#565555;
+    font-size:14px;
+    line-height:1.9;
+    text-align:left !important;
+}
+
+/* Reviews Button */
+.review-action-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.review-action-buttons form{
+    margin:0;
+}
+
+.hidden-btn{
+    background:#f3d36b;
+    color:#FFFFFF;
+}
+
+.delete-btn{
+    background:#D96B52;
+    color:#FFFFFF;
 }

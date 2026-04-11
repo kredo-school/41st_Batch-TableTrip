@@ -22,4 +22,19 @@ class AdminReservationController extends Controller
 
         return view('admin.reservations.show', compact('reservation'));
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $reservation = Reservation::findOrFail($id);
+
+        $reservation->status = $request->status;
+
+        if ($request->status === 'completed') {
+            $reservation->visited_at = now();
+        }
+
+        $reservation->save();
+
+        return back()->with('success', 'Reservation status updated.');
+    }
 }

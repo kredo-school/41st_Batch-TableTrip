@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Review;
 
 class User extends Authenticatable
 {
@@ -87,5 +88,10 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Models\Coupon::class, 'user_coupons')
                     ->withPivot('is_used', 'used_at')
                     ->withTimestamps();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }

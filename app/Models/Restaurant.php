@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Reservation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Review;
 
 class Restaurant extends Authenticatable
 {
@@ -43,5 +44,10 @@ class Restaurant extends Authenticatable
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }

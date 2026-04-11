@@ -12,7 +12,7 @@
 
 <a href="{{ route('admin.reservations.index') }}">Reservations</a>
 <a href="{{ route('admin.inquiries.index') }}">Inquiries</a>
-<a href="#">Reviews</a>
+<a href="{{ route('admin.reviews.index') }}">Reviews</a>
 <a href="#">Restaurants</a>
 <a href="#">Products</a>
 <a href="#">Users</a>
