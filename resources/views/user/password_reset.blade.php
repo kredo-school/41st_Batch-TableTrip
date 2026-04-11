@@ -4,27 +4,32 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/forget.css') }}">
+
 <div class="login-page-wrapper vh-100 d-flex flex-column align-items-center justify-content-center">
-    {{-- title part --}}
+    
+    {{-- Title with Single Underline --}}
     <div class="login-header-container text-center mb-5">
         <h1 class="login-title">Reset Password</h1>
         <div class="login-underline"></div>
     </div>
 
-    {{-- form card --}}
+    {{-- Form Card --}}
     <div class="login-card">
-        <p class="text-muted text-center mb-4">
-            Enter your email address and we'll send you a link to reset your password.
-        </p>
-
+        
+        {{-- Success Message Display --}}
         @if (session('status'))
-            <div class="alert alert-success mb-4" style="border-radius: 12px; font-family: 'Sen', sans-serif;">
+            <div class="alert-success-custom">
                 {{ session('status') }}
             </div>
         @endif
 
-        <form action="#" method="action">
+        <p class="instruction-text text-center">
+            Enter your email address and we'll send you a link to reset your password.
+        </p>
+
+        <form action="{{ route('password.email') }}" method="POST">
             @csrf
+
             {{-- Email Input --}}
             <div class="row mb-5 align-items-center">
                 <label for="email" class="login-label col-sm-4">Email Address</label>
@@ -36,12 +41,12 @@
                 @enderror
             </div>
 
-            {{-- Submit Button --}}
+            {{-- Action Buttons --}}
             <div class="d-flex justify-content-end align-items-center gap-3">
-                <a href="{{ route('login') }}" class="text-muted text-decoration-none small" style="font-family: 'Sen', sans-serif;">
+                <a href="{{ route('login') }}" class="back-link">
                     Back to Login
                 </a>
-                <button type="submit" class="btn-login-submit m-0">
+                <button type="submit" class="btn-login-submit">
                     Send Link
                 </button>
             </div>

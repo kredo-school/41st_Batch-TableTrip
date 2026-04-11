@@ -19,12 +19,6 @@ use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminInquiryController;
 
 
-
-// use App\Http\Controllers\ForgetController;  
-// use App\Http\Controllers\DashboardController; 
-// use App\Http\Controllers\ForgetController;  
-// use App\Http\Controllers\User\PaymentMethodController;  
-
 // use App\Http\Controllers\ForgetPasswordController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
