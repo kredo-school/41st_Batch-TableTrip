@@ -8,10 +8,6 @@
     <h1 class="history-title mb-4">Upcoming Reservations</h1>
 
     <div class="main-selection-wrapper">
-        <div class="main-tab-group mb-5">
-            <div class="main-category-label active-tab">Reservations</div>
-        </div>
-
         <div class="section-reservations">
             <table class="history-table">
                 <thead>
