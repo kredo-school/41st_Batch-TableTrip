@@ -1,0 +1,22 @@
+
+.section-container {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.custom-item-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.italic {
+    font-style: italic;
+    opacity: 0.7;
+}
