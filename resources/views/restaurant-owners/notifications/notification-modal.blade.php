@@ -1,6 +1,7 @@
 <!-- Notification Detail Modal -->
 <div class="modal fade"
-     id="notificationModal"
+     id="notificationModal{{ 
+     $notification->id }}"
      tabindex="-1"
      aria-labelledby="notificationModalLabel"
      aria-hidden="true">
@@ -11,10 +12,8 @@
             <!-- header -->
             <div class="modal-header border-bottom">
                 <h5 class="modal-title d-flex align-items-center gap-2" id="notificationModalLabel">
-
                     <i class="fa-regular fa-calendar"></i>
-                    [Reservation] Special request received
-
+                    {{ $notification->title }}
                 </h5>
 
                 <button type="button"
@@ -22,35 +21,55 @@
                         data-bs-dismiss="modal">
                 </button>
             </div>
+            
+            <div class="modal-body px-4 py-4" style="font-family: 'Sen','sans-serif'">
 
+            @if ($notification->target_type === \App\Models\Reservation::class && $notification->target)    
+                <p>Date: {{ \Carbon\Carbon::parse($notification->target->reservation_date)->format('M d') }}</p>
+                <p>Time: {{ \Carbon\Carbon::parse($notification->target->reservation_time)->format('H:i') }}</p>
+                <p> Customer Name: {{ $notification->target->full_name }}</p>
+                <p> Number of Guests: {{ $notification->target->number_of_people }}</p>
 
-            <!-- body -->
-            <div class="modal-body px-4 py-4" style="font-family: 'Sen','sens-serif'">
+            @if ($notification->target->special_requests)
+                <p class="">
+                    Special Request: {{ $notification->target->special_requests }}
+                </p>
+            @endif
 
-                <p class="mb-3">
-                    Dear Restaurant Owner,
+            <p class="mt-3">Please review the reservation details and take any necessary action.</p>
+
+            @elseif ($notification->target_type === \App\Models\Order::class && $notification->target)
+            <p>Order ID: #{{ $notification->target->id }}</p>
+
+            <p> Total Price: ${{ number_format($notification->target->total_price, 2) }}</p>
+
+            <p>Please review the order details and update the status if needed.</p>
+
+            @elseif ($notification->target_type === \App\Models\Review::class && $notification->target)
+                <p> 
+                    <div class="text-warning">
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= $notification->target->rating)
+                                <i class="fa-solid fa-star text-warning"></i>
+                            @else
+                                <i class="fa-regular fa-star text-warning"></i>
+                            @endif
+                        @endfor
+                    </div>
+                    Rating: {{ $notification->target->rating ?? '-' }}
                 </p>
 
-                <p>
-                    You have received a new reservation for Feb 25th at 19:00.
-                </p>
+            <p>
+                Comment: {{ $notification->target->comment ?? 'No comment provided.' }}
+            </p>
 
-                <p>
-                    The customer has informed us of a peanut allergy and requested a nut-free meal option.
-                </p>
+            @else
+            <p>{{ $notification->message }}</p>
+            @endif
 
-                <p>
-                    Please review the request carefully and ensure that appropriate measures are taken in the kitchen to avoid cross-contamination.
-                </p>
-
-                <p>
-                    Kindly confirm the reservation details at your earliest convenience.
-                </p>
-
-                <div class="text-end text-muted small mt-3">
-                    2 hours ago
-                </div>
-
+            <div class="text-end text-muted small mt-3">
+            {{ $notification->created_at->diffForHumans() }}
+            </div>
             </div>
 
 

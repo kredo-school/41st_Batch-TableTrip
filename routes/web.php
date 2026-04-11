@@ -21,7 +21,6 @@ use App\Http\Controllers\Admin\AdminReviewController;
 
 
 // use App\Http\Controllers\ForgetController;  
-use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -53,6 +52,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Owner\PageManagementController;
 use App\Http\Controllers\Owner\ReviewController as OwnerReviewController;
 use App\Models\User;
+use App\Http\Controllers\Owner\NotificationController as OwnerNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -294,6 +294,10 @@ Route::prefix('owner')->name('owner.')->group(function () {
         // Reviews
         Route::get('/reviews', [OwnerReviewController::class, 'index'])->name('reviews');
         Route::post('/reviews/{id}/reply', [OwnerReviewController::class, 'reply'])->name('reviews.reply');
+
+        // Notifications
+        Route::get('/notifications', [OwnerNotificationController::class, 'index'])->name('notifications');
+        Route::patch('/notifications/{id}/read', [OwnerNotificationController::class, 'markAsRead'])->name('notifications.read');
 
 
 
