@@ -10,16 +10,16 @@
     <div class="card-body">
 
         <div class="orders-table-wrapper">
-            <table class="table align-middle orders-table text-center">
+            <table class="table align-middle orders-table text-center reviews-table">
                 <thead>
                     <tr>
-                        <th style="width:90px;"><span class="th-label">Review ID</span></th>
-                        <th style="width:180px;"><span class="th-label">User</span></th>
-                        <th style="width:220px;"><span class="th-label">Restaurant</span></th>
-                        <th style="width:140px;"><span class="th-label">Rating</span></th>
-                        <th style="width:280px;"><span class="th-label">Comment</span></th>
-                        <th style="width:140px;"><span class="th-label">Status</span></th>
-                        <th style="width:120px;"><span class="th-label">Created</span></th>
+                        <th class="review-id-col"><span class="th-label">Review ID</span></th>
+                        <th class="review-user-col"><span class="th-label">User</span></th>
+                        <th class="review-restaurant-col"><span class="th-label">Restaurant</span></th>
+                        <th class="review-rating-col"><span class="th-label">Rating</span></th>
+                        <th class="review-comment-col"><span class="th-label">Comment</span></th>
+                        <th class="review-status-col"><span class="th-label">Status</span></th>
+                        <th class="review-created-col"><span class="th-label">Created</span></th>
                     </tr>
                 </thead>
                 <tbody>
