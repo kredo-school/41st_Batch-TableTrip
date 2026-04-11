@@ -4,7 +4,6 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ time() }}">
-
 <div class="login-page-wrapper vh-100 d-flex flex-column align-items-center justify-content-center">
         {{-- title part --}}
         <div class="login-header-container text-center mb-5">
