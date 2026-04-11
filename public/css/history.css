@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Sen:wght@400;700&display=swap');
 
-
 .history-container {
     max-width: 900px;
     margin: 0 auto;
     font-family: 'Sen', sans-serif;
 }
 
-.history-title, .history-table th {
+.history-title, .sub-title, .history-table th {
     font-family: 'Playfair Display', serif;
 }
 
@@ -17,28 +16,41 @@
     border-bottom: 1px solid #e2725b;
     display: inline-block;
     padding-bottom: 5px;
-    margin-bottom: 30px;
 }
 
-.main-tab-group {
-    display: flex;
-    justify-content: center;
+.sub-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
 }
 
-.main-category-label.active-tab {
-    background-color: #000;
-    color: #fff;
+
+.section-orders, .section-reservations, .content-upcoming, .content-past {
+    display: none;
+}
+
+#main-orders:checked ~ .section-orders { display: block; }
+#main-reservations:checked ~ .section-reservations { display: block; }
+#main-orders:checked ~ .main-tab-group label[for="main-orders"],
+#main-reservations:checked ~ .main-tab-group label[for="main-reservations"] {
+    background-color: #000; color: #fff;
+}
+
+#tab-upcoming:checked ~ .content-upcoming { display: table !important; width: 100%; }
+#tab-past:checked ~ .content-past { display: table !important; width: 100%; }
+#tab-upcoming:checked ~ .tab-labels-container label[for="tab-upcoming"],
+#tab-past:checked ~ .tab-labels-container label[for="tab-past"] {
+    background-color: #000; color: #fff;
+}
+
+.main-category-label, .tab-label {
     display: inline-block;
     border: 1px solid #d1cfc0;
     padding: 10px 30px;
+    cursor: pointer;
     font-weight: 700;
+    transition: 0.2s;
+    background: #fff;
     min-width: 160px;
-}
-
-
-.section-reservations-fixed {
-    display: block !important; 
-    width: 100%;
 }
 
 .history-table {
@@ -54,23 +66,31 @@
     padding: 12px;
     background-color: #fff; 
     font-weight: 600;
-    text-align: center;
 }
 
 .history-table td {
     border: 1px solid #d1cfc0;
-    padding: 20px 15px;
+    padding: 15px;
     vertical-align: middle;
-    text-align: center;
-}
-.no-data {
-    padding: 60px !important; 
-    color: #333;
-    font-style: italic;
-    background-color: #fff;
 }
 
-/* 下部ボタン */
+.no-data {
+    padding: 40px !important;
+    color: #333;
+    font-style: italic;
+}
+
+.history-container input[type="radio"] {
+    display: none;
+}
+
+.separator-line {
+    border: 0;
+    border-top: 1px solid #e2725b;
+    margin: 30px 0;
+}
+
+
 .btn-dashboard-back {
     display: inline-block;
     padding: 10px 25px;
@@ -87,12 +107,10 @@
     background-color: #f7f5f0;
 }
 
-/* アクションボタン */
 .btn-delete-link {
     background: none;
     border: none;
     color: #e2725b;
     font-weight: 700;
     text-decoration: underline;
-    cursor: pointer;
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Reservation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Review;
 use App\Models\Category;
 use App\Models\Menu;
 use App\Models\AbleImage;
@@ -49,6 +50,11 @@ class Restaurant extends Authenticatable
         return $this->belongsTo(Category::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+  
     public function images()
     {
         return $this->morphMany(AbleImage::class, 'target');

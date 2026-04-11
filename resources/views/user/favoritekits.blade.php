@@ -3,36 +3,38 @@
 @section('title', 'Favorite Kits')
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/favorite.css') }}">
 
-<div class="container py-5 d-flex flex-column align-items-center">
-    <div class="card purchase-card p-4 shadow-sm">
-        <h2 class="mb">My Favorites</h2>
-        <div class="selection-group mb-4">
-            <input type="radio" name="fav-tab" id="go-restaurants" onchange="location.href='{{ route('favorite_restaurants') }}'">
-            <label for="go-restaurants">Restaurants</label>
+<div class="container py-5 d-flex flex-column align-items-center favorite-page">
+    
+    <h2 class="page-title mb-4">My Favorites</h2>
 
-            <input type="radio" name="fav-tab" id="stay-kits" checked>
-            <label for="stay-kits">Kits</label>
+    <div class="favorite-content-wrapper">
+        <div class="favorite-header-tabs">
+            <div class="tab-item {{ request()->routeIs('user.favorite_restaurants') ? 'active' : '' }}" 
+                 onclick="location.href='{{ route('user.favorite_restaurants') }}'">
+                Restaurants
+            </div>
+            <div class="tab-item active"> Kits
+            </div>
         </div>
-        <hr>
 
-        <div class="purchase-list-container">
+        <div class="favorite-list-body">
             @forelse($favorite_kits as $kit)
-                <div class="purchase-item">
+                <div class="purchase-item border-bottom">
                     <div class="item-info">
                         <div class="item-date">Added on: {{ $kit->created_at->format('d/m/y') }}</div>
-                        <div class="item-status">Available</div>
+                        <div class="item-status text-success">Available</div>
 
                         <div class="row align-items-center">
                             <div class="col-sm-7">
-                                <div class="product-name">{{ $kit->product->name ?? 'Meal Kit Name' }}</div>
-                                <div class="restaurant-name">{{ $kit->product->restaurant_name ?? '' }}</div>
+                                <div class="product-name fw-bold">{{ $kit->product->name ?? 'Meal Kit Name' }}</div>
+                                <div class="restaurant-name text-muted small">{{ $kit->product->restaurant_name ?? '' }}</div>
                             </div>
-                            <div class="col-sm-5 item-details">
+                            <div class="col-sm-5 item-details text-end">
                                 <div class="fw-bold text-danger">{{ number_format($kit->product->price ?? 0) }}円</div>
-                                <div class="mt-2 d-flex gap-3">
-                                    <form action="{{ route('favorites.toggle') }}" method="POST" class="d-inline">
+                                <div class="mt-2 d-flex gap-3 justify-content-end">
+                                    <form action="{{ route('favorite.toggle') }}" method="POST" class="d-inline">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $kit->product_id }}">
                                         <button type="submit" class="btn p-0 border-0 bg-transparent">
@@ -50,19 +52,22 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="item-image d-none d-md-block">
-                        <img src="{{ asset('storage/' . ($kit->product->image ?? '')) }}" onerror="this.src='{{ asset('images/journykit.png') }}'" alt="Product">
+                    <div class="item-image d-none d-md-block ms-3">
+                        <img src="{{ asset('storage/' . ($kit->product->image ?? '')) }}" 
+                             onerror="this.src='{{ asset('images/journykit.png') }}'" 
+                             alt="Product" style="width: 100px; height: auto; border-radius: 4px;">
                     </div>
                 </div>
             @empty
-                <p class="text-center p-5 text-muted">No favorite kits found.</p>
+                <div class="no-data-message">
+                    No favorite kits found.
+                </div>
             @endforelse
         </div>
     </div>
 
-    <div class="btn-container">
-        <a href="{{ route('dashboard') }}" class="btn-back">
+    <div class="mt-5">
+        <a href="{{ route('dashboard') }}" class="btn-back-custom">
             <i class="fa-solid fa-house"></i> Back to Dashboard
         </a>
     </div>

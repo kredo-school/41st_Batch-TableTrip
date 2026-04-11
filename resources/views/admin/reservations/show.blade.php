@@ -99,14 +99,38 @@
                 </div>
             </div>
         </div>
+        <div class="inquiry-action-buttons mt-4">
+            <form action="{{ route('admin.reservations.updateStatus', $reservation->id) }}" method="POST">
+                @csrf
+                <input type="hidden" name="status" value="pending">
+                <button class="status-action-btn pending-btn">Pending</button>
+            </form>
 
+            <form action="{{ route('admin.reservations.updateStatus', $reservation->id) }}" method="POST">
+                @csrf
+                <input type="hidden" name="status" value="confirmed">
+                <button class="status-action-btn replied-btn">Confirmed</button>
+            </form>
+
+            <form action="{{ route('admin.reservations.updateStatus', $reservation->id) }}" method="POST">
+                @csrf
+                <input type="hidden" name="status" value="completed">
+                <button class="status-action-btn open-btn">Completed</button>
+            </form>
+
+            <form action="{{ route('admin.reservations.updateStatus', $reservation->id) }}" method="POST">
+                @csrf
+                <input type="hidden" name="status" value="cancelled">
+                <button class="status-action-btn flagged-btn">Cancelled</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<div class="text-center mt-5">
-    <a href="{{ route('admin.reservations.index') }}" class="back-link">
-        Back to list
-    </a>
+    <div class="text-center mt-5">
+        <a href="{{ route('admin.reservations.index') }}" class="back-link">
+            Back to list
+        </a>
+    </div>
 </div>
 
 @endsection
