@@ -4,14 +4,23 @@
 <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 @endpush
 
-@push('scripts')
-<script src="{{ asset('js/welcome.js') }}" defer></script>
-@endpush
-
 @section('content')
-<div class="welcome-container py-5">
-    <div class="container">
-        {{-- Restaurants Section --}}
+<div class="welcome-container">
+    
+    <div class="hero-section">
+        <div class="hero-overlay">
+            <div class="container text-center">
+                <h1 class="hero-title">Experience the Art of Dining</h1>
+                <p class="hero-subtitle">Premium restaurant reservations & chef-curated meal kits delivered to your door.</p>
+                <div class="hero-buttons mt-4">
+                    <a href="{{ route('search') }}" class="btn-hero-primary">Book a Table</a>
+                    <a href="{{ route('products.index') }}" class="btn-hero-secondary">Order Meal Kits</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
                 <h2 class="page-title m-0">Featured Restaurants</h2>
@@ -42,7 +51,6 @@
             @endforelse
         </div>
 
-        {{-- Meal Kits Section --}}
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
                 <h2 class="page-title m-0">Signature Meal Kits</h2>
