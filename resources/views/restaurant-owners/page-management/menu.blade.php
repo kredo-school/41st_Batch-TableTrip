@@ -30,7 +30,7 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($menus as $menu)
+                            @forelse ($menus as $menu)
                                 <tr>
                                     <td class="ps-4">
                                         @if($menu->image)
@@ -51,7 +51,13 @@
                                         data-bs-toggle="modal" data-bs-target="#deleteMenuModal-{{ $menu->id }}">
                                         <i class="fa-regular fa-trash-can fs-4 text-danger"></i>
                                      </button>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        No Menus found.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                     {{ $menus->links('layouts.pagination.custom') }}

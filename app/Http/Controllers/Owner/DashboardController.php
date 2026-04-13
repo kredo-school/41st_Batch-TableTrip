@@ -19,6 +19,7 @@ class DashboardController extends Controller
     public function index(){
 
         $owner = Auth::guard('restaurant')->user();
+        $restaurant = Restaurant::find($owner->id);
 
         //Reservations for today
         $todayReservations = Reservation::Where('restaurant_id',$owner->id)
@@ -91,6 +92,6 @@ class DashboardController extends Controller
         $topProduct = $topProducts->first();
         $topProductCount = $topProduct ? $topProduct->total_quantity : 0;
 
-        return view('restaurant-owners.dashboard',compact('todayReservations','reservationCount','pendingOrders','pendingReservations','orders','notificationCount','labels','data','productLabels','productData','topProduct','topProductCount') );
+        return view('restaurant-owners.dashboard',compact('todayReservations','reservationCount','pendingOrders','pendingReservations','orders','notificationCount','labels','data','productLabels','productData','topProduct','topProductCount','restaurant') );
     }
 }

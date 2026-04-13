@@ -10,7 +10,7 @@
             <div class="w-75 mx-auto">
                 <h1 class="text-underline-accent mb-4 ">Reviews</h1>
             </div>
-            @foreach ($reviews as $review)
+            @forelse($reviews as $review)
                 {{-- Review Card : reply form --}}
                 <div class="card border rounded-0 mb-4 shadow-sm w-75 mx-auto">
                     <div class="card-body p-4">
@@ -19,12 +19,11 @@
                         <div class="d-flex justify-content-between align-items-start mb-4">
                             <div class="d-flex align-items-start">
                                 <div class="me-3">
-                                    @if (optional($review->user->profile_picture))
+                                    @if (!empty($review->user->profile_picture))
                                         <img src="{{ asset('storage/'.$review->user->profile_picture) }}" alt="" class="review-icon rounded-circle">
                                     @else
                                        <i class="fa-solid fa-circle-user fs-1 text-dark"></i>
                                     @endif
-                                    
                                 </div>
 
                                 <div>
@@ -74,7 +73,11 @@
                         @endif
                     </div>
                 </div>
-            @endforeach
+                 @empty
+                    <div>
+                           <p class="text-center text-muted mt-5 fs-3">No reviews yet.</p>
+                    </div>
+                @endforelse
              {{ $reviews->links('layouts.pagination.custom') }}
         </div>
     </div>
