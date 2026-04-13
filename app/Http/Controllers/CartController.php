@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Purchased;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\User;
 
 class CartController extends Controller
 {
@@ -67,11 +68,14 @@ class CartController extends Controller
             : back();
     }
 
-    public function confirm()
+        public function confirm()
     {
         $cart  = session('cart', []);
         $total = array_sum(array_map(fn($i) => $i['product']['price'] * $i['quantity'], $cart));
-        return view('products.confirm', compact('cart', 'total'));
+
+        $user = auth()->user();
+
+        return view('products.confirm', compact('cart', 'total', 'user'));
     }
 
     public function thanks()

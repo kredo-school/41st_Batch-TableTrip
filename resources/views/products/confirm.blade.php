@@ -89,9 +89,9 @@
         <div class="mb-3 mt-3 position-relative">
             <h5 class="fw-bold mb-3">Shipping Address</h5>
             <div class="ps-3 small">
-                <p class="mb-1">Name : Taro Yamada</p>
-                <p class="mb-1">Address : 1-2-3 Kita-ku, Sapporo-shi, Hokkaido, Japan 060-0000</p>
-                <p class="mb-1">Phone : +81 80-1234-5678</p>
+                <p class="mb-1">Name : {{ $user->last_name }} {{ $user->first_name }}</p>
+                <p class="mb-1">Address : {{ $user->address }} {{ $user->zip_code }}</p>
+                <p class="mb-1">Phone : {{ $user->tel }}</p>
             </div>
             <a href="{{ route('user.edit') }}?from=confirm" class="text-dark position-absolute bottom-0 end-0 p-2" style="font-size: 1.2rem;">
                 <i class="bi bi-pencil-square"></i>
