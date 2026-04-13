@@ -47,12 +47,12 @@
                         @auth
                         @if (Auth::user()->is_admin )  
                         {{-- Admin --}}
-                            <form method="POST" action="{{ route('logout') }}" class="m-0">
-                                @csrf
-                                    <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
-                                        Logout
-                                    </button>
-                            </form>
+                        <form method="POST" action="{{ route('admin.logout') }}" class="admin-logout-form">
+                            @csrf
+                            <button type="submit" class="admin-logout-btn">
+                                Logout
+                            </button>
+                        </form>
 
 
       

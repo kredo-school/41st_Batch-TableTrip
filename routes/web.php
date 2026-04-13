@@ -22,7 +22,6 @@ use App\Http\Controllers\Admin\AdminRewardController;
 
 
 // use App\Http\Controllers\ForgetController;  
-use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -203,9 +202,10 @@ Route::prefix('admin')
             ->name('reviews.destroy');
 
         Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
-            ->name('rewards.points.history');
+            ->name('rewards.point-history');
 
-        // Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
+        Route::get('/rewards', [AdminRewardController::class, 'dashboard'])
+            ->name('rewards.dashboard');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');

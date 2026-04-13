@@ -58,5 +58,11 @@
     </ul>
 @endif
 
+<div class="back-link-wrapper">
+    <a href="{{ route('admin.rewards.dashboard') }}" class="back-dashboard-link">
+        ← Back to Reward Dashboard
+    </a>
+</div>
+
 
 @endsection
