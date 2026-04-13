@@ -123,11 +123,11 @@
 
                 {{-- Buttons --}}
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <button type="submit" name="action" value="draft" class="btn btn-outline-orange px-5">
+                    <button type="submit" name="status" value="draft" class="btn btn-outline-orange px-5">
                         Save Draft
                     </button>
 
-                    <button type="submit" name="action" value="publish" class="btn btn-orange px-5">
+                    <button type="submit" name="status" value="published" class="btn btn-orange px-5">
                         Publish
                     </button>
                 </div>
