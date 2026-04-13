@@ -12,7 +12,7 @@
 
 <a href="{{ route('admin.reservations.index') }}">Reservations</a>
 <a href="{{ route('admin.inquiries.index') }}">Inquiries</a>
-<a href="#">Reviews</a>
+<a href="{{ route('admin.reviews.index') }}">Reviews</a>
 <a href="#">Restaurants</a>
 <a href="#">Products</a>
 <a href="#">Users</a>
@@ -25,7 +25,7 @@
 
    <div class="submenu">
       <a href="/admin/coupons">Coupons</a>
-      <a href="/admin/points">Points</a>
+      <a href="{{ route('admin.rewards.points.history') }}">Point History</a>
       <a href="/admin/stamps">Stamp Rally</a>
    </div>
 

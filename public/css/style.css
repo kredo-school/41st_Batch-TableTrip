@@ -159,13 +159,17 @@ profile-default-svg {
     font-family:'Playfair Display',serif;
     font-size:2.5rem;
     color:#000000;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    text-decoration: none !important; 
+    border-bottom: none !important;   
+    display: inline-block;
 }
-.login-underline{
-    width:250px;
-    height:3px;
-    background-color:#d4a373;
-    margin:0 auto;
+.login-underline {
+    width: 200px; 
+    height: 2px;  
+    background-color: #d9a09a; 
+    margin: 0 auto;
+    border: none; 
 }
 .login-card{
     background-color:#fffdf9;
@@ -938,4 +942,51 @@ label {
     color: #ff7851 !important; 
     padding: 5px;
     font-size: 1.2rem;
+}
+
+
+/* purchased */
+
+.history-container .content-upcoming, 
+.history-container .content-past {
+    display: none;
+}
+
+.history-container #tab-orders:checked ~ .content-upcoming {
+    display: table !important; 
+    width: 100%;
+}
+
+.history-container #tab-visits:checked ~ .content-past {
+    display: table !important;
+    width: 100%;
+}
+
+.history-container input[type="radio"][name="history-tab"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #d1cfc0;
+}
+
+.history-table th {
+    background-color: #f7f5f0;
+    border: 1px solid #d1cfc0;
+    padding: 12px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+.history-table td {
+    padding: 15px;
+    border: 1px solid #d1cfc0;
+    vertical-align: middle;
 }

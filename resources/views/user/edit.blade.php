@@ -5,7 +5,7 @@
     <div class="edit-card">
         <h2 class="edit-title">Edit User Account</h2>
 
-        <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data" id="update-form">
+        <form action="{{ route('user.edit') }}" method="POST" enctype="multipart/form-data" id="update-form">
             @csrf
             @method('PUT')
 

@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TableTrip') }}|@yield('title')</title>
+        <title>{{ config('app.name', 'TableTrip') }} | @yield('title')</title>
+
+        <link rel="icon" href="{{ asset('images/logo.png') }}">
 
          <!--Fontawesome-->
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -73,7 +75,7 @@
                         @else
                         {{-- Normal User --}}
                             {{-- Normal User --}}
-                            <a href="/notifications" class="text-dark fs-4" aria-label="notifications">
+                            <a href="{{ route('user.notifications.index') }}" class="text-dark fs-4" aria-label="notifications">
                                 <i class="bi bi-bell"></i>
                             </a>
 
@@ -132,7 +134,7 @@
 
                                     {{-- Logout --}}
                                     <li>
-                                        <form action="/logout" method="POST" class="m-0">
+                                        <form action="{{ route('user.logout') }}" method="POST" class="m-0">
                                             @csrf 
                                             <button type="submit" class="dropdown-item text-danger">
                                                 <i class="bi bi-box-arrow-right me-2"></i> Logout

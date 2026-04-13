@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Sen:wght@400;700&display=swap');
+
+.login-page-wrapper {
+    background-color: #f8f5f0 !important;
+    min-height: 100vh;
+    font-family: 'Sen', sans-serif;
+}
+
+/* Title and the Single Underline (Strictly one line) */
+.login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #000000;
+    margin-bottom: 10px;
+    text-decoration: none !important; /* Removes default link underline */
+    border-bottom: none !important;   /* Ensures no double lines from borders */
+    display: block;
+}
+
+.login-underline {
+    width: 200px;
+    height: 1.5px;
+    background-color: #d9a09a; /* Pink-gold accent line */
+    margin: 0 auto;
+    border: none;
+}
+
+/* Card and Alerts */
+.login-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    padding: 60px 80px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.alert-success-custom {
+    background-color: #f0f9f7;
+    border: 1px solid #76c7b0;
+    color: #2d5a4e;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Form Styling */
+.instruction-text {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.login-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.login-input {
+    width: 100%;
+    border: 1px solid #d1cfc0;
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    outline: none;
+}
+
+.login-input:focus {
+    border-color: #d9a09a;
+}
+
+/* Buttons */
+.btn-login-submit {
+    background-color: #d9a09a;
+    color: #fff;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login-submit:hover {
+    background-color: #c58e88;
+    transform: translateY(-2px);
+}
+
+.back-link {
+    color: #888;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: #d9a09a;
+}
