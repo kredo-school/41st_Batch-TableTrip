@@ -308,7 +308,7 @@
                         <div class="d-flex align-items-start gap-3">
                             <i class="bi bi-person-circle fs-2"></i>
                             <div class="flex-grow-1">
-                            <div class="fw-semibold">Delicious Restaurant</div>
+                            <div class="fw-semibold">This is a dummy review</div>
                             <div class="small text-warning">★★★★★</div>
                             <div class="small text-muted mt-1">
                                 The sushi was incredibly fresh and beautifully presented...

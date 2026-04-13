@@ -4,18 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-class Review extends Model
-{
-    use HasFactory;
-
-    protected $fillable = [
-        'user_id',
-        'restaurant_id',
-        'rating',
-        'comment',
-        'status',
-    ];
+use App\Models\Restaurant;
+use App\Models\User;
+use App\Models\Product;
 
     public function user()
     {
