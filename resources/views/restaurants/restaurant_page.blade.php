@@ -64,7 +64,7 @@
       {{-- Bootstrap carousel --}}
       <div id="menuCarousel" class="carousel slide" data-bs-ride="false">
         <div class="carousel-inner">
-           @foreach ($menus->chunk(4) as $chunkIndex => $menuChunk)
+           @forelse ($menus->chunk(4) as $chunkIndex => $menuChunk)
                 <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
                     <div class="row g-3 justify-content-center">
                         @foreach ($menuChunk as $menu)
@@ -80,7 +80,11 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                            @empty
+                                <div class="col-12">
+                                    <div class="no-data-box text-center p-5">No menus available yet.</div>
+                                </div>                    
+                        @endforelse
                     </div>
                 </div>
             @endforeach
@@ -243,11 +247,11 @@
 
         <div class="carousel-inner">
 
-        @foreach ($products->chunk(3) as $index => $productChunk)
+        @forelse ($products->chunk(3) as $index => $productChunk)
               <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                   <div class="row g-4 justify-content-center">
 
-                      @foreach ($productChunk as $product)
+                      @forelse ($productChunk as $product)
                           <div class="col-12 col-md-4">
                               <div class="card border-0 bg-transparent">
                                 <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
@@ -265,8 +269,12 @@
 
                               </div>
                           </div>
-                      @endforeach
-
+                          @empty
+                           <div class="col-12">
+                              <div class="no-data-box text-center p-5">No meal kits available yet.</div>
+                          </div>
+                      @endforelse
+                         
                   </div>
               </div>
           @endforeach
