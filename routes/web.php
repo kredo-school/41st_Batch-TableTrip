@@ -12,12 +12,13 @@ use App\Http\Controllers\DashboardController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminInquiryController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminRewardController;
+use App\Http\Controllers\Admin\AdminRestaurantController;
 
 
 
@@ -200,7 +201,19 @@ Route::prefix('admin')
 
         Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy'])
             ->name('reviews.destroy');
+        
+        Route::get('/restaurants', [AdminRestaurantController::class, 'index'])
+            ->name('restaurants.index');
+        
+        Route::get('/restaurants/{id}', [AdminRestaurantController::class, 'show'])
+            ->name('restaurants.show');
 
+        Route::patch('/restaurants/{id}/approve', [AdminRestaurantController::class, 'approve'])
+            ->name('restaurants.approve');
+
+        Route::patch('/restaurants/{id}/reject', [AdminRestaurantController::class, 'reject'])
+            ->name('restaurants.reject');
+            
         Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
             ->name('rewards.point-history');
 

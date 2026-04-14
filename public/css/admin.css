@@ -1402,3 +1402,91 @@ button,
         text-align: left;
     }
 }
+
+/* Restaurant index*/
+.restaurants-table .col-id {
+    width: 90px;
+}
+
+.restaurants-table .col-name {
+    width: 220px;
+}
+
+.restaurants-table .col-email {
+    width: 240px;
+}
+
+.restaurants-table .col-prefecture {
+    width: 140px;
+}
+
+.restaurants-table .col-status {
+    width: 140px;
+}
+
+.restaurants-table .col-date {
+    width: 140px;
+}
+
+/* レストラン用ステータス*/
+.order-status.pending {
+    background: #D96B52;
+    color: #fff;
+}
+
+.order-status.approved {
+    background: #B8D9D0;
+    color: #fff;
+}
+
+.order-status.rejected {
+    background: #565555;
+    color: #fff;
+}
+
+.restaurant-application-card{
+    background:#ffffff;
+    box-shadow:0 4px 14px rgba(0,0,0,0.06);
+}
+
+.dot.approved{
+    background:#B8D9D0;
+}
+
+.dot.pending{
+    background:#D96B52;
+}
+
+.dot.rejected{
+    background:#565555;
+}
+
+.action-btn{
+    min-width: 80px;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover{
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+
+.approve-btn{
+    background: #FFFFFF;
+    color: #B8D9D0;
+}
+
+.reject-btn{
+    background: #565555;
+}
