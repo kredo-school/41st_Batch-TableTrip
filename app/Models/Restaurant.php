@@ -27,6 +27,7 @@ class Restaurant extends Authenticatable
         'category_id',
         'reservation_limit',
         'approval_status',
+        'status',
         'approved_at',
         'password',
     ];

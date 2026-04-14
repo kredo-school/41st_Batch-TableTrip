@@ -89,7 +89,7 @@
         <div class="mb-3 mt-3 position-relative">
             <h5 class="fw-bold mb-3">Shipping Address</h5>
             <div class="ps-3 small">
-                <p class="mb-1">Name : {{ $user->first_name ?? '' }} {{ $user->last_name ?? '' }}</p>
+                <p class="mb-1">Name : {{ $user->last_name ?? '' }} {{ $user->first_name ?? '' }}</p>
                 <p class="mb-1">Address : {{ $user->address ?? 'Not set' }}</p>
                 <p class="mb-1">Phone : {{ $user->tel ?? 'Not set' }}</p>
             </div>
