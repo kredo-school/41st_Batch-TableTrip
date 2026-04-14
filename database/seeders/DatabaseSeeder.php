@@ -15,19 +15,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'user_name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
 
         \App\Models\Category::firstOrCreate(
             ['name' => 'Meal Kit']
         );
 
-        $this->call(ProductSeeder::class);
+        $this->call([
+            UserSeeder::class,
+            PaymentMethodsSeeder::class,
+        ]);
 
-        $this->call([ReservationSeeder::class]);
+        $this->call([
+            ProductSeeder::class,
+            ReservationSeeder::class,
+        ]);
+
+        
+        User::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'User',
+            'user_name' => 'Test User',
+            'email' => 'test@example.com',
+            'tel' => '0000000000',  
+            'country' => 'Japan',    
+        ]);
     }
 }
