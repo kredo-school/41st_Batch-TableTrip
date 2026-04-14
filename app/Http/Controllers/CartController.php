@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Purchased;
+use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -69,9 +70,11 @@ class CartController extends Controller
 
     public function confirm()
     {
-        $cart  = session('cart', []);
-        $total = array_sum(array_map(fn($i) => $i['product']['price'] * $i['quantity'], $cart));
-        return view('products.confirm', compact('cart', 'total'));
+        $cart          = session('cart', []);
+        $total         = array_sum(array_map(fn($i) => $i['product']['price'] * $i['quantity'], $cart));
+        $user          = Auth::user();
+        $paymentMethod = $user ? PaymentMethod::where('user_id', $user->id)->where('is_default', true)->first() : null;
+        return view('products.confirm', compact('cart', 'total', 'user', 'paymentMethod'));
     }
 
     public function thanks()

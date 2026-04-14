@@ -89,9 +89,9 @@
         <div class="mb-3 mt-3 position-relative">
             <h5 class="fw-bold mb-3">Shipping Address</h5>
             <div class="ps-3 small">
-                <p class="mb-1">Name : Taro Yamada</p>
-                <p class="mb-1">Address : 1-2-3 Kita-ku, Sapporo-shi, Hokkaido, Japan 060-0000</p>
-                <p class="mb-1">Phone : +81 80-1234-5678</p>
+                <p class="mb-1">Name : {{ $user->first_name ?? '' }} {{ $user->last_name ?? '' }}</p>
+                <p class="mb-1">Address : {{ $user->address ?? 'Not set' }}</p>
+                <p class="mb-1">Phone : {{ $user->tel ?? 'Not set' }}</p>
             </div>
             <a href="{{ route('user.edit') }}?from=confirm" class="text-dark position-absolute bottom-0 end-0 p-2" style="font-size: 1.2rem;">
                 <i class="bi bi-pencil-square"></i>
@@ -104,9 +104,12 @@
         <div class="mb-3 mt-3 position-relative">
             <h5 class="fw-bold mb-3">Payment Method</h5>
             <div class="ps-3 small">
-                <p class="mb-1">Payment : VISA **** **** 9012</p>
-                <p class="mb-1">Expiry Date : 2030/05/28</p>
-                <p class="mb-1">Cardholder: TARO YAMADA</p>
+                @if($paymentMethod)
+                    <p class="mb-1">Payment : {{ $paymentMethod->brand }} **** **** {{ $paymentMethod->last4 }}</p>
+                    <p class="mb-1">Expiry Date : {{ $paymentMethod->exp_year }}/{{ str_pad($paymentMethod->exp_month, 2, '0', STR_PAD_LEFT) }}</p>
+                @else
+                    <p class="mb-1 text-muted">No payment method registered.</p>
+                @endif
             </div>
             <a href="{{ route('user.payment_method.index') }}?from=confirm" class="text-dark position-absolute bottom-0 end-0 p-2" style="font-size: 1.2rem;">
                 <i class="bi bi-pencil-square"></i>
