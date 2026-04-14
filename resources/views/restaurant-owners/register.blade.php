@@ -68,7 +68,7 @@
         @csrf
         <div class="mb-3">
             <label for="restaurant_name" class="text-white">Restaurant Name</label>
-            <input type="text" class="form-control bg-white" id="restaurant_name" name="restaurant_name" autofocus>
+            <input type="text" class="form-control bg-white @error('restaurant_name') is-invalid @enderror" value="{{ old('restaurant_name') }}"  id="restaurant_name" name="restaurant_name" autofocus>
              @error('restaurant_name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -77,7 +77,7 @@
         </div>
         <div class="mb-3">
             <label for="email" class="text-white">Email</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="email" name="email">
              @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -86,7 +86,7 @@
         </div>
         <div class="mb-3">
             <label for="phone" class="text-white">Phone Number</label>
-            <input type="text" class="form-control" id="phone" name="phone">  
+            <input type="text" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" id="phone" name="phone">  
              @error('phone')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -98,7 +98,7 @@
 
             <div class="col-md-6">
                 <label for="prefecture" class="text-white form-label">Prefecture</label>
-                <select class="form-select" id="prefecture" name="prefecture" style="border: none;">
+                <select class="form-select @error('prefecture') is-invalid @enderror" id="prefecture" name="prefecture" style="border: none;">
                     <option value="" selected disabled>Select Prefecture</option>
                     <option value="Hokkaido">Hokkaido</option>
                     <option value="Fukuoka">Fukuoka</option>
@@ -116,7 +116,7 @@
 
             <div class="col-md-6">
                 <label for="city" class="text-white form-label">City</label>
-                <input type="text" class="form-control" id="city" name="city">
+                <input type="text" class="form-control @error('city') is-invalid @enderror" value="{{ old('city') }}" id="city" name="city">
                  @error('city')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -127,7 +127,7 @@
         </div>
         <div class="mb-3">
             <label for="address_line" class="text-white form-label">Address Line</label>
-            <input type="text" class="form-control" id="address_line" name="address_line">
+            <input type="text" class="form-control @error('address_line') is-invalid @enderror" value="{{ old('address_line') }}" id="address_line" name="address_line">
              @error('address_line')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -136,7 +136,7 @@
         </div>
         <div class="mb-3">
             <label for="password" class="text-white form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password">
+            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
              @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -145,7 +145,7 @@
         </div>
         <div class="mb-5">
             <label for="password_confirmation" class="text-white form-label">Password Confirm</label>
-            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation">
              @error('password_confirmation')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

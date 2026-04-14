@@ -11,6 +11,7 @@ use App\Models\Review;
 use App\Models\Category;
 use App\Models\Menu;
 use App\Models\AbleImage;
+use App\Models\Notification;
 
 class Restaurant extends Authenticatable
 {
@@ -49,7 +50,7 @@ class Restaurant extends Authenticatable
         return $this->belongsTo(Category::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
@@ -83,5 +84,10 @@ class Restaurant extends Authenticatable
         return $this->hasOne(AbleImage::class, 'target_id')
         ->where('target_type', 'restaurant')
         ->where('display_order', 3);
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'recipient');
     }
 }

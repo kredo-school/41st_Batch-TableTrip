@@ -159,13 +159,17 @@ profile-default-svg {
     font-family:'Playfair Display',serif;
     font-size:2.5rem;
     color:#000000;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    text-decoration: none !important; 
+    border-bottom: none !important;   
+    display: inline-block;
 }
-.login-underline{
-    width:250px;
-    height:3px;
-    background-color:#d4a373;
-    margin:0 auto;
+.login-underline {
+    width: 200px; 
+    height: 2px;  
+    background-color: #d9a09a; 
+    margin: 0 auto;
+    border: none; 
 }
 .login-card{
     background-color:#fffdf9;

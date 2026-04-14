@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\User\ForgetPasswordController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -22,7 +23,7 @@ use App\Http\Controllers\Admin\AdminRestaurantController;
 
 
 
-// use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\ForgetPasswordController;  
 use App\Http\Controllers\ForgetController;  
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -54,6 +55,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Owner\PageManagementController;
 use App\Http\Controllers\Owner\ReviewController as OwnerReviewController;
 use App\Models\User;
+use App\Http\Controllers\Owner\NotificationController as OwnerNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,14 +76,19 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 |--------------------------------------------------------------------------
 */
 Route::middleware('guest')->group(function () {
+    // Login
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
+    // Register
     Route::get('/user-register', [RegisterController::class, 'show'])->name('register.show');
     Route::post('/user-register', [RegisterController::class, 'store'])->name('register.store');
-    Route::get('forgot-password', [ForgetController::class, 'show'])->name('password.request');
-    Route::post('forgot-password', [ForgetController::class, 'store'])->name('password.email');
+    // Password Reset 
+   Route::get('forgot-password', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('forgot-password', [ForgetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    // Reset Password (Step 2)
+    Route::get('reset-password/{token}', [ForgetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('reset-password', [ForgetPasswordController::class, 'updatePassword'])->name('password.update');
 });
-
 /*
 |--------------------------------------------------------------------------
 | Authenticated User Routes (Auth)
@@ -310,31 +317,15 @@ Route::prefix('owner')->name('owner.')->group(function () {
         Route::get('/reviews', [OwnerReviewController::class, 'index'])->name('reviews');
         Route::post('/reviews/{id}/reply', [OwnerReviewController::class, 'reply'])->name('reviews.reply');
 
+        // Notifications
+        Route::get('/notifications', [OwnerNotificationController::class, 'index'])->name('notifications');
+        Route::patch('/notifications/{id}/read', [OwnerNotificationController::class, 'markAsRead'])->name('notifications.read');
+
+        // Settings
+        Route::get('/setting', [RestaurantAuthController::class, 'changePassword'])->name('setting');
+        Route::patch('/setting', [RestaurantAuthController::class, 'updatePassword'])->name('setting.updatePassword');
+
 
 
     });
 });
-
-/*
-|--------------------------------------------------------------------------
-| Static Views (for layout checking)
-|--------------------------------------------------------------------------
-*/
-Route::view('/restaurant-page', 'restaurants.restaurant_page');
-Route::view('/restaurant-owner-page', 'restaurant-owners.register');
-Route::view('/restaurant-owner-login', 'restaurant-owners.login');
-Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
-Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
-Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
-Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
-Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
-Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
-Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
-Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
-Route::view('/restaurant-owner-page-info', 'restaurant-owners.page-management.basic-info');
-Route::view('/restaurant-owner-page-image', 'restaurant-owners.page-management.image');
-Route::view('/restaurant-owner-page-menu', 'restaurant-owners.page-management.menu');
-Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management.preview');
-Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
-Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
-Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');

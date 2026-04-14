@@ -1,17 +1,28 @@
 @extends('layouts.app')
 
+@section('title', 'Welcome to TableTrip')
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 @endpush
 
-@push('scripts')
-<script src="{{ asset('js/welcome.js') }}" defer></script>
-@endpush
-
 @section('content')
-<div class="welcome-container py-5">
-    <div class="container">
-        {{-- Restaurants Section --}}
+<div class="welcome-container">
+    
+    <div class="hero-section">
+        <div class="hero-overlay">
+            <div class="container text-center">
+                <h1 class="hero-title">Experience the Art of Dining</h1>
+                <p class="hero-subtitle">Premium restaurant reservations & chef-curated meal kits delivered to your door.</p>
+                <div class="hero-buttons mt-4">
+                    <a href="{{ route('search') }}" class="btn-hero-primary">Book a Table</a>
+                    <a href="{{ route('products.index') }}" class="btn-hero-secondary">Order Meal Kits</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
                 <h2 class="page-title m-0">Featured Restaurants</h2>
@@ -26,7 +37,7 @@
                     <div class="custom-item-card">
                         <a href="{{ route('restaurant', $restaurant->id) }}" class="text-decoration-none text-dark">
                             <div class="img-wrapper">
-                                <img src="{{ $restaurant->image_url ?? asset('images/no-image.jpg') }}" alt="{{ $restaurant->name }}">
+                                <img src="{{ $restaurant->heroImage ? asset('storage/' . $restaurant->heroImage->image_url) : asset('images/no-image.jpg') }}" alt="{{ $restaurant->name }}">
                             </div>
                             <div class="card-content p-3">
                                 <h5 class="item-title mb-1">{{ $restaurant->name }}</h5>
@@ -42,7 +53,6 @@
             @endforelse
         </div>
 
-        {{-- Meal Kits Section --}}
         <div class="section-header d-flex justify-content-between align-items-end mb-4">
             <div>
                 <h2 class="page-title m-0">Signature Meal Kits</h2>
