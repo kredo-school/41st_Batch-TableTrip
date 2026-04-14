@@ -23,8 +23,7 @@ use App\Http\Controllers\Admin\AdminRestaurantController;
 
 
 
-use App\Http\Controllers\ForgetPasswordController;  
-use App\Http\Controllers\ForgetController;  
+use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
