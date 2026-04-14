@@ -178,7 +178,7 @@
                         <div class="card-body px-3 pt-3 pb-3 text-start">
                             {{-- ハートボタン --}}
                             @auth
-                            <form action="{{ route('favorites.toggle') }}" method="POST"
+                            <form action="{{ route('favorite.toggle') }}" method="POST"
                                   style="position: absolute; top: 10px; right: 10px; z-index: 10;">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">

@@ -53,6 +53,11 @@
                         class="status-link {{ request('status') == 'delivered' ? 'active' : '' }}">
                             Delivered
                         </a>
+                        <span>|</span>
+                        <a href="{{ route('owner.orders', ['status' => 'completed']) }}"
+                        class="status-link {{ request('status') == 'completed' ? 'active' : '' }}">
+                            Completed
+                        </a>
 
                         <span>|</span>
                         <a href="{{ route('owner.orders', ['status' => 'cancelled']) }}"
@@ -81,7 +86,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($orders as $order)
+                            @foreach ($orders as $order)
                                 <tr onclick="window.location='{{ route('owner.orders.show', $order->id) }}'" style="cursor:pointer;">
                                     <td>{{ $order->id }}</td>
                                     <td>{{ $order->created_at->format('M d, Y') }}</td>
@@ -102,13 +107,7 @@
                                         <span class="badge bg-warning {{ $statusClass }}">{{ $order->status }}</span>
                                     </td>
                                 </tr>
-                                 @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center text-muted py-4">
-                                                No orders found.
-                                            </td>
-                                        </tr>
-                                 @endforelse
+                             @endforeach
                         </tbody>
                     </table>
                 </div>
