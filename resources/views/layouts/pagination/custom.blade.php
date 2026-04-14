@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
     <nav>
-        <ul class="pagination justify-content-center custom">
+        <ul class="pagination justify-content-center custom p-4">
 
             {{-- Prev --}}
             @if ($paginator->onFirstPage())
