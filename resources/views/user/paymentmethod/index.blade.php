@@ -56,6 +56,7 @@
                                             <form action="{{ route('user.payment_method.update', $method->id) }}" method="POST" class="d-flex align-items-center gap-1 m-0">
                                                 @csrf
                                                 @method('PUT')
+                                                <input type="hidden" name="from" value="{{ request('from') }}">
                                                 
                                                 <select name="exp_month" class="form-select form-select-sm" style="width: auto; min-width: 60px;">
                                                     @for ($m = 1; $m <= 12; $m++)
@@ -105,6 +106,7 @@
                     <h4 class="fw-bold mb-4" id="form-title">Register / Edit</h4>
                     <form id="payment-form" action="{{ route('user.payment_method.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="from" value="{{ request('from') }}">
                         <div id="method-field"></div>
 
                         {{-- card number --}}

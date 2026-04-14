@@ -64,6 +64,9 @@ class UserController extends Controller
 
         $user->save();
 
+        if ($request->input('from') === 'confirm') {
+            return redirect()->route('cart.confirm')->with('success', 'Your profile has been updated!');
+        }
 
         return redirect('/dashboard')->with('success', 'Your profile has been updated!');
     }

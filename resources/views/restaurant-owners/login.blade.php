@@ -14,7 +14,7 @@
 
                 <div class="mb-3">
                     <label for="email" class="form-label text-white">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required autofocus>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" required autofocus>
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -24,7 +24,7 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label text-white">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
                      @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

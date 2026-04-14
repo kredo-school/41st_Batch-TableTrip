@@ -40,7 +40,7 @@ class PageManagementController extends Controller
             'address_line' => 'required|string|max:255',
             'opening_hours' => 'required|string|max:255',
             'chef' => 'nullable|string|max:255',
-            'action' => 'required|in:draft,publish',
+            'status' => 'required|in:draft,published',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
         ]);
@@ -51,7 +51,6 @@ class PageManagementController extends Controller
                 ->withInput();
         }
 
-         $status = $request->action === 'publish' ? 'published' : 'draft';
 
         $restaurant->update([
         'restaurant_name' => $request->restaurant_name,
@@ -64,9 +63,8 @@ class PageManagementController extends Controller
         'chef' => $request->chef,
         'description' => $request->description,
         'category_id' => $request->category_id,
-        'status' => $status, 
+        'status' => $request->status, 
     ]);
-
 
         return redirect()->back()->with('success', 'Basic information updated successfully.');
     }

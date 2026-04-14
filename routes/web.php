@@ -13,15 +13,17 @@ use App\Http\Controllers\User\ForgetPasswordController;
 
 //Admin
 use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\Admin\AdminDashboardController as AdminDashboardController; // 名前が被るのでエイリアス設定
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminInquiryController;
 use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\AdminRewardController;
+use App\Http\Controllers\Admin\AdminRestaurantController;
 
 
-// use App\Http\Controllers\ForgetPasswordController;  
-use App\Http\Controllers\ForgetController;  
+
+use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
@@ -205,14 +207,28 @@ Route::prefix('admin')
 
         Route::delete('/reviews/{id}', [AdminReviewController::class, 'destroy'])
             ->name('reviews.destroy');
+        
+        Route::get('/restaurants', [AdminRestaurantController::class, 'index'])
+            ->name('restaurants.index');
+        
+        Route::get('/restaurants/{id}', [AdminRestaurantController::class, 'show'])
+            ->name('restaurants.show');
 
+        Route::patch('/restaurants/{id}/approve', [AdminRestaurantController::class, 'approve'])
+            ->name('restaurants.approve');
+
+        Route::patch('/restaurants/{id}/reject', [AdminRestaurantController::class, 'reject'])
+            ->name('restaurants.reject');
+            
+        Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
+            ->name('rewards.point-history');
+
+        Route::get('/rewards', [AdminRewardController::class, 'dashboard'])
+            ->name('rewards.dashboard');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
     });
-
-//Admin Rewards - Dashboard
-// Route::get('/admin/rewards', [AdminRewardController::class, 'dashboard']);
 
 //Product
 // 登録画面を表示するURL
@@ -303,6 +319,10 @@ Route::prefix('owner')->name('owner.')->group(function () {
         // Notifications
         Route::get('/notifications', [OwnerNotificationController::class, 'index'])->name('notifications');
         Route::patch('/notifications/{id}/read', [OwnerNotificationController::class, 'markAsRead'])->name('notifications.read');
+
+        // Settings
+        Route::get('/setting', [RestaurantAuthController::class, 'changePassword'])->name('setting');
+        Route::patch('/setting', [RestaurantAuthController::class, 'updatePassword'])->name('setting.updatePassword');
 
 
 

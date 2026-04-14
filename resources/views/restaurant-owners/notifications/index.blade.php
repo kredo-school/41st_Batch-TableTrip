@@ -10,7 +10,7 @@
             <h1 class="text-underline-accent mb-3">Notifications</h1>
             <div class="container my-4">
             
-             @foreach($notifications as $notification)
+             @forelse($notifications as $notification)
              
                 <button type="button"
                 class="notification-card text-decoration-none text-dark mb-3 w-100 text-start border-0 bg-white p-3 rounded shadow-sm"
@@ -51,7 +51,12 @@
                 </button>
                 
                     @include('restaurant-owners.notifications.notification-modal')
-            @endforeach
+
+             @empty
+                <div>
+                        <p class="text-center text-muted mt-5 fs-3">No notifications yet.</p>
+                </div>
+            @endforelse
              </div>
 
         </div>

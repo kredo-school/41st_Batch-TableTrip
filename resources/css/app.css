@@ -632,3 +632,28 @@ h6{
 .carousel-control-next:hover .carousel-control-next-icon {
     background-color: rgba(0, 0, 0, 0.6);
 }
+
+.revenue-card {
+    height: 300px;
+    max-width: 100%;
+}
+
+.chart-container {
+    position: relative;
+    height: 100%;
+}
+
+.top-product-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    align-items: center;
+}
+
+
+.status-link.active {
+    color: #D96B52 !important;
+    font-weight: 700;
+}
+
