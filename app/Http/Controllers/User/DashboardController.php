@@ -25,10 +25,8 @@ class DashboardController extends Controller
             ->get();
 
         // --- 2. cartinformation ---
-        $cart_items = $user->cartItems()->with('product')->get();
-        $totalPrice = $cart_items->sum(function($item) {
-            return ($item->product->price ?? 0) * $item->quantity;
-        });
+        $cart = session()->get('cart', []);
+        $totalPrice = array_sum(array_map(fn($i) => ($i['product']['price'] ?? 0) * $i['quantity'], $cart));
 
         // --- 3. favorite ---
         $favorite_restaurants = $user->favorite_restaurants()->get();
