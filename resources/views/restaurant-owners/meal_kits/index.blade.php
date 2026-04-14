@@ -63,7 +63,7 @@
             {{-- table --}}
             <div class="card rounded-4 shadow-sm border-0 overflow-hidden">
                 <div class="card-body p-0">
-                    <table class="table align-middle mb-5 mx-3 text-center table-hover">
+                    <table class="table align-middle mx-3 text-center table-hover">
                         <thead>
                             <tr class="border-bottom">
                                 <th class="ps-4 py-4">IMAGE</th>

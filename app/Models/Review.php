@@ -4,43 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
-class Review extends Model
-{
-    use HasFactory;
-
-    protected $fillable = [
-        'user_id',
-        'restaurant_id',
-        'rating',
-        'comment',
-        'status',
-    ];
-
-class Review extends Model
-{
-    protected $fillable = [
-        'restaurant_id',
-        'user_id',
-        'product_id',
-        'parent_id',
-        'author_type',
-        'comment_type',
-        'rating',
-        'comment',
-        'is_approved',
-        'ai_score',
-        'is_read'
-    ];
-
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class);
-    }
+use App\Models\Restaurant;
+use App\Models\User;
+use App\Models\Product;
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
     }
 
     protected static function booted()
@@ -69,15 +44,5 @@ class Review extends Model
 
             $review->status = 'visible';
         });
-    }
-
-    public function replies()
-    {
-        return $this->hasMany(Review::class, 'parent_id');
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
     }
 }

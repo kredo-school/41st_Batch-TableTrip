@@ -4,18 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\User;
 
-class PointHistory extends Model
+class UserCoupon extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_coupons';
+
     protected $fillable = [
         'user_id',
-        'points',
-        'type',
-        'description',
+        'coupon_id',
+        'is_used',
+        'used_at',
     ];
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
 
     public function user()
     {

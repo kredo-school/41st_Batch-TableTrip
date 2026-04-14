@@ -82,4 +82,39 @@ class RestaurantAuthController extends Controller
 
         return redirect()->route('owner.login');
     }
+    
+    public function changePassword(){
+        return view('restaurant-owners.setting.index');
+    }
+
+    public function updatePassword(Request $request){
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $authUser = Auth::guard('restaurant')->user();
+
+        if (!$authUser) {
+            return back()->withErrors(['current_password' => 'User not found']);
+        }
+
+        // Ensure we have an Eloquent Restaurant model instance so ->save() exists
+        $restaurant = $authUser instanceof \App\Models\Restaurant
+            ? $authUser
+            : Restaurant::find($authUser->getAuthIdentifier());
+
+        if (!$restaurant) {
+            return back()->withErrors(['current_password' => 'User not found']);
+        }
+
+        if (!Hash::check($request->current_password, $restaurant->password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect']);
+        }
+
+        $restaurant->password = Hash::make($request->new_password);
+        $restaurant->save();
+
+        return back()->with('success', 'Password updated successfully');
+    }
 }

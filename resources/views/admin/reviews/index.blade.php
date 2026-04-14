@@ -22,6 +22,7 @@
                         <th class="review-created-col"><span class="th-label">Created</span></th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     @forelse($reviews as $review)
                         <tr onclick="window.location='{{ route('admin.reviews.show', $review->id) }}'">

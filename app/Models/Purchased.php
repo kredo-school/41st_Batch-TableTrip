@@ -16,7 +16,7 @@ class Purchased extends Model
         'user_id',
         'meal_kit_id',
         'quantity',
-        'total_price',
+        'price_at_purchased',
         'ordered_at',
         'status'
     ];
@@ -31,5 +31,10 @@ class Purchased extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'meal_kit_id');
     }
 }

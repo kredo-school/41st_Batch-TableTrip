@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Welcome to TableTrip')
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 @endpush
@@ -35,7 +37,7 @@
                     <div class="custom-item-card">
                         <a href="{{ route('restaurant', $restaurant->id) }}" class="text-decoration-none text-dark">
                             <div class="img-wrapper">
-                                <img src="{{ $restaurant->image_url ?? asset('images/no-image.jpg') }}" alt="{{ $restaurant->name }}">
+                                <img src="{{ $restaurant->heroImage ? asset('storage/' . $restaurant->heroImage->image_url) : asset('images/no-image.jpg') }}" alt="{{ $restaurant->name }}">
                             </div>
                             <div class="card-content p-3">
                                 <h5 class="item-title mb-1">{{ $restaurant->name }}</h5>
