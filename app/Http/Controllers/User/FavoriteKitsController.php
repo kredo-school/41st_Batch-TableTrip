@@ -12,6 +12,6 @@ class FavoriteKitsController extends Controller
     $user = Auth::user();
 
     $favorite_kits = $user->favorites()->with('product')->get();
-    return view('user.favoritekits', compact('favorite_kits'));
+    return view('user.favorite_kits', compact('favorite_kits'));
 }
 }

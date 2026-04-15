@@ -102,7 +102,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
     Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('user.favorite_restaurants');
-    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favoritekits');
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favorite_kits');
 
     // reservation
     Route::prefix('reservations')->name('reservations.')->group(function () {
