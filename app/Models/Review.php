@@ -8,8 +8,10 @@ use App\Models\Restaurant;
 use App\Models\User;
 use App\Models\Product;
 
-class Review extends Model {
+class Review extends Model
+{
     use HasFactory;
+
     protected $fillable = [
         'restaurant_id',
         'user_id',
@@ -21,17 +23,33 @@ class Review extends Model {
         'comment',
         'is_approved',
         'ai_score',
-        'is_read'
+        'is_read',
+        'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function user()
+    public function product()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Review::class, 'parent_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Review::class, 'parent_id');
     }
 
     protected static function booted()
@@ -60,15 +78,5 @@ class Review extends Model {
 
             $review->status = 'visible';
         });
-    }
-
-    public function replies()
-    {
-        return $this->hasMany(Review::class, 'parent_id');
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
     }
 }

@@ -29,10 +29,11 @@ class DashboardController extends Controller
             ->get();
 
         // --- 2. cart ---
-        $cart_items = $user->cartItems()->with('product')->get();
-        $totalPrice = $cart_items->sum(function($item) {
-            return ($item->product->price ?? 0) * $item->quantity;
-        });
+        $cart = session()->get('cart', []);
+        $totalPrice = 0;
+        foreach ($cart as $item) {
+            $totalPrice += ($item['product']['price'] ?? 0) * $item['quantity'];
+        }
 
         // --- favorite---
         $favorite_restaurants = $user->favorite_restaurants()->get();
@@ -55,7 +56,7 @@ class DashboardController extends Controller
 
         return view('dashboard', compact(
             'latest_reservations', 
-            'cart_items', 
+            'cart', 
             'totalPrice', 
             'favorite_restaurants', 
             'favorite_kits',

@@ -68,33 +68,39 @@
                 </div>
         </section>
 
-        {{-- cart part --}}
+       {{-- cart part --}}
         <section class="dashboard-card cart-summary-card">
             <h3><i class="fa-solid fa-cart-shopping"></i>Cart</h3>
             <div class="card-content">
                 <div class="item-grid">
-                    @forelse ($cart_items->take(2) as $item)
+                    @forelse (array_slice($cart ?? [], 0, 2) as $id => $item)
+                        @php $product = (object) $item['product']; @endphp
                         <div class="cart-mini-item">
                             <div class="mini-img">
-                                <img src="#" alt="" >
+                                @if(!empty($product->image))
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                @else
+                                    <img src="https://via.placeholder.com/50" alt="No Image">
+                                @endif
                             </div>
                             <div class="mini-info">
-                                <p class="mini-name">{{ $item->product->name ?? 'Unknown' }}</p>
-                                <p class="mini-price">{{ number_format($item->product->price ?? 0) }} (x{{ $item->quantity }})</p>
+                                <p class="mini-name"><b>{{ $product->name ?? 'Unknown' }}</b></p>
+                                <p class="mini-price">¥{{ number_format($product->price ?? 0) }} (x{{ $item['quantity'] }})</p>
                             </div>
                         </div>
                     @empty
                         <p class="empty-msg">No items in cart</p>
                     @endforelse
                 </div>
-                @if($cart_items->isNotEmpty())
+
+                @if(count($cart ?? []) > 0)
                     <div class="cart-total-brief">
-                        <p>Total: <span>{{ number_format($totalPrice) }}</span></p>
+                        <p>Total: <span>¥{{ number_format($totalPrice) }}</span></p>
                     </div>
                 @endif
             </div>
             <div class="btn-container">
-               <a href="/cart"  class="btn-back">View Cart</a>
+                <a href="{{ route('cart.index') }}" class="btn-back">View Cart</a>
             </div>
         </section>
 

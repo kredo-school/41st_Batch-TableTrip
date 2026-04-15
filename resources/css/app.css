@@ -652,3 +652,8 @@ h6{
 }
 
 
+.status-link.active {
+    color: #D96B52 !important;
+    font-weight: 700;
+}
+
