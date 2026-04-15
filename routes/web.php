@@ -23,7 +23,8 @@ use App\Http\Controllers\Admin\AdminRestaurantController;
 
 
 
-use App\Http\Controllers\ForgetController;  
+
+use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
@@ -102,7 +103,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
     Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('user.favorite_restaurants');
-    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favoritekits');
+    Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favorite_kits');
 
     // reservation
     Route::prefix('reservations')->name('reservations.')->group(function () {
@@ -331,3 +332,27 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Static Views (for layout checking)
+|--------------------------------------------------------------------------
+*/
+Route::view('/restaurant-page', 'restaurants.restaurant_page');
+Route::view('/restaurant-owner-page', 'restaurant-owners.register');
+Route::view('/restaurant-owner-login', 'restaurant-owners.login');
+Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
+Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
+Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
+Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
+Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
+Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
+Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
+Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
+Route::view('/restaurant-owner-page-info', 'restaurant-owners.page-management.basic-info');
+Route::view('/restaurant-owner-page-image', 'restaurant-owners.page-management.image');
+Route::view('/restaurant-owner-page-menu', 'restaurant-owners.page-management.menu');
+Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management.preview');
+Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
+Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
+Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');

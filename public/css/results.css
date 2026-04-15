@@ -1,22 +1,127 @@
-
-.section-container {
-    background: rgba(255, 255, 255, 0.3);
-    padding: 20px;
-    border-radius: 10px;
+/* Global Settings */
+body {
+    background-color: #F8F6F1;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
 }
 
-.custom-item-card {
-    display: flex;
-    flex-direction: column;
+/* Header Section & Line */
+.header-section {
+    margin-bottom: 2.5rem;
 }
 
-.card-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+.page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #000;
 }
 
-.italic {
+/* Orange Line directly under title (like the login image) */
+.title-line {
+    width: 300px;
+    height: 1.5px;
+    background-color: #E2A292;
+}
+
+.results-count {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Tabs: Outside and centered */
+.tabs-outside-wrapper {
+    z-index: 10;
+}
+
+#searchTab {
+    background-color: #F1EFE9;
+    padding: 6px;
+    border-radius: 50px;
+    border: none;
+}
+
+#searchTab .nav-link {
+    color: #888;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    border-radius: 50px;
+    padding: 10px 30px;
+    transition: 0.3s;
+}
+
+#searchTab .nav-link.active {
+    background-color: #ffffff;
+    color: #E2A292;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Main Content Frame (The White Box) */
+.main-framed-outer {
+    background-color: #ffffff;
+    border: 1px solid #D1CFCA; /* Clear border to contrast with background */
+    border-radius: 2px;
+    padding: 4rem 3rem;
+    min-height: 400px;
+}
+
+/* Inner Item Styling */
+.item-inner-frame {
+    border: 1px solid #E6E4DD;
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+.item-inner-frame:hover {
+    border-color: #E2A292;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* Buttons and Badges */
+.btn-action {
+    background-color: #E2A292;
+    color: #fff !important;
+    font-family: 'Playfair Display', serif;
+    padding: 8px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+}
+.btn-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Pill-shaped buttons matching the reference image */
+.btn-back {
+    display: inline-block;
+    background: #f7f5f0;
+    border: 1px solid #d1cfc0;
+    padding: 10px 30px;
+    border-radius: 25px;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: 'Sen', sans-serif;
+}
+.badge-outline {
+    color: #E2A292;
+    border: 1px solid #E2A292;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+}
+
+.empty-msg {
+    font-family: 'Playfair Display', serif;
     font-style: italic;
-    opacity: 0.7;
 }

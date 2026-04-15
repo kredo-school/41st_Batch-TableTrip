@@ -61,6 +61,9 @@ class PaymentMethodController extends Controller
         'is_default'    => $isFirstCard,
     ]);
 
+    if ($request->input('from') === 'confirm') {
+        return redirect()->route('cart.confirm')->with('success', 'Your payment has been registered!!');
+    }
     return redirect()->route('user.payment_method.index')->with('success', 'Your payment has been registered!!');
     }
     // delete 
@@ -103,6 +106,10 @@ class PaymentMethodController extends Controller
         }
 
         $payment_method->update($data);
+
+        if ($request->input('from') === 'confirm') {
+            return redirect()->route('cart.confirm')->with('success', 'Your card has been updated successfully.');
+        }
 
         return back()->with('success', 'Your card has been updated successfully.');
     }

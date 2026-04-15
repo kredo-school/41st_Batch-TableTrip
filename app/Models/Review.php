@@ -19,6 +19,25 @@ class Review extends Model
         'status',
     ];
 
+class Review extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'restaurant_id',
+        'user_id',
+        'product_id',
+        'parent_id',
+        'author_type',
+        'comment_type',
+        'rating',
+        'comment',
+        'is_approved',
+        'ai_score',
+        'is_read',
+        'status',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -27,6 +46,21 @@ class Review extends Model
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Review::class, 'parent_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Review::class, 'parent_id');
     }
 
     protected static function booted()
