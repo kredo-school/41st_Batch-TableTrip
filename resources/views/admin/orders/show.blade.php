@@ -20,38 +20,78 @@
                 </div>
             </div>
 
-            <p><span>User :</span> {{ $order->user->name ?? 'Alex Farrara' }}</p>
-            <p><span>Membership Rank :</span> {{ $order->user->rank }}</p>
-            <p><span>Total Points :</span> 64pt</p>
-            <p><span>Credit Card :</span> xxxx-xxxx-0005</p>
+            <p>
+                <span class="detail-label">User :</span>
+                <span class="detail-value">{{ $order->user->name ?? 'Alex Farrara' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Membership Rank :</span>
+                <span class="detail-value">{{ $order->user->rank ?? 'N/A' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Total Points :</span>
+                <span class="detail-value">64pt</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Credit Card :</span>
+                <span class="detail-value">xxxx-xxxx-0005</span>
+            </p>
 
             <p class="section-title">Address :</p>
-            <p class="sub">
+            <p class="sub detail-value">
                 {{ $order->user->address }}<br>
                 {{ $order->user->postal_code }}
             </p>
 
             <p class="section-title">Shipping Address :</p>
-            <p class="sub">1-1-1 Umeda Kita-ku, Osaka<br>530-0001</p>
+            <p class="sub detail-value">
+                1-1-1 Umeda Kita-ku, Osaka<br>
+                530-0001
+            </p>
 
-            <p><span>Phone :</span>  {{ $order->user->tel }}</p>
-            <p><span>Email :</span> {{ $order->user->email }}</p>
+            <p>
+                <span class="detail-label">Phone :</span>
+                <span class="detail-value">{{ $order->user->tel }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Email :</span>
+                <span class="detail-value">{{ $order->user->email }}</span>
+            </p>
 
         </div>
-
 
         <!-- RIGHT -->
         <div class="order-card">
 
-            <p class="order-id">Order ID : <strong>#{{ $order->id }}</strong></p>
-
-            <p class="status-line">
-                Status : <span class="dot yellow"></span> Shipped
+            <p class="order-id">
+                Order ID : <strong>#{{ $order->id }}</strong>
             </p>
 
-            <p class="date">15 / 02 / 2026</p>
+            <p class="status-line">
+                Status :
+                <span class="dot
+                    @if($order->status === 'pending') pending-dot
+                    @elseif($order->status === 'shipped') yellow
+                    @elseif($order->status === 'delivered') delivered-dot
+                    @elseif($order->status === 'canceled') canceled-dot
+                    @elseif($order->status === 'refunded') refunded-dot
+                    @endif
+                "></span>
+                {{ ucfirst($order->status) }}
+            </p>
 
-            <p class="restaurant">Restaurant : Bistro Lapin</p>
+            <p class="date">
+                {{ $order->created_at ? $order->created_at->format('d / m / Y') : '15 / 02 / 2026' }}
+            </p>
+
+            <p class="restaurant">
+                Restaurant :
+                {{ $order->restaurant->restaurant_name ?? 'Bistro Lapin' }}
+            </p>
 
             <div class="divider"></div>
 
@@ -93,16 +133,44 @@
             <p class="points">Earned Points : 64pt</p>
 
         </div>
+    </div>
 
-        <div class="text-center mt-4">
-            <button class="edit-btn">Edit</button>
-        </div>
+    @php
+    $status = strtolower(trim($order->status ?? ''));
+    @endphp
+
+    <div class="text-center mt-4 order-action-buttons">
+        @if($status === 'pending')
+            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="d-inline-block">
+                @csrf
+                <input type="hidden" name="status" value="shipped">
+                <button type="submit" class="action-btn shipped-btn">Shipped</button>
+            </form>
+
+            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="d-inline-block">
+                @csrf
+                <input type="hidden" name="status" value="canceled">
+                <button type="submit" class="action-btn canceled-btn">Canceled</button>
+            </form>
+        @elseif($status === 'shipped')
+            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="d-inline-block">
+                @csrf
+                <input type="hidden" name="status" value="delivered">
+                <button type="submit" class="action-btn delivered-btn">Delivered</button>
+            </form>
+        @elseif($status === 'delivered')
+            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="d-inline-block">
+                @csrf
+                <input type="hidden" name="status" value="refunded">
+                <button type="submit" class="action-btn refunded-btn">Refunded</button>
+            </form>
+        @endif
     </div>
 </div>
 
 <div class="text-center mt-5">
     <a href="{{ route('admin.orders.index') }}" class="back-link">
-    Back to list
+        Back to list
     </a>
 </div>
 
