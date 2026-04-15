@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\AdminRestaurantController;
 
 
 
+
 use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -172,6 +173,9 @@ Route::prefix('admin')
 
         Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])
             ->name('orders.show');
+
+        Route::post('/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])
+            ->name('orders.updateStatus');
 
         Route::get('/reservations', [AdminReservationController::class, 'index'])
             ->name('reservations.index');
