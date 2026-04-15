@@ -17,13 +17,8 @@ class InquiryController extends Controller
         ->orWhere('recipient_id', $userId)
         ->orderBy('created_at', 'desc')
         ->get()
-        ->unique(function ($item) use ($userId) {
-            $opponentId = ($item->sender_id == $userId) ? $item->recipient_id : $item->sender_id;
-            $opponentType = ($item->sender_id == $userId) ? $item->recipient_type : $item->sender_type;
-            return $opponentId . $opponentType;
-        });
-
-    $restaurants = User::where('role', 'owner')->get(); 
+        ->unique('thread_id');
+    $restaurants = User::where('is_admin', true)->get(); 
 
     return view('user.inquiry.dashboard', compact('threads', 'restaurants'));
 }

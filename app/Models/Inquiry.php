@@ -13,7 +13,7 @@ class Inquiry extends Model
     protected $fillable = [
         'thread_id',
         'sender_id',
-        'sender_type',
+        'sender_type',//distinguish user,admin,restaurant
         'recipient_id',
         'recipient_type',
         'subject',
