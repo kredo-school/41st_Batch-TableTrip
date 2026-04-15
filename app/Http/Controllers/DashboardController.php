@@ -37,7 +37,7 @@ class DashboardController extends Controller
 
         // --- favorite---
         $favorite_restaurants = $user->favorite_restaurants()->get();
-        $favorite_kits = $user->favorite_kits()->with('product')->get();
+        $favorite_kits = $user->favorite_kits()->get();
 
         // history
         $purchased_items = Order::where('user_id', $user->id)

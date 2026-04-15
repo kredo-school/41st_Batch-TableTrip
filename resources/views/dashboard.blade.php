@@ -127,7 +127,7 @@
 
                     <div class="row">
                         @if(request('tab', 'restaurants') == 'restaurants')
-                            @forelse ($favoriterestaurants ?? [] as $restaurant)
+                            @forelse ($favorite_restaurants ?? [] as $restaurant)
                                 <div class="col-12">
                                     <p>{{ $restaurant->name ?? $restaurant->restaurant_name }}</p>
                                 </div>
@@ -135,9 +135,9 @@
                                 <p class="text-muted">No favorite restaurants yet.</p>
                             @endforelse
                         @else
-                            @forelse ($favoritekits ?? [] as $kit)
+                            @forelse ($favorite_kits as $kit)
                                 <div class="col-12">
-                                    <p>{{ $kit->product->name ?? 'N/A' }}</p>
+                                    <p>{{ $kit->name ?? 'N/A' }}</p>
                                 </div>
                             @empty
                                 <p class="text-muted">No favorite kits yet.</p>
@@ -150,7 +150,7 @@
                     @if(request('tab', 'restaurants') == 'restaurants')
                         <a href="{{ route('user.favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
                     @else
-                        <a href="{{ route('user.favoritekits') }}" class="btn-back">View All Kits</a>
+                        <a href="{{ route('user.favorite_kits') }}" class="btn-back">View All Kits</a>
                     @endif
                 </div>
             </div>
