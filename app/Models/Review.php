@@ -8,8 +8,8 @@ use App\Models\Restaurant;
 use App\Models\User;
 use App\Models\Product;
 
-class Review extends Model
-{
+class Review extends Model {
+    use HasFactory;
     protected $fillable = [
         'restaurant_id',
         'user_id',
