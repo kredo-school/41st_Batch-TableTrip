@@ -11,19 +11,23 @@ use App\Models\User;
 class InquiryController extends Controller
 {
    public function dashboard()
-{
-    $userId = Auth::id();
+    {
+        $userId = Auth::id();
 
-    $threads = Inquiry::where('sender_id', $userId)
-            ->orWhere('recipient_id', $userId)
-            ->with('recipient') 
+        $threads = Inquiry::with('recipient')
+            ->where(function($query) use ($userId) {
+                $query->where('sender_id', $userId)
+                    ->orWhere('recipient_id', $userId);
+            })
+            ->where('status', '!=', 'deleted') 
             ->orderBy('created_at', 'desc')
             ->get()
-            ->unique('thread_id');
-    $restaurants = Restaurant::where('approval_status', 'approved')->get(); 
+            ->unique('thread_id'); 
 
-    return view('user.inquiry.dashboard', compact('threads', 'restaurants'));
-}
+        $restaurants = Restaurant::where('approval_status', 'approved')->get(); 
+
+        return view('user.inquiry.dashboard', compact('threads', 'restaurants'));
+    }
     public function index($thread_id)
     {
 
@@ -75,7 +79,14 @@ class InquiryController extends Controller
             'status'         => 'pending',
         ]);
 
-        return redirect()->route('user.inquiry.show', $threadId)
+        return redirect()->route('user.inquiry.index', $threadId)
             ->with('success', 'Your message has been sent successfully!!');
+    }
+
+    public function destroy($thread_id)
+    {
+        Inquiry::where('thread_id', $thread_id)
+        ->where('sender_id',Auth::id())
+        ->update(['status' => 'deleted']);
     }
 }
