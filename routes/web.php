@@ -118,8 +118,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // inquiry
     Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
         Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
-        Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
+        Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('index');
         Route::post('/send', [InquiryController::class, 'send'])->name('send');
+        Route::delete('/destroy/{thread_id}', [InquiryController::class, 'destroy'])->name('destroy');
     });
 
     // --- User
