@@ -11,23 +11,22 @@ use App\Models\User;
 class InquiryController extends Controller
 {
    public function dashboard()
-    {
-        $userId = Auth::id();
+{
+    $userId = Auth::id();
 
-        $threads = Inquiry::with('recipient')
-            ->where(function($query) use ($userId) {
-                $query->where('sender_id', $userId)
-                    ->orWhere('recipient_id', $userId);
-            })
-            ->where('status', '!=', 'deleted') 
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->unique('thread_id'); 
+    $threads = Inquiry::with('recipient')
+        ->where(function($q) use ($userId) {
+            $q->where('sender_id', $userId)
+              ->orWhere('recipient_id', $userId);
+        })
+        ->where('status', '!=', 'deleted')
+        ->orderBy('created_at', 'desc') 
+        ->get()                         
+        ->unique('thread_id');          
+    $restaurants = Restaurant::where('approval_status', 'approved')->get();
 
-        $restaurants = Restaurant::where('approval_status', 'approved')->get(); 
-
-        return view('user.inquiry.dashboard', compact('threads', 'restaurants'));
-    }
+    return view('user.inquiry.dashboard', compact('threads', 'restaurants'));
+}
     public function index($thread_id)
     {
 
