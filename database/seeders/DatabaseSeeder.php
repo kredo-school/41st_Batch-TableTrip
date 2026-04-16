@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,26 +18,14 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->call([
-            UserSeeder::class,
+            UserSeeder::class,           
             PaymentMethodsSeeder::class,
-        ]);
-
-        $this->call([
             ProductSeeder::class,
             ReservationSeeder::class,
+            InquirySeeder::class,        
+            NotificationSeeder::class,   
         ]);
 
         
-        User::factory()->create([
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'user_name' => 'Test User',
-            'email' => 'test@example.com',
-            'tel' => '0000000000',  
-            'country' => 'Japan',    
-        $this->call([
-            UserSeeder::class,           
-            PaymentMethodsSeeder::class, 
-        ]);
     }
 }
