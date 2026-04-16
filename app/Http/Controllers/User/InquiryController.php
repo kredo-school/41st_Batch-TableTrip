@@ -16,7 +16,7 @@ class InquiryController extends Controller
 
     $threads = Inquiry::where('sender_id', $userId)
             ->orWhere('recipient_id', $userId)
-            ->with('recipient') // リレーションをロード
+            ->with('recipient') 
             ->orderBy('created_at', 'desc')
             ->get()
             ->unique('thread_id');
