@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\Inquiry;
+use App\Models\Restaurant;
 use App\Models\User;
 
 class InquiryController extends Controller
@@ -14,11 +15,12 @@ class InquiryController extends Controller
     $userId = Auth::id();
 
     $threads = Inquiry::where('sender_id', $userId)
-        ->orWhere('recipient_id', $userId)
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->unique('thread_id');
-    $restaurants = User::where('is_admin', true)->get(); 
+            ->orWhere('recipient_id', $userId)
+            ->with('recipient') 
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->unique('thread_id');
+    $restaurants = Restaurant::where('approval_status', 'approved')->get(); 
 
     return view('user.inquiry.dashboard', compact('threads', 'restaurants'));
 }

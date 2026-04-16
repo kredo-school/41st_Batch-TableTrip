@@ -28,7 +28,7 @@
                     <select name="recipient_id" class="chat-select">
                         <option value="" disabled selected>-- Select Restaurant --</option>
                         @foreach($restaurants as $res)
-                            <option value="{{ $res->id }}">{{ $res->name }}</option>
+                            <option value="{{ $res->id }}">{{ $res->restaurant_name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -45,8 +45,8 @@
                 @forelse($threads as $thread)
                     <a href="{{ route('user.inquiry.show', $thread->thread_id) }}" class="thread-item">
                         <div class="thread-content">
-                            <span class="thread-name">
-                                {{ $thread->recipient_type === 'Admin' ? 'Support' : ($thread->recipient->name ?? 'Owner') }}
+                           <span class="thread-name">
+                                {{ $thread->recipient_type === 'Admin' ? 'Support' : ($thread->recipient->restaurant_name ?? 'Owner') }}
                             </span>
                             <span class="thread-preview">{{ $thread->message }}</span>
                         </div>
