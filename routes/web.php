@@ -107,7 +107,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favorite_kits');
 
     // reservation
-    Route::prefix('reservations')->name('reservations.')->group(function () {
+    Route::prefix('reservations')->name('reservation.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');
         Route::post('/store', [ReservationController::class, 'store'])->name('store');
         Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');

@@ -64,7 +64,7 @@
                 </table>
                 </div> 
                 <div class="btn-container">
-                    <a href="{{ route('reservations.index') }}" class="btn-back">View All Reservations</a>
+                    <a href="{{ route('reservation.index') }}" class="btn-back">View All Reservations</a>
                 </div>
         </section>
 
@@ -213,12 +213,13 @@
                             View All Purchased Kits
                         </a>
                     @else
-                        <a href="{{ route('reservations.index') }}" class="btn-back">
+                        <a href="{{ route('reservation.index') }}" class="btn-back">
                             View All Past Visits
                         </a>
                     @endif
                 </div>
             </div>
+        
         </section>
 
     </div>
