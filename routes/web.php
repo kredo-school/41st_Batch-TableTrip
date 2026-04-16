@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\AdminRestaurantController;
 
 
 
+
 use App\Http\Controllers\ForgetController;
 use App\Http\Controllers\User\PaymentMethodController;  
 use App\Http\Controllers\PaymentController;
@@ -50,6 +51,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\User\ProductReviewController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Owner\PageManagementController;
 use App\Http\Controllers\Owner\ReviewController as OwnerReviewController;
@@ -172,6 +174,9 @@ Route::prefix('admin')
         Route::get('/orders/{id}', [AdminOrdersController::class, 'show'])
             ->name('orders.show');
 
+        Route::post('/orders/{id}/update-status', [AdminOrdersController::class, 'updateStatus'])
+            ->name('orders.updateStatus');
+
         Route::get('/reservations', [AdminReservationController::class, 'index'])
             ->name('reservations.index');
 
@@ -241,6 +246,8 @@ Route::prefix('admin')
 Route::get('/products/create', [OrderController::class, 'create'])->name('products.create');
 Route::get('/products', [OrderController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [OrderController::class, 'show'])->name('products.show');
+Route::get('/products/{id}/reviews', [ProductReviewController::class, 'index'])->name('products.reviews');
+Route::post('/products/{id}/reviews', [ProductReviewController::class, 'store'])->name('products.reviews.store')->middleware('auth');
 Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
 Route::get('/order/details', [OrderController::class, 'showDetails']);
 

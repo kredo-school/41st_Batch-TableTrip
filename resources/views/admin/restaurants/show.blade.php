@@ -25,10 +25,44 @@
                 </div>
             </div>
 
-            <p><span>Restaurant :</span> {{ $restaurant->restaurant_name ?? 'N/A' }}</p>
-            <p><span>Category :</span> {{ $restaurant->category->name ?? 'N/A' }}</p>
-            <p><span>Opening Hours :</span> {{ $restaurant->opening_hours ?? 'N/A' }}</p>
-            <p><span>Reservation Limit :</span> {{ $restaurant->reservation_limit ?? 'N/A' }}</p>
+            <p>
+                <span class="detail-label">Restaurant Name:</span>
+                <span class="detail-value">{{ $restaurant->restaurant_name ?? 'N/A' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Category :</span>
+                <span class="detail-value">{{ $restaurant->category->name ?? 'N/A' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Opening Hours :</span>
+                <span class="detail-value">{{ $restaurant->opening_hours ?? 'N/A' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Reservation Limit :</span>
+                <span class="detail-value">{{ $restaurant->reservation_limit ?? 'N/A' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Email :</span>
+                <span class="detail-value">{{ $restaurant->email ?? 'N/A' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Phone Number :</span>
+                <span class="detail-value">{{ $restaurant->phone ?? 'N/A' }}</span>
+            </p>
+
+            <p>
+                <span class="detail-label">Address :</span><br>
+                <span class="detail-value">
+                    {{ $restaurant->prefecture ?? '' }}
+                    {{ $restaurant->city ?? '' }}<br>
+                    {{ $restaurant->address_line ?? '' }}
+                </span>
+            </p>
 
         </div>
 
@@ -59,7 +93,7 @@
         @if(strtolower($restaurant->approval_status) === 'pending')
             <form action="{{ route('admin.restaurants.approve', $restaurant->id) }}" method="POST" class="d-inline-block">
                 @csrf
-                <button type="submit" class="action-btn approve-btn">Approve</button>
+                <button type="submit" class="action-btn approve-btn">Confirmed</button>
             </form>
 
             <form action="{{ route('admin.restaurants.reject', $restaurant->id) }}" method="POST" class="d-inline-block ms-2">

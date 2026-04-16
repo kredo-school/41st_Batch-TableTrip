@@ -217,16 +217,18 @@
                             {{-- 星評価 + カート --}}
                             <div class="d-flex justify-content-between align-items-center mt-2">
                                 <div>
-                                    <div class="mb-0" style="font-size: 1.1rem; line-height: 1;">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            @if($i <= floor($product->rating))
-                                                <span style="color: #F5A623;">★</span>
-                                            @else
-                                                <span style="color: #ddd;">★</span>
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    <span class="text-muted" style="font-size: 0.7rem;">{{ $product->rating }} (40)</span>
+                                    @php
+                                        $avgRating = round($product->reviews_avg_rating ?? 0, 1);
+                                        $reviewCount = $product->reviews_count ?? 0;
+                                    @endphp
+                                    <a href="{{ route('products.reviews', $product->id) }}" class="text-decoration-none d-flex align-items-center gap-1">
+                                        <div class="mb-0" style="font-size: 1.1rem; line-height: 1;">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <span style="color: {{ $i <= floor($avgRating) ? '#F5A623' : '#ddd' }};">★</span>
+                                            @endfor
+                                        </div>
+                                        <span class="text-muted" style="font-size: 0.7rem;">{{ $avgRating }} ({{ $reviewCount }})</span>
+                                    </a>
                                 </div>
 
                                 {{-- カートボタン --}}
