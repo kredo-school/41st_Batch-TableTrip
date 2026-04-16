@@ -83,9 +83,13 @@ class InquiryController extends Controller
     }
 
     public function destroy($thread_id)
-    {
+    {     
         Inquiry::where('thread_id', $thread_id)
-        ->where('sender_id',Auth::id())
-        ->update(['status' => 'deleted']);
+            ->where(function($q) {
+                $q->where('sender_id', Auth::id())
+                ->orWhere('recipient_id', Auth::id());
+            })
+            ->update(['status' => 'deleted']);
+        return redirect()->route('user.inquiry.dashboard')->with('success', 'History deleted.');
     }
 }
