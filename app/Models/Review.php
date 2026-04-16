@@ -12,18 +12,6 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'restaurant_id',
-        'rating',
-        'comment',
-        'status',
-    ];
-
-class Review extends Model
-{
-    use HasFactory;
-
-    protected $fillable = [
         'restaurant_id',
         'user_id',
         'product_id',
