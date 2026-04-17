@@ -25,11 +25,12 @@
                                 {{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} 
                                 {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}
                             </td>
-                            <td><strong>{{ $res->restaurant->name }}</strong></td>
+                            <td><strong>{{ $res->restaurant->restaurant_name }}</strong></td>
                             <td>{{ $res->number_of_people }}</td>
                             <td>
-                                <form action="#" method="POST" style="display:inline;">
-                                    @csrf @method('DELETE')
+                                <form action="{{ route('reservation.destroy', $res->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
                                     <button type="submit" class="btn-delete-link" onclick="return confirm('Cancel?')">Cancel</button>
                                 </form>
                             </td>
