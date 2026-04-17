@@ -15,7 +15,8 @@
                         <th>Date / Time</th>
                         <th>Restaurant</th>
                         <th>People</th>
-                        <th>Action</th>
+                        {{-- 2つの列を統合した管理用ヘッダー --}}
+                        <th style="width: 160px;">Manage</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,11 +29,24 @@
                             <td><strong>{{ $res->restaurant->restaurant_name }}</strong></td>
                             <td>{{ $res->number_of_people }}</td>
                             <td>
-                                <form action="{{ route('reservation.destroy', $res->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-delete-link" onclick="return confirm('Cancel?')">Cancel</button>
-                                </form>
+                                <div class="manage-action-group" style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+                                    {{-- Contact (Inquiry) --}}
+                                    <a href="{{ route('user.inquiry.create', ['restaurant_id' => $res->restaurant_id, 'reservation_id' => $res->id]) }}" 
+                                       class="btn-inquiry-icon" title="Contact Restaurant" style="color: #e2725b; text-decoration: none; font-size: 1.1rem;">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </a>
+
+                                    {{-- Cancel (Action) --}}
+                                    <form action="{{ route('reservation.destroy', $res->id) }}" method="POST" style="margin: 0;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-cancel-icon" 
+                                                onclick="return confirm('Cancel this reservation?')" 
+                                                style="background: none; border: none; color: #999; cursor: pointer; font-size: 1.1rem;" title="Cancel Reservation">
+                                            <i class="fa-solid fa-calendar-xmark"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty

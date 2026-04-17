@@ -18,11 +18,19 @@
             if ($isMeSender) {
                 $displayName = ($firstMsg->recipient_type === 'Admin') ? 'Support' : ($firstMsg->recipient->restaurant_name ?? 'Restaurant');
             } else {
-                $displayName = ($firstMsg->sender_type === 'Admin') ? 'Support' : ($firstMsg->recipient->restaurant_name ?? 'Restaurant');
+                $displayName = ($firstMsg->sender_type === 'Admin') ? 'Support' : ($firstMsg->sender->restaurant_name ?? 'Restaurant');
             }
         @endphp
         
-        <span class="display-name">{{ $displayName }}</span>
+        <div class="title-text-group">
+            <span class="display-name">{{ $displayName }}</span>
+            {{-- 予約情報の表示を追加 --}}
+            @if($firstMsg->subject !== 'Inquiry')
+                <small class="d-block text-muted" style="font-size: 0.75rem;">
+                    <i class="fa-solid fa-calendar-days"></i> {{ $firstMsg->subject }}
+                </small>
+            @endif
+        </div>
     </div>
 
     {{-- Chat Messages Window --}}
