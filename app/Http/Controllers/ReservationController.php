@@ -11,38 +11,26 @@ use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
-    /**
-     * Activity History 一覧 (Orders + Upcoming + Past)
-     */
-    public function index()
+        public function index()
     {
-        $user = Auth::user();
-        $today = Carbon::today()->toDateString();
-
-        $upcoming_reservations = Reservation::where('user_id', $user->id)
-            ->where('reservation_date', '>=', $today)
+        $userId = Auth::id();
+        $upcoming_reservations = Reservation::where('user_id', $userId)
+            ->whereDate('reservation_date', '>=', now()->toDateString())
             ->with('restaurant')
-            ->orderBy('reservation_date', 'asc') 
-            ->orderBy('reservation_time', 'asc') 
+            ->orderBy('reservation_date', 'asc')
             ->get();
 
-        $past_reservations = Reservation::where('user_id', $user->id)
-            ->where(function($query) use ($today) {
-                $query->where('reservation_date', '<', $today)
-                      ->orWhere('status', 'visited');
-            })
+        $past_reservations = Reservation::where('user_id', $userId)
+            ->whereDate('reservation_date', '<', now()->toDateString())
             ->with('restaurant')
-            ->orderBy('reservation_date', 'desc') 
+            ->orderBy('reservation_date', 'desc')
             ->get();
 
-        $purchased = $user->orders()->with(['product', 'product.restaurant'])->orderBy('ordered_at', 'desc')->get();
+        $purchased = []; 
 
         return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations', 'purchased'));
     }
 
-    /**
-     * 予約の保存
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([

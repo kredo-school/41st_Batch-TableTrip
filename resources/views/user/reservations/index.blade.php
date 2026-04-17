@@ -37,7 +37,7 @@
                                     </a>
 
                                     {{-- Cancel (Action) --}}
-                                    <form action="{{ route('reservation.destroy', $res->id) }}" method="POST" style="margin: 0;">
+                                    <form action="{{ route('user.reservations.destroy', $res->id) }}" method="POST" style="margin: 0;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-cancel-icon" 

@@ -213,7 +213,7 @@
                             View All Purchased Kits
                         </a>
                     @else
-                        <a href="{{ route('reservation.index') }}" class="btn-back">
+                        <a href="{{ route('purchased.index') }}" class="btn-back">
                             View All Past Visits
                         </a>
                     @endif

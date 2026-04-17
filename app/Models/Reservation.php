@@ -12,11 +12,11 @@ class Reservation extends Model
 {
     use HasFactory;
     protected $fillable = [ 
-        'restaurant_id',    // 'restaurants_id' から修正（単数形が一般的）
+        'restaurant_id',    
         'user_id',
         'reservation_date',
         'reservation_time',
-        'number_of_people', // もしDBが number_of_guests ならそちらに合わせてください
+        'number_of_people',
         'full_name',
         'phone',
         'email',
