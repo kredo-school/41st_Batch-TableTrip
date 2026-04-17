@@ -113,6 +113,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
         Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
         Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
+        Route::delete('/reservations/delete/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
     });
 
     // inquiry

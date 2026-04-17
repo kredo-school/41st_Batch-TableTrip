@@ -59,7 +59,7 @@ class ReservationController extends Controller
         $reservation = Reservation::where('user_id', Auth::id())->findOrFail($id);
         $reservation->delete();
 
-        return redirect()->back()->with('success', 'Reservation cancelled.');
+        return back()->with('success', 'Reservation cancelled.');
     }
 
 }
