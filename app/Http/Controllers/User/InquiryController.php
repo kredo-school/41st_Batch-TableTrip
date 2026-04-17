@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\Inquiry;
+use App\Models\Restaurant;
 use App\Models\User;
 
 class InquiryController extends Controller
@@ -13,12 +14,16 @@ class InquiryController extends Controller
 {
     $userId = Auth::id();
 
-    $threads = Inquiry::where('sender_id', $userId)
-        ->orWhere('recipient_id', $userId)
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->unique('thread_id');
-    $restaurants = User::where('is_admin', true)->get(); 
+    $threads = Inquiry::with('recipient')
+        ->where(function($q) use ($userId) {
+            $q->where('sender_id', $userId)
+              ->orWhere('recipient_id', $userId);
+        })
+        ->where('status', '!=', 'deleted')
+        ->orderBy('created_at', 'desc') 
+        ->get()                         
+        ->unique('thread_id');          
+    $restaurants = Restaurant::where('approval_status', 'approved')->get();
 
     return view('user.inquiry.dashboard', compact('threads', 'restaurants'));
 }
@@ -73,7 +78,18 @@ class InquiryController extends Controller
             'status'         => 'pending',
         ]);
 
-        return redirect()->route('user.inquiry.show', $threadId)
+        return redirect()->route('user.inquiry.index', $threadId)
             ->with('success', 'Your message has been sent successfully!!');
+    }
+
+    public function destroy($thread_id)
+    {     
+        Inquiry::where('thread_id', $thread_id)
+            ->where(function($q) {
+                $q->where('sender_id', Auth::id())
+                ->orWhere('recipient_id', Auth::id());
+            })
+            ->update(['status' => 'deleted']);
+        return redirect()->route('user.inquiry.dashboard')->with('success', 'History deleted.');
     }
 }

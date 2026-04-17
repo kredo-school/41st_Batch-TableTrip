@@ -1,6 +1,3 @@
-/* ==========================================================================
-   1. Base Theme & Fonts (Global)
-   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Sen&display=swap');
 
 body {
@@ -9,30 +6,22 @@ body {
     color: #000;
 }
 
-/* ==========================================================================
-   2. Layout Containers
-   ========================================================================== */
-/* Outer container for both Dashboard and Chat */
+/* Containers */
 .inquiry-outer-container, .chat-container {
     max-width: 1000px;
     margin: 50px auto;
     padding: 40px;
     background-color: #f7f5f0;
     border: 1px solid #d1cfc0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 
-/* Dashboard grid layout (1:1.5) */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 40px;
 }
 
-/* ==========================================================================
-   3. Typography & Decorative Lines
-   ========================================================================== */
-/* Main page titles with the signature red line */
+/* Typography */
 .chat-title {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
@@ -42,142 +31,56 @@ body {
     padding-bottom: 20px;
 }
 
-/* The signature thin red line beneath titles */
 .chat-title::after {
     content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-bottom: 1px solid #e2725b; /* Elegant Red */
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    border-bottom: 1px solid #e2725b;
 }
 
-/* Standalone line for manual placement */
-.title-line {
-    position: static;
-    display: block;
-    margin-bottom: 50px;
+/* History List */
+.thread-wrapper { position: relative; border-bottom: 1px solid #d1cfc0; }
+.thread-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 50px 18px 18px; text-decoration: none; color: #333;
 }
+.thread-item:hover { background: #fff; }
+.thread-name { font-weight: bold; color: #e2725b; display: block; }
+.thread-preview { font-size: 0.85rem; color: #666; }
 
-.form-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-}
+.delete-form { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); z-index: 10; }
+.btn-delete-icon { background: none; border: none; color: #ccc; cursor: pointer; }
+.btn-delete-icon:hover { color: #e2725b; }
 
-/* ==========================================================================
-   4. Chat Messenger UI (Index/Show Page)
-   ========================================================================== */
+/* Chat Window (LINE Layout) */
 .chat-window {
-    height: 500px;
-    overflow-y: auto;
-    padding: 30px 0;
-    display: flex;
-    flex-direction: column;
+    height: 500px; overflow-y: auto; padding: 30px 15px;
+    display: flex; flex-direction: column; background-color: #f7f5f0;
 }
-
-.message-row {
-    display: flex;
-    width: 100%;
-    margin-bottom: 25px;
-}
+.message-row { display: flex; width: 100%; margin-bottom: 20px; }
 .message-row.me { justify-content: flex-end; }
 .message-row.other { justify-content: flex-start; }
 
-.message-content { max-width: 70%; }
-
-/* Minimalist chat bubbles */
-.bubble {
-    padding: 12px 18px;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    border: 1px solid #d1cfc0;
-    background-color: #fff;
-}
+.message-content { max-width: 75%; display: flex; flex-direction: column; }
+.bubble { padding: 12px 18px; font-size: 0.95rem; border: 1px solid #d1cfc0; }
 
 .message-row.me .bubble {
-    border-left: 4px solid #e2725b; /* User accent line */
+    background-color: #fff; border-left: 4px solid #e2725b; 
+    border-radius: 12px 0 12px 12px;
 }
-
 .message-row.other .bubble {
-    background-color: #eeebe3;
+    background-color: #eeebe3; border-radius: 0 12px 12px 12px;
 }
 
-.timestamp {
-    display: block;
-    font-size: 0.7rem;
-    color: #999;
-    margin-top: 5px;
-}
+.timestamp { font-size: 0.7rem; color: #999; margin-top: 5px; }
 .message-row.me .timestamp { text-align: right; }
 
-/* ==========================================================================
-   5. Form Elements & Inputs
-   ========================================================================== */
-.chat-textarea, .chat-select {
-    width: 100%;
-    background: transparent;
-    border: 1px solid #d1cfc0;
-    padding: 15px;
-    font-family: 'Sen', sans-serif;
-    margin-bottom: 15px;
-    resize: none;
-}
-
-.chat-textarea { height: 120px; }
-
-/* ================= =========================================================
-   6. Buttons & Interactive Elements
-   ========================================================================== */
-.btn-container {
-    text-align: center;
-    margin-top: 40px;
-}
-
-/* Pill-shaped buttons matching the reference image */
+/* Forms & Buttons */
+.chat-textarea, .chat-select { width: 100%; background: transparent; border: 1px solid #d1cfc0; padding: 15px; }
 .chat-submit-btn, .btn-back {
-    display: inline-block;
-    background: #f7f5f0;
-    border: 1px solid #d1cfc0;
-    padding: 10px 30px;
-    border-radius: 25px;
-    color: #000;
-    text-decoration: none;
-    text-align: center;
-    transition: 0.3s;
-    cursor: pointer;
-    font-size: 0.9rem;
+    display: inline-block; background: #f7f5f0; border: 1px solid #d1cfc0;
+    padding: 10px 30px; border-radius: 25px; color: #000; text-decoration: none; cursor: pointer;
 }
+.chat-submit-btn:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-.chat-submit-btn:hover, .btn-back:hover {
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* ==========================================================================
-   7. History List (Dashboard Page)
-   ========================================================================== */
-.history-card {
-    border: 1px solid #d1cfc0;
-    background: transparent;
-}
-
-.thread-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px;
-    border-bottom: 1px solid #d1cfc0;
-    text-decoration: none;
-    color: #333;
-    transition: 0.2s;
-}
-
-.thread-item:hover { background: #fff; }
-
-.thread-name { font-weight: bold; color: #e2725b; display: block; }
-.thread-preview { font-size: 0.85rem; color: #666; }
-.thread-date { font-size: 0.75rem; color: #999; }
-
-/* Utilities */
+.back-link { position: absolute; left: 0; top: 50%; transform: translateY(-50%); text-decoration: none; color: #999; font-size: 0.85rem; }
 .hidden { display: none; }

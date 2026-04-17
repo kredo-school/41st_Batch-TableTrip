@@ -28,37 +28,49 @@
                     <select name="recipient_id" class="chat-select">
                         <option value="" disabled selected>-- Select Restaurant --</option>
                         @foreach($restaurants as $res)
-                            <option value="{{ $res->id }}">{{ $res->name }}</option>
+                            <option value="{{ $res->id }}">{{ $res->restaurant_name }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <textarea name="message" class="chat-textarea" style="height:150px;" placeholder="Write your message here..." required></textarea>
+                <textarea name="message" class="chat-textarea" placeholder="Write your message here..." required></textarea>
                 <button type="submit" class="chat-submit-btn" style="width:100%;">Start Chat</button>
             </form>
         </div>
 
         {{-- Right Section: Chat History --}}
         <div class="history-card">
-            <h3 class="chat-title" style="font-size: 1.5rem; border:none;">History</h3>
+            <div class="history-header">
+                <h3 class="form-subtitle" style="margin: 20px; border:none;">History</h3>
+            </div>
             <div class="history-list">
                 @forelse($threads as $thread)
-                    <a href="{{ route('user.inquiry.show', $thread->thread_id) }}" class="thread-item">
-                        <div class="thread-content">
-                            <span class="thread-name">
-                                {{ $thread->recipient_type === 'Admin' ? 'Support' : ($thread->recipient->name ?? 'Owner') }}
-                            </span>
-                            <span class="thread-preview">{{ $thread->message }}</span>
-                        </div>
-                        <span class="thread-date">{{ $thread->created_at->diffForHumans() }}</span>
-                    </a>
+                    <div class="thread-wrapper">
+                        <a href="{{ route('user.inquiry.index', $thread->thread_id) }}" class="thread-item">
+                            <div class="thread-content">
+                                <span class="thread-name">
+                                    {{ $thread->recipient_type === 'Admin' ? 'Support' : ($thread->recipient->restaurant_name ?? 'Owner') }}
+                                </span>
+                                <span class="thread-preview">{{ Str::limit($thread->message, 40) }}</span>
+                            </div>
+                            <span class="thread-date">{{ $thread->created_at->diffForHumans() }}</span>
+                        </a>
+
+                        {{-- Delete Button --}}
+                        <form action="{{ route('user.inquiry.destroy', $thread->thread_id) }}" method="POST" class="delete-form" onsubmit="return confirm('Delete this conversation history?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-delete-icon">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </div>
                 @empty
-                    <p class="no-history">No conversation history found.</p>
+                    <p class="no-history" style="padding: 20px; text-align: center;">No conversation history found.</p>
                 @endforelse
             </div>
         </div>
     </div>
-
     {{-- Footer Button Area --}}
     <div class="btn-container">
         <a href="{{ route('dashboard') }}" class="btn-back">
