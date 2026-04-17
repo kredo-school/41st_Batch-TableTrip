@@ -107,13 +107,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favorite_kits');
 
     // reservation
-    Route::prefix('reservations')->name('reservation.')->group(function () {
-        Route::get('/', [ReservationController::class, 'index'])->name('index');
+    Route::prefix('user/reservations')->name('user.reservations.')->group(function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('index');    // user.reservations.index
         Route::post('/store', [ReservationController::class, 'store'])->name('store');
-        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
-        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit'); // user.reservations.edit
         Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-        Route::delete('/reservations/delete/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
     });
 
     // inquiry

@@ -48,7 +48,7 @@
                                 {{-- guests --}}
                                 <td>{{ $reservation->number_of_guests }}</td>
                                 <td class="edit-icons">
-                                    <a href="{{ route('reservation.edit',$reservation->id) }}" class="">
+                                    <a href="{{ route('user.reservations.edit',$reservation->id) }}" class="">
                                         <i class="fa-regular fa-calender-check"></i>
                                     </a>
                                     <i class="fa-solid fa-user" style="margin-left:5px;"></i>
@@ -64,7 +64,7 @@
                 </table>
                 </div> 
                 <div class="btn-container">
-                    <a href="{{ route('reservation.index') }}" class="btn-back">View All Reservations</a>
+                    <a href="{{ route('user.reservations.index') }}" class="btn-back">View All Reservations</a>
                 </div>
         </section>
 
