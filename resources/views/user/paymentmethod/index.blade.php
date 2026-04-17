@@ -35,7 +35,7 @@
                                             <form action="{{ route('user.payment_method.default', $method->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PATCH')
-                                                <button type="submit" class="btn btn-link p-0 ms-2 text-decoration-none text-muted small badge-default" style="font-size: 0.8rem;">
+                                                <button type="submit" class="btn btn-link p-0 ms-2 text-decoration-none text-muted small">
                                                     Set as Default
                                                 </button>
                                             </form>
