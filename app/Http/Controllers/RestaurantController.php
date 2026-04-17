@@ -23,7 +23,6 @@ class RestaurantController extends Controller
             return response()->view('restaurants.not_published', [], 403);
         }
 
-
         $menus = Menu::where('restaurant_id', $id)->get();
         $products = Product::where('restaurant_id', $id)->get();
         $reviews = Review::with(['user', 'replies'])
@@ -34,7 +33,9 @@ class RestaurantController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-        return view('restaurants.restaurant_page', compact('restaurant', 'menus', 'products', 'reviews'));
+        $isFavorite = Auth::check() ? $restaurant->favorites()->where('user_id', Auth::id())->exists() : false;
+
+        return view('restaurants.restaurant_page', compact('restaurant', 'menus', 'products', 'reviews', 'isFavorite'));
     }
 
     public function store(Request $request, $id)
@@ -77,6 +78,28 @@ class RestaurantController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Your reservation has been made successfully!');
+    }
+
+   public function favoriteToggle($id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $favorite = $restaurant->favorites()->where('user_id', $user->id)->first();
+
+        if ($favorite) {
+            $favorite->delete();
+        } else {
+            $restaurant->favorites()->create([
+                'user_id' => $user->id
+            ]);
+        }
+
+        return back();
     }
 
 

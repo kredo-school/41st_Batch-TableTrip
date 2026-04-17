@@ -21,9 +21,20 @@
     {{-- Title + Heart --}}
     <div class="d-flex align-items-center justify-content-between">
       <h1 class="mb-0">{{ $restaurant->restaurant_name }}</h1>
-      <button class="btn p-0 border-0 bg-transparent" aria-label="favorite">
-        <i class="fa-regular fa-heart fs-3"></i>
-      </button>
+      @auth
+      <form action="{{ route('restaurant.favorite', $restaurant->id) }}" method="post">
+        @csrf
+        @if ($isFavorite)
+            <button class="btn p-0 border-0 bg-transparent" aria-label="unfavorite">
+              <i class="fa-solid fa-heart fs-3 text-orange"></i>
+            </button>
+        @else
+            <button class="btn p-0 border-0 bg-transparent" aria-label="favorite">
+              <i class="fa-regular fa-heart fs-3 text-orange"></i>
+            </button>     
+        @endif
+      </form>
+      @endauth
     </div>
 
     {{-- Gallery 2 photos --}}
@@ -183,7 +194,7 @@
       <div class="col-12 col-lg-6 bg-white rounded p-3 border">
         <h4 class="text-center p-3 text-underline-accent">Reservation</h4>
 
-        <form class="mt-3" id="reservationForm" action="{{ route('restaurant.reserve',$restaurant->id) }}" method="post">
+        <form class="mt-3" id="reservationForm" action="{{ route('restaurant.reservation',$restaurant->id) }}" method="post">
          @csrf
           <div class="row g-2">
             <div class="col-6">
