@@ -48,7 +48,7 @@ class NotificationsController extends Controller
         return back()->with('success', 'Mark as done');
     }
 
-    public function destroy($id)
+   public function destroy($id)
     {
         $notification = Notification::findOrFail($id);
 
@@ -58,6 +58,6 @@ class NotificationsController extends Controller
 
         $notification->delete();
 
-        return back()->with('success', 'Deleted!');
+        return redirect()->route('user.notifications.index')->with('success', 'Deleted!');
     }
 }

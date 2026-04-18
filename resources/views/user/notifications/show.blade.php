@@ -73,13 +73,13 @@
                     <i class="fa-solid fa-chevron-left me-2"></i> Back to List
                 </a>
 
-                <form action="{{ route('user.notifications.destroy', $notification->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this notification?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="delete-btn-link">
-                        <i class="fa-solid fa-trash-can me-1"></i> Delete this notification
-                    </button>
-                </form>
+                    <form action="{{ route('user.notifications.destroy', $notification->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="delete-btn-link">
+                            <i class="fa-solid fa-trash-can me-1"></i> Delete this notification
+                        </button>
+                    </form>
             </div>
         </div>
     </div>
