@@ -30,7 +30,7 @@ class ReservationController extends Controller
             ->get();
         $purchased = Order::where('user_id', $userId)
             ->with(['product', 'meal_kit']) 
-            ->orderBy('ordered_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations', 'purchased'));
