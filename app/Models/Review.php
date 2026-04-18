@@ -6,18 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Restaurant;
 use App\Models\User;
-
-class Review extends Model
-{
-    use HasFactory;
-
-    protected $fillable = [
-        'user_id',
-        'restaurant_id',
-        'rating',
-        'comment',
-        'status',
-    ];
+use App\Models\Product;
 
 class Review extends Model
 {
