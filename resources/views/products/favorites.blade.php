@@ -30,7 +30,7 @@
                     @endif
 
                     {{-- お気に入り解除ボタン --}}
-                    <form action="{{ route('favorites.toggle') }}" method="POST"
+                    <form action="{{ route('favorite.toggle') }}" method="POST"
                           style="position: absolute; top: 10px; right: 10px; z-index: 10;">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">

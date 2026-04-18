@@ -73,15 +73,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Restaurant::class, 'favorite_restaurants');
     }
 
-    // public function favorite_kits()
-    // {
-    //     return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
-    // }
-
+ 
     public function favorite_kits()
-    {
-        return $this->belongsToMany(Product::class, 'favorite_kits', 'user_id', 'meal_kit_id')->withTimestamps();
-    }
+{
+    return $this->belongsToMany(
+        Product::class,    
+        'favorites',
+        'user_id',         
+        'product_id'      
+    )->withTimestamps();
+}
 
     public function coupons()
     {

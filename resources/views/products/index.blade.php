@@ -14,7 +14,7 @@
         {{-- カテゴリ選択（元のレイアウトを維持） --}}
         <div class="row mb-3 text-center position-relative mx-0">
             {{-- 左側：Meal Kitsタブ --}}
-            <div class="col-6 border py-3 fw-bold d-flex align-items-center justify-content-center gap-2 p-0"
+            <div class="{{ auth()->check() ? 'col-6' : 'col-12' }} border py-3 fw-bold d-flex align-items-center justify-content-center gap-2 p-0"
                  style="z-index: 1020; background-color: {{ request('tab') !== 'favorites' ? '#2c3e50' : '#fff' }};">
                 <a href="{{ route('products.index') }}"
                    class="text-decoration-none flex-grow-1 py-2"
@@ -30,11 +30,13 @@
             </div>
             
             {{-- 右側：Favorites --}}
+            @auth
             <a href="{{ route('products.index', ['tab' => 'favorites']) }}"
                class="col-6 border py-3 text-decoration-none fw-bold d-flex align-items-center justify-content-center gap-2"
                style="z-index: 1020; background-color: {{ request('tab') === 'favorites' ? '#2c3e50' : '#fff' }}; color: {{ request('tab') === 'favorites' ? '#fff' : '#212529' }};">
                 <i class="bi bi-heart{{ request('tab') === 'favorites' ? '-fill' : '' }}"></i> Favorites
             </a>
+            @endauth
 
             {{-- --- ソートメニュー --- --}}
             <div id="customSearchMenu"
@@ -176,7 +178,7 @@
                         <div class="card-body px-3 pt-3 pb-3 text-start">
                             {{-- ハートボタン --}}
                             @auth
-                            <form action="{{ route('favorites.toggle') }}" method="POST"
+                            <form action="{{ route('favorite.toggle') }}" method="POST"
                                   style="position: absolute; top: 10px; right: 10px; z-index: 10;">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -249,11 +251,13 @@
             </div>
         </div>
 
+        @auth
         <div class="btn-back-container text-center my-5">
             <a href="{{ route('dashboard') }}" class="btn-back-custom">
                 <i class="bi bi-house-door-fill me-2"></i>Back to Dashboard
             </a>
         </div>
+        @endauth
 
 <script>
     // メニュー全体の開閉
