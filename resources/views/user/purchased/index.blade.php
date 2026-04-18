@@ -3,6 +3,7 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/history.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 <div class="history-container py-5 text-center">
     <h1 class="history-title mb-4">
@@ -18,31 +19,42 @@
             <label for="main-reservations" class="main-category-label">Reservations</label>
         </div>
 
-        {{-- ■ A. Orders --}}
+        {{-- ■ A. Orders  --}}
         <div class="section-orders">
-            <h2 class="sub-title">Order History</h2>
-            <table class="history-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($purchased ?? [] as $order)
+            <h2 class="sub-title"><i class="fa-solid fa-bag-shopping me-2"></i>Order History</h2>
+            <div class="table-wrapper">
+                <table class="history-table"> 
+                    <thead>
                         <tr>
-                            <td>{{ $order->ordered_at->format('d/m/y') }}</td>
-                            <td><strong>{{ $order->meal_kit->name ?? 'Meal Kit' }}</strong></td>
-                            <td>{{ $order->quantity }}</td>
-                            <td>¥{{ number_format($order->total_price) }}</td>
+                            <th>Product</th>
+                            <th>Restaurant</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                            <th>Date</th>
                         </tr>
-                    @empty
-                        <tr><td colspan="4" class="no-data">No order history found</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @forelse($purchased ?? [] as $item)
+                            <tr>
+                                <td><strong>{{ $item->product->name ?? 'N/A' }}</strong></td>
+                                <td>{{ $item->product->restaurant_name ?? 'N/A' }}</td>
+                                <td>¥{{ number_format($item->price_at_purchased) }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('d/m/y') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="6" class="no-data">No purchase history yet.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4">
+                <a href="{{ route('products.index') }}" class="btn-back">
+                    <i class="bi bi-bag me-2"></i>Continue Shopping
+                </a>
+            </div>
         </div>
 
         {{-- ■ B. Reservations  --}}
@@ -66,24 +78,31 @@
                                 <th>Date / Time</th>
                                 <th>Restaurant</th>
                                 <th>People</th>
-                                <th>Action</th>
+                                <th style="width: 160px;">Manage</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody>         
                             @forelse($upcoming_reservations ?? [] as $res)
                                 <tr>
-                                    <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}</td>
-                                    <td><strong>{{ $res->restaurant->name }}</strong></td>
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} 
+                                        {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}
+                                    </td>
+                                    <td><strong>{{ $res->restaurant->name ?? 'N/A' }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
                                     <td>
-                                        <form action="#" method="POST" style="display:inline;">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="btn-delete-link" onclick="return confirm('Cancel?')">Cancel</button>
-                                        </form>
+                                        <div class="manage-action-group" style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+                                            <a href="{{ route('user.inquiry.create', ['restaurant_id' => $res->restaurant_id, 'reservation_id' => $res->id]) }}" class="btn-inquiry-icon" title="Contact"><i class="fa-solid fa-envelope"></i></a>
+                                            <a href="{{ route('user.reservations.edit', $res->id) }}" class="btn-edit-icon" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <form action="{{ route('user.reservations.destroy', $res->id) }}" method="POST" style="margin: 0;">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="btn-cancel-icon" onclick="return confirm('Cancel?')" style="background:none; border:none; color:#999;"><i class="fa-solid fa-calendar-xmark"></i></button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="4" class="no-data">No upcoming reservations found</td></tr>
+                                <tr><td colspan="4" class="no-data-cell">No upcoming reservation yet</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -96,15 +115,17 @@
                             <tr>
                                 <th>Date / Time</th>
                                 <th>Restaurant</th>
+                                <th>Guest</th>
                                 <th>Status</th>
-                                <th>Feedback</th>
+                                <th>Review</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($past_reservations ?? [] as $res)
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}</td>
-                                    <td><strong>{{ $res->restaurant->name }}</strong></td>
+                                    <td><strong>{{ $res->restaurant->name ?? 'N/A' }}</strong></td>
+                                     <td>{{ $res->number_of_people }}</td>
                                     <td>Visited</td>
                                     <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i></td>
                                 </tr>
@@ -121,57 +142,6 @@
     <div class="mt-5">
         <a href="{{ route('dashboard') }}" class="btn-dashboard-back">
             <i class="fa-solid fa-house me-2"></i>Back to Dashboard
-        </a>
-    </div>
-</div>
-@endsection
-@section('title', 'Purchase History')
-
-@section('content')
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-<div class="reservation-list-container">
-    <h2 class="list-title">
-        <i class="fa-solid fa-bag-shopping me-2"></i>Purchase History
-    </h2>
-
-    <div class="table-wrapper">
-        <table class="table-custom">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Restaurant</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($purchased as $item)
-                    <tr>
-                        <td>{{ $item->product->name ?? 'N/A' }}</td>
-                        <td>{{ $item->product->restaurant_name ?? 'N/A' }}</td>
-                        <td>¥{{ number_format($item->price_at_purchased) }}</td>
-                        <td>{{ $item->quantity }}</td>
-                        <td>¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('Y/m/d') }}</td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" style="text-align:center; padding:20px;">No purchase history yet.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-
-    <div class="btn-container">
-        <a href="{{ route('products.index') }}" class="btn-back">
-            <i class="bi bi-bag me-2"></i>Continue Shopping
-        </a>
-        <a href="{{ route('dashboard') }}" class="btn-back">
-            <i class="fa-solid fa-house"></i> Back to Dashboard
         </a>
     </div>
 </div>
