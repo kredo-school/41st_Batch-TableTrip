@@ -17,21 +17,21 @@ class ReservationController extends Controller
         $userId = Auth::id();
         $today = now()->toDateString();
 
-        // upcoming reservation
         $upcoming_reservations = Reservation::where('user_id', $userId)
             ->whereDate('reservation_date', '>=', $today)
             ->with('restaurant')
             ->orderBy('reservation_date', 'asc')
             ->get();
 
-        // past reservation
         $past_reservations = Reservation::where('user_id', $userId)
             ->whereDate('reservation_date', '<', $today)
             ->with('restaurant')
             ->orderBy('reservation_date', 'desc')
             ->get();
-
-        $purchased = []; 
+        $purchased = Order::where('user_id', $userId)
+            ->with(['product', 'meal_kit']) 
+            ->orderBy('ordered_at', 'desc')
+            ->get();
 
         return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations', 'purchased'));
     }
