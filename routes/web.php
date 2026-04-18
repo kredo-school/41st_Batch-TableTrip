@@ -107,23 +107,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favorite_kits');
 
     // reservation
-    Route::prefix('reservations')->name('reservation.')->group(function () {
-        Route::get('/', [ReservationController::class, 'index'])->name('index');
+    Route::prefix('user/reservations')->name('user.reservations.')->group(function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('index');    // user.reservations.index
         Route::post('/store', [ReservationController::class, 'store'])->name('store');
-        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
-        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit'); // user.reservations.edit
         Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
-        Route::delete('/reservations/delete/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
     });
 
     // inquiry
     Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
         Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
+        Route::get('/create', [InquiryController::class, 'create'])->name('create'); // 追加
         Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('index');
         Route::post('/send', [InquiryController::class, 'send'])->name('send');
         Route::delete('/destroy/{thread_id}', [InquiryController::class, 'destroy'])->name('destroy');
     });
-
     // --- User
     Route::prefix('user')->name('user.')->group(function () {
 

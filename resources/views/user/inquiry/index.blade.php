@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{ asset('css/inquiry.css') }}">
 
 <div class="chat-container">
-    <div class="chat-title" style="position: relative;">
+    <div class="chat-header">
         <a href="{{ route('user.inquiry.dashboard') }}" class="back-link">
             <i class="fa-solid fa-chevron-left"></i> Back
         </a>
@@ -18,14 +18,20 @@
             if ($isMeSender) {
                 $displayName = ($firstMsg->recipient_type === 'Admin') ? 'Support' : ($firstMsg->recipient->restaurant_name ?? 'Restaurant');
             } else {
-                $displayName = ($firstMsg->sender_type === 'Admin') ? 'Support' : ($firstMsg->recipient->restaurant_name ?? 'Restaurant');
+                $displayName = ($firstMsg->sender_type === 'Admin') ? 'Support' : ($firstMsg->sender->restaurant_name ?? 'Restaurant');
             }
         @endphp
         
-        <span class="display-name">{{ $displayName }}</span>
+        <div class="chat-title-group text-center">
+            <h1 class="chat-title-main">{{ $displayName }}</h1>
+            @if($firstMsg->subject !== 'Inquiry')
+                <div class="chat-subtitle">
+                    <i class="fa-solid fa-calendar-days me-1"></i> {{ $firstMsg->subject }}
+                </div>
+            @endif
+        </div>
     </div>
 
-    {{-- Chat Messages Window --}}
     <div id="chat-window" class="chat-window">
         @foreach($messages as $msg)
             <div class="message-row {{ ($msg->sender_id == Auth::id() && $msg->sender_type === 'User') ? 'me' : 'other' }}">
@@ -39,7 +45,6 @@
         @endforeach
     </div>
 
-    {{-- Input Section --}}
     <div class="chat-input-area">
         @php
             $lastMessage = $messages->last();
@@ -59,14 +64,15 @@
             <input type="hidden" name="recipient_type" value="{{ $rType }}">
 
             <textarea name="message" class="chat-textarea" placeholder="Type your reply..." required></textarea>
-            <button type="submit" class="chat-submit-btn" style="width:100%;">Reply Message</button>
+            <button type="submit" class="chat-submit-btn">
+                <i class="fa-regular fa-paper-plane me-2"></i> Reply Message
+            </button>
         </form>
     </div>
 
-    {{-- Footer --}}
-    <div class="btn-container">
+    <div class="btn-container mt-4 text-center">
         <a href="{{ route('dashboard') }}" class="btn-back">
-            <i class="fa-solid fa-house"></i> Back to Dashboard
+            <i class="fa-solid fa-house me-2"></i> Back to Dashboard
         </a>
     </div>
 </div>
