@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
 
 <div class="history-container py-5 text-center">
-    <h1 class="history-title mb-4">Upcoming Reservations</h1>
+    <h1 class="history-title mb-4">Upcoming Reservation</h1>
 
     <div class="main-selection-wrapper">
         <div class="section-reservations">
@@ -15,7 +15,6 @@
                         <th>Date / Time</th>
                         <th>Restaurant</th>
                         <th>People</th>
-                        {{-- 2つの列を統合した管理用ヘッダー --}}
                         <th style="width: 160px;">Manage</th>
                     </tr>
                 </thead>

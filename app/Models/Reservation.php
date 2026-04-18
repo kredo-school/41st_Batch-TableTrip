@@ -16,6 +16,7 @@ class Reservation extends Model
         'user_id',
         'reservation_date',
         'reservation_time',
+        'reserved_at',
         'number_of_people',
         'full_name',
         'phone',
@@ -28,6 +29,7 @@ class Reservation extends Model
     protected $casts = [
         'reservation_date' => 'date',
         'reservation_time' => 'datetime:H:i',
+        'reserved_at'      => 'datetime',
         'visited_at' => 'datetime',
     ];
 

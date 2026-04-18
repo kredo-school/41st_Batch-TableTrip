@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reservation;
 use App\Models\Order; 
-use Carbon\User;
+use Model\User;
 use Carbon\Carbon;
 
 class ReservationController extends Controller
