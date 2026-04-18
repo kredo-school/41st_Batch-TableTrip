@@ -34,6 +34,10 @@
                                        class="btn-inquiry-icon" title="Contact Restaurant" style="color: #e2725b; text-decoration: none; font-size: 1.1rem;">
                                         <i class="fa-solid fa-envelope"></i>
                                     </a>
+                                    <a href="{{ route('user.reservations.edit', $res->id) }}" 
+                                        class="btn-edit-icon" title="Edit" style="color: #666; font-size: 1.1rem; text-decoration: none;">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
 
                                     {{-- Cancel (Action) --}}
                                     <form action="{{ route('user.reservations.destroy', $res->id) }}" method="POST" style="margin: 0;">
