@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminRewardController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminProductController;
 
 
 
@@ -239,6 +240,18 @@ Route::prefix('admin')
 
         Route::get('/rewards', [AdminRewardController::class, 'dashboard'])
             ->name('rewards.dashboard');
+
+        Route::get('/products', [AdminProductController::class, 'index'])
+            ->name('products.index');
+
+        Route::get('/products/{id}', [AdminProductController::class, 'show'])
+            ->name('products.show');
+        
+        Route::post('/products/{id}/toggle-visibility', [AdminProductController::class, 'toggleVisibility'])
+            ->name('products.toggleVisibility');
+
+        Route::delete('/products/{id}', [AdminProductController::class, 'destroy'])
+            ->name('products.destroy');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
