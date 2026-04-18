@@ -74,14 +74,14 @@
             <p class="status-line">
                 Status :
                 <span class="dot
-                    @if($order->status === 'pending') pending-dot
-                    @elseif($order->status === 'shipped') yellow
-                    @elseif($order->status === 'delivered') delivered-dot
-                    @elseif($order->status === 'canceled') canceled-dot
-                    @elseif($order->status === 'refunded') refunded-dot
+                    @if(($user->status ?? 'active') === 'active') active-dot
+                    @elseif(($user->status ?? 'active') === 'suspended') suspended-dot
+                    @elseif(($user->status ?? 'active') === 'deactivated') deactivated-dot
+                    @elseif(($user->status ?? 'active') === 'banned') banned-dot
                     @endif
                 "></span>
-                {{ ucfirst($order->status) }}
+
+                {{ ucfirst($user->status ?? 'active') }}
             </p>
 
             <p class="date">
