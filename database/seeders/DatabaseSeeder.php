@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,        
             ReservationSeeder::class,    
             InquirySeeder::class,        
-            // NotificationSeeder::class,   
+            NotificationSeeder::class,   
         ]);
 
         User::factory()->create([

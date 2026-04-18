@@ -14,11 +14,15 @@
         @php
             $firstMsg = $messages->first();
             $isMeSender = ($firstMsg->sender_id == Auth::id() && $firstMsg->sender_type === 'User');
-            
+
             if ($isMeSender) {
-                $displayName = ($firstMsg->recipient_type === 'Admin') ? 'Support' : ($firstMsg->recipient->restaurant_name ?? 'Restaurant');
+                $displayName = ($firstMsg->recipient_type === 'Restaurant' && $firstMsg->recipient) 
+                    ? $firstMsg->recipient->restaurant_name 
+                    : 'Support';
             } else {
-                $displayName = ($firstMsg->sender_type === 'Admin') ? 'Support' : ($firstMsg->sender->restaurant_name ?? 'Restaurant');
+                $displayName = ($firstMsg->sender_type === 'Restaurant' && $firstMsg->sender) 
+                    ? $firstMsg->sender->restaurant_name 
+                    : 'Support';
             }
         @endphp
         

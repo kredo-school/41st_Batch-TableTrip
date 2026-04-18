@@ -137,14 +137,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
         });
 
-        // notification)
+        // notifications
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('/', [NotificationsController::class, 'index'])->name('index');
             Route::get('/{id}', [NotificationsController::class, 'show'])->name('show');
             Route::patch('/{id}/complete', [NotificationsController::class, 'complete'])->name('complete');
             Route::delete('/{id}', [NotificationsController::class, 'destroy'])->name('destroy');
         });
-
         // payment
         Route::resource('payment_method', PaymentMethodController::class);
         Route::patch('payment_method/{payment_method}/default', [PaymentMethodController::class, 'setDefault'])

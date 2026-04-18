@@ -32,6 +32,7 @@
                             <th>Qty</th>
                             <th>Subtotal</th>
                             <th>Date</th>
+                            <th>Review</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,9 +44,10 @@
                                 <td>{{ $item->quantity }}</td>
                                 <td>¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('d/m/y') }}</td>
+                                <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i></td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="no-data">No purchase history yet.</td></tr>
+                            <tr><td colspan="7" class="no-data">No purchase history yet.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
