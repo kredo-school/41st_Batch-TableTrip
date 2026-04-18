@@ -276,8 +276,9 @@ Route::get('/cart/track', function () { return view('products.track'); })->name(
 |--------------------------------------------------------------------------
 */
 Route::get('/restaurant/{id}', [RestaurantController::class, 'show'])->name('restaurant');
-Route::post('/restaurant/{id}/reservation', [RestaurantController::class, 'store'])->name('restaurant.reservation');;
-Route::post('/restaurant/{id}/favorite', [RestaurantController::class, 'favoriteToggle'])->name('restaurant.favorite');;
+Route::post('/restaurant/{id}/reservation', [RestaurantController::class, 'store'])->name('restaurant.reservation');
+Route::post('/restaurant/{id}/favorite', [RestaurantController::class, 'favoriteToggle'])->name('restaurant.favorite');
+Route::post('/restaurant/{id}/reviews', [RestaurantController::class, 'storeReview'])->name('restaurant.reviews.store');
 
 /*
 |--------------------------------------------------------------------------

@@ -27,7 +27,7 @@
                         <option value="">All Status</option>
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                        <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                        <option value="visited" {{ request('status') == 'visited' ? 'selected' : '' }}>Visited</option>
                         <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                         <option value="no-show" {{ request('status') == 'no-show' ? 'selected' : '' }}>No-show</option>
                     </select>
@@ -135,7 +135,6 @@
                                         <th>Date</th>
                                         <th>Name</th>
                                         <th>Guests</th>
-                                        {{-- <th>Phone</th> --}}
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -151,14 +150,13 @@
                                             </td>
                                             <td class="ps-4">{{ $reservation->full_name }}</td>
                                             <td class="ps-4">{{ $reservation->number_of_people }}</td>
-                                            {{-- <td>{{ $reservation->phone }}</td> --}}
                                             <td class="pe-3">
                                                 @php
                                                     $statusClass = match($reservation->status) {
                                                         'pending' => 'bg-warning',
                                                         'confirmed' => 'bg-success',
                                                         'cancelled' => 'bg-danger',
-                                                        'completed' => 'bg-primary',
+                                                        'visited' => 'bg-primary',
                                                         'no-show' => 'bg-secondary',
                                                         default => 'bg-light text-dark',
                                                     };
