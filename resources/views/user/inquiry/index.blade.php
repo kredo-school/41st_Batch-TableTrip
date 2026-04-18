@@ -8,7 +8,7 @@
 <div class="chat-container">
     <div class="chat-header">
         <a href="{{ route('user.inquiry.dashboard') }}" class="back-link">
-            <i class="fa-solid fa-chevron-left"></i> Back
+            <i class="fa-solid fa-chevron-left"></i>
         </a>
         
         @php
@@ -67,19 +67,18 @@
             <input type="hidden" name="recipient_id" value="{{ $rId }}">
             <input type="hidden" name="recipient_type" value="{{ $rType }}">
 
-            <textarea name="message" class="chat-textarea" placeholder="Type your reply..." required></textarea>
-            <button type="submit" class="chat-submit-btn">
-                <i class="fa-regular fa-paper-plane me-2"></i> Reply Message
-            </button>
+            <div class="input-wrapper">
+                <textarea name="message" class="chat-textarea" placeholder="Type your reply..." required></textarea>
+                <button type="submit" class="chat-submit-btn">
+                    <i class="fa-regular fa-paper-plane"></i>
+                </button>
+            </div>
         </form>
     </div>
     
     <div class="btn-container mt-4 text-center">
-        <a href="{{ route('user.inquiry.dashboard') }}" class="btn-back">
-            <i class="fa-solid fa-house me-2"></i> Last page
-        </a>
         <a href="{{ route('dashboard') }}" class="btn-back">
-            <i class="fa-solid fa-house me-2"></i> Back to Dashboard
+            <i class="fa-solid fa-house me-2"></i> Dashboard
         </a>
     </div>
 </div>
