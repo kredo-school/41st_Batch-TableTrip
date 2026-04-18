@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminRewardController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 
 
@@ -227,6 +228,12 @@ Route::prefix('admin')
 
         Route::patch('/restaurants/{id}/reject', [AdminRestaurantController::class, 'reject'])
             ->name('restaurants.reject');
+        
+        Route::get('/users', [AdminUserController::class, 'index'])
+            ->name('users.index');
+        
+        Route::get('/users/{id}', [AdminUserController::class, 'show'])
+            ->name('users.show');
             
         Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
             ->name('rewards.point-history');
