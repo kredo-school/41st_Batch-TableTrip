@@ -14,143 +14,268 @@ body {
     color: var(--text-main);
 }
 
-/* --- Common Containers --- */
-.chat-container, .history-container {
-    max-width: 900px;
+
+.inquiry-outer-container {
+    max-width: 1100px;
     margin: 40px auto;
-    padding: 30px;
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
 }
 
-/* --- Header & Titles --- */
-.chat-header, .history-title-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.chat-header {
+    text-align: center;
+    border-bottom: 2px solid var(--accent-color);
     padding-bottom: 20px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--accent-color);
+    margin-bottom: 30px;
 }
 
-.chat-title-main, .history-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+.chat-title-main {
+    font-size: 2.5rem;
     margin: 0;
 }
 
-.chat-subtitle {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 5px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.back-link {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.back-link:hover { color: var(--accent-color); }
-
-/* --- Table Styles (Reservation List) --- */
-.history-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px;
-}
-
-.history-table th {
+.form-subtitle {
     font-family: 'Playfair Display', serif;
-    color: var(--text-muted);
-    font-weight: 400;
-    padding: 10px;
+    font-size: 1.4rem;
     border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
 }
 
-.history-table td {
-    background-color: #fff;
-    padding: 15px;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.history-table td:first-child { border-left: 1px solid var(--border-color); border-radius: 10px 0 0 10px; }
-.history-table td:last-child { border-right: 1px solid var(--border-color); border-radius: 0 10px 10px 0; }
-
-/* --- Chat Window (Line Style) --- */
-.chat-window {
-    height: 550px;
-    overflow-y: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background: rgba(255,255,255,0.3);
-    border-radius: 8px;
-}
-
-.message-row { display: flex; width: 100%; }
-.message-row.me { justify-content: flex-end; }
-.message-row.other { justify-content: flex-start; }
-
-.bubble {
-    max-width: 80%;
-    padding: 12px 18px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    border: 1px solid var(--border-color);
-}
-
-.message-row.me .bubble {
-    background-color: #fff;
-    border-left: 4px solid var(--accent-color);
-    border-radius: 15px 0 15px 15px;
-}
-
-.message-row.other .bubble {
-    background-color: #eeebe3;
-    border-radius: 0 15px 15px 15px;
-}
-
-.timestamp { font-size: 0.7rem; color: var(--text-muted); margin-top: 5px; }
-
-/* --- Buttons & Forms --- */
+/* --- 入力フォーム --- */
 .chat-textarea {
     width: 100%;
-    min-height: 80px;
+    min-height: 150px;
     border: 1px solid var(--border-color);
     padding: 15px;
-    border-radius: 10px;
-    resize: none;
+    border-radius: 12px;
+    background: #fff;
+    font-family: 'Sen', sans-serif;
+    margin-bottom: 15px;
 }
 
-.chat-submit-btn, .btn-back, .btn-dashboard-back {
-    display: inline-block;
-    background: var(--bg-color);
+.chat-select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.hidden { display: none; }
+
+/* --- スレッド一覧（カード） --- */
+.thread-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.thread-card {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.thread-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-color: var(--accent-color);
+}
+
+.active-indicator {
+    width: 4px;
+    height: 100%;
+    background-color: var(--accent-color);
+    position: absolute; left: 0; top: 0;
+    opacity: 0; transition: 0.3s;
+}
+
+.thread-card:hover .active-indicator { opacity: 1; }
+
+.thread-link {
+    display: flex;
+    padding: 15px 18px;
+    text-decoration: none !important;
+    color: var(--text-main);
+    gap: 15px;
+    align-items: center;
+}
+
+.thread-avatar {
+    width: 45px; height: 45px; min-width: 45px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sen', sans-serif; font-weight: bold; color: #fff;
+    font-size: 1.2rem;
+}
+
+.type-admin { background-color: #5c5a4a; }
+.type-res { background-color: var(--accent-color); }
+
+.thread-content { flex-grow: 1; min-width: 0; }
+
+.thread-header-row {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 2px;
+}
+
+.partner-name { font-weight: 700; font-size: 1.05rem; }
+.thread-date { font-family: 'Sen', sans-serif; font-size: 0.7rem; color: var(--text-muted); }
+
+.message-preview {
+    font-family: 'Sen', sans-serif; font-size: 0.85rem; color: #777;
+    margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.chat-submit-btn, .btn-back {
+    background: #fff;
     border: 1px solid var(--border-color);
     padding: 10px 25px;
     border-radius: 30px;
     color: var(--text-main);
     font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
     transition: 0.3s;
 }
 
-.chat-submit-btn:hover, .btn-back:hover, .btn-dashboard-back:hover {
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.chat-submit-btn:hover, .btn-back:hover {
+    background: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
 }
 
-/* Manage Icons (Reservation List) */
-.btn-inquiry-icon:hover { color: var(--accent-color) !important; transform: scale(1.1); }
-.btn-cancel-icon:hover { color: #333 !important; transform: scale(1.1); }
+.btn-delete-icon {
+    position: absolute; top: 10px; right: 10px;
+    background: none; border: none; color: #ddd;
+    opacity: 0; transition: 0.2s;
+}
+
+.thread-card:hover .btn-delete-icon { opacity: 1; }
+.btn-delete-icon:hover { color: var(--accent-color); }
+
+/* --- Chat Window Specific Styles --- */
+
+.chat-container {
+    max-width: 800px; /* チャットは見やすさのために少し絞る */
+    margin: 40px auto;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.chat-window {
+    height: 500px;
+    overflow-y: auto;
+    padding: 30px;
+    background-color: var(--bg-color); /* 薄いベージュの背景 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* メッセージのレイアウト */
+.message-row {
+    display: flex;
+    width: 100%;
+}
+
+.message-row.me { justify-content: flex-end; }
+.message-row.other { justify-content: flex-start; }
+
+.message-content {
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-row.me .message-content { align-items: flex-end; }
+.message-row.other .message-content { align-items: flex-start; }
+
+/* 吹き出しのデザイン */
+.bubble {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-family: 'Sen', sans-serif;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.message-row.me .bubble {
+    background-color: var(--accent-color);
+    color: #fff;
+    border-radius: 18px 18px 2px 18px;
+}
+
+.message-row.other .bubble {
+    background-color: #fff;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 18px 18px 18px 2px;
+}
+
+.timestamp {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    font-family: 'Sen', sans-serif;
+}
+
+/* 入力エリアのモダン化 */
+.chat-input-area {
+    padding: 20px;
+    background-color: #fff;
+    border-top: 1px solid var(--border-color);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.chat-input-area .chat-textarea {
+    min-height: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 12px 50px 12px 20px;
+    border-radius: 25px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    flex-grow: 1;
+}
+
+.chat-input-area .chat-submit-btn {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+}
+
+.chat-input-area .chat-submit-btn:hover {
+    transform: scale(1.05);
+    background-color: #d65d45;
+}
+
+.chat-window::-webkit-scrollbar { width: 6px; }
+.chat-window::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }

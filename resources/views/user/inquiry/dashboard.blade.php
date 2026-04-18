@@ -1,18 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- Load the custom inquiry style --}}
 <link rel="stylesheet" href="{{ asset('css/inquiry.css') }}">
 
 <div class="container inquiry-outer-container">
-    {{-- Main Title and Decorative Line --}}
     <div class="chat-header">
         <h1 class="chat-title-main">Inquiry Support</h1>
+        <p class="chat-subtitle">We are here to help you</p>
     </div>
 
     <div class="dashboard-grid">
-        
-        {{-- Left Section: Create New Inquiry --}}
         <div class="chat-create-section">
             <h3 class="form-subtitle"><i class="fa-solid fa-pen-to-square me-2"></i>Start New Inquiry</h3>
             <form action="{{ route('user.inquiry.send') }}" method="POST" class="mt-4">
@@ -44,41 +41,47 @@
             </form>
         </div>
 
-        {{-- Right Section: Chat History --}}
         <div class="history-section">
             <h3 class="form-subtitle mb-4"><i class="fa-solid fa-clock-rotate-left me-2"></i>Chat History</h3>
             
             <div class="thread-list">
                 @forelse($threads as $thread)
                     <div class="thread-card">
-                        {{-- Card Main Link --}}
+                        <div class="active-indicator"></div>
+
                         <a href="{{ route('user.inquiry.index', $thread->thread_id) }}" class="thread-link">
                             @php
                                 $isMeSender = ($thread->sender_id == Auth::id() && $thread->sender_type === 'User');
+                                $isPartnerAdmin = $isMeSender ? ($thread->recipient_type === 'Admin') : ($thread->sender_type === 'Admin');
+                                
                                 $partnerName = $isMeSender 
-                                    ? ($thread->recipient_type === 'Admin' ? 'Support' : ($thread->recipient->restaurant_name ?? 'Restaurant'))
-                                    : ($thread->sender_type === 'Admin' ? 'Support' : ($thread->sender->restaurant_name ?? 'Restaurant'));
+                                    ? ($isPartnerAdmin ? 'Support' : ($thread->recipient->restaurant_name ?? 'Restaurant'))
+                                    : ($isPartnerAdmin ? 'Support' : ($thread->sender->restaurant_name ?? 'Restaurant'));
+                                
+                                $avatarChar = mb_substr($partnerName, 0, 1);
+                                $typeClass = $isPartnerAdmin ? 'type-admin' : 'type-res';
                             @endphp
-                            
-                            <div class="thread-header">
-                                <span class="partner-name">{{ $partnerName }}</span>
-                                <span class="thread-date">{{ $thread->created_at->diffForHumans() }}</span>
+
+                            <div class="thread-avatar {{ $typeClass }}">
+                                {{ $avatarChar }}
                             </div>
-                            
-                            <div class="thread-body">
-                                @if($thread->subject !== 'Inquiry')
-                                    <span class="subject-badge">{{ $thread->subject }}</span>
-                                @endif
-                                <p class="message-preview">{{ Str::limit($thread->message, 50) }}</p>
+
+                            <div class="thread-content">
+                                <div class="thread-header-row">
+                                    <span class="partner-name">{{ $partnerName }}</span>
+                                    <span class="thread-date">{{ $thread->created_at->diffForHumans() }}</span>
+                                </div>
+                                <div class="thread-body-row">
+                                    <p class="message-preview">{{ Str::limit($thread->message, 45) }}</p>
+                                </div>
                             </div>
                         </a>
-
-                        {{-- Hover Delete Button --}}
-                        <form action="{{ route('user.inquiry.destroy', $thread->thread_id) }}" method="POST" class="delete-thread-form" onsubmit="return confirm('Delete this chat history?');">
+                        
+                        <form action="{{ route('user.inquiry.destroy', $thread->thread_id) }}" method="POST" class="delete-thread-form">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn-delete-icon" title="Delete History">
-                                <i class="fa-solid fa-trash-can"></i>
+                            <button type="submit" class="btn-delete-icon" onclick="return confirm('Delete this chat history?');">
+                                <i class="fa-solid fa-xmark"></i>
                             </button>
                         </form>
                     </div>
@@ -92,7 +95,7 @@
         </div>
     </div>
 
-    {{-- Footer Button Area --}}
+    {{-- footer --}}
     <div class="btn-container mt-5 text-center">
         <a href="{{ route('dashboard') }}" class="btn-back">
             <i class="fa-solid fa-house me-1"></i> Back to Dashboard
