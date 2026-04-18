@@ -15,6 +15,7 @@
         </div>        
         
         {{-- Notifications List --}}
+    <div class="notification-list-scroll">
         <div class="d-flex flex-column">
             @forelse($notifications as $notification)
                 <div class="notification-wrapper position-relative mb-2">
@@ -49,6 +50,7 @@
                 </div>
             @endforelse
         </div>
+    </div>
         {{-- Back to Dashboard Button --}}
         <div class="mt-5 pb-3 text-center">
             <a href="{{ route('dashboard') }}" class="btn-back">
