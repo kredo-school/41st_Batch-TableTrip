@@ -73,8 +73,11 @@
             </button>
         </form>
     </div>
-
+    
     <div class="btn-container mt-4 text-center">
+        <a href="{{ route('user.inquiry.dashboard') }}" class="btn-back">
+            <i class="fa-solid fa-house me-2"></i> Last page
+        </a>
         <a href="{{ route('dashboard') }}" class="btn-back">
             <i class="fa-solid fa-house me-2"></i> Back to Dashboard
         </a>
