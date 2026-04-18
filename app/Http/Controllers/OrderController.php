@@ -47,7 +47,7 @@ class OrderController extends Controller
             default:           $query->orderBy('id', 'desc');     break;
         }
 
-        $products    = $query->get();
+        $products    = $query->withCount('reviews')->withAvg('reviews', 'rating')->get();
         $categories  = \App\Models\Category::all();
         $locations   = Product::where('is_visible', true)->distinct()->pluck('location')->sort()->values();
         $priceMax    = Product::where('is_visible', true)->max('price') ?? 10000;

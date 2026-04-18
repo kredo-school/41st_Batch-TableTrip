@@ -20,16 +20,18 @@ class NotificationsController extends Controller
     return view('user.notifications.index', compact('notifications'));
 }
 
-    public function show($id)
-    {
-        $notification = Notification::findOrFail($id);
+   public function show($id)
+{
+    $notification = Notification::findOrFail($id);
 
-        if ($notification->recipient_id !== Auth::id()) {
-            abort(403);
-        }
-
-        return view('notifications.show', compact('notification'));
+    if ($notification->recipient_id !== Auth::id()) {
+        abort(403);
     }
+
+    $notification->update(['is_completed' => true]);
+
+    return view('user.notifications.show', compact('notification'));
+}
 
     public function complete($id)
     {
@@ -46,7 +48,7 @@ class NotificationsController extends Controller
         return back()->with('success', 'Mark as done');
     }
 
-    public function destroy($id)
+   public function destroy($id)
     {
         $notification = Notification::findOrFail($id);
 
@@ -56,6 +58,6 @@ class NotificationsController extends Controller
 
         $notification->delete();
 
-        return back()->with('success', 'Deleted!');
+        return redirect()->route('user.notifications.index')->with('success', 'Deleted!');
     }
 }

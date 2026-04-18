@@ -20,6 +20,10 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
         $product = Product::findOrFail($request->product_id);
         $cart = session('cart', []);
 

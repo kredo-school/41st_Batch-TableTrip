@@ -118,7 +118,7 @@
                     <select class="form-select" name="status" id="status" value="{{ old('status')}}">
                         <option value="confirmed">Confirmed</option>
                         <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
+                        <option value="completed">Visited</option>
                         <option value="cancelled" >Cancelled</option>
                         <option value="no-show">No-show</option>
                     </select>
