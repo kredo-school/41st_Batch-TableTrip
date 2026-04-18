@@ -24,7 +24,12 @@ class Inquiry extends Model
         'reservation_id',
     ];
     public function recipient(): BelongsTo
-    {
-        return $this->belongsTo(Restaurant::class, 'recipient_id');
-    }
+        {
+            return $this->belongsTo(Restaurant::class, 'recipient_id');
+        }
+
+    public function sender(): BelongsTo
+        {
+            return $this->belongsTo(Restaurant::class, 'sender_id');
+        }
 }
