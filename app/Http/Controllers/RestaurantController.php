@@ -34,8 +34,10 @@ class RestaurantController extends Controller
         ->get();
 
         $isFavorite = Auth::check() ? $restaurant->favorites()->where('user_id', Auth::id())->exists() : false;
+        $hasVisited = $restaurant->reservations()->where('user_id', Auth::id())->where('status', 'visited')->exists(); //can be used to check if user can write review or not
+        $hasReviewed = $restaurant->reviews()->where('user_id', Auth::id())->where('comment_type', 'visit')->exists(); //can be used to check if user can write review or not
 
-        return view('restaurants.restaurant_page', compact('restaurant', 'menus', 'products', 'reviews', 'isFavorite'));
+        return view('restaurants.restaurant_page', compact('restaurant', 'menus', 'products', 'reviews', 'isFavorite', 'hasVisited', 'hasReviewed'));
     }
 
     public function store(Request $request, $id)
@@ -100,6 +102,33 @@ class RestaurantController extends Controller
         }
 
         return back();
+    }
+
+    public function storeReview(Request $request, $id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $request->validate([
+            'rating' => 'nullable|integer|min:1|max:5',
+            'comment' => 'required|string|max:1000',
+        ]);
+
+        Review::create([
+            'restaurant_id' => $restaurant->id,
+            'user_id' => $user->id,
+            'author_type' => 'user',
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+            'comment_type' => 'visit',
+            'is_approved' => true, 
+        ]);
+
+        return redirect()->back()->with('success', 'Your review has been submitted successfully!');
     }
 
 

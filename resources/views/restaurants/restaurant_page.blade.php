@@ -319,6 +319,53 @@
       <section class="mt-5 mb-4">
         <h2 class="text-center my-5 text-underline-accent">Reviews</h2>
 
+         {{-- レビュー投稿フォーム --}}
+        @auth
+            @if($hasVisited && !$hasReviewed)
+                <div class="card border-0 shadow-sm mb-5" style="border-radius: 12px;">
+                    <div class="card-body p-4">
+                        <h6 class="fw-bold mb-3">Write a Review</h6>
+                        <form action="{{ route('restaurant.reviews.store', $restaurant->id) }}" method="POST">
+                            @csrf
+
+                            {{-- 星評価 --}}
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Rating</label>
+                                <div class="d-flex gap-2" id="star-rating">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <span class="btn star-btn" data-value="{{ $i }}">
+                                         <i class="fa-solid fa-star fs-3"></i></span>
+                                    @endfor
+                                </div>
+                                <input type="hidden" name="rating" id="rating-input" value="">
+                                @error('rating')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                            </div>
+
+                            {{-- コメント --}}
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small">Comment</label>
+                                <textarea name="comment" class="form-control" rows="3"
+                                          placeholder="Share your experience..." style="border-radius: 8px;">{{ old('comment') }}</textarea>
+                                @error('comment')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                            </div>
+
+                            <div class="text-end">
+                                <button type="submit" class="btn text-white btn-orange px-4">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {{-- @else
+                <div class="alert alert-light border mb-4 text-center small">
+                    Only customers who purchased this product can write a review.
+                </div> --}}
+            @endif
+        @else
+            <div class="alert alert-light border mb-4 text-center small">
+                <a href="{{ route('login') }}" class="text-dark fw-bold">Login</a> to write a review.
+            </div>
+        @endauth
+
         <div class="d-grid gap-3">
             @foreach ($reviews as $review)
             <div class="card">
