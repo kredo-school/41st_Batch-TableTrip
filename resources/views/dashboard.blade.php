@@ -43,11 +43,8 @@
                                 <td>{{ $reservation->number_of_people }}</td>
                                 <td class="edit-icons">
                                     <a href="{{ route('user.reservations.edit',$reservation->id) }}" class="">
-                                        <i class="fa-regular fa-calender-check"></i>
+                                        <i class="fa-regular fa-calendar-check"></i>
                                     </a>
-                                    <i class="fa-solid fa-user" style="margin-left:5px;"></i>
-                                    <i class="fa-solid fa-rotate-left" style="margin-left:5px;"></i>
-                                </td>
                             </tr>
                         @empty
                             <tr>
