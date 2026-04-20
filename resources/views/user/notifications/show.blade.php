@@ -24,13 +24,19 @@
                     <i class="fa-solid fa-chevron-left me-2"></i> Back to List
                 </a>
 
-                    <form action="{{ route('user.notifications.destroy', $notification->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="delete-btn-link">
-                            <i class="fa-solid fa-trash-can me-1"></i> Delete this notification
-                        </button>
-                    </form>
+                @if($notification->is_action_required && !$notification->is_completed && $notification->target_type === 'App\Models\Product' && $notification->target_id)
+                    <a href="{{ route('products.reviews', $notification->target_id) }}" class="btn btn-sm text-white" style="background-color: #D96D55; border-radius: 6px;">
+                        <i class="fa-solid fa-star me-1"></i> Write a Review
+                    </a>
+                @endif
+
+                <form action="{{ route('user.notifications.destroy', $notification->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="delete-btn-link">
+                        <i class="fa-solid fa-trash-can me-1"></i> Delete this notification
+                    </button>
+                </form>
             </div>
         </div>
     </div>

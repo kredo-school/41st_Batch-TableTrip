@@ -58,13 +58,9 @@
                 {{-- 星評価 --}}
                 <div class="d-flex align-items-center gap-1 mb-3">
                     @for($i = 1; $i <= 5; $i++)
-                        @if($i <= floor($product->rating))
-                            <span class="text-warning" style="font-size: 1.3rem;">★</span>
-                        @else
-                            <span class="text-secondary" style="font-size: 1.3rem;">★</span>
-                        @endif
+                        <span style="font-size: 1.3rem; color: {{ $i <= round($avgRating) ? '#F5A623' : '#ddd' }};">★</span>
                     @endfor
-                    <span class="small text-muted ms-1">{{ $product->rating }} (40)</span>
+                    <span class="small text-muted ms-1">{{ number_format($avgRating, 1) }} ({{ $reviews->count() }})</span>
                 </div>
 
                 <hr>
@@ -97,6 +93,103 @@
         <div class="mt-3">
             <a href="{{ route('products.index') }}" class="text-muted small">← Back to list</a>
         </div>
+
+        {{-- レビューセクション --}}
+        <div class="mt-4">
+            <h5 class="fw-bold mb-3" style="font-family: serif;">Reviews</h5>
+
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
+            {{-- レビュー投稿フォーム --}}
+            @auth
+                @if($hasReviewed)
+                    <div class="alert alert-light border text-center small mb-3">You have already submitted a review.</div>
+                @elseif($hasPurchased)
+                    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold mb-3">Write a Review</h6>
+                            <form action="{{ route('products.reviews.store', $product->id) }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Rating</label>
+                                    <div class="d-flex gap-2" id="star-rating">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <span class="star-btn" data-value="{{ $i }}"
+                                                  style="font-size: 1.8rem; cursor: pointer; color: #ddd;">★</span>
+                                        @endfor
+                                    </div>
+                                    <input type="hidden" name="rating" id="rating-input" value="">
+                                    @error('rating')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Comment</label>
+                                    <textarea name="comment" class="form-control" rows="3"
+                                              placeholder="Share your experience...">{{ old('comment') }}</textarea>
+                                    @error('comment')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn text-white px-4"
+                                            style="background-color: #2c3e50; border-radius: 8px;">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
+            @endauth
+
+            {{-- レビュー一覧 --}}
+            @forelse($reviews as $review)
+                <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+                    <div class="card-body p-3">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                @if(!empty($review->user->profile_picture))
+                                    <img src="{{ asset('storage/' . $review->user->profile_picture) }}"
+                                         class="rounded-circle" style="width:32px; height:32px; object-fit:cover;">
+                                @else
+                                    <i class="fa-solid fa-circle-user fs-5 text-secondary"></i>
+                                @endif
+                                <span class="fw-bold small">{{ $review->user->user_name ?? 'User' }}</span>
+                            </div>
+                            <span class="text-muted" style="font-size: 0.75rem;">{{ $review->created_at->format('M d, Y') }}</span>
+                        </div>
+                        <div class="mb-1">
+                            @for($i = 1; $i <= 5; $i++)
+                                <span style="color: {{ $i <= $review->rating ? '#F5A623' : '#ddd' }};">★</span>
+                            @endfor
+                        </div>
+                        <p class="mb-0 small">{{ $review->comment }}</p>
+                    </div>
+                </div>
+            @empty
+                <p class="text-muted small text-center py-3">No reviews yet.</p>
+            @endforelse
+        </div>
     </div>
 </div>
+
+<script>
+    const stars = document.querySelectorAll('.star-btn');
+    const ratingInput = document.getElementById('rating-input');
+    if (stars.length) {
+        stars.forEach(star => {
+            star.addEventListener('mouseover', () => {
+                stars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
+            });
+            star.addEventListener('mouseout', () => {
+                const val = ratingInput.value;
+                stars.forEach(s => s.style.color = s.dataset.value <= val ? '#F5A623' : '#ddd');
+            });
+            star.addEventListener('click', () => {
+                ratingInput.value = star.dataset.value;
+                stars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
+            });
+        });
+    }
+</script>
 @endsection

@@ -5,23 +5,31 @@
     <div class="container py-5" style="max-width: 600px;">
 
         <h2 class="fw-bold text-center mb-1">Track Your Order</h2>
-        <p class="text-center text-muted small mb-5">Order #TRP-20260214-007</p>
+        <p class="text-center text-muted small mb-5">Order #{{ $orderId }}</p>
 
         {{-- 商品カード --}}
-        <div class="card mb-5 border-dark shadow-sm text-start" style="border-radius: 5px;">
+        @foreach($cart as $item)
+        @php $product = is_array($item['product']) ? (object)$item['product'] : $item['product']; @endphp
+        <div class="card mb-3 border-dark shadow-sm text-start" style="border-radius: 5px;">
             <div class="row g-0 align-items-center">
                 <div class="col-4 p-2">
-                    <img src="{{ asset('images/journykit.png') }}" class="img-fluid rounded border" alt="Item">
+                    @if(!empty($product->image))
+                        <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid rounded border" alt="{{ $product->name }}">
+                    @else
+                        <img src="{{ asset('images/journykit.png') }}" class="img-fluid rounded border" alt="Item">
+                    @endif
                 </div>
                 <div class="col-8 p-3 d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="fw-bold mb-1">Journey Kit</h5>
-                        <p class="text-muted small mb-0">Hokkaido | Kitchen Sapporo</p>
+                        <h5 class="fw-bold mb-1">{{ $product->name ?? 'N/A' }}</h5>
+                        <p class="text-muted small mb-0">{{ $product->location ?? '' }}{{ !empty($product->restaurant_name) ? ' | ' . $product->restaurant_name : '' }}</p>
+                        <p class="text-muted small mb-0">Qty: {{ $item['quantity'] }}</p>
                     </div>
-                    <p class="fw-bold mb-0">¥9,920-</p>
+                    <p class="fw-bold mb-0">¥{{ number_format(($product->price ?? 0) * $item['quantity']) }}-</p>
                 </div>
             </div>
         </div>
+        @endforeach
 
         {{-- ステータスタイムライン --}}
         <div class="card border-dark shadow-sm p-4 mb-4" style="border-radius: 5px;">
@@ -79,9 +87,9 @@
         <div class="card border-dark shadow-sm p-4 mb-5" style="border-radius: 5px;">
             <h5 class="fw-bold mb-3">Shipping to</h5>
             <div class="ps-2 small text-muted">
-                <p class="mb-1">Name: Taro Yamada</p>
-                <p class="mb-1">Address: 1-2-3 Kita-ku, Sapporo-shi, Hokkaido, Japan 060-0000</p>
-                <p class="mb-0">Phone: +81 80-1234-5678</p>
+                <p class="mb-1">Name: {{ $user->first_name }} {{ $user->last_name }}</p>
+                <p class="mb-1">Address: {{ $user->address }}{{ $user->postal_code ? ', ' . $user->postal_code : '' }}{{ $user->country ? ', ' . $user->country : '' }}</p>
+                <p class="mb-0">Phone: {{ $user->tel ?? 'N/A' }}</p>
             </div>
         </div>
 
@@ -91,6 +99,12 @@
                class="btn text-white px-5 py-3 fw-bold"
                style="background-color: #2c3e50; border-radius: 5px; font-family: serif;">
                 Back to Products
+            </a>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="{{ route('dashboard') }}" class="btn-dashboard-back">
+                <i class="fa-solid fa-house me-2"></i>Back to Dashboard
             </a>
         </div>
 

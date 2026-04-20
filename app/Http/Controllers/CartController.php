@@ -9,6 +9,7 @@ use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Notification;
 
 class CartController extends Controller
 {
@@ -95,6 +96,19 @@ class CartController extends Controller
                     'quantity'           => $item['quantity'],
                     'price_at_purchased' => $item['product']['price'],
                     'ordered_at'         => Carbon::now(),
+                ]);
+
+                $productName = $item['product']['name'] ?? 'your recent purchase';
+
+                Notification::create([
+                    'recipient_id'       => Auth::id(),
+                    'recipient_type'     => User::class,
+                    'title'              => 'How was your order? Leave a review!',
+                    'message'            => "Thank you for purchasing \"{$productName}\"! We hope you enjoyed it. Share your experience by leaving a review — your feedback helps other customers and supports our restaurant partners.",
+                    'target_type'        => Product::class,
+                    'target_id'          => $id,
+                    'is_action_required' => true,
+                    'is_completed'       => false,
                 ]);
             }
             session(['last_order' => ['id' => $orderId, 'items' => $cart, 'ordered_at' => now()->format('Y/m/d')]]);

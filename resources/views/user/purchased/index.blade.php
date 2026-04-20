@@ -44,7 +44,17 @@
                                 <td>{{ $item->quantity }}</td>
                                 <td>¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('d/m/y') }}</td>
-                                <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i></td>
+                                <td>
+                                    @if(in_array($item->meal_kit_id, $reviewedProductIds ?? []))
+                                        <i class="fa-solid fa-comment-dots" style="color: #aaa;" title="Already reviewed"></i>
+                                    @else
+                                        <i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#reviewModal"
+                                           data-product-id="{{ $item->meal_kit_id }}"
+                                           data-product-name="{{ $item->product->name ?? '' }}"></i>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr><td colspan="7" class="no-data">No purchase history yet.</td></tr>
@@ -147,4 +157,78 @@
         </a>
     </div>
 </div>
+
+{{-- Review Modal --}}
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Write a Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="reviewForm" method="POST" action="">
+                @csrf
+                <div class="modal-body">
+                    <p class="text-muted small mb-3" id="reviewProductName"></p>
+
+                    {{-- 星評価 --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Rating</label>
+                        <div class="d-flex gap-2" id="modal-star-rating">
+                            @for($i = 1; $i <= 5; $i++)
+                                <span class="modal-star" data-value="{{ $i }}"
+                                      style="font-size: 1.8rem; cursor: pointer; color: #ddd;">★</span>
+                            @endfor
+                        </div>
+                        <input type="hidden" name="rating" id="modal-rating-input" value="">
+                    </div>
+
+                    {{-- コメント --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Comment</label>
+                        <textarea name="comment" class="form-control" rows="3"
+                                  placeholder="Share your experience..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn text-white" style="background-color: #2c3e50;">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // モーダルが開くとき、商品IDと名前をセット
+    document.getElementById('reviewModal').addEventListener('show.bs.modal', function (e) {
+        const icon = e.relatedTarget;
+        const productId = icon.dataset.productId;
+        const productName = icon.dataset.productName;
+
+        document.getElementById('reviewForm').action = '/products/' + productId + '/reviews';
+        document.getElementById('reviewProductName').textContent = productName;
+        document.getElementById('modal-rating-input').value = '';
+
+        document.querySelectorAll('.modal-star').forEach(s => s.style.color = '#ddd');
+    });
+
+    // 星クリック
+    const modalStars = document.querySelectorAll('.modal-star');
+    const modalRatingInput = document.getElementById('modal-rating-input');
+
+    modalStars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+            modalStars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
+        });
+        star.addEventListener('mouseout', () => {
+            const val = modalRatingInput.value;
+            modalStars.forEach(s => s.style.color = s.dataset.value <= val ? '#F5A623' : '#ddd');
+        });
+        star.addEventListener('click', () => {
+            modalRatingInput.value = star.dataset.value;
+            modalStars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
+        });
+    });
+</script>
 @endsection
