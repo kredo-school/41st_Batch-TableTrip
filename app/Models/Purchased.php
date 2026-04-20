@@ -35,6 +35,6 @@ class Purchased extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'meal_kit_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }
