@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\AdminInquiryController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminRewardController;
 use App\Http\Controllers\Admin\AdminRestaurantController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminProductController;
 
 
 
@@ -224,12 +226,30 @@ Route::prefix('admin')
 
         Route::patch('/restaurants/{id}/reject', [AdminRestaurantController::class, 'reject'])
             ->name('restaurants.reject');
+        
+        Route::get('/users', [AdminUserController::class, 'index'])
+            ->name('users.index');
+        
+        Route::get('/users/{id}', [AdminUserController::class, 'show'])
+            ->name('users.show');
             
         Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
             ->name('rewards.point-history');
 
         Route::get('/rewards', [AdminRewardController::class, 'dashboard'])
             ->name('rewards.dashboard');
+
+        Route::get('/products', [AdminProductController::class, 'index'])
+            ->name('products.index');
+
+        Route::get('/products/{id}', [AdminProductController::class, 'show'])
+            ->name('products.show');
+        
+        Route::post('/products/{id}/toggle-visibility', [AdminProductController::class, 'toggleVisibility'])
+            ->name('products.toggleVisibility');
+
+        Route::delete('/products/{id}', [AdminProductController::class, 'destroy'])
+            ->name('products.destroy');
 
         Route::post('/logout', [AdminLoginController::class, 'logout'])
             ->name('logout');
@@ -266,7 +286,9 @@ Route::get('/cart/track', function () { return view('products.track'); })->name(
 |--------------------------------------------------------------------------
 */
 Route::get('/restaurant/{id}', [RestaurantController::class, 'show'])->name('restaurant');
-Route::post('/restaurant/{id}', [RestaurantController::class, 'store'])->name('restaurant.reserve');
+Route::post('/restaurant/{id}/reservation', [RestaurantController::class, 'store'])->name('restaurant.reservation');
+Route::post('/restaurant/{id}/favorite', [RestaurantController::class, 'favoriteToggle'])->name('restaurant.favorite');
+Route::post('/restaurant/{id}/reviews', [RestaurantController::class, 'storeReview'])->name('restaurant.reviews.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -335,27 +357,3 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
     });
 });
-
-/*
-|--------------------------------------------------------------------------
-| Static Views (for layout checking)
-|--------------------------------------------------------------------------
-*/
-Route::view('/restaurant-page', 'restaurants.restaurant_page');
-Route::view('/restaurant-owner-page', 'restaurant-owners.register');
-Route::view('/restaurant-owner-login', 'restaurant-owners.login');
-Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
-Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
-Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
-Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
-Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
-Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
-Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
-Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
-Route::view('/restaurant-owner-page-info', 'restaurant-owners.page-management.basic-info');
-Route::view('/restaurant-owner-page-image', 'restaurant-owners.page-management.image');
-Route::view('/restaurant-owner-page-menu', 'restaurant-owners.page-management.menu');
-Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management.preview');
-Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
-Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
-Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');

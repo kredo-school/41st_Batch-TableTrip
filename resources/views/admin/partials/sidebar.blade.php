@@ -14,8 +14,13 @@
     <a href="{{ route('admin.inquiries.index') }}">Inquiries</a>
     <a href="{{ route('admin.reviews.index') }}">Reviews</a>
     <a href="{{ route('admin.restaurants.index') }}" class="{{ request()->routeIs('admin.restaurants.*') ? 'active' : '' }}">Restaurants</a>
-    <a href="#">Products</a>
-    <a href="#">Users</a>
+    <a href="{{ route('admin.products.index') }}"
+    class="{{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
+    Products
+    </a>
+    <a href="{{ route('admin.users.index') }}"
+        class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+        Users</a>
 
     <div class="menu-item">
         <a href="{{ route('admin.rewards.dashboard') }}" class="menu-title">
