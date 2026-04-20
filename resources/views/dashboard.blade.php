@@ -28,7 +28,6 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Restaurants</th>
-                            <th>Location</th>
                             <th>Map</th>
                             <th>Guests</th>
                             <th>Edit</th>
@@ -43,8 +42,6 @@
                                 <td>{{ $reservation->restaurant->name ?? 'N/A' }}</td>
                                 {{-- location--}}
                                 <td>{{ $reservation->restaurant->location ?? 'N/A' }}</td>
-                                {{-- Map icon --}}
-                                <td><i class="fa-solid fa-location-dot" style="color: #e2725b;"></i></td>
                                 {{-- guests --}}
                                 <td>{{ $reservation->number_of_guests }}</td>
                                 <td class="edit-icons">
