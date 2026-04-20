@@ -28,8 +28,6 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Restaurants</th>
-                            <th>Location</th>
-                            <th>Map</th>
                             <th>Guests</th>
                             <th>Edit</th>
                         </tr>
@@ -40,24 +38,17 @@
                                 <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('y-n-j') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
                                 {{-- restaurant name --}}
-                                <td>{{ $reservation->restaurant->name ?? 'N/A' }}</td>
-                                {{-- location--}}
-                                <td>{{ $reservation->restaurant->location ?? 'N/A' }}</td>
-                                {{-- Map icon --}}
-                                <td><i class="fa-solid fa-location-dot" style="color: #e2725b;"></i></td>
+                                <td>{{ $reservation->restaurant->restaurant_name ?? 'N/A' }}</td>
                                 {{-- guests --}}
-                                <td>{{ $reservation->number_of_guests }}</td>
+                                <td>{{ $reservation->number_of_people }}</td>
                                 <td class="edit-icons">
                                     <a href="{{ route('user.reservations.edit',$reservation->id) }}" class="">
-                                        <i class="fa-regular fa-calender-check"></i>
+                                        <i class="fa-regular fa-calendar-check"></i>
                                     </a>
-                                    <i class="fa-solid fa-user" style="margin-left:5px;"></i>
-                                    <i class="fa-solid fa-rotate-left" style="margin-left:5px;"></i>
-                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" style="text-align:center; padding:20px;">No Reservations yet</td>
+                                <td colspan="5" style="text-align:center; padding:20px;">No Reservations yet</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -104,57 +95,27 @@
             </div>
         </section>
 
-        {{-- 3. Favorite --}}
-        <section class="dashboard-card">
-            <h3><i class="fa-solid fa-heart"></i> Favorite</h3>
-            <div class="card-content">
-                <div class="info-area">
-
-                    <form action="{{ route('dashboard') }}" method="GET" id="fav-form">
-                        <div class="selection-group">
-                            <input type="radio" name="tab" id="show-restaurants" value="restaurants"
-                                {{ request('tab', 'restaurants') == 'restaurants' ? 'checked' : '' }}
-                                onchange="this.form.submit()">
-                            <label for="show-restaurants">Restaurants</label>
-
-                            <input type="radio" name="tab" id="show-products" value="products"
-                                {{ request('tab') == 'products' ? 'checked' : '' }}
-                                onchange="this.form.submit()">
-                            <label for="show-products">Kits</label>
+       {{-- 3. Favorite --}}
+    <section class="dashboard-card">
+        <h3><i class="fa-solid fa-heart"></i> Favorite Kits</h3>
+        <div class="card-content">
+            <div class="info-area">
+                <div class="row">
+                    @forelse ($favorite_kits ?? [] as $kit)
+                        <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+                            <p class="mb-0">{{ $kit->name ?? 'N/A' }}</p>
                         </div>
-                    </form>
-                    <hr>
-
-                    <div class="row">
-                        @if(request('tab', 'restaurants') == 'restaurants')
-                            @forelse ($favorite_restaurants ?? [] as $restaurant)
-                                <div class="col-12">
-                                    <p>{{ $restaurant->name ?? $restaurant->restaurant_name }}</p>
-                                </div>
-                            @empty
-                                <p class="text-muted">No favorite restaurants yet.</p>
-                            @endforelse
-                        @else
-                            @forelse ($favorite_kits as $kit)
-                                <div class="col-12">
-                                    <p>{{ $kit->name ?? 'N/A' }}</p>
-                                </div>
-                            @empty
-                                <p class="text-muted">No favorite kits yet.</p>
-                            @endforelse
-                        @endif
-                    </div>
-                </div>
-
-                <div class="btn-container">
-                    @if(request('tab', 'restaurants') == 'restaurants')
-                        <a href="{{ route('user.favorite_restaurants') }}" class="btn-back">View All Restaurants</a>
-                    @else
-                        <a href="{{ route('user.favorite_kits') }}" class="btn-back">View All Kits</a>
-                    @endif
+                    @empty
+                        <p class="text-muted">No favorite kits yet.</p>
+                    @endforelse
                 </div>
             </div>
-        </section>
+
+            <div class="btn-container">
+                <a href="{{ route('user.favorite_kits') }}" class="btn-back">View All Kits</a>
+            </div>
+        </div>
+    </section>
 
         {{-- 4. History(visited/purchased) --}}
         <section class="dashboard-card">

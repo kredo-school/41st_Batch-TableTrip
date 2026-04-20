@@ -92,7 +92,7 @@ class CartController extends Controller
             foreach ($cart as $id => $item) {
                 Purchased::create([
                     'user_id'            => Auth::id(),
-                    'meal_kit_id'        => $id,
+                    'product_id'        => $id,
                     'quantity'           => $item['quantity'],
                     'price_at_purchased' => $item['product']['price'],
                     'ordered_at'         => Carbon::now(),

@@ -14,7 +14,7 @@ class Purchased extends Model
 
     protected $fillable = [
         'user_id',
-        'meal_kit_id',
+        'product_id',
         'quantity',
         'price_at_purchased',
         'ordered_at',
@@ -35,6 +35,6 @@ class Purchased extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'meal_kit_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }
