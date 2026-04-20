@@ -14,7 +14,7 @@ class Purchased extends Model
 
     protected $fillable = [
         'user_id',
-        'meal_kit_id',
+        'product_id',
         'quantity',
         'price_at_purchased',
         'ordered_at',
