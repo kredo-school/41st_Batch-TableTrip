@@ -32,7 +32,6 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\FavoriteKitsController;
-use App\Http\Controllers\User\FavoriteRestaurantsController;
 use App\Http\Controllers\User\InquiryController;
 
 
@@ -105,7 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
-    Route::get('/favorite/restaurant', [FavoriteRestaurantsController::class, 'index'])->name('user.favorite_restaurants');
+
     Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favorite_kits');
 
     // reservation
