@@ -93,7 +93,7 @@
                                                <select class="form-select @error('status') is-invalid @enderror rounded mb-2 text-white border-0 px-2 py-0" style="background-color: #9FC6BC" name="status" id="status_{{ $reservation->id }}">
                                                     <option value="confirmed" {{ old('status', $reservation->status) == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                                                     <option value="pending" {{ old('status', $reservation->status) == 'pending' ? 'selected' : '' }}>Pending</option>
-                                                    <option value="completed" {{ old('status', $reservation->status) == 'completed' ? 'selected' : '' }}>Completed</option>
+                                                    <option value="visited" {{ old('status', $reservation->status) == 'visited' ? 'selected' : '' }}>Visited</option>
                                                     <option value="cancelled" {{ old('status', $reservation->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                                     <option value="no-show" {{ old('status', $reservation->status) == 'no-show' ? 'selected' : '' }}>No-show</option>
                                                 </select>

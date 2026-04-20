@@ -23,7 +23,6 @@ class RestaurantController extends Controller
             return response()->view('restaurants.not_published', [], 403);
         }
 
-
         $menus = Menu::where('restaurant_id', $id)->get();
         $products = Product::where('restaurant_id', $id)->get();
         $reviews = Review::with(['user', 'replies'])
@@ -34,7 +33,11 @@ class RestaurantController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-        return view('restaurants.restaurant_page', compact('restaurant', 'menus', 'products', 'reviews'));
+        $isFavorite = Auth::check() ? $restaurant->favorites()->where('user_id', Auth::id())->exists() : false;
+        $hasVisited = $restaurant->reservations()->where('user_id', Auth::id())->where('status', 'visited')->exists(); //can be used to check if user can write review or not
+        $hasReviewed = $restaurant->reviews()->where('user_id', Auth::id())->where('comment_type', 'visit')->exists(); //can be used to check if user can write review or not
+
+        return view('restaurants.restaurant_page', compact('restaurant', 'menus', 'products', 'reviews', 'isFavorite', 'hasVisited', 'hasReviewed'));
     }
 
     public function store(Request $request, $id)
@@ -77,6 +80,55 @@ class RestaurantController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Your reservation has been made successfully!');
+    }
+
+   public function favoriteToggle($id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $favorite = $restaurant->favorites()->where('user_id', $user->id)->first();
+
+        if ($favorite) {
+            $favorite->delete();
+        } else {
+            $restaurant->favorites()->create([
+                'user_id' => $user->id
+            ]);
+        }
+
+        return back();
+    }
+
+    public function storeReview(Request $request, $id)
+    {
+        $restaurant = Restaurant::findOrFail($id);
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $request->validate([
+            'rating' => 'nullable|integer|min:1|max:5',
+            'comment' => 'required|string|max:1000',
+        ]);
+
+        Review::create([
+            'restaurant_id' => $restaurant->id,
+            'user_id' => $user->id,
+            'author_type' => 'user',
+            'rating' => $request->rating,
+            'comment' => $request->comment,
+            'comment_type' => 'visit',
+            'is_approved' => true, 
+        ]);
+
+        return redirect()->back()->with('success', 'Your review has been submitted successfully!');
     }
 
 

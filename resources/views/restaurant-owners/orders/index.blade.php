@@ -53,11 +53,6 @@
                         class="status-link {{ request('status') == 'delivered' ? 'active' : '' }}">
                             Delivered
                         </a>
-                        <span>|</span>
-                        <a href="{{ route('owner.orders', ['status' => 'completed']) }}"
-                        class="status-link {{ request('status') == 'completed' ? 'active' : '' }}">
-                            Completed
-                        </a>
 
                         <span>|</span>
                         <a href="{{ route('owner.orders', ['status' => 'cancelled']) }}"

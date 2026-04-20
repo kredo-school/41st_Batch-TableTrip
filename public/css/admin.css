@@ -342,7 +342,7 @@ z-index:1100;
 
 .orders-table th,
 .orders-table td{
-    padding:10px 16px;
+    padding:10px 16px !important;
     white-space:nowrap;
 }
 
@@ -359,14 +359,17 @@ background:#f8f8f8 !important;
 }
 
 .order-status{
-font-family:'Playfair Display', serif;
-font-size:12px;
-padding:3px 10px;
-border-radius:3px;
-display:inline-block;
-
-width:90px;
-text-align:center; 
+    font-family:'Playfair Display', serif;
+    font-size:12px;
+    padding:3px 10px;
+    border-radius:3px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:90px;
+    height:22px;
+    line-height:1;
+    text-align:center;
 }
 
 /* Order用ステータスカラー
@@ -487,13 +490,13 @@ opacity:0.8;
 font-size:16px;
 }
 
-.dot{
-display:inline-block;
-width:10px;
-height:10px;
-border-radius:50%;
-background:#6ecf7f;
-margin-right:6px;
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px; /* ←ここ重要 */
+    flex-shrink: 0;
 }
 
 .user-card p{
@@ -560,7 +563,11 @@ margin-bottom:10px;
 }
 
 .status-line{
-margin-bottom:10px;
+    display:inline-flex;
+    align-items:center;
+    height:22px;
+    gap:6px;
+    margin:0;
 }
 
 .yellow{
@@ -1546,4 +1553,240 @@ button,
 
 .reject-btn{
     background: #565555;
+}
+
+/* Users table */
+/* Users Table */
+.users-table th:nth-child(1),
+.users-table td:nth-child(1){
+    width: 90px;
+}
+
+.users-table th:nth-child(2),
+.users-table td:nth-child(2){
+    width: 180px;
+}
+
+.users-table th:nth-child(3),
+.users-table td:nth-child(3){
+    width: 180px;
+}
+
+.users-table th:nth-child(4),
+.users-table td:nth-child(4){
+    width: 120px;
+}
+
+.users-table th:nth-child(5),
+.users-table td:nth-child(5){
+    width: 120px;
+}
+
+/* User Rank */
+.order-status.bronze{
+    background:#C89B6D;
+    color:#FFFFFF;
+}
+
+.order-status.silver{
+    background:#BFC4C9;
+    color:#FFFFFF;
+}
+
+.order-status.gold{
+    background:#D8B400;
+    color:#FFFFFF;
+}
+
+.order-status.diamond{
+    background:#7EC8E3;
+    color:#FFFFFF;
+}
+
+/* Users Detail */
+.user-card,
+.reservation-card{
+    flex:1;
+    min-width:280px;
+}
+
+.user-card{
+    font-family:'Playfair Display', serif;
+    padding:10px 0;
+}
+
+.user-top{
+    display:flex;
+    gap:15px;
+    align-items:flex-start;
+    margin-bottom:20px;
+}
+
+.user-icon{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    border:2px solid #000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    background:#fff;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.user-icon img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.user-id{
+    font-size:14px;
+    color:#ffffff;
+    margin-bottom:8px;
+}
+
+.user-name{
+    font-family:'Playfair Display', serif;
+    font-size:28px;
+    color:#ffffff;
+    margin-bottom:20px;
+    line-height:1.3;
+    word-break:break-word;
+}
+
+.info-row,
+.reservation-info{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:16px;
+}
+
+.info-row .label,
+.reservation-info .label{
+    font-size:14px;
+    color:#ffffff;
+    margin-bottom:4px;
+}
+
+.info-row .value,
+.reservation-info .value{
+    font-size:15px;
+    color:#565555;
+    line-height:1.6;
+    word-break:break-word;
+}
+
+.reservation-card{
+    background:rgba(255,255,255,0.43);
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    font-family:'Playfair Display', serif;
+}
+
+.reservation-title{
+    font-size:28px;
+    color:#ffffff;
+    text-align:center;
+    margin-bottom:22px;
+    font-family:'Playfair Display', serif;
+}
+
+.flagged-count{
+    color:#D96B52 !important;
+    font-weight:600;
+}
+
+/* Right Card KPI style */
+.reservation-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:6px;
+    margin-bottom:16px;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    padding-bottom:10px;
+}
+
+.reservation-info .label{
+    font-size:14px;
+    color:#ffffff;
+    margin-bottom:0;
+}
+
+.reservation-info .value{
+    font-size:15px;
+    color:#565555;
+    font-weight:500;
+    text-align:right;
+}
+
+.badge-row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-top:8px;
+    margin-bottom:8px;
+}
+
+.badge-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:8px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+}
+
+.account-text{
+    font-family:'Playfair Display', serif;
+    font-size:14px;
+    color:#ffffff;
+    line-height:1;
+}
+
+/* User Status */
+.dot.suspended{
+    background:#f3d36b;
+}
+
+.dot.deactivated{
+    background:#565555;
+}
+
+.dot.banned{
+    background:#D96B52;
+}
+
+.user-action-buttons{
+    margin-top: 24px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+}
+
+.suspended-btn{
+    background:#f3d36b;
+}
+
+.activate-btn{
+    background:#ffffff;
+    color:#B8D9D0 !important;
+}
+
+.ban-btn{
+    background:#565555;
+}
+
+/* Product Detail Page */
+.order-info-title,
+.info-value {
+    font-family: 'Playfair Display', serif;
+}
+
+.order-info-title {
+    font-size: 20px;
 }

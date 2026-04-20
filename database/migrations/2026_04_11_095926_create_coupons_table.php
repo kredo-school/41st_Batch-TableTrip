@@ -8,21 +8,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('coupons', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
-            $table->string('discount_type')->default('percentage');
-            $table->integer('discount_value');
-            $table->text('description')->nullable();
-            $table->dateTime('expires_at')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
+        Schema::table('coupons', function (Blueprint $table) {
+            $table->string('code')->nullable()->unique()->after('name');
+            $table->text('description')->nullable()->after('code');
+            $table->dateTime('expires_at')->nullable()->after('description');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('coupons');
+        Schema::table('coupons', function (Blueprint $table) {
+            $table->dropColumn([
+                'code',
+                'description',
+                'expires_at',
+            ]);
+        });
     }
 };
