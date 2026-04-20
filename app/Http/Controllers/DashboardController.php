@@ -36,7 +36,6 @@ class DashboardController extends Controller
         }
 
         // --- favorite---
-        $favorite_restaurants = $user->favorite_restaurants()->get();
         $favorite_kits = $user->favorite_kits()->get();
 
         // history
@@ -58,7 +57,6 @@ class DashboardController extends Controller
             'latest_reservations', 
             'cart', 
             'totalPrice', 
-            'favorite_restaurants', 
             'favorite_kits',
             'purchased_items',
             'past_reservations'
