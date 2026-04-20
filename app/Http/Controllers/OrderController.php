@@ -74,7 +74,7 @@ class OrderController extends Controller
         $avgRating = $reviews->avg('rating') ?? 0;
 
         $hasPurchased = Auth::check()
-            ? Purchased::where('user_id', Auth::id())->where('meal_kit_id', $id)->exists()
+            ? Purchased::where('user_id', Auth::id())->where('product_id', $id)->exists()
             : false;
 
         $hasReviewed = Auth::check()

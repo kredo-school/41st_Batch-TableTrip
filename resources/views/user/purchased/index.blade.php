@@ -45,13 +45,13 @@
                                 <td>¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('d/m/y') }}</td>
                                 <td>
-                                    @if(in_array($item->meal_kit_id, $reviewedProductIds ?? []))
+                                    @if(in_array($item->product_id, $reviewedProductIds ?? []))
                                         <i class="fa-solid fa-comment-dots" style="color: #aaa;" title="Already reviewed"></i>
                                     @else
                                         <i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"
                                            data-bs-toggle="modal"
                                            data-bs-target="#reviewModal"
-                                           data-product-id="{{ $item->meal_kit_id }}"
+                                           data-product-id="{{ $item->product_id }}"
                                            data-product-name="{{ $item->product->name ?? '' }}"></i>
                                     @endif
                                 </td>
