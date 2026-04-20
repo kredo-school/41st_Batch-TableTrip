@@ -28,7 +28,6 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Restaurants</th>
-                            <th>Map</th>
                             <th>Guests</th>
                             <th>Edit</th>
                         </tr>
@@ -39,11 +38,9 @@
                                 <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('y-n-j') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
                                 {{-- restaurant name --}}
-                                <td>{{ $reservation->restaurant->name ?? 'N/A' }}</td>
-                                {{-- location--}}
-                                <td>{{ $reservation->restaurant->location ?? 'N/A' }}</td>
+                                <td>{{ $reservation->restaurant->restaurant_name ?? 'N/A' }}</td>
                                 {{-- guests --}}
-                                <td>{{ $reservation->number_of_guests }}</td>
+                                <td>{{ $reservation->number_of_people }}</td>
                                 <td class="edit-icons">
                                     <a href="{{ route('user.reservations.edit',$reservation->id) }}" class="">
                                         <i class="fa-regular fa-calender-check"></i>
@@ -54,7 +51,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" style="text-align:center; padding:20px;">No Reservations yet</td>
+                                <td colspan="5" style="text-align:center; padding:20px;">No Reservations yet</td>
                             </tr>
                         @endforelse
                     </tbody>
