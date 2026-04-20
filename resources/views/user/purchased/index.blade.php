@@ -44,7 +44,7 @@
                                 <td>{{ $item->quantity }}</td>
                                 <td>¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('d/m/y') }}</td>
-                                <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i></td>
+                                <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i><a href="{{ route('products.reviews', $item->product_id) }}">Reviews</a></td>
                             </tr>
                         @empty
                             <tr><td colspan="7" class="no-data">No purchase history yet.</td></tr>
@@ -129,7 +129,7 @@
                                     <td><strong>{{ $res->restaurant->name ?? 'N/A' }}</strong></td>
                                      <td>{{ $res->number_of_people }}</td>
                                     <td>Visited</td>
-                                    <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i></td>
+                                    <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i><a href="{{ route('products.reviews', $res->restaurant_id) }}">Reviews</a></td>
                                 </tr>
                             @empty
                                 <tr><td colspan="4" class="no-data">No past visits found</td></tr>

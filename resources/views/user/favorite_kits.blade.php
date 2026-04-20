@@ -58,6 +58,7 @@
     </div>
 
     <div class="mt-5">
+        <a href="{{ route('products.index') }}" class="btn btn-dark">Back to Products</a>
         <a href="{{ route('dashboard') }}" class="btn-back-custom text-decoration-none">
             <i class="fa-solid fa-house me-2"></i>Back to Dashboard
         </a>

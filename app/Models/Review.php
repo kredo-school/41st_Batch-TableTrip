@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Restaurant;
-use App\Models\User;
-use App\Models\Product;
 
 class Review extends Model
 {
@@ -26,6 +23,8 @@ class Review extends Model
         'is_read',
         'status',
     ];
+
+    // --- Relationships ---
 
     public function user()
     {
@@ -52,19 +51,14 @@ class Review extends Model
         return $this->hasMany(Review::class, 'parent_id');
     }
 
+    // --- AI/Bad word check logic ---
+
     protected static function booted()
     {
         static::creating(function ($review) {
             $badWords = [
-                'stupid',
-                'idiot',
-                'hate',
-                'damn',
-                'sex',
-                'xxx',
-                'spam',
-                'http',
-                'www',
+                'stupid', 'idiot', 'hate', 'damn', 'sex', 
+                'xxx', 'spam', 'http', 'www',
             ];
 
             $comment = strtolower($review->comment ?? '');
