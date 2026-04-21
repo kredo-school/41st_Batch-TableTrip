@@ -41,12 +41,25 @@
                     <tbody>
                         @forelse($purchased ?? [] as $item)
                             <tr>
+                                {{-- 1. Product --}}
                                 <td><strong>{{ $item->product->name ?? 'N/A' }}</strong></td>
+                                
+                                {{-- 2. Restaurant --}}
                                 <td>{{ $item->product->restaurant_name ?? 'N/A' }}</td>
-                                <td>¥{{ number_format($item->price_at_purchased) }}</td>
+                                
+                                {{-- 3. Price --}}
+                                <td>¥{{ number_format((int)$item->getRawOriginal('price_at_purchased')) }}</td>
+                                
+                                {{-- 4. Qty --}}
                                 <td>{{ $item->quantity }}</td>
-                                <td>¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('d/m/y') }}</td>
+                                
+                                {{-- 5. Subtotal  --}}
+                                <td>¥{{ number_format((int)$item->getRawOriginal('price_at_purchased') * (int)$item->quantity) }}</td>
+                                
+                                {{-- 6. Date--}}
+                                <td>{{ $item->ordered_at ? $item->ordered_at->format('d/m/y') : 'N/A' }}</td>
+                                
+                                {{-- 7. Review --}}
                                 <td>
                                     @if(in_array($item->product_id, $reviewedProductIds ?? []))
                                         <i class="fa-solid fa-comment-dots icon-reviewed" title="Already reviewed"></i>
@@ -139,7 +152,7 @@
                             @forelse($past_reservations ?? [] as $res)
                                 <tr>
                                     <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}</td>
-                                    <td><strong>{{ $res->restaurant->name ?? 'N/A' }}</strong></td>
+                                    <td><strong>{{ $res->restaurant->restaurant_name ?? 'N/A' }}</strong></td>
                                      <td>{{ $res->number_of_people }}</td>
                                     <td>Visited</td>
                                     <td><i class="fa-solid fa-comment-dots icon-review-btn"></i><a href="{{ route('products.reviews', $res->restaurant_id) }}">Reviews</a></td>

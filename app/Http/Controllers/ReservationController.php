@@ -8,33 +8,35 @@ use App\Models\Reservation;
 use App\Models\Order; 
 use App\Models\User; 
 use Carbon\Carbon;
+use App\Models\Purchased;
 
 class ReservationController extends Controller
 {
 
     public function index()
-    {
-        $userId = Auth::id();
-        $today = now()->toDateString();
+{
+    $userId = Auth::id();
+    $today = now()->toDateString();
 
-        $upcoming_reservations = Reservation::where('user_id', $userId)
-            ->whereDate('reservation_date', '>=', $today)
-            ->with('restaurant')
-            ->orderBy('reservation_date', 'asc')
-            ->get();
+    $upcoming_reservations = Reservation::where('user_id', $userId)
+        ->whereDate('reservation_date', '>=', $today)
+        ->with('restaurant')
+        ->orderBy('reservation_date', 'asc')
+        ->get();
 
-        $past_reservations = Reservation::where('user_id', $userId)
-            ->whereDate('reservation_date', '<', $today)
-            ->with('restaurant')
-            ->orderBy('reservation_date', 'desc')
-            ->get();
-        $purchased = Order::where('user_id', $userId)
-            ->with(['product', 'meal_kit']) 
-            ->orderBy('created_at', 'desc')
-            ->get();
+    $past_reservations = Reservation::where('user_id', $userId)
+        ->whereDate('reservation_date', '<', $today)
+        ->with('restaurant')
+        ->orderBy('reservation_date', 'desc')
+        ->get();
 
-        return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations', 'purchased'));
-    }
+    $purchased = Purchased::where('user_id', $userId)
+        ->with('product') 
+        ->orderBy('ordered_at', 'desc') 
+        ->get();
+
+    return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations', 'purchased'));
+}
 
     public function store(Request $request)
     {
