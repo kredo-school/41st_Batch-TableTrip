@@ -46,9 +46,17 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center mt-4">
-    {{ $restaurants->links() }}
-</div>
+@if ($restaurants->hasPages())
+    <ul class="pagination justify-content-center mt-4">
+        @for ($i = 1; $i <= $restaurants->lastPage(); $i++)
+            <li class="page-item {{ $restaurants->currentPage() == $i ? 'active' : '' }}">
+                <a class="page-link" href="{{ $restaurants->url($i) }}">
+                    {{ $i }}
+                </a>
+            </li>
+        @endfor
+    </ul>
+@endif
 
 <div class="text-center mt-3">
     <a href="{{ route('admin.dashboard') }}" class="admin-home-link">

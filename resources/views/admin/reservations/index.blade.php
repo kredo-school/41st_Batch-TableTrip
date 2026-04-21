@@ -52,9 +52,18 @@
     </div>
 </div>
 
-<div class="d-flex justify-content-center mt-4">
-    {{ $reservations->links() }}
-</div>
+@if ($reservations->hasPages())
+    <ul class="pagination justify-content-center mt-4">
+        @for ($i = 1; $i <= $reservations->lastPage(); $i++)
+            <li class="page-item {{ $reservations->currentPage() == $i ? 'active' : '' }}">
+                <a class="page-link" href="{{ $reservations->url($i) }}">
+                    {{ $i }}
+                </a>
+            </li>
+        @endfor
+    </ul>
+@endif
+
 <div class="text-center mt-3">
     <a href="{{ route('admin.dashboard') }}" class="admin-home-link">
         Home
