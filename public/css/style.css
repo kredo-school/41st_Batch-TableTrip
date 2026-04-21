@@ -429,7 +429,7 @@ input[type="text"], input[type="email"], input[type="password"], select {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f8f4f0; 
+    
 }
 
 .welcome-text {
@@ -837,10 +837,7 @@ label.small {
 }
 /* payment */
 
-body {
-    background-color:  #f4fdf9;
-    font-family: 'Playfair Display', serif;
-}
+
 .table-responsive::-webkit-scrollbar {
     width: 6px;  
     height: 6px; 
