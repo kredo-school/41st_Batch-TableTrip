@@ -85,13 +85,12 @@
                 <div class="row g-4 align-items-center">
 
                     <!-- Left: links -->
-                    <div class="col-12 col-md-7">
-                        <div class="d-flex flex-wrap gap-5">
-                            <a href="/" class="text-white text-decoration-none fs-5">Home</a>
-                            <a href="/company" class="text-white text-decoration-none fs-5">Company</a>
-                            <a href="/faq" class="text-white text-decoration-none fs-5">FAQ</a>
-                            <a href="/privacy-policy" class="text-white text-decoration-none fs-5">Privacy Policy</a>
-                            <a href="/contact" class="text-white text-decoration-none fs-5">Contact us</a>
+                    <div class="col-12 col-md-7 text-center">
+                        <div class="d-flex flex-wrap gap-5 text-center justify-content-center">
+                            <a href="" class="text-white text-decoration-none fs-5">About us</a>
+                            <a href="" class="text-white text-decoration-none fs-5">FAQ</a>
+                            <a href="" class="text-white text-decoration-none fs-5">Privacy Policy</a>
+                            <a href="" class="text-white text-decoration-none fs-5">Contact us</a>
                         </div>
 
                         <div class="mt-4 footer-border"></div>
@@ -103,17 +102,19 @@
 
                     <!-- Right: partner CTA -->
                     <div class="col-12 col-md-5 text-md-center text-center">
-                        <p class="text-white-50 mb-2">
-                            Restaurant owners & partners
+                        <p class="text-white mb-2">
+                            Restaurant Owners Support
                         </p>
 
-                        <a href="{{ route('owner.register') }}" class="btn btn-light rounded-pill px-5 py-2 fw-semibold">
-                            Partner with us
+                        <p class="text-white-50 mb-3">
+                            Need help managing your page or reservations?
+                        </p>
+
+                        <a href="#" class="btn btn-light rounded-pill px-5 py-2 fw-semibold">
+                           Contact Support
                         </a>
 
-                        <p class="text-white-50 mt-3">
-                            List your restaurant & sell meal kits
-                        </p>
+                        
                     </div>
 
                 </div>

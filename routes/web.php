@@ -53,6 +53,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\PurchasedController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\User\ProductReviewController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Owner\PageManagementController;
 use App\Http\Controllers\Owner\ReviewController as OwnerReviewController;
@@ -100,7 +101,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // hisotry
+    // history
     Route::get('/purchased', [PurchasedController::class, 'index'])->name('purchased.index');
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle'])->name('favorite.toggle');
@@ -108,21 +109,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/favorite/kits', [FavoriteKitsController::class, 'index'])->name('user.favorite_kits');
 
     // reservation
-    Route::prefix('reservations')->name('reservations.')->group(function () {
+    Route::prefix('user/reservations')->name('user.reservations.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');
         Route::post('/store', [ReservationController::class, 'store'])->name('store');
-        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
-        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit');
+        Route::get('/{id}/edit', [ReservationController::class, 'edit'])->name('edit'); 
         Route::patch('/{id}', [ReservationController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ReservationController::class, 'destroy'])->name('destroy');
     });
 
     // inquiry
     Route::prefix('inquiry')->name('user.inquiry.')->group(function () {
         Route::get('/', [InquiryController::class, 'dashboard'])->name('dashboard');
-        Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('show');
+        Route::get('/create', [InquiryController::class, 'create'])->name('create'); 
+        Route::get('/chat/{thread_id}', [InquiryController::class, 'index'])->name('index');
         Route::post('/send', [InquiryController::class, 'send'])->name('send');
+        Route::delete('/destroy/{thread_id}', [InquiryController::class, 'destroy'])->name('destroy');
     });
-
     // --- User
     Route::prefix('user')->name('user.')->group(function () {
 
@@ -136,16 +138,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/{cartItem}', [UserCartController::class, 'destroy'])->name('cart_destroy');
         });
 
-        // notification)
+        // notifications
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('/', [NotificationsController::class, 'index'])->name('index');
             Route::get('/{id}', [NotificationsController::class, 'show'])->name('show');
             Route::patch('/{id}/complete', [NotificationsController::class, 'complete'])->name('complete');
             Route::delete('/{id}', [NotificationsController::class, 'destroy'])->name('destroy');
         });
-
         // payment
         Route::resource('payment_method', PaymentMethodController::class);
+        Route::patch('payment_method/{payment_method}/default', [PaymentMethodController::class, 'setDefault'])
+        ->name('payment_method.default');
     });
 
     // checkout
@@ -265,6 +268,8 @@ Route::prefix('admin')
 Route::get('/products/create', [OrderController::class, 'create'])->name('products.create');
 Route::get('/products', [OrderController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [OrderController::class, 'show'])->name('products.show');
+Route::get('/products/{id}/reviews', [ProductReviewController::class, 'index'])->name('products.reviews');
+Route::post('/products/{id}/reviews', [ProductReviewController::class, 'store'])->name('products.reviews.store')->middleware('auth');
 Route::post('/products/store', [OrderController::class, 'store'])->name('products.store');
 Route::get('/order/details', [OrderController::class, 'showDetails']);
 
@@ -283,7 +288,9 @@ Route::get('/cart/track', function () { return view('products.track'); })->name(
 |--------------------------------------------------------------------------
 */
 Route::get('/restaurant/{id}', [RestaurantController::class, 'show'])->name('restaurant');
-Route::post('/restaurant/{id}', [RestaurantController::class, 'store'])->name('restaurant.reserve');
+Route::post('/restaurant/{id}/reservation', [RestaurantController::class, 'store'])->name('restaurant.reservation');
+Route::post('/restaurant/{id}/favorite', [RestaurantController::class, 'favoriteToggle'])->name('restaurant.favorite');
+Route::post('/restaurant/{id}/reviews', [RestaurantController::class, 'storeReview'])->name('restaurant.reviews.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -352,27 +359,3 @@ Route::prefix('owner')->name('owner.')->group(function () {
 
     });
 });
-
-/*
-|--------------------------------------------------------------------------
-| Static Views (for layout checking)
-|--------------------------------------------------------------------------
-*/
-Route::view('/restaurant-page', 'restaurants.restaurant_page');
-Route::view('/restaurant-owner-page', 'restaurant-owners.register');
-Route::view('/restaurant-owner-login', 'restaurant-owners.login');
-Route::view('/restaurant-owner-dashboard', 'restaurant-owners.dashboard');
-Route::view('/restaurant-owner-reservations', 'restaurant-owners.reservations.index');
-Route::view('/restaurant-owner-reservation-details', 'restaurant-owners.reservations.reservation-details');
-Route::view('/restaurant-owner-orders', 'restaurant-owners.orders.index');
-Route::view('/restaurant-owner-order-details', 'restaurant-owners.orders.order-details');
-Route::view('/restaurant-owner-meal-kit', 'restaurant-owners.meal_kits.index');
-Route::view('/restaurant-owner-meal-kit-add', 'restaurant-owners.meal_kits.add-mealkit');
-Route::view('/restaurant-owner-meal-kit-details', 'restaurant-owners.meal_kits.details');
-Route::view('/restaurant-owner-page-info', 'restaurant-owners.page-management.basic-info');
-Route::view('/restaurant-owner-page-image', 'restaurant-owners.page-management.image');
-Route::view('/restaurant-owner-page-menu', 'restaurant-owners.page-management.menu');
-Route::view('/restaurant-owner-page-preview', 'restaurant-owners.page-management.preview');
-Route::view('/restaurant-owner-review', 'restaurant-owners.review.index');
-Route::view('/restaurant-owner-notifications', 'restaurant-owners.notifications.index');
-Route::view('/restaurant-owner-setting', 'restaurant-owners.setting.index');

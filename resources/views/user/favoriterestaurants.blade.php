@@ -13,7 +13,7 @@
         <div class="favorite-header-tabs">
             <div class="tab-item active"> Restaurants
             </div>
-            <div class="tab-item" onclick="location.href='{{ route('user.favoritekits') }}'">
+            <div class="tab-item" onclick="location.href='{{ route('user.favorite_kits') }}'">
                 Kits
             </div>
         </div>

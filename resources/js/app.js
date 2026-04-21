@@ -11,3 +11,4 @@ import './images';
 import './reservation';
 import './markAsRead';
 import './owner-dashboard';
+import './star-btn';

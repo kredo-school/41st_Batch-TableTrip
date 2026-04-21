@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Inquiry extends Model
 {
@@ -22,4 +23,13 @@ class Inquiry extends Model
         'order_id',
         'reservation_id',
     ];
+    public function recipient(): BelongsTo
+        {
+            return $this->belongsTo(Restaurant::class, 'recipient_id');
+        }
+
+    public function sender(): BelongsTo
+        {
+            return $this->belongsTo(Restaurant::class, 'sender_id');
+        }
 }

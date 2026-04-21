@@ -91,4 +91,9 @@ class Restaurant extends Authenticatable
     {
         return $this->morphMany(Notification::class, 'recipient');
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(FavoriteRestaurant::class);
+    }
 }

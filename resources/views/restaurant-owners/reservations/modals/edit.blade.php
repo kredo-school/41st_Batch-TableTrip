@@ -107,7 +107,7 @@
                             <select class="form-select @error('status') is-invalid @enderror" name="status" id="status_{{ $reservation->id }}">
                                 <option value="confirmed" {{ old('status', $reservation->status) == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                                 <option value="pending" {{ old('status', $reservation->status) == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="completed" {{ old('status', $reservation->status) == 'completed' ? 'selected' : '' }}>Completed</option>
+                                <option value="completed" {{ old('status', $reservation->status) == 'visited' ? 'selected' : '' }}>Visited</option>
                                 <option value="cancelled" {{ old('status', $reservation->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                 <option value="no-show" {{ old('status', $reservation->status) == 'no-show' ? 'selected' : '' }}>No-show</option>
                             </select>
