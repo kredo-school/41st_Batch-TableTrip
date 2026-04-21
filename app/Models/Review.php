@@ -35,6 +35,11 @@ class Review extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(Review::class, 'parent_id');
+    }
+
 protected static function booted()
     {
         static::creating(function ($review) {
