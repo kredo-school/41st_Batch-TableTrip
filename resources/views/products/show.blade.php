@@ -2,10 +2,10 @@
 @vite(['resources/css/product-list.css'])
 
 @section('content')
-<div style="background-color: #F9F7F2; min-height: 100vh;">
+<div class="product-show-wrapper">
 
-<div class="container py-5" style="max-width: 480px;">
-        <div class="card border-0 shadow-sm position-relative overflow-hidden" style="border-radius: 16px;">
+<div class="container py-5 product-show-container">
+        <div class="card border-0 shadow-sm position-relative overflow-hidden product-show-card">
 
             {{-- リボン --}}
             @if($product->badge)
@@ -24,32 +24,28 @@
             {{-- 商品画像 --}}
             @if($product->image)
                 <img src="{{ asset('storage/' . $product->image) }}"
-                     class="card-img-top"
-                     alt="{{ $product->name }}"
-                     style="height: 260px; object-fit: cover;">
+                     class="card-img-top product-show-img"
+                     alt="{{ $product->name }}">
             @else
                 <img src="https://via.placeholder.com/480x260?text=No+Image"
-                     class="card-img-top"
-                     alt="No Image"
-                     style="height: 260px; object-fit: cover;">
+                     class="card-img-top product-show-img"
+                     alt="No Image">
             @endif
 
             <div class="card-body px-4 pb-4">
 
                 {{-- 商品名・タグ・価格 --}}
                 <div class="d-flex align-items-center flex-wrap gap-2 mt-2">
-                    <h4 class="fw-bold mb-0" style="font-family: serif; color: #333;">{{ $product->name }}</h4>
+                    <h4 class="fw-bold mb-0 product-name">{{ $product->name }}</h4>
                     @if($product->tag)
                         @php
-                            $tagStyle = $product->tag === 'Flash Frozen'
-                                ? 'background-color:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd;'
-                                : 'background-color:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc;';
+                            $tagClass = $product->tag === 'Flash Frozen' ? 'tag-flash-frozen' : 'tag-cool';
                         @endphp
-                        <span style="font-size:0.75rem; border-radius:3px; padding:2px 8px; font-weight:600; {{ $tagStyle }}">
+                        <span class="product-tag {{ $tagClass }}">
                             {{ $product->tag === 'Flash Frozen' ? '❄ Flash Frozen' : '🧊 Cool' }}
                         </span>
                     @endif
-                    <span class="fw-bold ms-auto" style="font-size: 1.1rem;">¥{{ number_format($product->price) }}-</span>
+                    <span class="fw-bold ms-auto product-price">¥{{ number_format($product->price) }}-</span>
                 </div>
 
                 {{-- レストラン名・場所 --}}
@@ -58,7 +54,7 @@
                 {{-- 星評価 --}}
                 <div class="d-flex align-items-center gap-1 mb-3">
                     @for($i = 1; $i <= 5; $i++)
-                        <span style="font-size: 1.3rem; color: {{ $i <= round($avgRating) ? '#F5A623' : '#ddd' }};">★</span>
+                        <span class="product-star" style="color: {{ $i <= round($avgRating) ? '#F5A623' : '#ddd' }};">★</span>
                     @endfor
                     <span class="small text-muted ms-1">{{ number_format($avgRating, 1) }} ({{ $reviews->count() }})</span>
                 </div>
@@ -79,9 +75,9 @@
                     <form action="{{ route('cart.add') }}" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button type="submit" class="border-0 bg-transparent text-center" style="cursor: pointer;">
-                            <i class="bi bi-cart-fill" style="font-size: 2.5rem; color: #2c3e50;"></i>
-                            <p class="mb-0 fw-bold" style="font-size: 0.7rem;">Add Cart</p>
+                        <button type="submit" class="border-0 bg-transparent text-center">
+                            <i class="bi bi-cart-fill product-cart-icon"></i>
+                            <p class="mb-0 fw-bold product-cart-text">Add Cart</p>
                         </button>
                     </form>
                 </div>
@@ -96,7 +92,7 @@
 
         {{-- レビューセクション --}}
         <div class="mt-4">
-            <h5 class="fw-bold mb-3" style="font-family: serif;">Reviews</h5>
+            <h5 class="fw-bold mb-3 section-title-serif">Reviews</h5>
 
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -110,7 +106,7 @@
                 @if($hasReviewed)
                     <div class="alert alert-light border text-center small mb-3">You have already submitted a review.</div>
                 @elseif($hasPurchased)
-                    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px;">
+                    <div class="card border-0 shadow-sm mb-4 product-review-card">
                         <div class="card-body p-4">
                             <h6 class="fw-bold mb-3">Write a Review</h6>
                             <form action="{{ route('products.reviews.store', $product->id) }}" method="POST">
@@ -119,8 +115,7 @@
                                     <label class="form-label fw-bold small">Rating</label>
                                     <div class="d-flex gap-2" id="star-rating">
                                         @for($i = 1; $i <= 5; $i++)
-                                            <span class="star-btn" data-value="{{ $i }}"
-                                                  style="font-size: 1.8rem; cursor: pointer; color: #ddd;">★</span>
+                                            <span class="star-btn" data-value="{{ $i }}">★</span>
                                         @endfor
                                     </div>
                                     <input type="hidden" name="rating" id="rating-input" value="">
@@ -133,8 +128,7 @@
                                     @error('comment')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                                 </div>
                                 <div class="text-end">
-                                    <button type="submit" class="btn text-white px-4"
-                                            style="background-color: #2c3e50; border-radius: 8px;">Submit</button>
+                                    <button type="submit" class="btn text-white px-4 btn-dark-submit">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -144,19 +138,19 @@
 
             {{-- レビュー一覧 --}}
             @forelse($reviews as $review)
-                <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
+                <div class="card border-0 shadow-sm mb-3 product-review-card">
                     <div class="card-body p-3">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div class="d-flex align-items-center gap-2">
                                 @if(!empty($review->user->profile_picture))
                                     <img src="{{ asset('storage/' . $review->user->profile_picture) }}"
-                                         class="rounded-circle" style="width:32px; height:32px; object-fit:cover;">
+                                         class="rounded-circle user-avatar">
                                 @else
                                     <i class="fa-solid fa-circle-user fs-5 text-secondary"></i>
                                 @endif
                                 <span class="fw-bold small">{{ $review->user->user_name ?? 'User' }}</span>
                             </div>
-                            <span class="text-muted" style="font-size: 0.75rem;">{{ $review->created_at->format('M d, Y') }}</span>
+                            <span class="text-muted review-date">{{ $review->created_at->format('M d, Y') }}</span>
                         </div>
                         <div class="mb-1">
                             @for($i = 1; $i <= 5; $i++)
@@ -173,6 +167,7 @@
     </div>
 </div>
 
+@push('scripts')
 <script>
     const stars = document.querySelectorAll('.star-btn');
     const ratingInput = document.getElementById('rating-input');
@@ -192,4 +187,5 @@
         });
     }
 </script>
+@endpush
 @endsection

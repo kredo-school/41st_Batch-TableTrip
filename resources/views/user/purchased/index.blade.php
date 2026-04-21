@@ -1,9 +1,12 @@
 @extends('layouts.app')
 @section('title','Activity History')
 
-@section('content')
+@push('styles')
 <link rel="stylesheet" href="{{ asset('css/history.css') }}">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+@endpush
+
+@section('content')
 
 <div class="history-container py-5 text-center">
     <h1 class="history-title mb-4">
@@ -23,7 +26,7 @@
         <div class="section-orders">
             <h2 class="sub-title"><i class="fa-solid fa-bag-shopping me-2"></i>Order History</h2>
             <div class="table-wrapper">
-                <table class="history-table"> 
+                <table class="history-table">
                     <thead>
                         <tr>
                             <th>Product</th>
@@ -46,9 +49,9 @@
                                 <td>{{ \Carbon\Carbon::parse($item->ordered_at)->format('d/m/y') }}</td>
                                 <td>
                                     @if(in_array($item->product_id, $reviewedProductIds ?? []))
-                                        <i class="fa-solid fa-comment-dots" style="color: #aaa;" title="Already reviewed"></i>
+                                        <i class="fa-solid fa-comment-dots icon-reviewed" title="Already reviewed"></i>
                                     @else
-                                        <i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"
+                                        <i class="fa-solid fa-comment-dots icon-review-btn"
                                            data-bs-toggle="modal"
                                            data-bs-target="#reviewModal"
                                            data-product-id="{{ $item->product_id }}"
@@ -90,25 +93,25 @@
                                 <th>Date / Time</th>
                                 <th>Restaurant</th>
                                 <th>People</th>
-                                <th style="width: 160px;">Manage</th>
+                                <th class="th-manage">Manage</th>
                             </tr>
                         </thead>
-                        <tbody>         
+                        <tbody>
                             @forelse($upcoming_reservations ?? [] as $res)
                                 <tr>
                                     <td>
-                                        {{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} 
+                                        {{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }}
                                         {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}
                                     </td>
                                     <td><strong>{{ $res->restaurant->name ?? 'N/A' }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
                                     <td>
-                                        <div class="manage-action-group" style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+                                        <div class="manage-action-group">
                                             <a href="{{ route('user.inquiry.create', ['restaurant_id' => $res->restaurant_id, 'reservation_id' => $res->id]) }}" class="btn-inquiry-icon" title="Contact"><i class="fa-solid fa-envelope"></i></a>
                                             <a href="{{ route('user.reservations.edit', $res->id) }}" class="btn-edit-icon" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <form action="{{ route('user.reservations.destroy', $res->id) }}" method="POST" style="margin: 0;">
+                                            <form action="{{ route('user.reservations.destroy', $res->id) }}" method="POST" class="manage-form">
                                                 @csrf @method('DELETE')
-                                                <button type="submit" class="btn-cancel-icon" onclick="return confirm('Cancel?')" style="background:none; border:none; color:#999;"><i class="fa-solid fa-calendar-xmark"></i></button>
+                                                <button type="submit" class="btn-cancel-icon" onclick="return confirm('Cancel?')"><i class="fa-solid fa-calendar-xmark"></i></button>
                                             </form>
                                         </div>
                                     </td>
@@ -139,7 +142,7 @@
                                     <td><strong>{{ $res->restaurant->name ?? 'N/A' }}</strong></td>
                                      <td>{{ $res->number_of_people }}</td>
                                     <td>Visited</td>
-                                    <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i><a href="{{ route('products.reviews', $res->restaurant_id) }}">Reviews</a></td>
+                                    <td><i class="fa-solid fa-comment-dots icon-review-btn"></i><a href="{{ route('products.reviews', $res->restaurant_id) }}">Reviews</a></td>
                                 </tr>
                             @empty
                                 <tr><td colspan="4" class="no-data">No past visits found</td></tr>
@@ -176,8 +179,7 @@
                         <label class="form-label fw-bold small">Rating</label>
                         <div class="d-flex gap-2" id="modal-star-rating">
                             @for($i = 1; $i <= 5; $i++)
-                                <span class="modal-star" data-value="{{ $i }}"
-                                      style="font-size: 1.8rem; cursor: pointer; color: #ddd;">★</span>
+                                <span class="modal-star" data-value="{{ $i }}">★</span>
                             @endfor
                         </div>
                         <input type="hidden" name="rating" id="modal-rating-input" value="">
@@ -192,15 +194,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn text-white" style="background-color: #2c3e50;">Submit</button>
+                    <button type="submit" class="btn text-white btn-modal-submit">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+@push('scripts')
 <script>
-    // モーダルが開くとき、商品IDと名前をセット
     document.getElementById('reviewModal').addEventListener('show.bs.modal', function (e) {
         const icon = e.relatedTarget;
         const productId = icon.dataset.productId;
@@ -213,7 +215,6 @@
         document.querySelectorAll('.modal-star').forEach(s => s.style.color = '#ddd');
     });
 
-    // 星クリック
     const modalStars = document.querySelectorAll('.modal-star');
     const modalRatingInput = document.getElementById('modal-rating-input');
 
@@ -231,4 +232,5 @@
         });
     });
 </script>
+@endpush
 @endsection

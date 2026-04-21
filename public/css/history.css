@@ -114,3 +114,43 @@
     font-weight: 700;
     text-decoration: underline;
 }
+
+.icon-reviewed {
+    color: #aaa;
+}
+
+.icon-review-btn {
+    color: #e2725b;
+    cursor: pointer;
+}
+
+.th-manage {
+    width: 160px;
+}
+
+.manage-action-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.manage-form {
+    margin: 0;
+}
+
+.btn-cancel-icon {
+    background: none;
+    border: none;
+    color: #999;
+}
+
+.modal-star {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #ddd;
+}
+
+.btn-modal-submit {
+    background-color: #2c3e50;
+}

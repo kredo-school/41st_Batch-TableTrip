@@ -25,7 +25,7 @@
                 </a>
 
                 @if($notification->is_action_required && !$notification->is_completed && $notification->target_type === 'App\Models\Product' && $notification->target_id)
-                    <a href="{{ route('products.reviews', $notification->target_id) }}" class="btn btn-sm text-white" style="background-color: #D96D55; border-radius: 6px;">
+                    <a href="{{ route('products.reviews', $notification->target_id) }}" class="btn btn-sm text-white btn-review">
                         <i class="fa-solid fa-star me-1"></i> Write a Review
                     </a>
                 @endif
