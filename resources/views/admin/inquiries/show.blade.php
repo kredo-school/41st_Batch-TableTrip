@@ -5,83 +5,106 @@
 @section('content')
 
 <div class="order-wrapper inquiry-detail-wrapper">
-    <h2 class="order-title">Inquiry Details</h2>
+    <h2 class="order-title">Inquiry Thread</h2>
 
-    <!-- TOP INFO -->
+    @php
+        $firstMessage = $messages->first();
+    @endphp
+
+    @if($firstMessage)
     <div class="inquiry-top-info">
         <div class="inquiry-left-info">
-            <p><span>From :</span> <strong class="info-value">{{ $inquiry->name }}</strong></p>
-
-            <p><span>Email :</span> <strong class="info-value">{{ $inquiry->email }}</strong></p>
+            <p>
+                <span>Thread ID :</span>
+                <strong class="info-value">{{ $firstMessage->thread_id }}</strong>
+            </p>
 
             <p>
-                <span>User ID :</span>
+                <span>Subject :</span>
+                <strong class="info-value">{{ $firstMessage->subject }}</strong>
+            </p>
+
+            <p>
+                <span>Status :</span>
                 <strong class="info-value">
-                    {{ $matchedUser ? '#' . $matchedUser->id : 'Guest' }}
+                    <span class="status-dot {{ $firstMessage->status }}"></span>
+                    {{ ucfirst($firstMessage->status) }}
                 </strong>
             </p>
         </div>
 
         <div class="inquiry-right-info">
             <p>
-                <span>Inquiry ID :</span>
-                <strong class="info-value">#{{ $inquiry->id }}</strong>
+                <span>Sender :</span>
+                <strong class="info-value">
+                    {{ ucfirst($firstMessage->sender_type) }} #{{ $firstMessage->sender_id }}
+                </strong>
             </p>
 
             <p>
-                <span>Status :</span>
+                <span>Recipient :</span>
                 <strong class="info-value">
-                    <span class="status-dot {{ $inquiry->status }}"></span>
-                    {{ ucfirst($inquiry->status) }}
+                    {{ $firstMessage->recipient_type ? ucfirst($firstMessage->recipient_type) : '-' }}
+                    {{ $firstMessage->recipient_id ? '#' . $firstMessage->recipient_id : '' }}
                 </strong>
             </p>
 
             <p>
                 <span>Received at :</span>
                 <strong class="info-value">
-                    {{ $inquiry->created_at->format('M d, Y - g:i A') }}
+                    {{ $firstMessage->created_at->format('M d, Y - g:i A') }}
                 </strong>
             </p>
         </div>
     </div>
 
-    <!-- SUBJECT -->
     <div class="inquiry-subject-box">
-        {{ $inquiry->subject }}
+        {{ $firstMessage->subject }}
     </div>
+    @endif
 
-    <!-- MESSAGE -->
     <div class="inquiry-message-box">
-        {!! nl2br(e($inquiry->message)) !!}
+        @foreach($messages as $message)
+            <div class="mb-3 p-3 border rounded">
+                <p class="mb-1">
+                    <strong>
+                        {{ ucfirst($message->sender_type) }} #{{ $message->sender_id }}
+                    </strong>
+                </p>
+
+                <p class="mb-1">{!! nl2br(e($message->message)) !!}</p>
+
+                <small class="text-muted">
+                    {{ $message->created_at->format('M d, Y - g:i A') }}
+                </small>
+            </div>
+        @endforeach
     </div>
 
-    <!-- ACTION BUTTONS -->
+    @if($firstMessage)
     <div class="inquiry-action-buttons mt-4">
-        <a href="{{ route('admin.inquiries.replyForm', $inquiry->id) }}" class="edit-btn reply-btn">
-            Reply
-        </a>
-
-        <form action="{{ route('admin.inquiries.updateStatus', $inquiry->id) }}" method="POST">
+        <form action="{{ route('admin.inquiries.updateStatus', $firstMessage->thread_id) }}" method="POST">
             @csrf
             @method('PATCH')
             <input type="hidden" name="status" value="replied">
             <button type="submit" class="status-action-btn replied-btn">Mark as Replied</button>
         </form>
 
-        <form action="{{ route('admin.inquiries.updateStatus', $inquiry->id) }}" method="POST">
+        <form action="{{ route('admin.inquiries.updateStatus', $firstMessage->thread_id) }}" method="POST">
             @csrf
             @method('PATCH')
             <input type="hidden" name="status" value="flagged">
             <button type="submit" class="status-action-btn flagged-btn">Mark as Flagged</button>
         </form>
 
-        <form action="{{ route('admin.inquiries.updateStatus', $inquiry->id) }}" method="POST">
+        <form action="{{ route('admin.inquiries.updateStatus', $firstMessage->thread_id) }}" method="POST">
             @csrf
             @method('PATCH')
-            <input type="hidden" name="status" value="open">
-            <button type="submit" class="status-action-btn open-btn">Restore to Open</button>
+            <input type="hidden" name="status" value="pending">
+            <button type="submit" class="status-action-btn open-btn">Restore to Pending</button>
         </form>
     </div>
+    @endif
 </div>
 
 <div class="text-center mt-5">

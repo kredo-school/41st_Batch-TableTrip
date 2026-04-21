@@ -54,16 +54,6 @@ class UserSeeder extends Seeder
             'address' => 'Tokyo, Shibuya',
             'postal_code' => '1500002',
         ]);
-    }
-}
-            'tel' => '627288238',
-            'email'=>'satonao@kredo.com',
-            'postal_code'=> '9758WK',
-            'country' => 'Netherlands',
-            'address' => 'Fukushima',
-            'password' => Hash::make('password914'),            
-
-        ]);
 
         // second user
         User::create([
@@ -92,7 +82,6 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password0917'),            
 
         ]);
-
 
     }
 }
