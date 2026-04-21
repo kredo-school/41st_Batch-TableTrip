@@ -109,11 +109,6 @@
 </div>
 
 @push('scripts')
-<script>
-    window.addEventListener('load', function () {
-        const line = document.getElementById('progress-line');
-        line.style.height = '96px';
-    });
-</script>
+<script src="{{ asset('js/product-track.js') }}"></script>
 @endpush
 @endsection
