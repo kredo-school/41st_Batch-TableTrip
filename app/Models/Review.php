@@ -13,14 +13,8 @@ class Review extends Model
         'restaurant_id',
         'user_id',
         'product_id',
-        'parent_id',
-        'author_type',
-        'comment_type',
         'rating',
         'comment',
-        'is_approved',
-        'ai_score',
-        'is_read',
         'status',
     ];
 
@@ -41,19 +35,7 @@ class Review extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function parent()
-    {
-        return $this->belongsTo(Review::class, 'parent_id');
-    }
-
-    public function replies()
-    {
-        return $this->hasMany(Review::class, 'parent_id');
-    }
-
-    // --- AI/Bad word check logic ---
-
-    protected static function booted()
+protected static function booted()
     {
         static::creating(function ($review) {
             $badWords = [

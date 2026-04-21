@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Purchased; 
-use App\Models\Review; 
-use App\Models\Reservation; 
-use Illuminate\Support\Facades\Auth; 
+use App\Models\Purchased;
+use App\Models\Reservation;
+use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 
 class PurchasedController extends Controller
 {
@@ -32,10 +32,15 @@ class PurchasedController extends Controller
         ->orderBy('reservation_date', 'desc')
         ->get();
 
+    $reviewedProductIds = Review::where('user_id', $user_id)
+        ->pluck('product_id')
+        ->toArray();
+
     return view('user.purchased.index', compact(
-        'purchased', 
-        'upcoming_reservations', 
-        'past_reservations'
+        'purchased',
+        'upcoming_reservations',
+        'past_reservations',
+        'reviewedProductIds'
     ));
 }
 }
