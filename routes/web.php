@@ -278,7 +278,28 @@ Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remov
 Route::get('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
 Route::get('/cart/thanks', [CartController::class, 'thanks'])->name('cart.thanks');
 Route::get('/cart/order-details', [CartController::class, 'orderDetails'])->name('cart.order_details');
-Route::get('/cart/track', function () { return view('products.track'); })->name('cart.track');
+Route::get('/cart/track', function () {
+    $user = auth()->user();
+    $lastOrder = session('last_order');
+
+    // セッションがなければDBから最新の購入データを取得
+    if (!$lastOrder && $user) {
+        $purchased = \App\Models\Purchased::where('user_id', $user->id)
+            ->with('product')
+            ->orderBy('ordered_at', 'desc')
+            ->get();
+        $orderId = $purchased->first()?->ordered_at?->format('Ymd') ?? '';
+        $cart = $purchased->mapWithKeys(fn($p) => [$p->meal_kit_id => [
+            'quantity' => $p->quantity,
+            'product'  => $p->product ? $p->product->toArray() : [],
+        ]]);
+    } else {
+        $orderId = $lastOrder['id'] ?? '';
+        $cart    = collect($lastOrder['items'] ?? []);
+    }
+
+    return view('products.track', compact('user', 'cart', 'orderId'));
+})->middleware('auth')->name('cart.track');
 
 /*
 |--------------------------------------------------------------------------

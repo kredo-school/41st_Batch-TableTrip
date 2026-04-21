@@ -73,7 +73,7 @@ class DashboardController extends Controller
 
         //Top selling products for the last 7 days
        $topProducts = DB::table('purchased')
-            ->join('products', 'purchased.meal_kit_id', '=', 'products.id')
+            ->join('products', 'purchased.product_id', '=', 'products.id')
             ->where('products.restaurant_id', $owner->id)
             ->select(
                 'products.id',
