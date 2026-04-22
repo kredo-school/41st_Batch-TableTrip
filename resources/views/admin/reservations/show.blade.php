@@ -114,8 +114,8 @@
 
             <form action="{{ route('admin.reservations.updateStatus', $reservation->id) }}" method="POST">
                 @csrf
-                <input type="hidden" name="status" value="completed">
-                <button class="status-action-btn open-btn">Completed</button>
+                <input type="hidden" name="status" value="visited">
+                <button class="status-action-btn open-btn">Visited</button>
             </form>
 
             <form action="{{ route('admin.reservations.updateStatus', $reservation->id) }}" method="POST">
