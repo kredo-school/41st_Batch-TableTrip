@@ -44,9 +44,20 @@
                                 {{ \Illuminate\Support\Str::limit($review->comment, 40, '...') }}
                             </td>
                             <td>
-                                <span class="order-status {{ strtolower($review->status) }}">
-                                    {{ ucfirst($review->status) }}
-                                </span>
+                            @php
+                                $status = strtolower(trim($review->status ?? ''));
+
+                                $statusClass = match ($status) {
+                                    'hidden' => 'status-hidden',
+                                    'flagged' => 'status-flagged',
+                                    default => 'status-visible',
+                                };
+                            @endphp
+
+                            <span class="order-status {{ $statusClass }}">
+                                {{ $statusLabel }}
+                            </span>
+
                             </td>
                             <td>{{ $review->created_at->format('Y-m-d') }}</td>
                         </tr>

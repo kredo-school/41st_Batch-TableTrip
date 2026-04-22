@@ -238,6 +238,12 @@ Route::prefix('admin')
         Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
             ->name('rewards.point-history');
 
+        Route::get('/rewards/coupons', [AdminRewardController::class, 'coupons'])
+            ->name('rewards.coupons');
+
+        Route::get('/rewards/stamps', [AdminRewardController::class, 'stamps'])
+            ->name('rewards.stamps');
+
         Route::get('/rewards', [AdminRewardController::class, 'dashboard'])
             ->name('rewards.dashboard');
 
