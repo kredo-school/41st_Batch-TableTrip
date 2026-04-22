@@ -67,13 +67,6 @@
                     @forelse (array_slice($cart ?? [], 0, 2) as $id => $item)
                         @php $product = (object) $item['product']; @endphp
                         <div class="cart-mini-item">
-                            <div class="mini-img">
-                                @if(!empty($product->image))
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="width: 50px; height: 50px; object-fit: cover;">
-                                @else
-                                    <img src="https://via.placeholder.com/50" alt="No Image">
-                                @endif
-                            </div>
                             <div class="mini-info">
                                 <p class="mini-name"><b>{{ $product->name ?? 'Unknown' }}</b></p>
                                 <p class="mini-price">¥{{ number_format($product->price ?? 0) }} (x{{ $item['quantity'] }})</p>
