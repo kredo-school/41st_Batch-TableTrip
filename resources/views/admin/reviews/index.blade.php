@@ -50,7 +50,15 @@
                                 $statusClass = match ($status) {
                                     'hidden' => 'status-hidden',
                                     'flagged' => 'status-flagged',
+                                    'visible' => 'status-visible',
                                     default => 'status-visible',
+                                };
+
+                                $statusLabel = match ($status) {
+                                    'hidden' => 'Hidden',
+                                    'flagged' => 'Flagged',
+                                    'visible' => 'Visible',
+                                    default => 'Visible',
                                 };
                             @endphp
 
