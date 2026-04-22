@@ -28,9 +28,20 @@
         </a>
 
         <div class="submenu">
-            <a href="/admin/coupons">Coupons</a>
-            <a href="{{ route('admin.rewards.point-history') }}">Point History</a>
-            <a href="/admin/stamps">Stamp Rally</a>
+            <a href="{{ route('admin.rewards.coupons') }}"
+            class="{{ request()->routeIs('admin.rewards.coupons') ? 'active' : '' }}">
+                Coupons
+            </a>
+
+            <a href="{{ route('admin.rewards.point-history') }}"
+            class="{{ request()->routeIs('admin.rewards.point-history') ? 'active' : '' }}">
+                Point History
+            </a>
+
+            <a href="{{ route('admin.rewards.stamps') }}"
+            class="{{ request()->routeIs('admin.rewards.stamps') ? 'active' : '' }}">
+                Stamp Rally
+            </a>
         </div>
     </div>
 
