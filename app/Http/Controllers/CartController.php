@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Notification;
+use App\Models\Order;
 
 class CartController extends Controller
 {
@@ -89,8 +90,28 @@ class CartController extends Controller
         $orderId = 'TRP-' . now()->format('Ymd') . '-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
 
         if (Auth::check() && count($cart) > 0) {
+
+
+        // カート全体の合計金額
+        $totalPrice = collect($cart)->sum(function ($item) {
+            return $item['quantity'] * $item['product']['price'];
+        });
+
+
+        $firstItem = collect($cart)->first();
+        $restaurantId = $firstItem['product']['restaurant_id'] ?? null;
+
+        // orders に1件作成
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'restaurant_id' => $restaurantId,
+            'total_price' => $totalPrice,
+            'status' => 'pending',
+        ]);
+
             foreach ($cart as $id => $item) {
                 Purchased::create([
+                    'order_id'            => $order->id,
                     'user_id'            => Auth::id(),
                     'product_id'        => $id,
                     'quantity'           => $item['quantity'],

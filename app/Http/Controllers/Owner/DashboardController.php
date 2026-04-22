@@ -12,6 +12,7 @@ use App\Models\Restaurant;
 use App\Models\Notification;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use App\Models\Purchased;
 
 
 class DashboardController extends Controller
@@ -53,12 +54,15 @@ class DashboardController extends Controller
             ->count();
 
         //Revenue for the last 7 days
-       $sales = Order::where('restaurant_id', $owner->id)
-        ->whereDate('created_at', '>=', Carbon::today()->subDays(6))
-        ->selectRaw('DATE(created_at) as date, SUM(total_price) as total')
-        ->groupBy('date')
-        ->orderBy('date')
-        ->get();
+        $sales = Purchased::with('product')
+            ->whereHas('product', function ($query) use ($owner) {
+                $query->where('restaurant_id', $owner->id);
+            })
+            ->whereDate('ordered_at', '>=', Carbon::today()->subDays(6))
+            ->selectRaw('DATE(ordered_at) as date, SUM(quantity * price_at_purchased) as total')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
         $labels = [];
         $data = [];

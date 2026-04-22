@@ -87,7 +87,7 @@
                                         class="product-image rounded">
                                 </td>
                                 <td>{{ $product->name }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>¥{{ number_format($product->price) }}</td>
                                 <td>{{ $product->stock }}</td>
 
                                  @php
