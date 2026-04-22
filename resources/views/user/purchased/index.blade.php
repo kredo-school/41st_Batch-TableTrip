@@ -178,7 +178,7 @@
                                     <td><strong>{{ $res->restaurant->restaurant_name ?? 'N/A' }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
                                     <td>Visited</td>
-                                    <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i><a href="{{ route('restaurant', $res->restaurant_id) }}">Reviews</a></td>
+                                    <td><i class="fa-solid fa-comment-dots icon-review-btn"></i><a href="{{ route('restaurant', $res->restaurant_id) }}">Reviews</a></td>
                                 </tr>
                             @empty
                                 <tr><td colspan="4" class="no-data">No past visits found</td></tr>

@@ -1014,17 +1014,17 @@ button,
 }
 
 /* Reviews status用　追加分*/
-.order-status.visible{
-    background:#B8D9D0;
-    color:#FFFFFF;
+.order-status.status-hidden {
+    background: #565555;
+    color: #fff;
 }
 
-.order-status.hidden{
-    background:#565555;
-    color:#fff;
+.order-status.status-visible {
+    background: #B8D9D0;
+    color: #fff;
 }
 
-.order-status.flagged{
+.order-status.status-flagged{
     background:#D96B52;
     color:#fff;
 }
@@ -1790,3 +1790,20 @@ button,
 .order-info-title {
     font-size: 20px;
 }
+
+/* Coupon's Status */
+.order-status.used {
+    background: #B8D9D0;
+    color: #fff;
+}
+
+.order-status.unused {
+    background: #D96B52;
+    color: #fff;
+}
+
+.order-status.expired {
+    background: #565555;
+    color: #fff;
+}   
+

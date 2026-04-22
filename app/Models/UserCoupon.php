@@ -16,6 +16,7 @@ class UserCoupon extends Model
         'coupon_id',
         'is_used',
         'used_at',
+        'expires_at',
     ];
 
     public function coupon()

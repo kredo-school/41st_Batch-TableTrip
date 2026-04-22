@@ -13,7 +13,7 @@
             <div class="card dashboard-card-small">
                 <div class="card-body">
                     <p class="card-label">Restaurant<br>Applications</p>
-                    <p class="card-text fs-3 dashboard-number">12</p>
+                    <p class="card-text fs-3 dashboard-number">{{ $reportedReviewsCount }}</p>
                 </div>
             </div>
         </a>
@@ -35,7 +35,7 @@
             <div class="card dashboard-card-small">
                 <div class="card-body">
                     <p class="card-label">Open<br>Inquiries</p>
-                    <p class="card-text fs-3 dashboard-number">2</p>
+                    <p class="card-text fs-3 dashboard-number">{{ $openInquiryCount }}</p>
                 </div>
             </div>
         </a>

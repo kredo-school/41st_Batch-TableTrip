@@ -49,7 +49,10 @@
                 </div>
 
                 {{-- レストラン名・場所 --}}
-                <p class="text-muted small mt-1 mb-2">{{ $product->location }} | {{ $product->restaurant_name }}</p>
+                <p class="text-muted small mt-1 mb-2">
+                    {{ $product->location }} |
+                    <a href="{{ route('restaurant', $product->restaurant_id) }}" class="text-muted">{{ $product->restaurant_name }}</a>
+                </p>
 
                 {{-- 星評価 --}}
                 <div class="d-flex align-items-center gap-1 mb-3">
@@ -168,24 +171,6 @@
 </div>
 
 @push('scripts')
-<script>
-    const stars = document.querySelectorAll('.star-btn');
-    const ratingInput = document.getElementById('rating-input');
-    if (stars.length) {
-        stars.forEach(star => {
-            star.addEventListener('mouseover', () => {
-                stars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
-            });
-            star.addEventListener('mouseout', () => {
-                const val = ratingInput.value;
-                stars.forEach(s => s.style.color = s.dataset.value <= val ? '#F5A623' : '#ddd');
-            });
-            star.addEventListener('click', () => {
-                ratingInput.value = star.dataset.value;
-                stars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
-            });
-        });
-    }
-</script>
+<script src="{{ asset('js/product-show.js') }}"></script>
 @endpush
 @endsection
