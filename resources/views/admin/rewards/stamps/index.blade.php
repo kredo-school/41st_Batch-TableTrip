@@ -23,7 +23,7 @@
 
                 <tbody>
                     @foreach($users as $user)
-                        <tr>
+                        <tr onclick="window.location='{{ route('admin.rewards.stamps.show', $user->id) }}'">
 
                             <td>
                                 {{ trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? '')) }}

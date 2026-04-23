@@ -49,7 +49,7 @@ class AdminRewardController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('admin.rewards.point-history', compact('pointHistories'));
+        return view('admin.rewards.points.index', compact('pointHistories'));
     }
 
     public function coupons()
@@ -71,7 +71,7 @@ class AdminRewardController extends Controller
             }
         }
 
-        return view('admin.rewards.coupons', compact('coupons'));
+        return view('admin.rewards.coupons.index', compact('coupons'));
     }
 
     public function stamps()
@@ -89,12 +89,14 @@ class AdminRewardController extends Controller
             }
         }
 
-        return view('admin.rewards.stamps', compact('users'));
+        return view('admin.rewards.stamps.index', compact('users'));
     }
 
     public function show($id)
     {
-        $user = User::with('stamps')->findOrFail($id);
+        $user = User::with(['stamps' => function ($query) {
+            $query->orderBy('earned_at', 'desc');
+        }])->findOrFail($id);
 
         return view('admin.rewards.stamps.show', compact('user'));
     }

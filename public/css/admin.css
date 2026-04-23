@@ -499,6 +499,10 @@ font-size:16px;
     flex-shrink: 0;
 }
 
+.dot.active{ background:#28a745; }     /* 緑 */
+.dot.suspended{ background:#dc3545; }  /* 赤 */
+.dot.pending{ background:#ffc107; }    /* 黄 */
+
 .user-card p{
 margin-bottom:14px;
 }
@@ -1583,6 +1587,7 @@ button,
 }
 
 /* User Rank */
+
 .order-status.bronze{
     background:#C89B6D;
     color:#FFFFFF;
@@ -1807,3 +1812,40 @@ button,
     color: #fff;
 }   
 
+.reservation-card {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Stamps Detail Page */
+.rank-badge{
+    display: inline-block !important;
+    width: auto !important;
+    min-width: unset !important;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.rank-badge.bronze{
+    background:#C89B6D;
+    color:#FFFFFF;
+}
+
+.rank-badge.silver{
+    background:#BFC4C9;
+    color:#FFFFFF;
+}
+
+.rank-badge.gold{
+    background:#D8B400;
+    color:#FFFFFF;
+}
+
+.rank-badge.diamond{
+    background:#7EC8E3;
+    color:#FFFFFF;
+}

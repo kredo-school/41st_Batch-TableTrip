@@ -50,7 +50,7 @@ class AdminReservationController extends Controller
                     'prefecture' => $prefecture,
                 ],
                 [
-                    'earned_at' => now(),
+                    'earned_at' => $reservation->visited_at,
                 ]
             );
 
