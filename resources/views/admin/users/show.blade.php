@@ -110,7 +110,7 @@
 
             <div class="reservation-info">
                 <span class="label">Stamp Rally</span>
-                <span class="value">12 / 47</span>
+                <span class="value">{{ $user->stamps_count }} / 47</span>
             </div>
 
             <div class="reservation-info">
