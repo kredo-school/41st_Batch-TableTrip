@@ -101,14 +101,18 @@
                 <button type="submit" class="action-btn reject-btn">Reject</button>
             </form>
         @elseif(strtolower($restaurant->approval_status) === 'approved')
-            <a href="{{ route('admin.restaurants.edit', $restaurant->id) }}" class="edit-btn text-decoration-none d-inline-block">
-                Edit
-            </a>
+            @if(Route::has('admin.restaurants.edit'))
+                <a href="{{ route('admin.restaurants.edit', $restaurant->id) }}" class="edit-btn text-decoration-none d-inline-block">
+                    Edit
+                </a>
+            @endif
 
-            <form action="{{ route('admin.restaurants.suspend', $restaurant->id) }}" method="POST" class="d-inline-block ms-2">
-                @csrf
-                <button type="submit" class="status-action-btn pending-btn">Suspend</button>
-            </form>
+            @if(Route::has('admin.restaurants.suspend'))
+                <form action="{{ route('admin.restaurants.suspend', $restaurant->id) }}" method="POST" class="d-inline-block ms-2">
+                    @csrf
+                    <button type="submit" class="status-action-btn pending-btn">Suspend</button>
+                </form>
+            @endif
         @endif
     </div>
 </div>

@@ -191,16 +191,16 @@ Route::prefix('admin')
         Route::get('/inquiries', [AdminInquiryController::class, 'index'])
             ->name('inquiries.index');
         
-        Route::get('/inquiries/{id}', [AdminInquiryController::class, 'show'])
+        Route::get('/inquiries/{thread_id}', [AdminInquiryController::class, 'show'])
             ->name('inquiries.show');
         
-        Route::patch('/inquiries/{id}/status', [AdminInquiryController::class, 'updateStatus'])
+        Route::patch('/inquiries/{thread_id}/status', [AdminInquiryController::class, 'updateStatus'])
             ->name('inquiries.updateStatus');
 
-        Route::get('/inquiries/{id}/reply', [AdminInquiryController::class, 'replyForm'])
+        Route::get('/inquiries/{thread_id}/reply', [AdminInquiryController::class, 'replyForm'])
             ->name('inquiries.replyForm');
-        
-        Route::post('/inquiries/{id}/reply', [AdminInquiryController::class, 'sendReply'])
+
+        Route::post('/inquiries/{thread_id}/reply', [AdminInquiryController::class, 'sendReply'])
             ->name('inquiries.sendReply');
 
         Route::get('/reviews', [AdminReviewController::class, 'index'])
@@ -233,8 +233,18 @@ Route::prefix('admin')
         Route::get('/users/{id}', [AdminUserController::class, 'show'])
             ->name('users.show');
             
-        Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
-            ->name('rewards.point-history');
+        Route::get('/rewards/points', [AdminRewardController::class, 'pointHistory'])
+            ->name('rewards.points.index');
+        
+        Route::get('/rewards/coupons', [AdminRewardController::class, 'coupons'])
+            ->name('rewards.coupons.index');
+
+
+        Route::get('/rewards/stamps', [AdminRewardController::class, 'stamps'])
+            ->name('rewards.stamps.index');
+
+        Route::get('/rewards/stamps/{id}', [AdminRewardController::class, 'show'])
+            ->name('rewards.stamps.show');
 
         Route::get('/rewards', [AdminRewardController::class, 'dashboard'])
             ->name('rewards.dashboard');

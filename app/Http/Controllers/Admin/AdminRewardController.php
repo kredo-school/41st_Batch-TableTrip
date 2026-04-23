@@ -49,6 +49,55 @@ class AdminRewardController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('admin.rewards.point-history', compact('pointHistories'));
+        return view('admin.rewards.points.index', compact('pointHistories'));
+    }
+
+    public function coupons()
+    {
+        $coupons = UserCoupon::with(['user', 'coupon'])
+            ->latest()
+            ->get();
+
+        foreach ($coupons as $item) {
+
+            if ($item->is_used) {
+                $item->status = 'used';
+
+            } elseif ($item->expires_at && $item->expires_at < now()) {
+                $item->status = 'expired';
+
+            } else {
+                $item->status = 'unused';
+            }
+        }
+
+        return view('admin.rewards.coupons.index', compact('coupons'));
+    }
+
+    public function stamps()
+    {
+        $users = User::withCount('stamps')
+            ->get();
+
+        foreach ($users as $user) {
+            $user->stamp_count = $user->stamps_count;
+
+            if ($user->stamp_count >= 47) {
+                $user->status = 'completed';
+            } else {
+                $user->status = 'in-progress';
+            }
+        }
+
+        return view('admin.rewards.stamps.index', compact('users'));
+    }
+
+    public function show($id)
+    {
+        $user = User::with(['stamps' => function ($query) {
+            $query->orderBy('earned_at', 'desc');
+        }])->findOrFail($id);
+
+        return view('admin.rewards.stamps.show', compact('user'));
     }
 }

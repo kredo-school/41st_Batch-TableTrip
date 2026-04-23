@@ -49,7 +49,14 @@
                 </div>
 
                 {{-- レストラン名・場所 --}}
-                <p class="text-muted small mt-1 mb-2">{{ $product->location }} | {{ $product->restaurant_name }}</p>
+                <p class="text-muted small mt-1 mb-2">
+                    {{ $product->location }}
+                    @if($product->restaurant_id)
+                        | <a href="{{ route('restaurant', $product->restaurant_id) }}" class="text-muted">{{ $product->restaurant_name }}</a>
+                    @elseif($product->restaurant_name)
+                        | {{ $product->restaurant_name }}
+                    @endif
+                </p>
 
                 {{-- 星評価 --}}
                 <div class="d-flex align-items-center gap-1 mb-3">
@@ -89,6 +96,35 @@
         <div class="mt-3">
             <a href="{{ route('products.index') }}" class="text-muted small">← Back to list</a>
         </div>
+
+        {{-- レストラン情報 --}}
+        @if($restaurant)
+        <div class="mt-4">
+            <h5 class="fw-bold mb-3 section-title-serif">Restaurant</h5>
+            <div class="card border-0 shadow-sm product-review-card">
+                @if($restaurant->heroImage)
+                    <img src="{{ asset('storage/' . $restaurant->heroImage->image_url) }}"
+                         class="card-img-top"
+                         style="height: 160px; object-fit: cover; border-radius: 12px 12px 0 0;"
+                         alt="{{ $restaurant->restaurant_name }}">
+                @endif
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-1">{{ $restaurant->restaurant_name }}</h6>
+                    @if($restaurant->address_line || $restaurant->city || $restaurant->prefecture)
+                        <p class="text-muted small mb-1">
+                            <i class="bi bi-geo-alt me-1"></i>{{ $restaurant->address_line }} {{ $restaurant->city }} {{ $restaurant->prefecture }}
+                        </p>
+                    @endif
+                    @if($restaurant->opening_hours)
+                        <p class="text-muted small mb-2">
+                            <i class="bi bi-clock me-1"></i>{{ $restaurant->opening_hours }}
+                        </p>
+                    @endif
+                    <a href="{{ route('restaurant', $restaurant->id) }}" class="btn btn-sm btn-outline-secondary mt-1">View Restaurant</a>
+                </div>
+            </div>
+        </div>
+        @endif
 
         {{-- レビューセクション --}}
         <div class="mt-4">
@@ -168,24 +204,6 @@
 </div>
 
 @push('scripts')
-<script>
-    const stars = document.querySelectorAll('.star-btn');
-    const ratingInput = document.getElementById('rating-input');
-    if (stars.length) {
-        stars.forEach(star => {
-            star.addEventListener('mouseover', () => {
-                stars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
-            });
-            star.addEventListener('mouseout', () => {
-                const val = ratingInput.value;
-                stars.forEach(s => s.style.color = s.dataset.value <= val ? '#F5A623' : '#ddd');
-            });
-            star.addEventListener('click', () => {
-                ratingInput.value = star.dataset.value;
-                stars.forEach(s => s.style.color = s.dataset.value <= star.dataset.value ? '#F5A623' : '#ddd');
-            });
-        });
-    }
-</script>
+<script src="{{ asset('js/product-show.js') }}"></script>
 @endpush
 @endsection

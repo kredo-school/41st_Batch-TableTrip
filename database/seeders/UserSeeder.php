@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'password'    => Hash::make('password914'),
             'tel'         => '627288238',
             'country'     => 'Netherlands',
-            'address'     => 'Fukushima', 
+            'address'     => 'Fukushima',
             'postal_code' => '9758WK',
         ]);
 
@@ -51,5 +51,8 @@ class UserSeeder extends Seeder
             'address'     => 'Akita',
             'postal_code' => '0717WK',
         ]);
+
+       
+
     }
 }

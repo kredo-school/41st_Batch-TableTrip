@@ -132,7 +132,7 @@
                 <div class="card-body">
                     <div class="rewards-card-header recent-history-header">
                         <h3 class="rewards-section-title mb-0">Recent Point History</h3>
-                        <a href="{{ route('admin.rewards.point-history') }}" class="view-all-link">View All</a>
+                        <a href="{{ route('admin.rewards.points.index') }}" class="view-all-link">View All</a>
                     </div>
 
                     <div class="recent-history-table-wrapper">

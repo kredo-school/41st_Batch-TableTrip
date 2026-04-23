@@ -114,11 +114,11 @@
 }
 
 .product-show-container {
-    max-width: 480px;
+    max-width: 480px !important;
 }
 
 .product-show-card {
-    border-radius: 16px;
+    border-radius: 16px !important;
 }
 
 .product-show-img {

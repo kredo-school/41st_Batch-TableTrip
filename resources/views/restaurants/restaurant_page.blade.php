@@ -5,14 +5,19 @@
 
 
 @section('content')
+  @php
+      $mealImages = ['Meal1.jpg','Meal2.jpg','Meal3.jpg','Meal4.jpg','Meal5.jpg','Meal6.jpg'];
+      $heroImg    = $mealImages[($restaurant->id - 1) % 6];
+      $gallery1   = $mealImages[$restaurant->id % 6];
+      $gallery2   = $mealImages[($restaurant->id + 1) % 6];
+  @endphp
+
   {{-- Hero --}}
   <section class="container-fluid p-0">
       @if ($restaurant->heroImage)
           <img src="{{ asset('storage/'.$restaurant->heroImage->image_url) }}" alt="hero_image" class="img-fluid rounded hero-image w-100">
       @else
-          <div class="bg-light border rounded d-flex align-items-center justify-content-center hero-image w-100" >
-              <span class="text-muted">No Hero Image Uploaded</span>
-          </div>
+          <img src="{{ asset('images/' . $heroImg) }}" alt="hero_image" class="img-fluid rounded hero-image w-100">
       @endif
   </section>
 
@@ -31,7 +36,7 @@
         @else
             <button class="btn p-0 border-0 bg-transparent" aria-label="favorite">
               <i class="fa-regular fa-heart fs-3 text-orange"></i>
-            </button>     
+            </button>
         @endif
       </form>
       @endauth
@@ -39,23 +44,18 @@
 
     {{-- Gallery 2 photos --}}
     <section class="row g-3 mt-2">
-     
       <div class="col-12 col-md-6">
         @if ($restaurant->galleryImage1)
           <img src="{{ asset('storage/'.$restaurant->galleryImage1->image_url) }}" class="w-100 rounded sub-image" alt="Gallery Image 1">
         @else
-          <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
-            <span class="text-muted">No Gallery Image 1 Uploaded</span>
-          </div>
+          <img src="{{ asset('images/' . $gallery1) }}" class="w-100 rounded sub-image" alt="Gallery Image 1">
         @endif
       </div>
       <div class="col-12 col-md-6">
         @if ($restaurant->galleryImage2)
-          <img src="{{ asset('storage/'.$restaurant->galleryImage2->image_url) }}" class="w-100 rounded sub-image"  alt="Gallery Image 2">
+          <img src="{{ asset('storage/'.$restaurant->galleryImage2->image_url) }}" class="w-100 rounded sub-image" alt="Gallery Image 2">
         @else
-          <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
-            <span class="text-muted">No Gallery Image 2 Uploaded</span>
-          </div>
+          <img src="{{ asset('images/' . $gallery2) }}" class="w-100 rounded sub-image" alt="Gallery Image 2">
         @endif
       </div>
     </section>
@@ -398,19 +398,6 @@
                         </div>
                         <div class="small text-muted">{{ $review->created_at->format('M d,Y') }}</div>
                     </div>
-                    @if ($review->replies->isNotEmpty())
-                        <div class="ps-2">
-                            <div class="d-flex align-items-start gap-2">
-                                <i class="fa-solid fa-reply mt-1"></i>
-                                <div>
-                                    <span class="mb-2 fw-light">Restaurant reply:</span>
-                                    <p class="font-sen ms-3 text-muted">
-                                        {{ $review->replies->first()->comment }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                      @endif
                 </div>
             </div>
             @empty

@@ -99,7 +99,7 @@
                     <span class="info-value">{{ $product->allergens ?? '-' }}</span>
                 </div>
 
-                <div class="row-row">
+                <div class="info-row">
                     <span class="info-label">Description</span>
                     <span class="info-value">{{ $product->description ?? '-' }}</span>
                 </div>
@@ -120,23 +120,31 @@
             </div>
         </div>
     
-        <form action="{{ route('admin.products.toggleVisibility', $product->id) }}" method="POST">
-            @csrf
+        <div class="user-action-buttons text-center mt-4 d-flex justify-content-center gap-3">
 
-            @if($product->is_visible)
-                <button type="submit" class="action-btn refunded-btn">Hide</button>
-            @else
-                <button type="submit" class="action-btn delivered-btn">Show</button>
-            @endif
-        </form>
-        
-        <!-- Delete -->
-        <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
-            onsubmit="return confirm('Are you sure you want to delete this product?');">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="action-btn canceled-btn">Delete</button>
-        </form>
+            <!-- Show / Hide -->
+            <form action="{{ route('admin.products.toggleVisibility', $product->id) }}" method="POST">
+                @csrf
+                @if($product->is_visible)
+                    <button type="submit" class="action-btn refunded-btn">Hide</button>
+                @else
+                    <button type="submit" class="action-btn delivered-btn">Show</button>
+                @endif
+            </form>
+
+            <!-- Delete -->
+            <form action="{{ route('admin.products.destroy', $product->id) }}"
+                method="POST"
+                class="delete-form">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="action-btn canceled-btn">
+                    Delete
+                </button>
+            </form>
+
+        </div>
 
     </div>
 </div>

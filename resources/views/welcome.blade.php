@@ -31,17 +31,23 @@
             <a href="{{ route('search') }}" class="view-all-link">Explore All →</a>
         </div> 
 
-        <div class="row g-4 mb-5"> 
+        @php
+            $restaurantImages = ['Reataurant1.jpg', 'Reataurant2.png', 'Reataurant3.jpg', 'Reataurant4.jpg'];
+        @endphp
+        <div class="row g-4 mb-5">
             @forelse ($featured_restaurants as $restaurant)
+                @php
+                    $restaurantImg = $restaurantImages[($restaurant->id - 1) % 4];
+                @endphp
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="custom-item-card">
                         <a href="{{ route('restaurant', $restaurant->id) }}" class="text-decoration-none text-dark">
                             <div class="img-wrapper">
-                                <img src="{{ $restaurant->heroImage ? asset('storage/' . $restaurant->heroImage->image_url) : asset('images/no-image.jpg') }}" alt="{{ $restaurant->name }}">
+                                <img src="{{ asset('images/' . $restaurantImg) }}" alt="{{ $restaurant->restaurant_name }}">
                             </div>
                             <div class="card-content p-3">
                                 <h5 class="item-title mb-1">{{ $restaurant->restaurant_name }}</h5>
-                                <p class="text-muted small m-0"><i class="bi bi-geo-alt me-1"></i>{{ $restaurant->prefecture }}</p>
+                                <p class="text-muted small m-0"><i class="bi bi-geo-alt me-1"></i>{{ $restaurant->city }} {{ $restaurant->prefecture }}</p>
                             </div>
                         </a>
                     </div>

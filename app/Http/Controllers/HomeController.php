@@ -14,8 +14,11 @@ class HomeController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $featured_restaurants = Restaurant::take(8)->get(); 
-        $featured_products = \App\Models\Product::take(8)->get();
+        $featured_restaurants = Restaurant::with('heroImage')
+            ->where('approval_status', 'approved')
+            ->take(8)
+            ->get();
+        $featured_products = \App\Models\Product::where('is_visible', true)->take(8)->get();
 
         return view('welcome', compact('featured_restaurants', 'featured_products'));
     }

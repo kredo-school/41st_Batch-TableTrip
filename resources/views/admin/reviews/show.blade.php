@@ -35,10 +35,28 @@
                     <strong class="review-side-label">Posted:</strong>
                     <span class="review-side-value">{{ $review->created_at->format('F d, Y') }}</span>
                 </p>
+                @php
+                    $status = strtolower(trim($review->status ?? ''));
+
+                    $statusClass = match ($status) {
+                        'hidden' => 'status-hidden',
+                        'flagged' => 'status-flagged',
+                        'visible' => 'status-visible',
+                        default => 'status-visible',
+                    };
+
+                    $statusLabel = match ($status) {
+                        'hidden' => 'Hidden',
+                        'flagged' => 'Flagged',
+                        'visible' => 'Visible',
+                        default => 'Visible',
+                    };
+                @endphp
+
                 <p>
                     <strong class="review-side-label">Status:</strong>
-                    <span class="status-badge status-{{ $review->status }}">
-                        {{ ucfirst($review->status) }}
+                    <span class="status-badge {{ $statusClass }}">
+                        {{ $statusLabel }}
                     </span>
                 </p>
             </div>
@@ -84,19 +102,33 @@
     @endif
 
     <div class="review-action-buttons mt-4">
+
+        @if($status !== 'visible')
+        <form action="{{ route('admin.reviews.updateStatus', $review->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="visible">
+            <button type="submit" class="status-action-btn visible-btn">Approve</button>
+        </form>
+        @endif
+
+        @if($status !== 'hidden')
         <form action="{{ route('admin.reviews.updateStatus', $review->id) }}" method="POST">
             @csrf
             @method('PATCH')
             <input type="hidden" name="status" value="hidden">
             <button type="submit" class="status-action-btn hidden-btn">Hide</button>
         </form>
+        @endif
 
+        @if($status !== 'flagged')
         <form action="{{ route('admin.reviews.updateStatus', $review->id) }}" method="POST">
             @csrf
             @method('PATCH')
             <input type="hidden" name="status" value="flagged">
             <button type="submit" class="status-action-btn flagged-btn">Flag</button>
         </form>
+        @endif
 
         <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST"
             onsubmit="return confirm('Delete this review?');">
@@ -104,10 +136,11 @@
             @method('DELETE')
             <button type="submit" class="status-action-btn delete-btn">Delete</button>
         </form>
+
     </div>
 </div>
 <div class="text-center mt-5">
-    <a href="{{ route('admin.orders.index') }}" class="back-link">
+    <a href="{{ route('admin.reviews.index') }}" class="back-link">
     Back to list
     </a>
 </div>

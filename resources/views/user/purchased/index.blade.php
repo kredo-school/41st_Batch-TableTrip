@@ -39,41 +39,64 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($purchased ?? [] as $item)
+                        @forelse ($purchased ?? [] as $item)
                             <tr>
                                 {{-- 1. Product --}}
-                                <td><strong>{{ $item->product->name ?? 'N/A' }}</strong></td>
-                                
+                                <td>
+                                    <strong>{{ optional($item->product)->name ?? 'N/A' }}</strong>
+                                </td>
+
                                 {{-- 2. Restaurant --}}
-                                <td>{{ $item->product->restaurant_name ?? 'N/A' }}</td>
-                                
+                                <td>
+                                    {{ optional($item->product)->restaurant_name ?? 'N/A' }}
+                                </td>
+
                                 {{-- 3. Price --}}
-                                <td>¥{{ number_format((int)$item->getRawOriginal('price_at_purchased')) }}</td>
-                                
+                                <td>
+                                    ¥{{ number_format((int) ($item->price_at_purchased ?? 0)) }}
+                                </td>
+
                                 {{-- 4. Qty --}}
-                                <td>{{ $item->quantity }}</td>
-                                
-                                {{-- 5. Subtotal  --}}
-                                <td>¥{{ number_format((int)$item->getRawOriginal('price_at_purchased') * (int)$item->quantity) }}</td>
-                                
-                                {{-- 6. Date--}}
-                                <td>{{ $item->ordered_at ? $item->ordered_at->format('d/m/y') : 'N/A' }}</td>
-                                
+                                <td>
+                                    {{ $item->quantity ?? 0 }}
+                                </td>
+
+                                {{-- 5. Subtotal --}}
+                                <td>
+                                    ¥{{ number_format((int) ($item->price_at_purchased ?? 0) * (int) ($item->quantity ?? 0)) }}
+                                </td>
+
+                                {{-- 6. Date --}}
+                                <td>
+                                    {{ optional($item->ordered_at)->format('d/m/y') ?? 'N/A' }}
+                                </td>
+
                                 {{-- 7. Review --}}
                                 <td>
-                                    @if(in_array($item->product_id, $reviewedProductIds ?? []))
+                                    @php
+                                        $productId = $item->product_id ?? null;
+                                    @endphp
+
+                                    @if($productId && in_array($productId, $reviewedProductIds ?? []))
                                         <i class="fa-solid fa-comment-dots icon-reviewed" title="Already reviewed"></i>
-                                    @else
+                                    @elseif($productId)
                                         <i class="fa-solid fa-comment-dots icon-review-btn"
-                                           data-bs-toggle="modal"
-                                           data-bs-target="#reviewModal"
-                                           data-product-id="{{ $item->product_id }}"
-                                           data-product-name="{{ $item->product->name ?? '' }}"></i>
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#reviewModal"
+                                        data-product-id="{{ $productId }}"
+                                        data-product-name="{{ optional($item->product)->name }}">
+                                        </i>
+                                    @else
+                                        <span class="text-muted">N/A</span>
                                     @endif
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="7" class="no-data">No purchase history yet.</td></tr>
+                            <tr>
+                                <td colspan="7" class="no-data text-center">
+                                    No purchase history yet.
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -155,7 +178,7 @@
                                     <td><strong>{{ $res->restaurant->restaurant_name ?? 'N/A' }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
                                     <td>Visited</td>
-                                    <td><i class="fa-solid fa-comment-dots" style="color: #e2725b; cursor:pointer;"></i><a href="{{ route('restaurant', $res->restaurant_id) }}">Reviews</a></td>
+                                    <td><i class="fa-solid fa-comment-dots icon-review-btn"></i><a href="{{ route('restaurant', $res->restaurant_id) }}">Reviews</a></td>
                                 </tr>
                             @empty
                                 <tr><td colspan="4" class="no-data">No past visits found</td></tr>
