@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('purchased', function (Blueprint $table) {
-            $table->renameColumn('meal_kit_id', 'product_id');
-        });
+        // Schema::table('purchased', function (Blueprint $table) {
+        //     $table->renameColumn('meal_kit_id', 'product_id');
+        // });
 
         Schema::table('favorite_kits', function (Blueprint $table) {
             $table->renameColumn('meal_kit_id', 'product_id');
