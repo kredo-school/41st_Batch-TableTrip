@@ -18,13 +18,13 @@ class ReservationSeeder extends Seeder
             $reservations = [
                 [
                     'label' => 'Upcoming reservation',
-                    'reservation_date' => '2026-04-20', 
+                    'reservation_date' => '2026-04-26',
                     'reservation_time' => '18:00:00',
                     'number_of_people' => 5,
                 ],
                 [
                     'label' => 'Past reservation',
-                    'reservation_date' => '2026-04-10', 
+                    'reservation_date' => '2026-04-10',
                     'reservation_time' => '19:00:00',
                     'number_of_people' => 2,
                 ],
@@ -39,7 +39,7 @@ class ReservationSeeder extends Seeder
                     ],
                     [
                         'reservation_time' => $data['reservation_time'],
-                        'reserved_at'      => now(), 
+                        'reserved_at'      => now(),
                         'number_of_people' => $data['number_of_people'],
                         'full_name'        => $user->first_name . ' ' . $user->last_name,
                         'phone'            => $user->tel,

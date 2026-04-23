@@ -5,38 +5,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Reservation;
-use App\Models\Order; 
-use App\Models\User; 
-use Carbon\Carbon;
 use App\Models\Purchased;
+use App\Models\Restaurant;
+use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
-
     public function index()
-{
-    $userId = Auth::id();
-    $today = now()->toDateString();
+    {
+        $userId = Auth::id();
+        $today = now()->toDateString();
 
-    $upcoming_reservations = Reservation::where('user_id', $userId)
-        ->whereDate('reservation_date', '>=', $today)
-        ->with('restaurant')
-        ->orderBy('reservation_date', 'asc')
-        ->get();
+        $upcoming_reservations = Reservation::where('user_id', $userId)
+            ->whereDate('reservation_date', '>=', $today)
+            ->with('restaurant')
+            ->orderBy('reservation_date', 'asc')
+            ->get();
 
-    $past_reservations = Reservation::where('user_id', $userId)
-        ->whereDate('reservation_date', '<', $today)
-        ->with('restaurant')
-        ->orderBy('reservation_date', 'desc')
-        ->get();
+        $past_reservations = Reservation::where('user_id', $userId)
+            ->whereDate('reservation_date', '<', $today)
+            ->with('restaurant')
+            ->orderBy('reservation_date', 'desc')
+            ->get();
 
-    $purchased = Purchased::where('user_id', $userId)
-        ->with('product') 
-        ->orderBy('ordered_at', 'desc') 
-        ->get();
+        $purchased = Purchased::where('user_id', $userId)
+            ->with('product')
+            ->orderBy('ordered_at', 'desc')
+            ->get();
 
-    return view('user.reservations.index', compact('upcoming_reservations', 'past_reservations', 'purchased'));
-}
+        return view('user.reservations.index', compact(
+            'upcoming_reservations',
+            'past_reservations',
+            'purchased'
+        ));
+    }
 
     public function store(Request $request)
     {
@@ -52,6 +54,19 @@ class ReservationController extends Controller
             'email'            => 'nullable|email|max:255',
         ]);
 
+        $restaurant = Restaurant::findOrFail($validated['restaurant_id']);
+
+        if (!$this->isWithinOpeningHours($restaurant, $validated['reservation_time'])) {
+            [$open, $close] = $this->getOpeningHoursRange($restaurant);
+
+            return back()
+                ->withErrors([
+                    'reservation_time' =>
+                        "The selected time ({$validated['reservation_time']}) is outside business hours. Business hours are {$open} - {$close}."
+                ])
+                ->withInput();
+        }
+
         Reservation::create([
             'user_id'          => $user->id,
             'restaurant_id'    => $validated['restaurant_id'],
@@ -61,17 +76,16 @@ class ReservationController extends Controller
             'full_name'        => $validated['full_name'] ?? ($user->first_name . ' ' . $user->last_name),
             'phone'            => $validated['phone'] ?? $user->tel,
             'email'            => $validated['email'] ?? $user->email,
-            'status'           => 'pending', 
+            'status'           => 'pending',
         ]);
 
-        return redirect()->route('user.reservations.index')->with('success', 'Reservation completed!');
+        return redirect()->route('user.reservations.index')
+            ->with('success', 'Reservation completed successfully.');
     }
 
     public function edit($id)
     {
-
         $reservation = Reservation::where('user_id', Auth::id())->findOrFail($id);
-
         return view('user.reservations.edit', compact('reservation'));
     }
 
@@ -86,10 +100,21 @@ class ReservationController extends Controller
             'special_requests' => 'nullable|string|max:500',
         ]);
 
+        if (!$this->isWithinOpeningHours($reservation->restaurant, $validated['reservation_time'])) {
+            [$open, $close] = $this->getOpeningHoursRange($reservation->restaurant);
+
+            return back()
+                ->withErrors([
+                    'reservation_time' =>
+                        "The selected time ({$validated['reservation_time']}) is outside business hours. Business hours are {$open} - {$close}."
+                ])
+                ->withInput();
+        }
+
         $reservation->update($validated);
 
         return redirect()->route('user.reservations.index')
-                         ->with('success', 'Reservation updated successfully!');
+            ->with('success', 'Reservation updated successfully.');
     }
 
     public function destroy($id)
@@ -97,6 +122,25 @@ class ReservationController extends Controller
         $reservation = Reservation::where('user_id', Auth::id())->findOrFail($id);
         $reservation->delete();
 
-        return back()->with('success', 'Reservation cancelled.');
+        return back()->with('success', 'Reservation cancelled successfully.');
+    }
+
+
+    private function isWithinOpeningHours($restaurant, $time)
+    {
+        if (!$restaurant->opening_hours) return true;
+
+        [$open, $close] = $this->getOpeningHoursRange($restaurant);
+
+        $openTime  = Carbon::parse($open);
+        $closeTime = Carbon::parse($close);
+        $inputTime = Carbon::parse($time);
+
+        return $inputTime->between($openTime, $closeTime);
+    }
+
+    private function getOpeningHoursRange($restaurant)
+    {
+        return array_map('trim', explode('-', $restaurant->opening_hours));
     }
 }
