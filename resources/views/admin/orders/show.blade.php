@@ -16,7 +16,14 @@
                 <div class="user-icon">👤</div>
                 <div>
                     <p class="user-id">User ID #{{ $order->user->id ?? '2001' }}</p>
-                    <p class="user-status"><span class="dot"></span> Active</p>
+                    @php
+                        $status = strtolower($user->status ?? 'active');
+                    @endphp
+
+                    <p class="user-status">
+                        <span class="dot {{ $status }}"></span>
+                        {{ ucfirst($status) }}
+                    </p>
                 </div>
             </div>
 

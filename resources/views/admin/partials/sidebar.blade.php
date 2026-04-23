@@ -28,18 +28,18 @@
         </a>
 
         <div class="submenu">
-            <a href="{{ route('admin.rewards.coupons') }}"
-            class="{{ request()->routeIs('admin.rewards.coupons') ? 'active' : '' }}">
+            <a href="{{ route('admin.rewards.coupons.index') }}"
+            class="{{ request()->routeIs('admin.rewards.coupons.index') ? 'active' : '' }}">
                 Coupons
             </a>
 
-            <a href="{{ route('admin.rewards.point-history') }}"
-            class="{{ request()->routeIs('admin.rewards.point-history') ? 'active' : '' }}">
+            <a href="{{ route('admin.rewards.points.index') }}"
+            class="{{ request()->routeIs('admin.rewards.points.index') ? 'active' : '' }}">
                 Point History
             </a>
 
-            <a href="{{ route('admin.rewards.stamps') }}"
-            class="{{ request()->routeIs('admin.rewards.stamps') ? 'active' : '' }}">
+            <a href="{{ route('admin.rewards.stamps.index') }}"
+            class="{{ request()->routeIs('admin.rewards.stamps.index') ? 'active' : '' }}">
                 Stamp Rally
             </a>
         </div>
