@@ -19,7 +19,8 @@ class AdminUserController extends Controller
 
     public function show($id)
     {
-        $user = User::with(['reservations', 'reviews', 'coupons'])
+        $user = User::with(['reservations', 'reviews', 'coupons', 'stamps'])
+            ->withCount('stamps')
             ->findOrFail($id);
 
         return view('admin.users.show', compact('user'));

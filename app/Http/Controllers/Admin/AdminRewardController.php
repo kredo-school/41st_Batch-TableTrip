@@ -76,10 +76,11 @@ class AdminRewardController extends Controller
 
     public function stamps()
     {
-        $users = \App\Models\User::withCount('reservations')->get();
+        $users = User::withCount('stamps')
+            ->get();
 
         foreach ($users as $user) {
-            $user->stamp_count = $user->reservations_count;
+            $user->stamp_count = $user->stamps_count;
 
             if ($user->stamp_count >= 47) {
                 $user->status = 'completed';
@@ -89,5 +90,12 @@ class AdminRewardController extends Controller
         }
 
         return view('admin.rewards.stamps', compact('users'));
+    }
+
+    public function show($id)
+    {
+        $user = User::with('stamps')->findOrFail($id);
+
+        return view('admin.rewards.stamps.show', compact('user'));
     }
 }
