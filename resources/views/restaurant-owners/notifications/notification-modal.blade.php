@@ -23,7 +23,6 @@
             </div>
             
             <div class="modal-body px-4 py-4" style="font-family: 'Sen','sans-serif'">
-
             @if ($notification->target_type === \App\Models\Reservation::class && $notification->target)    
                 <p>Date: {{ \Carbon\Carbon::parse($notification->target->reservation_date)->format('M d') }}</p>
                 <p>Time: {{ \Carbon\Carbon::parse($notification->target->reservation_time)->format('H:i') }}</p>
