@@ -74,7 +74,7 @@
 
       {{-- Bootstrap carousel --}}
       @php
-        $menuChunks = $menus->chunk(4);
+        $menuChunks = $products->chunk(4);
       @endphp
 
       <div id="menuCarousel" class="carousel slide" data-bs-ride="false">
@@ -124,7 +124,7 @@
 
             {{-- Business Hours --}}
             <div class="info-row">
-    
+
                 <div class="info-left">
                     <i class="bi bi-clock me-2"></i>Business Hours
                 </div>
@@ -298,7 +298,7 @@
 
          {{-- ← --}}
           @if($products->count() > 3)
-          <button 
+          <button
               class="carousel-control-prev"
               type="button"
               data-bs-target="#mealCarousel"
@@ -307,7 +307,7 @@
           </button>
 
           {{-- → --}}
-          <button 
+          <button
               class="carousel-control-next"
               type="button"
               data-bs-target="#mealCarousel"
