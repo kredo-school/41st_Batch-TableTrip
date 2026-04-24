@@ -44,17 +44,22 @@ class ReservationController extends Controller
     {
         $user = Auth::user();
 
+        // Get restaurant limit first for dynamic validation
+        $request->validate(['restaurant_id' => 'required|exists:restaurants,id']);
+        $restaurant = Restaurant::findOrFail($request->restaurant_id);
+        $limit = $restaurant->reservation_limit;
+
         $validated = $request->validate([
             'restaurant_id'    => 'required|exists:restaurants,id',
             'reservation_date' => 'required|date|after_or_equal:today',
             'reservation_time' => 'required',
-            'number_of_people' => 'required|integer|min:1',
+            'number_of_people' => "required|integer|min:1|max:{$limit}",
             'full_name'        => 'nullable|string|max:255',
             'phone'            => 'nullable|string|max:20',
             'email'            => 'nullable|email|max:255',
+        ], [
+            'number_of_people.max' => "The number of people cannot exceed the restaurant's limit of {$limit}."
         ]);
-
-        $restaurant = Restaurant::findOrFail($validated['restaurant_id']);
 
         if (!$this->isWithinOpeningHours($restaurant, $validated['reservation_time'])) {
             [$open, $close] = $this->getOpeningHoursRange($restaurant);
@@ -92,12 +97,15 @@ class ReservationController extends Controller
     public function update(Request $request, $id)
     {
         $reservation = Reservation::where('user_id', Auth::id())->findOrFail($id);
+        $limit = $reservation->restaurant->reservation_limit;
 
         $validated = $request->validate([
             'reservation_date' => 'required|date|after_or_equal:today',
             'reservation_time' => 'required',
-            'number_of_people' => 'required|integer|min:1',
+            'number_of_people' => "required|integer|min:1|max:{$limit}",
             'special_requests' => 'nullable|string|max:500',
+        ], [
+            'number_of_people.max' => "The number of people cannot exceed the restaurant's limit of {$limit}."
         ]);
 
         if (!$this->isWithinOpeningHours($reservation->restaurant, $validated['reservation_time'])) {
@@ -124,7 +132,6 @@ class ReservationController extends Controller
 
         return back()->with('success', 'Reservation cancelled successfully.');
     }
-
 
     private function isWithinOpeningHours($restaurant, $time)
     {
