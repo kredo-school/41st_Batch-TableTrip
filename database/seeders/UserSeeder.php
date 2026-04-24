@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'password'    => Hash::make('password914'),
             'tel'         => '627288238',
             'country'     => 'Netherlands',
-            'address'     => 'Fukushima', 
+            'address'     => 'Fukushima',
             'postal_code' => '9758WK',
         ]);
 
@@ -52,33 +52,7 @@ class UserSeeder extends Seeder
             'postal_code' => '0717WK',
         ]);
 
-        // second user
-        User::create([
-            'first_name' => 'Xuan',
-            'last_name' => 'Wu',
-            'user_name' => 'iamwuxuan',
-            'tel' => '60940527',
-            'email'=>'wuxuan@kredo.com',
-            'postal_code'=> 'Tianjin',
-            'country' => 'China',
-            'address' => 'shanghai',
-            'password' => Hash::make('password527'),            
-
-        ]);
-
-        // third
-        User::create([
-            'first_name' => 'Haruto',
-            'last_name' => 'Fujiwara',
-            'user_name' => 'iamharuto',
-            'tel' => '6187846464',
-            'email'=>'haruto@kredo.com',
-            'postal_code'=> '0717WK',
-            'country' => 'Japan',
-            'address' => 'Akita',
-            'password' => Hash::make('password0917'),            
-
-        ]);
+       
 
     }
 }

@@ -14,10 +14,12 @@ class Purchased extends Model
     protected $fillable = [
         'order_id',
         'user_id',
-        'meal_kit_id',
+        'product_id',
         'quantity',
         'price_at_purchased',
         'ordered_at',
+        'status',
+        'order_id'
     ];
 
     protected $casts = [
@@ -32,5 +34,7 @@ class Purchased extends Model
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id');
+
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

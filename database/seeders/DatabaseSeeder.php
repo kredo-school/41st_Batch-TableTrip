@@ -14,14 +14,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            UserSeeder::class,
-            // RestaurantSeeder::class,
-            PaymentMethodsSeeder::class,
-            ProductSeeder::class,
-            ReservationSeeder::class,
-            PointHistorySeeder::class,
-            InquirySeeder::class,
-            NotificationSeeder::class,
+            UserSeeder::class,           
+            RestaurantSeeder::class,     
+            PaymentMethodsSeeder::class, 
+            ProductSeeder::class,        
+            ReservationSeeder::class,    
+            InquirySeeder::class,        
+            NotificationSeeder::class,   
+            
         ]);
 
         User::factory()->create([

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Restaurant;
-use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Reservation;
@@ -19,25 +18,22 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::with('heroImage', 'galleryImage1', 'galleryImage2')
         ->findOrFail($id);
 
-        if ($restaurant->approval_status !== 'approved' || $restaurant->status !== 'published') {
+        if ($restaurant->approval_status !== 'approved') {
             return response()->view('restaurants.not_published', [], 403);
         }
 
-        $menus = Menu::where('restaurant_id', $id)->get();
         $products = Product::where('restaurant_id', $id)->get();
-        $reviews = Review::with(['user', 'replies'])
+        $reviews = Review::with('user')
         ->where('restaurant_id', $id)
-        ->where('comment_type', 'visit') // レストランレビューのみ取得
-        ->whereNotNull('user_id') // ユーザーIDがnullでないレビューのみ取得
-        ->whereNull('parent_id') // 親レビューのみ取得
+        ->whereNotNull('user_id')
         ->orderBy('created_at', 'desc')
         ->get();
 
         $isFavorite = Auth::check() ? $restaurant->favorites()->where('user_id', Auth::id())->exists() : false;
-        $hasVisited = $restaurant->reservations()->where('user_id', Auth::id())->where('status', 'visited')->exists(); //can be used to check if user can write review or not
-        $hasReviewed = $restaurant->reviews()->where('user_id', Auth::id())->where('comment_type', 'visit')->exists(); //can be used to check if user can write review or not
+        $hasVisited = Auth::check() ? $restaurant->reservations()->where('user_id', Auth::id())->where('status', 'visited')->exists() : false;
+        $hasReviewed = Auth::check() ? $restaurant->reviews()->where('user_id', Auth::id())->exists() : false;
 
-        return view('restaurants.restaurant_page', compact('restaurant', 'menus', 'products', 'reviews', 'isFavorite', 'hasVisited', 'hasReviewed'));
+        return view('restaurants.restaurant_page', compact('restaurant', 'products', 'reviews', 'isFavorite', 'hasVisited', 'hasReviewed'));
     }
 
     public function store(Request $request, $id)
@@ -121,11 +117,8 @@ class RestaurantController extends Controller
         Review::create([
             'restaurant_id' => $restaurant->id,
             'user_id' => $user->id,
-            'author_type' => 'user',
             'rating' => $request->rating,
             'comment' => $request->comment,
-            'comment_type' => 'visit',
-            'is_approved' => true, 
         ]);
 
         return redirect()->back()->with('success', 'Your review has been submitted successfully!');

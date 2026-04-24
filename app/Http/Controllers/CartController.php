@@ -9,6 +9,8 @@ use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Notification;
+use App\Models\Order;
 
 class CartController extends Controller
 {
@@ -88,13 +90,46 @@ class CartController extends Controller
         $orderId = 'TRP-' . now()->format('Ymd') . '-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT);
 
         if (Auth::check() && count($cart) > 0) {
+
+
+        // カート全体の合計金額
+        $totalPrice = collect($cart)->sum(function ($item) {
+            return $item['quantity'] * $item['product']['price'];
+        });
+
+
+        $firstItem = collect($cart)->first();
+        $restaurantId = $firstItem['product']['restaurant_id'] ?? null;
+
+        // orders に1件作成
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'restaurant_id' => $restaurantId,
+            'total_price' => $totalPrice,
+            'status' => 'pending',
+        ]);
+
             foreach ($cart as $id => $item) {
                 Purchased::create([
+                    'order_id'            => $order->id,
                     'user_id'            => Auth::id(),
-                    'meal_kit_id'        => $id,
+                    'product_id'        => $id,
                     'quantity'           => $item['quantity'],
                     'price_at_purchased' => $item['product']['price'],
                     'ordered_at'         => Carbon::now(),
+                ]);
+
+                $productName = $item['product']['name'] ?? 'your recent purchase';
+
+                Notification::create([
+                    'recipient_id'       => Auth::id(),
+                    'recipient_type'     => User::class,
+                    'title'              => 'How was your order? Leave a review!',
+                    'message'            => "Thank you for purchasing \"{$productName}\"! We hope you enjoyed it. Share your experience by leaving a review — your feedback helps other customers and supports our restaurant partners.",
+                    'target_type'        => Product::class,
+                    'target_id'          => $id,
+                    'is_action_required' => true,
+                    'is_completed'       => false,
                 ]);
             }
             session(['last_order' => ['id' => $orderId, 'items' => $cart, 'ordered_at' => now()->format('Y/m/d')]]);

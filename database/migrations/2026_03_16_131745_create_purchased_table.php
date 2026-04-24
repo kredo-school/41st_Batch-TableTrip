@@ -11,9 +11,9 @@ return new class extends Migration
     Schema::create('purchased', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id'); 
-        $table->integer('meal_kit_id');
+        $table->integer('product_id');
         $table->integer('quantity');
-        $table->integer('total_price');
+        $table->integer('price_at_purchased');
         $table->timestamp('ordered_at');
         $table->timestamps();
     });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\Purchased;
 use App\Models\Order; 
 use Carbon\Carbon;
 
@@ -36,13 +37,12 @@ class DashboardController extends Controller
         }
 
         // --- favorite---
-        $favorite_restaurants = $user->favorite_restaurants()->get();
         $favorite_kits = $user->favorite_kits()->get();
 
         // history
-        $purchased_items = Order::where('user_id', $user->id)
-            ->with('product') 
-            ->orderBy('created_at', 'desc')
+        $purchased_items = Purchased::where('user_id', $user->id)
+            ->with('product')
+            ->orderBy('ordered_at', 'desc')
             ->take(5)
             ->get();
 
@@ -58,7 +58,6 @@ class DashboardController extends Controller
             'latest_reservations', 
             'cart', 
             'totalPrice', 
-            'favorite_restaurants', 
             'favorite_kits',
             'purchased_items',
             'past_reservations'

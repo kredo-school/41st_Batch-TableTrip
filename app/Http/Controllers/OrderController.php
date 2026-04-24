@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Favorite;
-use Illuminate\Support\Facades\Auth; 
+use App\Models\Review;
+use App\Models\Purchased;
+use App\Models\Restaurant;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -63,7 +66,27 @@ class OrderController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return view('products.show', compact('product'));
+        $reviews = Review::with('user')
+            ->where('product_id', $id)
+            ->where('status', 'visible')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $avgRating = $reviews->avg('rating') ?? 0;
+
+        $hasPurchased = Auth::check()
+            ? Purchased::where('user_id', Auth::id())->where('product_id', $id)->exists()
+            : false;
+
+        $hasReviewed = Auth::check()
+            ? Review::where('user_id', Auth::id())->where('product_id', $id)->exists()
+            : false;
+
+        $restaurant = $product->restaurant_id
+            ? Restaurant::with('heroImage')->find($product->restaurant_id)
+            : null;
+
+        return view('products.show', compact('product', 'reviews', 'avgRating', 'hasPurchased', 'hasReviewed', 'restaurant'));
     }
 
     public function showDetails()
