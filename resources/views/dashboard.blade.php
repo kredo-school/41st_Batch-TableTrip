@@ -20,87 +20,108 @@
             </div>
         </section> --}}
         <section class="dashboard-card">
-            <h3><i class="fa-regular fa-calendar-check"></i> Reservation</h3>
-            <div class="card-content">
-                <table class="table-sm">
-                    <thead>
+        <h3><i class="fa-regular fa-calendar-check"></i> Upcoming Reservations</h3>
+        <div class="card-content">
+            <table class="table-sm">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Restaurant</th>
+                        <th>Guests</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- Show only top 2 items --}}
+                    @forelse ($latest_reservations->take(2) as $reservation)
                         <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Restaurants</th>
-                            <th>Guests</th>
-                            <th>Edit</th>
+                            <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('M d, Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
+                            <td>{{ $reservation->restaurant->restaurant_name ?? 'N/A' }}</td>
+                            <td>{{ $reservation->number_of_people }}</td>
+                            <td class="edit-icons">
+                                <a href="{{ route('user.reservations.edit', $reservation->id) }}">
+                                    <i class="fa-regular fa-calendar-check"></i>
+                                </a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($latest_reservations as $reservation)
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('y-n-j') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('H:i') }}</td>
-                                {{-- restaurant name --}}
-                                <td>{{ $reservation->restaurant->restaurant_name ?? 'N/A' }}</td>
-                                {{-- guests --}}
-                                <td>{{ $reservation->number_of_people }}</td>
-                                <td class="edit-icons">
-                                    <a href="{{ route('user.reservations.edit',$reservation->id) }}" class="">
-                                        <i class="fa-regular fa-calendar-check"></i>
-                                    </a>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" style="text-align:center; padding:20px;">No Reservations yet</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                </div> 
-                <div class="btn-container">
-                    <a href="{{ route('user.reservations.index') }}" class="btn-back">View All Reservations</a>
-                </div>
-        </section>
+                    @empty
+                        <tr>
+                            <td colspan="5" style="text-align:center; padding:20px;">No upcoming reservations yet.</td>
+                        </tr>
+                    @endforelse
+
+                    {{-- Logic for remaining reservations --}}
+                    @if($latest_reservations->count() > 2)
+                        <tr>
+                            <td colspan="5" style="text-align:center; color: #6c757d; font-size: 0.85rem; padding: 10px 0;">
+                                + {{ $latest_reservations->count() - 2 }} other reservation(s)
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-container">
+            <a href="{{ route('user.reservations.index') }}" class="btn-back">View All Reservations</a>
+        </div>
+    </section>
 
        {{-- cart part --}}
-        <section class="dashboard-card cart-summary-card">
-            <h3><i class="fa-solid fa-cart-shopping"></i>Cart</h3>
-            <div class="card-content">
-                <div class="item-grid">
-                    @forelse (array_slice($cart ?? [], 0, 2) as $id => $item)
-                        @php $product = (object) $item['product']; @endphp
-                        <div class="cart-mini-item">
-                            <div class="mini-info">
-                                <p class="mini-name"><b>{{ $product->name ?? 'Unknown' }}</b></p>
-                                <p class="mini-price">¥{{ number_format($product->price ?? 0) }} (x{{ $item['quantity'] }})</p>
-                            </div>
+    <section class="dashboard-card cart-summary-card">
+        <h3><i class="fa-solid fa-cart-shopping"></i>Cart</h3>
+        <div class="card-content">
+            <div class="item-grid">
+                @forelse (collect($cart)->take(2) as $id => $item)
+                    @php $product = (object) $item['product']; @endphp
+                    <div class="cart-mini-item">
+                        <div class="mini-info">
+                            <p class="mini-name"><b>{{ $product->name ?? 'Unknown' }}</b></p>
+                            <p class="mini-price">¥{{ number_format($product->price ?? 0) }} (x{{ $item['quantity'] }})</p>
                         </div>
-                    @empty
-                        <p class="empty-msg">No items in cart</p>
-                    @endforelse
-                </div>
-
-                @if(count($cart ?? []) > 0)
-                    <div class="cart-total-brief">
-                        <p>Total: <span>¥{{ number_format($totalPrice) }}</span></p>
                     </div>
+                @empty
+                    <p class="empty-msg">No items in cart</p>
+                @endforelse
+
+                {{-- more than three carts --}}
+                @if(count($cart ?? []) > 2)
+                    <p class="text-muted small mt-2">+ {{ count($cart) - 2 }} others</p>
                 @endif
             </div>
-            <div class="btn-container">
-                <a href="{{ route('cart.index') }}" class="btn-back">View Cart</a>
-            </div>
-        </section>
 
-       {{-- 3. Favorite --}}
+            @if(count($cart ?? []) > 0)
+                <div class="cart-total-brief">
+                    <p>Total: <span>¥{{ number_format($totalPrice) }}</span></p>
+                </div>
+            @endif
+        </div>
+        <div class="btn-container">
+            <a href="{{ route('cart.index') }}" class="btn-back">View Cart</a>
+        </div>
+    </section>
+
+        {{-- 3. Favorite --}}
     <section class="dashboard-card">
         <h3><i class="fa-solid fa-heart"></i> Favorite Kits</h3>
         <div class="card-content">
             <div class="info-area">
                 <div class="row">
-                    @forelse ($favorite_kits ?? [] as $kit)
+                    @forelse ($favorite_kits->take(3) ?? [] as $kit)
                         <div class="col-12 d-flex justify-content-between align-items-center mb-2">
                             <p class="mb-0">{{ $kit->name ?? 'N/A' }}</p>
                         </div>
                     @empty
                         <p class="text-muted">No favorite kits yet.</p>
                     @endforelse
+
+                    {{-- more than 4 favorites--}}
+                    @if($favorite_kits->count() > 3)
+                        <div class="col-12">
+                            <p class="text-muted small">+ {{ $favorite_kits->count() - 3 }} others</p>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -173,7 +194,7 @@
                     @endif
                 </div>
             </div>
-        
+
         </section>
 
     </div>
