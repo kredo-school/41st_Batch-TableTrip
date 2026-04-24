@@ -139,7 +139,7 @@
                                         {{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }}
                                         {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}
                                     </td>
-                                    <td><strong>{{ $res->restaurant->name ?? 'N/A' }}</strong></td>
+                                    <td><strong>{{ $res->restaurant->restaurant_name ?? 'N/A' }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
                                     <td>
                                         <div class="manage-action-group">
