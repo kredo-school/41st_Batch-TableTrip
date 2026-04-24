@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Favorite;
 use App\Models\Review;
 use App\Models\Purchased;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -81,7 +82,11 @@ class OrderController extends Controller
             ? Review::where('user_id', Auth::id())->where('product_id', $id)->exists()
             : false;
 
-        return view('products.show', compact('product', 'reviews', 'avgRating', 'hasPurchased', 'hasReviewed'));
+        $restaurant = $product->restaurant_id
+            ? Restaurant::with('heroImage')->find($product->restaurant_id)
+            : null;
+
+        return view('products.show', compact('product', 'reviews', 'avgRating', 'hasPurchased', 'hasReviewed', 'restaurant'));
     }
 
     public function showDetails()

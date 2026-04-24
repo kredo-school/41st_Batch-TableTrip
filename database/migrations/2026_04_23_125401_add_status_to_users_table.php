@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::table('user_coupons', function (Blueprint $table) {
-            $table->timestamp('expires_at')->nullable()->after('used_at');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('status')->default('active');
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_coupons', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

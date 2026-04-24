@@ -34,4 +34,9 @@ class Order extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
+    public function items()
+    {
+        return $this->hasMany(Purchased::class, 'order_id');
+    }
+
 }
