@@ -336,12 +336,13 @@ h6{
   }
 
   .stat-icon {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 30px;
-    color: #aaa;
-    opacity:0.4;
+    width: 40px;
+    height: 40px;
+}
+
+.review-icon {
+    width: 3rem;
+    height: 3rem;
 }
 
  /* restaurant owner reservations page  */

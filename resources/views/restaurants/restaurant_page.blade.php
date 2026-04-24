@@ -390,7 +390,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-start gap-3 mb-3">
-                        @if (optional($review->user->profile_picture))
+                       @if ($review->user && $review->user->profile_picture)
                             <img src="{{ asset('storage/'.$review->user->profile_picture) }}" alt="" class="review-icon rounded-circle">
                         @else
                             <i class="fa-solid fa-circle-user fs-1 text-dark"></i>
