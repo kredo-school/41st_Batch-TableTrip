@@ -18,7 +18,8 @@ class Purchased extends Model
         'quantity',
         'price_at_purchased',
         'ordered_at',
-        'status'
+        'status',
+        'order_id'
     ];
 
     protected $casts = [

@@ -54,7 +54,7 @@
                                 <span>*******2345</span>
                             </p>
 
-                            <h5 class="mt-2">Total: $45.32</h5>
+                            <h5 class="mt-2">Total: ¥{{ $order->total_price }}</h5>
                         </div>
                     </div>
                 </div>
@@ -78,23 +78,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="border-0" style="width: 90px;">
-                                        <img src="{{ asset('images/journykit.png') }}" alt="Journey Kit" class="img-fluid rounded" style="max-width: 72px;">
-                                    </td>
-                                    <td class="border-0">Bibimbap</td>
-                                    <td class="border-0 text-center">1</td>
-                                    <td class="border-0 text-end">$25.12</td>
+                                @foreach ($orderItems as $item)
+                                    <tr>
+                                        <td class="border-0" style="width: 90px;">
+                                            <img src="{{ $item->product->image 
+                                                        ? asset('storage/' . $item->product->image) 
+                                                        : asset('images/no_image.png') }}"
+                                                        alt="{{ $item->product->name }}"
+                                                        class="img-fluid rounded"
+                                                        style="max-width: 72px;">                                        
+                                        </td>
+                                        <td class="border-0">{{ $item->product->name }}</td>
+                                        <td class="border-0 text-center">{{ $item->quantity }}</td>
+                                        <td class="border-0 text-end">¥{{ number_format($item->price_at_purchased * $item->quantity) }}</td>
                                 </tr>
-
-                                <tr>
-                                    <td class="border-0" style="width: 90px;">
-                                        <img src="{{ asset('images/journykit.png') }}" alt="Chicken Rice Bowl" class="img-fluid rounded" style="max-width: 72px;">
-                                    </td>
-                                    <td class="border-0">Chicken Rice Bowl</td>
-                                    <td class="border-0 text-center">1</td>
-                                    <td class="border-0 text-end">$18.20</td>
-                                </tr>
+                                    
+                                @endforeach
                             </tbody>
                         </table>
 
@@ -102,15 +101,15 @@
                             <tbody>
                                 <tr>
                                     <td class="py-2">Subtotal:</td>
-                                    <td class="py-2 text-end">$43.32</td>
+                                    <td class="py-2 text-end">¥{{ $subtotal }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2">Shipping Fee</td>
-                                    <td class="py-2 text-end">$0</td>
+                                    <td class="py-2 text-end">¥0</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 fw-semibold">Total:</td>
-                                    <td class="py-2 text-end fw-semibold">$43.32</td>
+                                    <td class="py-2 text-end fw-semibold">¥{{ number_format($subtotal) }}</td>
                                 </tr>
                             </tbody>
                         </table>
