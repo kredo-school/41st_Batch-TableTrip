@@ -27,7 +27,7 @@
         <!-- Scripts -->
         @stack('styles')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
+
     </head>
     <body class="d-flex flex-column min-vh-100">
         <header class="border bg-header" >
@@ -42,9 +42,9 @@
 
                     <!-- Center: Search (like your image) -->
                     <form class="flex-grow-1 d-flex justify-content-center align-items-center" role="search" action="{{ route('search') }}" method="GET">
-                        <input type="text" name="keyword" placeholder="search" aria-label="search" 
+                        <input type="text" name="keyword" placeholder="search" aria-label="search"
                             class="form-control rounded-pill header-search" value="{{ request('keyword') }}">
-                        
+
                         <button type="submit" class="btn p-0 ms-3" aria-label="search button">
                             <i class="bi bi-search fs-5 text-dark"></i>
                         </button>
@@ -64,7 +64,7 @@
                       @endguest
 
                       @auth
-                       @if (Auth::user()->is_admin )  
+                       @if (Auth::user()->is_admin )
                         {{-- Admin --}}
                              <form method="POST" action="{{ route('admin.logout') }}" class="m-0">
                                  @csrf
@@ -90,7 +90,6 @@
                                     </span>
                                 @endif
                             </a>
-
                             <a href="/cart" class="text-dark fs-4 position-relative" aria-label="cart">
                                 <i class="bi bi-cart"></i>
                                 @php $cartCount = array_sum(array_column(session('cart', []), 'quantity')); @endphp
@@ -108,12 +107,12 @@
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                         aria-label="account menu">
-                                    
+
                                     {{-- Profile Icon Logic --}}
                                     @if(Auth::user()->profile_picture)
-                                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
-                                            alt="User Icon" 
-                                            class="rounded-circle border" 
+                                        <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
+                                            alt="User Icon"
+                                            class="rounded-circle border"
                                             style="width: 32px; height: 32px; object-fit: cover;">
                                     @else
                                         <i class="bi bi-person-circle fs-4"></i>
@@ -127,7 +126,7 @@
                                             <i class="bi bi-person me-2"></i> Edit Profile
                                         </a>
                                     </li>
-                                    
+
                                     {{-- Inquiry --}}
                                     <li>
                                         <a href="{{ route('user.inquiry.dashboard') }}" class="dropdown-item">
@@ -147,7 +146,7 @@
                                     {{-- Logout --}}
                                     <li>
                                         <form action="{{ route('user.logout') }}" method="POST" class="m-0">
-                                            @csrf 
+                                            @csrf
                                             <button type="submit" class="dropdown-item text-danger">
                                                 <i class="bi bi-box-arrow-right me-2"></i> Logout
                                             </button>
@@ -155,7 +154,7 @@
                                     </li>
                                 </ul>
                             </div>
-                             
+
                           @endif
                         @endauth
                     </div>
@@ -165,7 +164,7 @@
         <main class="flex-grow-1">
             @yield('content')
         </main>
-       
+
         <footer class="mt-auto bg-navy">
             <div class="container p-5 ">
                 <div class="row g-4 align-items-center">

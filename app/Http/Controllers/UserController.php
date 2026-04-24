@@ -30,11 +30,11 @@ class UserController extends Controller
             'last_name'       => 'required|string|max:255',
             'user_name'       => 'required|string|max:255|unique:users,user_name,' . $user->id,
             'email'           => 'required|email|unique:users,email,' . $user->id,
-            'tel'             => 'required|string|max:20', 
-            'postal_code'     => 'required|string|max:10', 
-            'address'         => 'required|string|max:255', 
-            'country'         => 'required|string|max:100', 
-            'password'        => 'nullable|min:8', 
+            'tel'             => 'required|string|max:20',
+            'postal_code'     => 'required|string|max:10',
+            'address'         => 'required|string|max:255',
+            'country'         => 'required|string|max:100',
+            'password'        => 'nullable|min:8',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -52,12 +52,12 @@ class UserController extends Controller
         }
 
         if ($request->hasFile('profile_picture')) {
-  
+
             if ($user->profile_picture) {
                 Storage::disk('public')->delete($user->profile_picture);
             }
 
-  
+
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
             $user->profile_picture = $path;
         }
@@ -67,14 +67,12 @@ class UserController extends Controller
         if ($request->input('from') === 'confirm') {
             return redirect()->route('cart.confirm')->with('success', 'Your profile has been updated!');
         }
-
         return redirect('/dashboard')->with('success', 'Your profile has been updated!');
     }
-
    public function destroy()
 {
     $userId = Auth::id();
-    $user = User::findOrFail($userId); 
+    $user = User::findOrFail($userId);
 
     if ($user->profile_picture) {
         Storage::disk('public')->delete($user->profile_picture);
