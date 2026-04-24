@@ -11,8 +11,8 @@ class Purchased extends Model
 
     protected $table = 'purchased';
 
-
     protected $fillable = [
+        'order_id',
         'user_id',
         'product_id',
         'quantity',
@@ -26,16 +26,15 @@ class Purchased extends Model
         'ordered_at' => 'datetime',
     ];
 
-    
-    
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function product()
     {
+        return $this->belongsTo(Product::class, 'meal_kit_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+
         return $this->belongsTo(Product::class, 'product_id');
     }
 }

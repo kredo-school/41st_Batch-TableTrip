@@ -7,6 +7,12 @@
 <div class="order-wrapper">
     <h2 class="order-title">User Details</h2>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="order-content">
 
         <!-- LEFT -->
@@ -122,21 +128,60 @@
         </div>
     </div>
     <!-- ⭐ ここに入れる -->
-    <div class="user-action-buttons text-center mt-4">
+<div class="user-action-buttons text-center mt-4">
 
-        @if(($user->status ?? 'active') === 'active')
-            <button class="action-btn suspended-btn">Suspend</button>
-            <button class="action-btn refunded-btn">Ban</button>
+    @if(($user->status ?? 'active') === 'active')
 
-        @elseif(($user->status ?? 'active') === 'suspended')
+        <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}" style="display:inline;">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="suspended">
+            <button onclick="return confirm('Suspend this user?')" class="action-btn suspended-btn">
+                Suspend
+            </button>
+        </form>
+
+        <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}" style="display:inline;">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="banned">
+            <button onclick="return confirm('Are you sure you want to ban this user?')" class="action-btn refunded-btn">
+                Ban
+            </button>
+        </form>
+
+    @elseif(($user->status ?? 'active') === 'suspended')
+
+        <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}" style="display:inline;">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="active">
+                <button onclick="return confirm('Activate this user?')" class="action-btn activate-btn">
+                    Activate
+                </button>
+        </form>
+
+        <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}" style="display:inline;">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="banned">
+            <button onclick="return confirm('Are you sure?')" class="action-btn refunded-btn">
+                Ban
+            </button>
+        </form>
+
+    @elseif(($user->status ?? 'active') === 'banned')
+
+        <form method="POST" action="{{ route('admin.users.updateStatus', $user->id) }}" style="display:inline;">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="active">
             <button class="action-btn activate-btn">Activate</button>
-            <button class="action-btn refunded-btn">Ban</button>
+        </form>
 
-        @elseif(($user->status ?? 'active') === 'banned')
-            <button class="action-btn activate-btn">Activate</button>
-        @endif
+    @endif
 
-    </div>
+</div>
 </div>
     <div class="text-center mt-4">
         <a href="{{ route('admin.users.index') }}" class="back-link">
