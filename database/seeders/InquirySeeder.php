@@ -12,7 +12,7 @@ class InquirySeeder extends Seeder
 {
     public function run(): void
     {
-        $users = User::all();
+        $users = User::where('is_admin', false)->get();
         $restaurant = Restaurant::first() ?? Restaurant::factory()->create();
 
         if ($users->isEmpty()) {
@@ -37,7 +37,7 @@ class InquirySeeder extends Seeder
             Inquiry::create([
                 'thread_id'      => $restaurantThreadId,
                 'sender_id'      => $restaurant->id,
-                'sender_type'    => 'restaurant',
+                'sender_type'    => get_class($restaurant),
                 'recipient_id'   => $users->get(1)->id,
                 'recipient_type' => 'user',
                 'subject'        => 'Re: Question',
@@ -45,41 +45,38 @@ class InquirySeeder extends Seeder
                 'status'         => 'replied',
             ]);
 
-            // User ↔ Admin
-            $adminThreadId = (string) Str::uuid();
-
-            Inquiry::create([
-                'thread_id'      => $adminThreadId,
-                'sender_id'      => $user->id,
-                'sender_type'    => 'user',
-                'recipient_id'   => 1,
-                'recipient_type' => 'admin',
-                'subject'        => 'Order Issue',
-                'message'        => 'Where is my order?',
-                'status'         => 'pending',
-            ]);
-
-            Inquiry::create([
-                'thread_id'      => $adminThreadId,
-                'sender_id'      => 1,
-                'sender_type'    => 'admin',
-                'recipient_id'   => $user->id,
-                'recipient_type' => 'user',
-                'subject'        => 'Re: Order Issue',
-                'message'        => 'Your order is being prepared.',
-                'status'         => 'replied',
-            ]);
-
+           // User ↔ Admin
             $topics = [
-                ['Reservation Question', 'Can I change my reservation time?', 'pending'],
-                ['Order Delivery', 'When will my order arrive?', 'replied'],
-                ['Complaint', 'The food quality was terrible.', 'flagged'],
-                ['Refund Request', 'I want a refund.', 'pending'],
-                ['Account Issue', 'I cannot log in.', 'pending'],
+                ['Order Issue', 'Where is my order?'],
+                ['Reservation', 'Can I change my reservation time?'],
+                ['Delivery Delay', 'The delivery was late.'],
+                ['Wrong Item', 'I received the wrong item.'],
+                ['Refund Request', 'I want a refund.'],
+                ['Payment Error', 'My payment failed.'],
+                ['Positive Feedback', 'The food was amazing!'],
+                ['Cancel Order', 'I want to cancel my order.'],
+                ['Address Change', 'Can I change my delivery address?'],
+                ['Account Issue', 'I cannot log in.'],
+                ['Coupon Issue', 'My coupon is not working.'],
+                ['Shipping Cost', 'Why is shipping so expensive?'],
+                ['Order Confirmation', 'I didn’t receive a confirmation email.'],
+                ['Late Response', 'No one has replied to my inquiry.'],
+                ['Menu Question', 'Do you have vegetarian options?'],
             ];
 
-            foreach ($topics as $topic) {
+            $replies = [
+                'We are checking your request.',
+                'Thank you, we will get back to you shortly.',
+                'Your issue has been resolved.',
+                'Please allow some more time.',
+            ];
+
+            $count = rand(1, 3);
+
+            for ($i = 0; $i < $count; $i++) {
                 $threadId = (string) Str::uuid();
+                $topic = $topics[array_rand($topics)];
+                $status = ['open', 'replied', 'flagged'][rand(0, 2)];
 
                 Inquiry::create([
                     'thread_id'      => $threadId,
@@ -89,10 +86,10 @@ class InquirySeeder extends Seeder
                     'recipient_type' => 'admin',
                     'subject'        => $topic[0],
                     'message'        => $topic[1],
-                    'status'         => $topic[2],
+                    'status'         => $status,
                 ]);
 
-                if ($topic[2] === 'replied') {
+                if ($status === 'replied') {
                     Inquiry::create([
                         'thread_id'      => $threadId,
                         'sender_id'      => 1,
@@ -100,27 +97,11 @@ class InquirySeeder extends Seeder
                         'recipient_id'   => $user->id,
                         'recipient_type' => 'user',
                         'subject'        => 'Re: ' . $topic[0],
-                        'message'        => 'Thank you for your inquiry.',
+                        'message'        => $replies[array_rand($replies)],
                         'status'         => 'replied',
                     ]);
                 }
             }
-        }
-
-        // 追加で別件のadmin問い合わせ
-        if ($users->count() >= 2) {
-            $threadId2 = (string) Str::uuid();
-
-            Inquiry::create([
-                'thread_id'      => $threadId2,
-                'sender_id'      => $users[1]->id,
-                'sender_type'    => 'user',
-                'recipient_id'   => 1,
-                'recipient_type' => 'admin',
-                'subject'        => 'Refund Request',
-                'message'        => 'I want a refund.',
-                'status'         => 'pending',
-            ]);
         }
     }
 }
