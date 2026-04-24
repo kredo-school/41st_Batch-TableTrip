@@ -95,4 +95,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    public function stamps()
+    {
+        return $this->hasMany(\App\Models\PrefectureStamp::class);
+    }
+
 }

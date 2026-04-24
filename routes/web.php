@@ -232,15 +232,22 @@ Route::prefix('admin')
         
         Route::get('/users/{id}', [AdminUserController::class, 'show'])
             ->name('users.show');
+        
+        Route::patch('/users/{id}/status', [AdminUserController::class, 'updateStatus'])
+            ->name('users.updateStatus');
             
-        Route::get('/rewards/point-history', [AdminRewardController::class, 'pointHistory'])
-            ->name('rewards.point-history');
-
+        Route::get('/rewards/points', [AdminRewardController::class, 'pointHistory'])
+            ->name('rewards.points.index');
+        
         Route::get('/rewards/coupons', [AdminRewardController::class, 'coupons'])
-            ->name('rewards.coupons');
+            ->name('rewards.coupons.index');
+
 
         Route::get('/rewards/stamps', [AdminRewardController::class, 'stamps'])
-            ->name('rewards.stamps');
+            ->name('rewards.stamps.index');
+
+        Route::get('/rewards/stamps/{id}', [AdminRewardController::class, 'show'])
+            ->name('rewards.stamps.show');
 
         Route::get('/rewards', [AdminRewardController::class, 'dashboard'])
             ->name('rewards.dashboard');

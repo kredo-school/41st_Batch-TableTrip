@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Purchased;
 
 use App\Models\Order;
 
@@ -44,9 +45,22 @@ class OrdersController extends Controller
     }
 
     public function show($id){
+        $owner = Auth::guard('restaurant')->user();
         $order = Order::findOrFail($id);
 
-        return view('restaurant-owners.orders.order-details',compact('order'));
+        $orderItems = Purchased::with('product')
+        ->where('order_id', $id)
+        ->whereHas('product', function ($query) use ($owner) {
+            $query->where('restaurant_id', $owner->id);
+        })
+        ->get();
+
+        $subtotal = $orderItems->sum(function ($item) {
+        return $item->quantity * $item->price_at_purchased;
+        });
+
+         abort_if(Auth::guard('restaurant')->id() !== $order->restaurant_id, 403);
+        return view('restaurant-owners.orders.order-details',compact('order','orderItems','subtotal'));
     }
 
     public function update(Request $request,$id){

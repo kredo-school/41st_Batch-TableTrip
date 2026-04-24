@@ -5,14 +5,19 @@
 
 
 @section('content')
+  @php
+      $mealImages = ['Meal1.jpg','Meal2.jpg','Meal3.jpg','Meal4.jpg','Meal5.jpg','Meal6.jpg'];
+      $heroImg    = $mealImages[($restaurant->id - 1) % 6];
+      $gallery1   = $mealImages[$restaurant->id % 6];
+      $gallery2   = $mealImages[($restaurant->id + 1) % 6];
+  @endphp
+
   {{-- Hero --}}
   <section class="container-fluid p-0">
       @if ($restaurant->heroImage)
           <img src="{{ asset('storage/'.$restaurant->heroImage->image_url) }}" alt="hero_image" class="img-fluid rounded hero-image w-100">
       @else
-          <div class="bg-light border rounded d-flex align-items-center justify-content-center hero-image w-100" >
-              <span class="text-muted">No Hero Image Uploaded</span>
-          </div>
+          <img src="{{ asset('images/' . $heroImg) }}" alt="hero_image" class="img-fluid rounded hero-image w-100">
       @endif
   </section>
 
@@ -31,7 +36,7 @@
         @else
             <button class="btn p-0 border-0 bg-transparent" aria-label="favorite">
               <i class="fa-regular fa-heart fs-3 text-orange"></i>
-            </button>     
+            </button>
         @endif
       </form>
       @endauth
@@ -39,23 +44,18 @@
 
     {{-- Gallery 2 photos --}}
     <section class="row g-3 mt-2">
-     
       <div class="col-12 col-md-6">
         @if ($restaurant->galleryImage1)
           <img src="{{ asset('storage/'.$restaurant->galleryImage1->image_url) }}" class="w-100 rounded sub-image" alt="Gallery Image 1">
         @else
-          <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
-            <span class="text-muted">No Gallery Image 1 Uploaded</span>
-          </div>
+          <img src="{{ asset('images/' . $gallery1) }}" class="w-100 rounded sub-image" alt="Gallery Image 1">
         @endif
       </div>
       <div class="col-12 col-md-6">
         @if ($restaurant->galleryImage2)
-          <img src="{{ asset('storage/'.$restaurant->galleryImage2->image_url) }}" class="w-100 rounded sub-image"  alt="Gallery Image 2">
+          <img src="{{ asset('storage/'.$restaurant->galleryImage2->image_url) }}" class="w-100 rounded sub-image" alt="Gallery Image 2">
         @else
-          <div class="bg-light border rounded d-flex align-items-center justify-content-center sub-image w-100" >
-            <span class="text-muted">No Gallery Image 2 Uploaded</span>
-          </div>
+          <img src="{{ asset('images/' . $gallery2) }}" class="w-100 rounded sub-image" alt="Gallery Image 2">
         @endif
       </div>
     </section>
@@ -73,45 +73,43 @@
       <h2 class="text-center my-5 text-underline-accent">Menu</h2>
 
       {{-- Bootstrap carousel --}}
+      @php
+        $menuChunks = $menus->chunk(4);
+      @endphp
+
       <div id="menuCarousel" class="carousel slide" data-bs-ride="false">
-        <div class="carousel-inner">
-           @forelse ($menus->chunk(4) as $chunkIndex => $menuChunk)
-                <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
-                    <div class="row g-3 justify-content-center">
-                        @foreach ($menuChunk as $menu)
-                            <div class="col-6 col-md-3">
-                                <div class="card border-0 bg-transparent">
-                                    <img src="{{ asset('storage/' . $menu->image) }}"
-                                        class="card-img-top rounded"
-                                        style="height: 140px; object-fit: cover;"
-                                        alt="{{ $menu->name }}">
-                                    <div class="card-body px-0 pt-2">
-                                        <div class="small fw-semibold">{{ $menu->name }}</div>
-                                        <div class="small text-muted">${{ $menu->price }}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            @empty
-                                <div class="col-12">
-                                    <div class="no-data-box text-center p-5">No menus available yet.</div>
-                                </div>                    
-                        @endforelse
-                    </div>
-                </div>
-            @endforeach
-        </div>
-
-        @if($menus->count() > 4)
-            <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        @endif
+          <div class="carousel-inner">
+              @if ($menuChunks->isNotEmpty())
+                  @foreach ($menuChunks as $chunkIndex => $menuChunk)
+                      <div class="carousel-item {{ $chunkIndex == 0 ? 'active' : '' }}">
+                          <div class="row g-3 justify-content-center">
+                              @foreach ($menuChunk as $menu)
+                                  <div class="col-6 col-md-3">
+                                      <div class="card border-0 bg-transparent">
+                                          <img src="{{ asset('storage/' . $menu->image) }}"
+                                              class="card-img-top rounded"
+                                              style="height: 140px; object-fit: cover;"
+                                              alt="{{ $menu->name }}">
+                                          <div class="card-body px-0 pt-2">
+                                              <div class="small fw-semibold">{{ $menu->name }}</div>
+                                              <div class="small text-muted">¥{{ number_format($menu->price) }}</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              @endforeach
+                          </div>
+                      </div>
+                  @endforeach
+              @else
+                  <div class="carousel-item active">
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="no-data-box text-center p-5">No menus available yet.</div>
+                          </div>
+                      </div>
+                  </div>
+              @endif
+          </div>
       </div>
     </section>
 
@@ -256,40 +254,46 @@
 
     <div id="mealCarousel" class="carousel slide" data-bs-ride="false">
 
-        <div class="carousel-inner">
+      @php
+          $productChunks = $products->chunk(3);
+      @endphp
 
-        @forelse ($products->chunk(3) as $index => $productChunk)
-              <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                  <div class="row g-4 justify-content-center">
+      <div class="carousel-inner">
+          @if ($productChunks->isNotEmpty())
+              @foreach ($productChunks as $index => $productChunk)
+                  <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                      <div class="row g-4 justify-content-center">
+                          @foreach ($productChunk as $product)
+                              <div class="col-12 col-md-4">
+                                  <div class="card border-0 bg-transparent">
+                                      <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                                          <img
+                                              src="{{ asset('storage/' . $product->image) }}"
+                                              class="card-img-top"
+                                              style="height:200px; object-fit:cover;"
+                                              alt="{{ $product->name }}">
 
-                      @forelse ($productChunk as $product)
-                          <div class="col-12 col-md-4">
-                              <div class="card border-0 bg-transparent">
-                                <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
-                                  <img 
-                                      src="{{ asset('storage/' . $product->image) }}"
-                                      class="card-img-top"
-                                      style="height:200px; object-fit:cover;"
-                                      alt="{{ $product->name }}">
-
-                                  <div class="card-body px-0 pt-2">
-                                      <h5 class="meal-name">{{ $product->name }}</h5>
-                                      <div class="meal-price">${{ $product->price }}</div>
+                                          <div class="card-body px-0 pt-2">
+                                              <h5 class="meal-name">{{ $product->name }}</h5>
+                                              <div class="meal-price">¥{{ number_format($product->price) }}</div>
+                                          </div>
+                                      </a>
                                   </div>
-                                  </a>
-
                               </div>
-                          </div>
-                          @empty
-                           <div class="col-12">
-                              <div class="no-data-box text-center p-5">No meal kits available yet.</div>
-                          </div>
-                      @endforelse
-                         
+                          @endforeach
+                      </div>
+                  </div>
+              @endforeach
+          @else
+              <div class="carousel-item active">
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="no-data-box text-center p-5">No meal kits available yet.</div>
+                      </div>
                   </div>
               </div>
-          @endforeach
-        </div>
+          @endif
+      </div>
 
 
          {{-- ← --}}
@@ -355,19 +359,19 @@
                         </form>
                     </div>
                 </div>
-            {{-- @else
+            @else
                 <div class="alert alert-light border mb-4 text-center small">
                     Only customers who purchased this product can write a review.
-                </div> --}}
+                </div>
             @endif
-        @else
-            <div class="alert alert-light border mb-4 text-center small">
-                <a href="{{ route('login') }}" class="text-dark fw-bold">Login</a> to write a review.
-            </div>
+        {{-- @else
+            <div class="alert mb-4 text-center small">
+                <a href="{{ route('login') }}" class="fw-bold">Login</a> to write a review.
+            </div> --}}
         @endauth
 
         <div class="d-grid gap-3">
-            @foreach ($reviews as $review)
+            @forelse ($reviews as $review)
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-start gap-3 mb-3">
@@ -394,22 +398,13 @@
                         </div>
                         <div class="small text-muted">{{ $review->created_at->format('M d,Y') }}</div>
                     </div>
-                    @if ($review->replies->isNotEmpty())
-                        <div class="ps-2">
-                            <div class="d-flex align-items-start gap-2">
-                                <i class="fa-solid fa-reply mt-1"></i>
-                                <div>
-                                    <span class="mb-2 fw-light">Restaurant reply:</span>
-                                    <p class="font-sen ms-3 text-muted">
-                                        {{ $review->replies->first()->comment }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                      @endif
                 </div>
             </div>
-            @endforeach
+            @empty
+              <div class="alert text-center">
+                  No reviews yet.
+              </div>
+          @endforelse
         </div>
       </section>
   </div>
