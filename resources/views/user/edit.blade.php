@@ -19,7 +19,6 @@
 
                 <div class="col-sm-8 text-center text-sm-start">
                     <label for="profile_picture" class="profile-upload-label">
-
                         @if(isset($user) && $user->profile_picture)
                             <img id="profile_picture_preview"
                                 src="{{ asset('storage/' . $user->profile_picture) }}"

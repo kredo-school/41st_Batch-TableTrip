@@ -90,7 +90,6 @@
                                     </span>
                                 @endif
                             </a>
-
                             <a href="/cart" class="text-dark fs-4 position-relative" aria-label="cart">
                                 <i class="bi bi-cart"></i>
                                 @php $cartCount = array_sum(array_column(session('cart', []), 'quantity')); @endphp
@@ -114,7 +113,7 @@
                                         <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}"
                                             alt="User Icon"
                                             class="rounded-circle border"
-                                            style="width:40px; height: 40px; object-fit: cover;">
+                                            style="width: 32px; height: 32px; object-fit: cover;">
                                     @else
                                         <i class="bi bi-person-circle fs-4"></i>
                                     @endif

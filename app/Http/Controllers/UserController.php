@@ -58,24 +58,8 @@ class UserController extends Controller
             }
 
 
-            if ($request->hasFile('profile_picture')) {
-
-                $file = $request->file('profile_picture');
-
-                if (!$file->isValid()) {
-                    dd('Upload failed');
-                }
-
-                if ($user->profile_picture) {
-                    Storage::disk('public')->delete($user->profile_picture);
-                }
-
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-
-                $path = $file->storeAs('profile_pictures', $filename, 'public');
-
-                $user->profile_picture = $path;
-            }
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
         }
 
         $user->save();
@@ -83,10 +67,8 @@ class UserController extends Controller
         if ($request->input('from') === 'confirm') {
             return redirect()->route('cart.confirm')->with('success', 'Your profile has been updated!');
         }
-
         return redirect('/dashboard')->with('success', 'Your profile has been updated!');
     }
-
    public function destroy()
 {
     $userId = Auth::id();
