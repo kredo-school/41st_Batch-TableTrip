@@ -110,6 +110,25 @@
                   </div>
               @endif
           </div>
+            {{-- ← --}}
+          @if($menus->count() > 3)
+          <button 
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#menuCarousel"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+          </button>
+
+          {{-- → --}}
+          <button 
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#mealCarousel"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+          </button>
+          @endif
       </div>
     </section>
 

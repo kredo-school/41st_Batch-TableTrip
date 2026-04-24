@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Review;
 use App\Models\Reservation;
 use App\Models\Notification;
+use App\Models\Menu;
 
 class RestaurantController extends Controller
 {
@@ -23,6 +24,7 @@ class RestaurantController extends Controller
         }
 
         $products = Product::where('restaurant_id', $id)->get();
+        $menus = Menu::where('restaurant_id', $id)->get();
         $reviews = Review::with('user')
         ->where('restaurant_id', $id)
         ->whereNotNull('user_id')
@@ -33,7 +35,7 @@ class RestaurantController extends Controller
         $hasVisited = Auth::check() ? $restaurant->reservations()->where('user_id', Auth::id())->where('status', 'visited')->exists() : false;
         $hasReviewed = Auth::check() ? $restaurant->reviews()->where('user_id', Auth::id())->exists() : false;
 
-        return view('restaurants.restaurant_page', compact('restaurant', 'products', 'reviews', 'isFavorite', 'hasVisited', 'hasReviewed'));
+        return view('restaurants.restaurant_page', compact('restaurant', 'products', 'menus', 'reviews', 'isFavorite', 'hasVisited', 'hasReviewed'));
     }
 
     public function store(Request $request, $id)
