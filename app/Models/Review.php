@@ -13,9 +13,15 @@ class Review extends Model
         'restaurant_id',
         'user_id',
         'product_id',
-        'rating',
+        'parent_id',
+        'author_type',
+        'comment_type',
         'comment',
+        'rating',
         'status',
+        'is_approved',
+        'ai_score',
+        'is_read',
     ];
 
     // --- Relationships ---

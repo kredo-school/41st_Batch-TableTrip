@@ -378,15 +378,11 @@
                         </form>
                     </div>
                 </div>
-            @else
-                <div class="alert alert-light border mb-4 text-center small">
-                    Only customers who purchased this product can write a review.
-                </div>
             @endif
-        {{-- @else
+        @else
             <div class="alert mb-4 text-center small">
                 <a href="{{ route('login') }}" class="fw-bold">Login</a> to write a review.
-            </div> --}}
+            </div>
         @endauth
 
         <div class="d-grid gap-3">

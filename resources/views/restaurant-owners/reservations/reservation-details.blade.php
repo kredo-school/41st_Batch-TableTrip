@@ -86,29 +86,11 @@
                                 <div class="col-12 col-md-6">
                                     <label class="form-label text-muted mb-1"><i class="fa-regular fa-circle-check"></i>Status</label>
                                     <div class="row">
-                                       <form action="{{ route('owner.reservations.update',$reservation->id) }}" method="post">
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="col">
-                                               <select class="form-select @error('status') is-invalid @enderror rounded mb-2 text-white border-0 px-2 py-0" style="background-color: #9FC6BC" name="status" id="status_{{ $reservation->id }}">
-                                                    <option value="confirmed" {{ old('status', $reservation->status) == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
-                                                    <option value="pending" {{ old('status', $reservation->status) == 'pending' ? 'selected' : '' }}>Pending</option>
-                                                    <option value="visited" {{ old('status', $reservation->status) == 'visited' ? 'selected' : '' }}>Visited</option>
-                                                    <option value="cancelled" {{ old('status', $reservation->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                                    <option value="no-show" {{ old('status', $reservation->status) == 'no-show' ? 'selected' : '' }}>No-show</option>
-                                                </select>
-                                                @error('status')
-                                                    <span class="invalid-feedback d-block" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
+                                        <div class="col ms-4">
+                                            <div class="w-25">
+                                                <h4 class="rounded p-2 bg-green text-white text-center">{{ $reservation->status }}</h4>
+                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <button type="submit" class="btn btn-sm btn-outline-navy w-100 px-2 py-0">
-                                                Update Status
-                                            </button>
-                                        </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
