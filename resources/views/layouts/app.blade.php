@@ -66,7 +66,7 @@
                       @auth
                        @if (Auth::user()->is_admin )  
                         {{-- Admin --}}
-                             <form method="POST" action="{{ route('user.show') }}" class="m-0">
+                             <form method="POST" action="{{ route('admin.logout') }}" class="m-0">
                                  @csrf
                                     <button type="submit" class="btn btn-outline-navy rounded-pill px-3">
                                         Logout
@@ -75,8 +75,20 @@
                         @else
                         {{-- Normal User --}}
                             {{-- Normal User --}}
-                            <a href="{{ route('user.notifications.index') }}" class="text-dark fs-4" aria-label="notifications">
+                            @php
+                                $unreadCount = \App\Models\Notification::where('recipient_id', Auth::id())
+                                    ->where('recipient_type', \App\Models\User::class)
+                                    ->where('is_completed', false)
+                                    ->count();
+                            @endphp
+                            <a href="{{ route('user.notifications.index') }}" class="text-dark fs-4 position-relative" aria-label="notifications">
                                 <i class="bi bi-bell"></i>
+                                @if($unreadCount > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                                          style="background-color:#e74c3c; font-size:0.6rem;">
+                                        {{ $unreadCount }}
+                                    </span>
+                                @endif
                             </a>
 
                             <a href="/cart" class="text-dark fs-4 position-relative" aria-label="cart">

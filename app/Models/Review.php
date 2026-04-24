@@ -4,9 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Restaurant;
-use App\Models\User;
-use App\Models\Product;
 
 class Review extends Model
 {
@@ -16,16 +13,12 @@ class Review extends Model
         'restaurant_id',
         'user_id',
         'product_id',
-        'parent_id',
-        'author_type',
-        'comment_type',
         'rating',
         'comment',
-        'is_approved',
-        'ai_score',
-        'is_read',
         'status',
     ];
+
+    // --- Relationships ---
 
     public function user()
     {
@@ -42,29 +35,17 @@ class Review extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function parent()
-    {
-        return $this->belongsTo(Review::class, 'parent_id');
-    }
-
     public function replies()
     {
         return $this->hasMany(Review::class, 'parent_id');
     }
 
-    protected static function booted()
+protected static function booted()
     {
         static::creating(function ($review) {
             $badWords = [
-                'stupid',
-                'idiot',
-                'hate',
-                'damn',
-                'sex',
-                'xxx',
-                'spam',
-                'http',
-                'www',
+                'stupid', 'idiot', 'hate', 'damn', 'sex', 
+                'xxx', 'spam', 'http', 'www',
             ];
 
             $comment = strtolower($review->comment ?? '');

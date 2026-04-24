@@ -114,8 +114,8 @@ class ProductSeeder extends Seeder
                 'ingredients'      => $p['ingredients'],
                 'allergens'        => $p['allergens'],
                 'image'            => $image,
-                'badge'            => $p['badge'],
-                'tag'              => null,
+                // 'badge'            => $p['badge'],
+                // 'tag'              => null,
                 'difficulty_level' => $p['difficulty'],
                 'category_id'      => $categoryIds[$r['category']],
                 'is_visible'       => true,
@@ -125,5 +125,49 @@ class ProductSeeder extends Seeder
         }
 
         $this->command->info('20 products seeded successfully!');
+
+        //     $images = [
+        //     'product/meal_kit1.jpeg',
+        //     'product/meal_kit2.jpeg',
+        //     'product/meal_kit3.jpeg',
+        //     'product/meal_kit4.png',
+        //     'product/meal_kit5.jpeg',
+        // ];
+
+        // $restaurants = range(25, 34);
+
+        // $products = [];
+
+        // for ($i = 0; $i < 20; $i++) {
+
+        //     $restaurantId = $restaurants[array_rand($restaurants)];
+
+        //     // 25を多めに
+        //     if ($i < 8) {
+        //         $restaurantId = 25;
+        //     }
+
+        //     $products[] = [
+        //         'name'             => 'Meal Kit ' . ($i + 1),
+        //         'price'            => rand(1500, 5000),
+        //         'stock'            => rand(5, 50),
+        //         'serving'          => rand(1, 4),
+        //         'difficulty_level' => ['Easy', 'Medium', 'Hard'][array_rand(['Easy','Medium','Hard'])],
+        //         'location'         => 'Japan',
+        //         'restaurant_name'  => 'Demo Restaurant',
+        //         'rating'           => rand(30, 50) / 10,
+        //         'description'      => 'Delicious meal kit for demo.',
+        //         'ingredients'      => 'Meat, Vegetables, Sauce',
+        //         'allergens'        => 'None',
+        //         'image'            => $images[array_rand($images)],
+        //         'is_visible'       => 1,
+        //         'category_id'      => 1,
+        //         'restaurant_id'    => $restaurantId,
+        //         'created_at'       => $now,
+        //         'updated_at'       => $now,
+        //     ];
+        // }
+
+        // DB::table('products')->insert($products);
     }
 }

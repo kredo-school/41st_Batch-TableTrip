@@ -26,7 +26,7 @@ class ProductReviewController extends Controller
         // 購入済みかチェック
         $hasPurchased = Auth::check()
             ? Purchased::where('user_id', Auth::id())
-                ->where('meal_kit_id', $id)
+                ->where('product_id', $id)
                 ->exists()
             : false;
 
@@ -44,7 +44,7 @@ class ProductReviewController extends Controller
     {
         // 購入済みかチェック
         $hasPurchased = Purchased::where('user_id', Auth::id())
-            ->where('meal_kit_id', $id)
+            ->where('product_id', $id)
             ->exists();
 
         if (!$hasPurchased) {

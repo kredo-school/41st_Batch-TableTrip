@@ -19,7 +19,12 @@
         <div class="d-flex flex-column">
             @forelse($notifications as $notification)
                 <div class="notification-wrapper position-relative mb-2">
-                    <a href="{{ route('user.notifications.show', $notification->id) }}" class="text-decoration-none">
+                    @php
+                        $notifLink = ($notification->is_action_required && $notification->target_type === 'App\Models\Product' && $notification->target_id)
+                            ? route('products.reviews', $notification->target_id)
+                            : route('user.notifications.show', $notification->id);
+                    @endphp
+                    <a href="{{ $notifLink }}" class="text-decoration-none">
                         <div class="notification-item {{ $notification->is_completed ? 'read' : 'unread' }}">
                             <div class="notification-content">
                                 <div class="notification-title">
