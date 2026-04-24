@@ -234,6 +234,9 @@ Route::prefix('admin')
         
         Route::get('/users/{id}', [AdminUserController::class, 'show'])
             ->name('users.show');
+        
+        Route::patch('/users/{id}/status', [AdminUserController::class, 'updateStatus'])
+            ->name('users.updateStatus');
             
         Route::get('/rewards/points', [AdminRewardController::class, 'pointHistory'])
             ->name('rewards.points.index');

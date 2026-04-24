@@ -25,4 +25,18 @@ class AdminUserController extends Controller
 
         return view('admin.users.show', compact('user'));
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|in:active,suspended,banned',
+        ]);
+
+        $user->status = $request->status;
+        $user->save();
+
+        return back()->with('success', 'User status updated.');
+    }
 }

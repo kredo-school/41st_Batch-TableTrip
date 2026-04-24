@@ -11,30 +11,26 @@ class Purchased extends Model
 
     protected $table = 'purchased';
 
-
     protected $fillable = [
+        'order_id',
         'user_id',
         'meal_kit_id',
         'quantity',
         'price_at_purchased',
         'ordered_at',
-        'status'
     ];
 
     protected $casts = [
         'ordered_at' => 'datetime',
     ];
 
-    
-    
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function product()
     {
         return $this->belongsTo(Product::class, 'meal_kit_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }
