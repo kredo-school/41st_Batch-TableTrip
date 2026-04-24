@@ -165,6 +165,6 @@
 </div>
 
 @push('scripts')
-    <script src="{{ asset('js/profile.js') }}"></script> 
+    <script src="{{ asset('js/profile.js') }}"></script>
 @endpush
 @endsection
