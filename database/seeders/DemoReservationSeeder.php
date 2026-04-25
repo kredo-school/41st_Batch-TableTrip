@@ -30,6 +30,7 @@ class DemoReservationSeeder extends Seeder
                 Reservation::create([
                     'user_id' => $user->id,
                     'restaurant_id' => $restaurant->id,
+                    'full_name' => trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? '')),
                     'reservation_date' => $reservationDate->format('Y-m-d'),
                     'reservation_time' => $reservationTime->format('H:i:s'),
                     'reserved_at' => Carbon::now()->subDays(rand(1, 90)),
