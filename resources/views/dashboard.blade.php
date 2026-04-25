@@ -161,7 +161,7 @@
                                     <div class="mb-2">
                                         <p class="mb-0">
                                             <strong>{{ $item->product->name ?? 'Meal Kit' }}</strong>
-                                            <small class="text-muted ms-2">x{{ $item->quantity }} ({{ $item->ordered_at->format('Y/m/d') }})</small>
+                                            <small class="text-muted ms-2">x{{ $item->quantity }} ({{ $item->ordered_at ? $item->ordered_at->format('Y/m/d') : '-' }})</small>
                                         </p>
                                     </div>
                                 @empty
