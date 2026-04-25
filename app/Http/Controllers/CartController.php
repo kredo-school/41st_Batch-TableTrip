@@ -100,11 +100,13 @@ class CartController extends Controller
 
         $firstItem = collect($cart)->first();
         $restaurantId = $firstItem['product']['restaurant_id'] ?? null;
+        $productId = $firstItem['product']['id'] ?? null;
 
         // orders に1件作成
         $order = Order::create([
             'user_id' => Auth::id(),
             'restaurant_id' => $restaurantId,
+            'product_id'    => $productId,
             'total_price' => $totalPrice,
             'status' => 'pending',
         ]);
