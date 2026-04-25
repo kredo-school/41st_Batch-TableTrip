@@ -63,6 +63,7 @@ class DemoRestaurantSeeder extends Seeder
                 'prefecture' => $prefecture
             ],[
                 'restaurant_name' => $restaurantName,
+                'email' => strtolower($prefecture) . '@test.com',
                 'phone' => '090-1234-5678',
                 'prefecture' => $prefecture,
                 'city' => 'Sample City',
@@ -70,6 +71,7 @@ class DemoRestaurantSeeder extends Seeder
                 'opening_hours' => $opening,
                 'reservation_limit' => 10,
                 'approval_status' => $status,
+                'password' => bcrypt('password'),
             ]);
         }
     }

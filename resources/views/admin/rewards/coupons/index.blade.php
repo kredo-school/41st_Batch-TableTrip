@@ -33,7 +33,7 @@
                             </td>
 
                             <td>
-                                {{ $item->coupon->name ?? 'N/A' }}
+                                {{ $item->coupon->description ?? $item->coupon->name ?? 'N/A' }}
                             </td>
 
                             <td>

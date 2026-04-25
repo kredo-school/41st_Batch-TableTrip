@@ -25,6 +25,7 @@ class DemoStampSeeder extends Seeder
                 DB::table('prefecture_stamps')->insert([
                     'user_id' => $user->id,
                     'prefecture' => $prefecture,
+                    'earned_at' => now(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
