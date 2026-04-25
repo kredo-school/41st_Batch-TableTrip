@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->integer('stock')->default(0)->after('price');
-            $table->integer('serving')->default(1)->after('stock');
-            $table->string('difficulty_level')->nullable()->after('serving');
-            $table->boolean('is_visible')->default(true)->after('image');
-        });
+        // Schema::table('products', function (Blueprint $table) {
+        //     $table->integer('stock')->default(0)->after('price');
+        //     $table->integer('serving')->default(1)->after('stock');
+        //     $table->string('difficulty_level')->nullable()->after('serving');
+        //     $table->boolean('is_visible')->default(true)->after('image');
+        // });
     }
 
     /**
@@ -26,10 +26,10 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropColumn([
-                'stock',
-                'serving',
-                'difficulty_level',
-                'is_visible',
+                // 'stock',
+                // 'serving',
+                // 'difficulty_level',
+                // 'is_visible',
             ]);
         });
     }
