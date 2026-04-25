@@ -61,11 +61,11 @@ class DemoReviewSeeder extends Seeder
 
                 } else {
                     // 📦 Product Review
-                    $product = $products->random();
+                    $product = $products->whereNotNull('restaurant_id')->random();
 
                     $review = Review::create([
                         'user_id' => $user->id,
-                        'restaurant_id' => null,
+                        'restaurant_id' => $product->restaurant_id,
                         'product_id' => $product->id,
                         'rating' => rand(1, 5),
                         'comment' => $comment,

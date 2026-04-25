@@ -11,15 +11,20 @@ class DemoAllSeeder extends Seeder
         $this->call([
             DemoUserSeeder::class,
             DemoRestaurantSeeder::class,
-            ProductSeeder::class,
-            InquirySeeder::class,
+
+            DemoProductSeeder::class, // ← ここに上げる🔥
+
             DemoOrderSeeder::class,
-            DemoPointHistorySeeder::class,
             DemoReservationSeeder::class,
+            DemoPointHistorySeeder::class,
             DemoStampSeeder::class,
+
             DemoCouponSeeder::class,
             DemoUserCouponSeeder::class,
+
             DemoReviewSeeder::class,
+
+            InquirySeeder::class,
         ]);
     }
 }
