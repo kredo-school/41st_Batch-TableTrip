@@ -27,8 +27,9 @@ return new class extends Migration
             $table->string('email');
 
             $table->text('special_requests')->nullable();
-
-            $table->string('status')->default('pending');
+            // In your create_reservations_table migration
+            $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed', 'no_show'])
+            ->default('pending');
             $table->timestamp('visited_at')->nullable();
             $table->timestamps();
         });

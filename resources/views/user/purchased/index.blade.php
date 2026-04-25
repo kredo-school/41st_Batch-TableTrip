@@ -177,7 +177,7 @@
                                     <td>{{ \Carbon\Carbon::parse($res->reservation_date)->format('d/m/y') }} {{ \Carbon\Carbon::parse($res->reservation_time)->format('H:i') }}</td>
                                     <td><strong>{{ $res->restaurant->restaurant_name ?? 'N/A' }}</strong></td>
                                     <td>{{ $res->number_of_people }}</td>
-                                    <td>Visited</td>
+                                    <td>{{$res->status}}</td>
                                     <td><i class="fa-solid fa-comment-dots icon-review-btn"></i><a href="{{ route('restaurant', $res->restaurant_id) }}">Reviews</a></td>
                                 </tr>
                             @empty
@@ -210,7 +210,6 @@
                 <div class="modal-body">
                     <p class="text-muted small mb-3" id="reviewProductName"></p>
 
-                    {{-- 星評価 --}}
                     <div class="mb-3">
                         <label class="form-label fw-bold small">Rating</label>
                         <div class="d-flex gap-2" id="modal-star-rating">
@@ -221,7 +220,6 @@
                         <input type="hidden" name="rating" id="modal-rating-input" value="">
                     </div>
 
-                    {{-- コメント --}}
                     <div class="mb-3">
                         <label class="form-label fw-bold small">Comment</label>
                         <textarea name="comment" class="form-control" rows="3"
