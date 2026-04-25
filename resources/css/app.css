@@ -283,7 +283,7 @@ h6{
 
   /* restaurant owner dashboard  */
   .stat-card {
-    height: 120px;
+     min-height: 105px;
     box-shadow:0 2px 8px rgba(0,0,0,0.06);
     border-radius:12px;
   }
@@ -336,8 +336,11 @@ h6{
   }
 
   .stat-icon {
-    width: 40px;
-    height: 40px;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: #d6d6d6;
 }
 
 .review-icon {
