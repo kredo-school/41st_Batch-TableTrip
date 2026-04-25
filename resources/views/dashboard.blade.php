@@ -155,29 +155,57 @@
 
                     <div class="row">
                         @if(request('tab2', 'purchased') == 'purchased')
-                            {{-- purchased history--}}
-                            @forelse ($purchased_items ?? [] as $item)
-                                <div class="col-12">
-                                    <p>
-                                        {{ $item->product->name ?? 'Meal Kit' }}
-                                        <small class="text-muted">x{{ $item->quantity }} ({{ $item->ordered_at }})</small>
-                                    </p>
-                                </div>
-                            @empty
-                                <p class="text-muted">No purchase history yet.</p>
-                            @endforelse
+                            {{-- purchased history --}}
+                            <div class="col-12">
+                                @forelse ($purchased_items ?? [] as $item)
+                                    <div class="mb-2">
+                                        <p class="mb-0">
+                                            <strong>{{ $item->product->name ?? 'Meal Kit' }}</strong>
+                                            <small class="text-muted ms-2">x{{ $item->quantity }} ({{ $item->ordered_at->format('Y/m/d') }})</small>
+                                        </p>
+                                    </div>
+                                @empty
+                                    <p class="text-muted">No purchase history yet.</p>
+                                @endforelse
+                            </div>
                         @else
-                            {{-- visited list --}}
-                            @forelse ($past_reservations ?? [] as $past)
-                                <div class="col-12">
-                                    <p>
-                                        {{ $past->restaurant->restaurant_name ?? 'N/A' }}
-                                        <small class="text-muted">({{ $past->reservation_date }})</small>
-                                    </p>
-                                </div>
-                            @empty
-                                <p class="text-muted">No past visits yet.</p>
-                            @endforelse
+                            {{-- visited list (Table format) --}}
+                            <div class="col-12">
+                                <table class="table table-sm table-borderless align-middle">
+                                    <thead class="text-muted small">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Restaurant</th>
+                                            <th class="text-end">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($past_reservations ?? [] as $past)
+                                            <tr>
+                                                <td class="small text-nowrap">
+                                                    {{ \Carbon\Carbon::parse($past->reservation_date)->format('M d, Y') }}
+                                                </td>
+                                                <td>
+                                                    <div class="fw-bold" style="font-size: 0.85rem;">
+                                                        {{ $past->restaurant->restaurant_name ?? 'N/A' }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-end">
+                                                    @if($past->status === 'completed')
+                                                        <span class="badge rounded-pill bg-success-subtle text-success" style="font-size: 0.7rem;">Visited</span>
+                                                    @else
+                                                        <span class="badge rounded-pill bg-light text-dark" style="font-size: 0.7rem;">{{ $past->status_label }}</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center text-muted py-3">No past visits yet.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
                     </div>
                 </div>
