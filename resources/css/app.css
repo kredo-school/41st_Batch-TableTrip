@@ -251,6 +251,11 @@ h6{
     color:#333;
   }
 
+  .review-icon{
+    width: 3rem;
+    height: 3rem;
+  }
+
   /* Restaurant Owner Register Page */
   .icon-lg{
     font-size: 3rem;
